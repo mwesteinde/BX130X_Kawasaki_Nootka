@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_GantryHoldDown" Id="{212016f5-1181-4eaa-b089-a8c72c29c00d}" SpecialFunc="None">
+    <Declaration><![CDATA[//TODO: set methods to enable all following, pneumatic cylinder activation, error handling
+
+FUNCTION_BLOCK FB_GantryHoldDown
+VAR_INPUT
+	robot				: FB_Robot; //robot_object
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	//MC_functions, called in methods
+	fbMC_PowerWest		: MC_Power;
+	fbMC_PowerEast		: MC_Power;
+	fbMC_SyncEastWest	: MC_MoveAbsolute;
+	fbMC_MoveAbsWest1	: MC_MoveAbsolute;
+	fbMC_MoveAbsWest2	: MC_MoveAbsolute;
+	fbMC_HomeWest		: MC_Home;
+	fbMC_HomeEast		: MC_Home;
+	fbMC_SyncAxes		: MC_GearIn;
+	Aborting			: MC_BufferMode;
+	
+	//Inputs
+	ls1NE AT %I* 		: BOOL;
+	ls2SE AT %I* 		: BOOL;
+	ls3NW AT %I* 		: BOOL;
+	ls4SW AT %I* 		: BOOL;
+	
+	//Enable bools
+	executeEnableWest	: BOOL;
+	executeEnableEast	: BOOL;
+	executeHomeWest		: BOOL;
+	executeHomeEast		: BOOL;
+	executeFollow		: BOOL;
+	executeSync			: BOOL := TRUE;
+	executeCylinders	: BOOL;
+	
+	followVariable		: BOOL:= TRUE; //Set for following robot
+	
+	//Pneumatic cylinders
+	cylindersNorth 		 AT %Q* : BOOL;
+	cylindersCentreNorth AT %Q* : BOOL;
+	cylindersCentreSouth AT %Q* : BOOL;
+	cylindersSouth		 AT %Q* : BOOL;
+	
+	//Variable to be set by program being run
+	LEN_WOOD : LREAL; //mm, length of wood being clamped
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
+GVL_Axes.AxisEast.ReadStatus();
+Enable_Axes();
+Home_Axes();
+Couple_Axes();
+Follow_Robot();
+Cylinder_Set_Cutting();]]></ST>
+    </Implementation>
+    <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}">
+      <Declaration><![CDATA[METHOD Couple_Axes
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbMC_SyncAxes(
+	Master:= GVL_Axes.AxisWest, 
+	Slave:= GVL_Axes.AxisEast, 
+	Execute:= executeSync, 
+	RatioNumerator:= 1);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Cylinder_Set_Cutting" Id="{80c33305-3d27-491c-90ce-c1e0d842bbab}">
+      <Declaration><![CDATA[METHOD Cylinder_Set_Cutting
+VAR_INPUT
+END_VAR
+VAR
+	POS_CYLINDER_NORTH : LREAL := 76.5; //mm, position of north pneum cylinder relative to gantry plate
+	POS_CYLINDER_NORTHCENTRE : LREAL := 229.62; //mm, position of centre north pneum cylinder relative to gantry plate
+	POS_CYLINDER_SOUTHCENTRE : LREAL := 712.212; //mm, position of centre south pneum cylinder relative to gantry plate
+	POS_CYLINDER_SOUTH : LREAL := 867.832; //mm, position of south pneum cylinder relative to gantry plate
+	POS_TABLE_NORTH : LREAL := 474.14; //mm, position of table start WRT Zero
+	FACTOR_OF_SAFETY : LREAL := 100; //mm, distance from edge of table cylinders will rise
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF executeCylinders THEN
+	IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTH THEN
+		cylindersNorth := 1;
+		IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTHCENTRE THEN
+			cylindersCentreNorth := 1;
+		ELSE
+			cylindersCentreNorth := 0;
+		END_IF
+	ELSE
+		cylindersNorth := 0;
+	END_IF
+	
+	IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
+		cylindersSouth := 1;
+		IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
+			cylindersCentreSouth := 1;
+		ELSE 
+			cylindersCentreSouth := 0;
+		END_IF
+		cylindersSouth := 0;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Enable_Axes" Id="{c19824d3-7d09-4504-aec2-151759bbf50b}">
+      <Declaration><![CDATA[METHOD Enable_Axes : BOOL
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//IF GVL_Axes.AxisWest.Status.Disabled THEN
+//	executeEnableWest := TRUE;
+//END_IF
+
+//IF GVL_Axes.AxisEast.Status.Disabled THEN
+//	executeEnableEast := TRUE;
+//END_IF
+
+fbMC_PowerWest(
+		Axis:= GVL_Axes.AxisWest, 
+		Enable:= executeEnableWest, 
+		Enable_Positive:= executeEnableWest, 
+		Enable_Negative:= executeEnableWest, 
+		Override:= 100.0);
+		
+fbMC_PowerWest(
+		Axis:= GVL_Axes.AxisEast, 
+		Enable:= executeEnableEast, 
+		Enable_Positive:= executeEnableEast, 
+		Enable_Negative:= executeEnableEast, 
+		Override:= 100.0);
+		
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
+      <Declaration><![CDATA[METHOD Follow_Robot
+VAR_INPUT
+END_VAR
+
+VAR
+	targetPosition: LREAL;
+	accel: LREAL:=600;
+	decel: LREAL:=600;
+	jer:   LREAL:=1200;
+	vel: LREAL:= 170;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[targetPosition := (robot.y_pose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
+	targetPosition := GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST;
+ELSIF targetPosition > GVL_SERVO_ROBOT_CONST.MAX_POS_SERVOWEST THEN
+	targetPosition := GVL_SERVO_ROBOT_CONST.MAX_POS_SERVOWEST;
+END_IF
+
+//If target position - current position > threshold, hold robot
+
+followVariable := NOT followVariable;
+
+IF executeFollow AND GVL_Axes.AxisWest.Status.Homed THEN
+	fbMC_MoveAbsWest1(
+		Axis:= GVL_Axes.AxisWest, 
+		Execute:= followVariable, 
+		Position:= targetPosition, 
+		Velocity:= vel,
+		Acceleration:= accel, 
+		Deceleration:= decel,
+		Jerk:= jer, 
+		BufferMode:= Aborting);
+	
+	fbMC_MoveAbsWest2(
+		Axis:= GVL_Axes.AxisWest, 
+		Execute:= NOT followVariable, 
+		Position:= targetPosition, 
+		Velocity:= vel,
+		Acceleration:= accel, 
+		Deceleration:= decel,
+		Jerk:= jer, 
+		BufferMode:= Aborting);
+END_IF
+
+
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Home_Axes" Id="{47d775d5-845e-4f32-9b48-f325228313c3}">
+      <Declaration><![CDATA[METHOD Home_Axes
+VAR_INPUT
+END_VAR
+
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[	fbMC_HomeWest(
+		Axis:= GVL_Axes.AxisWest, 
+		Execute:= executeHomeWest, 
+		Position:= 0, 
+		HomingMode:= MC_DefaultHoming, 
+		bCalibrationCam:= NOT ls3NW);
+	
+	fbMC_HomeEast(
+		Axis:= GVL_Axes.AxisEast, 
+		Execute:= executeHomeEast, 
+		Position:= 0, 
+		HomingMode:= MC_DefaultHoming, 
+		bCalibrationCam:= NOT ls1NE);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_GantryHoldDown">
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="133" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Couple_Axes">
+      <LineId Id="6" Count="4" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Cylinder_Set_Cutting">
+      <LineId Id="52" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="47" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="38" Count="4" />
+      <LineId Id="49" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="53" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Enable_Axes">
+      <LineId Id="6" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="18" Count="2" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="9" Count="5" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="4" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="15" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Follow_Robot">
+      <LineId Id="5" Count="0" />
+      <LineId Id="80" Count="1" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="36" Count="1" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="40" Count="4" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="45" Count="1" />
+      <LineId Id="48" Count="4" />
+      <LineId Id="70" Count="2" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Home_Axes">
+      <LineId Id="6" Count="4" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="4" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

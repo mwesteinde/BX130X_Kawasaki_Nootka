@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Machine" Id="{3f2b54bd-7836-4066-a761-fd73c9f3b9ef}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Machine
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbRobot					: FB_Robot;					// Robot object
+	fbVFD					: FB_VFD;					// VFD Object
+	fbGantry				: FB_GantryHoldDown;		// Gantry hold down object
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbRobot();
+fbGantry(robot := fbRobot);]]></ST>
+    </Implementation>
+    <LineIds Name="FB_Machine">
+      <LineId Id="9" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

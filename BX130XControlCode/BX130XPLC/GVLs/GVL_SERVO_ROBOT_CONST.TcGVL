@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="GVL_SERVO_ROBOT_CONST" Id="{63c8ac0d-8c4b-4022-b5cd-cf33f8211901}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+//Position of the robot at the centre of the gantry at max and min travel of the gantry.
+
+VAR_GLOBAL CONSTANT
+	MIN_POS_ROBOT : LREAL := 969.619;
+	MAX_POS_ROBOT : LREAL := 3337.2225;
+	MAX_POS_SERVOWEST : LREAL := 2375.2591;
+ 	MIN_POS_SERVOWEST : LREAL := 0.1;
+	DIFFERENCE_ROBOT : LREAL := MAX_POS_ROBOT - MIN_POS_ROBOT;
+	DIFFERENCE_SERVOWEST : LREAL := MAX_POS_SERVOWEST - MIN_POS_SERVOWEST;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
