@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="VFD_WRITE" Id="{8cbf1fd6-2d39-40a7-8131-7eca32614bdb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK VFD_WRITE
+VAR
+  	fbWriteRegs : FB_MBWriteRegs; //Function call
+	ipAddr      : STRING(15) := '192.168.1.5'; //IPADDRESS
+  	M0 AT%MB0   : ARRAY [0..1] OF WORD;
+  	startValue  : ARRAY [0..1] OF WORD;
+	stopValue	: ARRAY [0..1] OF WORD;
+	eWriteState	: (WAIT, START, STOP, WRITE); //state machine
+	startTrigger 	: R_TRIG; //Trigger function block
+	stopTrigger 	: R_TRIG; //Trigger function block
+	Light AT %Q*: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[startValue[0] := INT_TO_WORD(18);
+startValue[1] := INT_TO_WORD(4000);
+stopValue[0] := INT_TO_WORD(1);
+stopValue[1] := INT_TO_WORD(0);
+
+startTrigger();
+stopTrigger();
+IF startTrigger.Q THEN
+	IF eWriteState = WAIT THEN
+		eWriteState := START;
+	END_IF
+END_IF
+
+IF stopTrigger.Q THEN
+	IF eWriteState = WAIT THEN
+		eWriteState := STOP;
+	END_IF
+END_IF
+
+CASE eWriteState OF
+	WAIT: 
+		//Do nothing
+		
+	START:
+		fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(startValue), 
+			pSrcAddr:= ADR(startValue), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+		
+		eWriteState := WRITE;
+		
+	STOP:
+		fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(stopValue), 
+			pSrcAddr:= ADR(stopValue), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+		
+		eWriteState := WRITE;
+		
+	WRITE :
+		fbWriteRegs(bExecute := FALSE);
+		IF NOT fbWriteRegs.bBusy OR fbWriteRegs.bError THEN
+			eWriteState := WAIT;
+		END_IF
+		
+		// 
+END_CASE
+]]></ST>
+    </Implementation>
+    <LineIds Name="VFD_WRITE">
+      <LineId Id="116" Count="2" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="51" Count="1" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="82" Count="3" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="2" />
+      <LineId Id="54" Count="11" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="69" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="88" Count="14" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="2" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="68" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

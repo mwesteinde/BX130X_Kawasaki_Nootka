@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN_1" Id="{1bedfddd-56ad-4218-a74c-ac6a1237ad24}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN_1
+VAR
+	Switch AT %I* : BOOL;
+	Light AT %Q* : BOOL;
+	fVFDWrite : VFD_WRITE;
+	fREGWrite : sREG_WRITE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fREGWrite();]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN_1">
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

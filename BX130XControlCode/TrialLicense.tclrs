@@ -2,9 +2,9 @@
 <TcLicenseInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2011/11/TcLicenseInfo">
 	<LicenseInfo>
 		<SystemId>{C04E3AB2-521A-F18D-70E7-840E6FB606B6}</SystemId>
-		<IssueTime>2024-02-09T00:07:00</IssueTime>
-		<ExpireTime>2024-02-17T00:00:00</ExpireTime>
-		<LicenseKey>34ace4fa6c8cd292d0d69d2be4b2b4a4067655345fd61f009a117bfd07c9a261e85ca3e7c4b9035a12b0f36f2253a8c6c97f32bd85d375771e05e6395f4242b93d1c34fa351df939fde2e232a1d91a0c16983a31e0d71b2ab300d55aec481398c817e0567d5f2a6578e95f5717c85292dfdc148ed479dc1e33ae2f371f5a63de45873f0b6af369430e270e020388c9bab38f4e3ee5706a32c1aa49522ba7694beb79ab9eb3c0d04b740b538ab60d45d46201904c53bd625be80839e8f4fdcab93dc02b50a632f2b8ec5fbdd3f21f32bca77ba884d0712f2931460785d8c69943b8f134295b9309718de8d39b4eaf98ee154123fa0dad891b8fac787af965e23e</LicenseKey>
+		<IssueTime>2024-02-27T20:04:00</IssueTime>
+		<ExpireTime>2024-03-06T00:00:00</ExpireTime>
+		<LicenseKey>9072b41308842f2b29e4e19291a75ccdcaa8630134121f3117d9f8ef79f5f325aa0fbcea16a30f6aae5403b52f21267925b984be6f6072e775ccdc17d8c177cdea45dbe76ffa02e7a37880a2473cb27839647854c0604db4bfd9a9fd66723e09436e5e5f35fda91aec25b476d1c9a099ff71c728d6165b70a398c5163e83e56cb2b0754b6d37b1b695fdca04f493aa09ac157a5f4d8ae4d9e66837ea87fc069d2a598e891ae13f3598278c038133f162bdfdeeaaa6c7f476821183df37810af8ba7c28045768c9537394c48d446d9e640a199ed9fffb35a67cba1c74ef147622990ebf95ae0e5464d6752d48a33b7d53d7c4471a84026b078bb3bc63a4d309aa</LicenseKey>
 		<License>
 			<LicenseId>{4C256767-E6E6-4AF5-BD68-9F7ABAD0C200}</LicenseId>
 			<Name>TC3 ADS</Name>
@@ -29,6 +29,11 @@
 			<LicenseId>{520DE751-9DB6-47CB-8240-BD5C466E7E64}</LicenseId>
 			<Name>TC3 NC PTP</Name>
 			<OrderNo>TF5000</OrderNo>
+		</License>
+		<License>
+			<LicenseId>{6952449D-F68C-49A2-ADE4-8639D85B33A4}</LicenseId>
+			<Name>TC3 Modbus-TCP</Name>
+			<OrderNo>TF6250</OrderNo>
 		</License>
 	</LicenseInfo>
 </TcLicenseInfo>

@@ -13,6 +13,7 @@ VAR
 	o_pose			: INT;
 	a_pose			: INT;
 	t_pose			: INT;
+	test_1			: BOOL;
 	x_pose_1 AT %I* : USINT;
 	x_pose_2 AT %I* : USINT;
 	y_pose_1 AT %I* : USINT;

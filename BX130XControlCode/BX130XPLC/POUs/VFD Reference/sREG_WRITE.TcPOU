@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="sREG_WRITE" Id="{96592d10-29ab-4f53-b6fd-69fbdca092eb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK sREG_WRITE
+VAR
+	fbWriteReg : FB_MBWriteSingleReg; //Function call
+	nWriteValue : INT;
+	fbTrigger 	: R_TRIG; //Trigger function block
+	eWriteState	: (WAIT, START, WRITE); //state machine
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbTrigger();
+IF fbTrigger.Q THEN
+	IF eWriteState = WAIT THEN
+		eWriteState := START;
+	END_IF
+END_IF
+
+CASE eWriteState OF
+	WAIT: 
+		//Do nothing
+		
+	START:
+		fbWriteReg(
+			sIPAddr:= '192.168.1.5', 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nMBAddr:= 16#2000, 
+			nValue:= TO_WORD(nWriteValue), 
+			bExecute:= TRUE, 
+			tTimeout:= T#5s, 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+		
+		eWriteState := WRITE;
+		
+	WRITE :
+		fbWriteReg(bExecute := FALSE);
+		IF NOT fbWriteReg.bBusy OR fbWriteReg.bError THEN
+			eWriteState := WAIT;
+		END_IF
+		
+		// 
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="sREG_WRITE">
+      <LineId Id="24" Count="0" />
+      <LineId Id="27" Count="4" />
+      <LineId Id="38" Count="5" />
+      <LineId Id="84" Count="9" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="74" Count="9" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

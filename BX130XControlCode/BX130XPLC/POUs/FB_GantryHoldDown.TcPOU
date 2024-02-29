@@ -23,9 +23,7 @@ VAR
 	
 	//Inputs
 	ls1NE AT %I* 		: BOOL;
-	ls2SE AT %I* 		: BOOL;
 	ls3NW AT %I* 		: BOOL;
-	ls4SW AT %I* 		: BOOL;
 	
 	//Enable bools
 	executeEnableWest	: BOOL;
@@ -39,14 +37,24 @@ VAR
 	followVariable		: BOOL:= TRUE; //Set for following robot
 	
 	//Pneumatic cylinders
-	cylindersNorth 		 AT %Q* : BOOL;
-	cylindersCentreNorth AT %Q* : BOOL;
-	cylindersCentreSouth AT %Q* : BOOL;
-	cylindersSouth		 AT %Q* : BOOL;
+	cylindersNorth 			AT %Q* : BOOL;
+	cylindersCentreNorth	AT %Q* : BOOL;
+	cylindersCentreSouth	AT %Q* : BOOL;
+	cylindersSouth			AT %Q* : BOOL;
+
+	pbTableWest				AT %I* : BOOL;
+	pbTableEast				AT %I* : BOOL;
+	
+	pbTableWestLast: BOOL;
+	pbTableEastLast: BOOL;
+	pbTableWestLastTrig: R_TRIG;
+	pbTableEastLastTriq: R_TRIG;
+	cylinderTableWest		AT %Q* : BOOL := FALSE;
+	cylinderTableEast		AT %Q* : BOOL := FALSE;
 	
 	//Variable to be set by program being run
-	LEN_WOOD : LREAL; //mm, length of wood being clamped
-	
+	LEN_WOOD : LREAL := 2133; //mm, length of wood being clamped
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -56,7 +64,8 @@ Enable_Axes();
 Home_Axes();
 Couple_Axes();
 Follow_Robot();
-Cylinder_Set_Cutting();]]></ST>
+Cylinder_Set_Cutting();
+Load_Tables();]]></ST>
     </Implementation>
     <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}">
       <Declaration><![CDATA[METHOD Couple_Axes
@@ -103,6 +112,7 @@ END_VAR]]></Declaration>
 		ELSE 
 			cylindersCentreSouth := 0;
 		END_IF
+	ELSE
 		cylindersSouth := 0;
 	END_IF
 END_IF]]></ST>
@@ -151,7 +161,8 @@ VAR
 	vel: LREAL:= 170;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[targetPosition := (robot.y_pose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+        <ST><![CDATA[//Set target position to middle of robot tool
+targetPosition := (robot.y_pose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
 IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
 	targetPosition := GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST;
 ELSIF targetPosition > GVL_SERVO_ROBOT_CONST.MAX_POS_SERVOWEST THEN
@@ -200,16 +211,34 @@ END_VAR
         <ST><![CDATA[	fbMC_HomeWest(
 		Axis:= GVL_Axes.AxisWest, 
 		Execute:= executeHomeWest, 
-		Position:= 0, 
+		Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
 		HomingMode:= MC_DefaultHoming, 
 		bCalibrationCam:= NOT ls3NW);
 	
-	fbMC_HomeEast(
-		Axis:= GVL_Axes.AxisEast, 
-		Execute:= executeHomeEast, 
-		Position:= 0, 
-		HomingMode:= MC_DefaultHoming, 
-		bCalibrationCam:= NOT ls1NE);]]></ST>
+//	fbMC_HomeEast(
+//		Axis:= GVL_Axes.AxisEast, 
+//		Execute:= executeHomeEast, 
+//		Position:= 403, 
+//		HomingMode:= MC_DefaultHoming, 
+//		bCalibrationCam:= NOT ls1NE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Load_Tables" Id="{7ee35345-9ea6-48dd-a062-6897bfc4de67}">
+      <Declaration><![CDATA[METHOD Load_Tables
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pbTableWest AND NOT pbTableWestLast THEN
+	cylinderTableWest := NOT cylinderTableWest;
+END_IF
+
+pbTableWestLast := pbTableWest;
+
+IF pbTableEast AND NOT pbTableEastLast THEN
+	cylinderTableEast := NOT cylinderTableEast;
+END_IF
+
+pbTableEastLast := pbTableEast;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_GantryHoldDown">
@@ -220,6 +249,7 @@ END_VAR
       <LineId Id="85" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="133" Count="0" />
+      <LineId Id="192" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Couple_Axes">
       <LineId Id="6" Count="4" />
@@ -236,6 +266,7 @@ END_VAR
       <LineId Id="38" Count="4" />
       <LineId Id="49" Count="1" />
       <LineId Id="43" Count="0" />
+      <LineId Id="64" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="37" Count="0" />
       <LineId Id="53" Count="0" />
@@ -253,6 +284,7 @@ END_VAR
       <LineId Id="15" Count="1" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Follow_Robot">
+      <LineId Id="98" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="80" Count="1" />
       <LineId Id="83" Count="0" />
@@ -283,6 +315,14 @@ END_VAR
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="4" />
       <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Load_Tables">
+      <LineId Id="5" Count="1" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="2" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

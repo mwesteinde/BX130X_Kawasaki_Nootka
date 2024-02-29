@@ -1471,6 +1471,11 @@ External Setpoint Generation:
 	</ImageDatas>
 	<Project ProjectGUID="{32872FC4-8034-484F-9A78-AA69B4EEC0C4}" TargetNetId="172.18.239.23.1.1" Target64Bit="true" ShowHideConfigurations="#x346">
 		<System>
+			<Licenses>
+				<Target>
+					<ManualSelect>{6952449D-F68C-49A2-ADE4-8639D85B33A4}</ManualSelect>
+				</Target>
+			</Licenses>
 			<Tasks>
 				<Task Id="5" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
 					<Name>PlcTask</Name>
@@ -1498,7 +1503,7 @@ External Setpoint Generation:
 					<Name>Axis West</Name>
 					<AxisPara>
 						<Dynamic Acceleration="260.052" Deceleration="260.052" Jerk="780.156"/>
-						<Velo RefSearch="1.73368102550468" RefSync="1.73368102550468" SlowManual="8.6684051275234" FastManual="52.0104307651404" Fast="173.368102550468" Maximum="173.368"/>
+						<Velo RefSync="10" SlowManual="8.6684051275234" FastManual="52.0104307651404" Fast="173.368102550468" Maximum="173.368"/>
 						<OtherSettings AllowMotionCmdToSlave="true"/>
 					</AxisPara>
 					<Encoder Name="Enc" EncType="8">
@@ -1787,11 +1792,19 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{75441B77-C8B6-C667-C463-7914B256EF50}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{98D814FA-868B-7A13-14BB-70E02FB20F53}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.x_pose_1</Name>
 							<Type>USINT</Type>
@@ -1894,28 +1907,28 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbGantry.ls2SE</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.fbMachine.fbGantry.ls3NW</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbGantry.ls4SW</Name>
+							<Name>MAIN.fbMachine.fbGantry.pbTableWest</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+							<Name>MAIN.fbMachine.fbGantry.pbTableEast</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbGantry.cylindersNorth</Name>
 							<Comment><![CDATA[Pneumatic cylinders]]></Comment>
@@ -1934,12 +1947,12 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+							<Name>MAIN.fbMachine.fbGantry.cylinderTableWest</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+							<Name>MAIN.fbMachine.fbGantry.cylinderTableEast</Name>
+							<Type>BOOL</Type>
 						</Var>
 					</Vars>
 					<Contexts>
@@ -2405,43 +2418,46 @@ External Setpoint Generation:
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="PressureSwitch1Spindle" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="PressureSwitch2HoldDown" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="PressureSwitch3TableClamps" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="RobotTeachMode" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6040" Sub="#x01">
+								<Entry Name="RobotError" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6050" Sub="#x01">
+								<Entry Name="SpindleToolOpen" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
+									<Comment><![CDATA[NO]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6060" Sub="#x01">
+								<Entry Name="SpindleToolLocked" Index="#x6060" Sub="#x01">
 									<Type>BIT</Type>
+									<Comment><![CDATA[NO]]></Comment>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6070" Sub="#x01">
+								<Entry Name="SpindleToolChange" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
+									<Comment><![CDATA[NO]]></Comment>
 								</Entry>
 							</Pdo>
 						</EtherCAT>
@@ -2453,42 +2469,42 @@ External Setpoint Generation:
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="LimitSwitchEast" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="LimitSwitchWest" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="TablePBEast" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="TablePBWest" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6040" Sub="#x01">
+								<Entry Name="Tool1Present" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6050" Sub="#x01">
+								<Entry Name="Tool2Present" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6060" Sub="#x01">
+								<Entry Name="Tool3Present" Index="#x6060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6070" Sub="#x01">
+								<Entry Name="Tool4Present" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2501,42 +2517,42 @@ External Setpoint Generation:
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6000" Sub="#x01">
+								<Entry Name="Tool5" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6010" Sub="#x01">
+								<Entry Name="Tool6" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6020" Sub="#x01">
+								<Entry Name="Tool7" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6030" Sub="#x01">
+								<Entry Name="Tool8" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6040" Sub="#x01">
+								<Entry Name="LaserCollectorNorth" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6050" Sub="#x01">
+								<Entry Name="LaserCollectorSouth" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6060" Sub="#x01">
+								<Entry Name="FlowSensorOn" Index="#x6060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Input" Index="#x6070" Sub="#x01">
+								<Entry Name="DustBootLimitSwitch" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2567,42 +2583,42 @@ External Setpoint Generation:
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="SV1ToolChange1" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="SV2ToolChange2" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="SV3DustBootLower" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7030" Sub="#x01">
+								<Entry Name="SV4SpindleClean" Index="#x7030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1604" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7040" Sub="#x01">
+								<Entry Name="SV5TableClampWest" Index="#x7040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1605" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7050" Sub="#x01">
+								<Entry Name="SV6TableClampEast" Index="#x7050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1606" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7060" Sub="#x01">
+								<Entry Name="SV7WorkHoldDownNorth" Index="#x7060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1607" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7070" Sub="#x01">
+								<Entry Name="SV8WorkHoldDownNorthCentre" Index="#x7070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2615,42 +2631,42 @@ External Setpoint Generation:
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="SV9WorkHoldDownSouthCentre" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7010" Sub="#x01">
+								<Entry Name="SV10WorkHoldDownSouth" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="RobotX91ControlPowerON" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7030" Sub="#x01">
+								<Entry Name="RobotX95MotorPowerON" Index="#x7030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1604" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7040" Sub="#x01">
+								<Entry Name="RobotX97MotorHold" Index="#x7040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1605" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7050" Sub="#x01">
+								<Entry Name="LightGreen" Index="#x7050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1606" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7060" Sub="#x01">
+								<Entry Name="LightYellow" Index="#x7060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1607" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7070" Sub="#x01">
+								<Entry Name="LightRed" Index="#x7070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2663,7 +2679,7 @@ External Setpoint Generation:
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7000" Sub="#x01">
+								<Entry Name="LightBuzzer" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -3862,20 +3878,22 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_2" VarB="TxPDO^SubIndex 006"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 10 (EL2008)">
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreSouth" VarB="Channel 1^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreSouth" VarB="Channel 1^SV9WorkHoldDownSouthCentre"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 11 (EL2008)">
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^LightBuzzer"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 6 (EL1008)">
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls1NE" VarB="Channel 1^Input"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls2SE" VarB="Channel 2^Input"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls3NW" VarB="Channel 3^Input"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls4SW" VarB="Channel 4^Input"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls1NE" VarB="Channel 1^LimitSwitchEast"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls3NW" VarB="Channel 2^LimitSwitchWest"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pbTableEast" VarB="Channel 3^TablePBEast"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pbTableWest" VarB="Channel 4^TablePBWest"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 9 (EL2008)">
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreNorth" VarB="Channel 8^Output"/>
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersNorth" VarB="Channel 7^Output"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylinderTableEast" VarB="Channel 6^SV6TableClampEast"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylinderTableWest" VarB="Channel 5^SV5TableClampWest"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreNorth" VarB="Channel 8^SV8WorkHoldDownNorthCentre"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersNorth" VarB="Channel 7^SV7WorkHoldDownNorth"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis East">
 				<Link VarA="PlcTask Inputs^GVL_Axes.AxisEast.NcToPlc" VarB="Outputs^ToPlc"/>
