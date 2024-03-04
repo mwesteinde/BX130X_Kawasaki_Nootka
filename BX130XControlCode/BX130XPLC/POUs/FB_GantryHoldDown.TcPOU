@@ -96,24 +96,26 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF executeCylinders THEN
 	IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTH THEN
 		cylindersNorth := 1;
-		IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTHCENTRE THEN
-			cylindersCentreNorth := 1;
-		ELSE
-			cylindersCentreNorth := 0;
-		END_IF
 	ELSE
 		cylindersNorth := 0;
 	END_IF
 	
+	IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTHCENTRE THEN
+		cylindersCentreNorth := 1;
+	ELSE
+		cylindersCentreNorth := 0;
+	END_IF
+	
 	IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
 		cylindersSouth := 1;
-		IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
-			cylindersCentreSouth := 1;
-		ELSE 
-			cylindersCentreSouth := 0;
-		END_IF
 	ELSE
 		cylindersSouth := 0;
+	END_IF
+	
+	IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
+			cylindersCentreSouth := 1;
+	ELSE 
+			cylindersCentreSouth := 0;
 	END_IF
 END_IF]]></ST>
       </Implementation>
@@ -258,17 +260,18 @@ pbTableEastLast := pbTableEast;]]></ST>
       <LineId Id="52" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="32" Count="0" />
-      <LineId Id="35" Count="1" />
-      <LineId Id="45" Count="1" />
-      <LineId Id="34" Count="0" />
       <LineId Id="47" Count="1" />
       <LineId Id="33" Count="0" />
-      <LineId Id="38" Count="4" />
-      <LineId Id="49" Count="1" />
-      <LineId Id="43" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="77" Count="3" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="38" Count="2" />
       <LineId Id="64" Count="0" />
       <LineId Id="51" Count="0" />
       <LineId Id="37" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="82" Count="3" />
+      <LineId Id="81" Count="0" />
       <LineId Id="53" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Enable_Axes">

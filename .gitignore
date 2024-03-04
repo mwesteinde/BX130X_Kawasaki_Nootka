@@ -280,3 +280,14 @@ _Boot/
 _CompileInfo/
 _Libraries/
 _ModuleInstall/
+
+# TwinCAT HMI
+.engineering_servers/
+liveview_*
+*.cache
+*.db-shm
+*.db-wal
+*.pid
+.hmiframework/
+.hmipkgs/*-*-*-*/
+tchmipublish.journal.json

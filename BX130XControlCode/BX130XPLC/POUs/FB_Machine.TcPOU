@@ -8,17 +8,19 @@ VAR_OUTPUT
 END_VAR
 VAR
 	fbRobot					: FB_Robot;					// Robot object
-	fbVFD					: FB_VFD;					// VFD Object
+	fbSpindle					: FB_SPINDLE;					// VFD Object
 	fbGantry				: FB_GantryHoldDown;		// Gantry hold down object
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbRobot();
-fbGantry(robot := fbRobot);]]></ST>
+fbGantry(robot := fbRobot);
+fbSpindle();]]></ST>
     </Implementation>
     <LineIds Name="FB_Machine">
       <LineId Id="9" Count="0" />
       <LineId Id="13" Count="0" />
+      <LineId Id="34" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

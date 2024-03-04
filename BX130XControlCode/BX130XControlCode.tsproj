@@ -1509,7 +1509,7 @@ External Setpoint Generation:
 					<Encoder Name="Enc" EncType="8">
 						<EncPara ScaleFactorNumerator="9.999689" ScaleFactorDenominator="1048576" Inverse="true" MaxCount="#xffffffff">
 							<SoftEndMinControl Enable="true"/>
-							<SoftEndMaxControl Enable="true" Range="2377"/>
+							<SoftEndMaxControl Enable="true" Range="2335"/>
 							<Inc RefSearchInverse="true" RefSyncInverse="false"/>
 						</EncPara>
 						<Vars VarGrpType="1">
@@ -1792,19 +1792,11 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{98D814FA-868B-7A13-14BB-70E02FB20F53}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{6B02F1DC-3456-CC42-E035-3B77506F2E3F}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
-						<Var>
-							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.x_pose_1</Name>
 							<Type>USINT</Type>
@@ -1852,6 +1844,10 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.t_pose_2</Name>
 							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbSpindle.pbToolChange</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbGantry.robot.x_pose_1</Name>
@@ -1918,16 +1914,24 @@ External Setpoint Generation:
 							<Name>MAIN.fbMachine.fbGantry.pbTableEast</Name>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
 						<Var>
-							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+							<Name>MAIN.fbMachine.fbSpindle.cylinderToolRelease1</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+							<Name>MAIN.fbMachine.fbSpindle.cylinderToolRelease2</Name>
+							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbGantry.cylindersNorth</Name>
@@ -1953,6 +1957,14 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.fbMachine.fbGantry.cylinderTableEast</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 					</Vars>
 					<Contexts>
@@ -3883,6 +3895,9 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 11 (EL2008)">
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^LightBuzzer"/>
 			</OwnerB>
+			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.pbToolChange" VarB="Channel 8^SpindleToolChange"/>
+			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 6 (EL1008)">
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls1NE" VarB="Channel 1^LimitSwitchEast"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls3NW" VarB="Channel 2^LimitSwitchWest"/>
@@ -3894,6 +3909,8 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylinderTableWest" VarB="Channel 5^SV5TableClampWest"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreNorth" VarB="Channel 8^SV8WorkHoldDownNorthCentre"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersNorth" VarB="Channel 7^SV7WorkHoldDownNorth"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbSpindle.cylinderToolRelease1" VarB="Channel 1^SV1ToolChange1"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbSpindle.cylinderToolRelease2" VarB="Channel 2^SV2ToolChange2"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis East">
 				<Link VarA="PlcTask Inputs^GVL_Axes.AxisEast.NcToPlc" VarB="Outputs^ToPlc"/>

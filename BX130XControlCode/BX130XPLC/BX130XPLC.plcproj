@@ -38,16 +38,26 @@
     <Compile Include="POUs\FB_Robot.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_VFD.TcPOU">
+    <Compile Include="POUs\FB_SPINDLE.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VFD Reference\MAIN_1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VFD Reference\sREG_WRITE.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\VFD Reference\VFD_WRITE.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="POUs\VFD Reference" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
