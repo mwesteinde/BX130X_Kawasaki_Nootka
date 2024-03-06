@@ -1,26 +1,266 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
   <POU Name="FB_Machine" Id="{3f2b54bd-7836-4066-a761-fd73c9f3b9ef}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Machine
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Machine //Control program
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	// =============== Machine Modules ================================================
 	fbRobot					: FB_Robot;					// Robot object
-	fbSpindle					: FB_SPINDLE;					// VFD Object
-	fbGantry				: FB_GantryHoldDown;		// Gantry hold down object
+	fbSpindle				: FB_Spindle;				// Spindle Object. Includes spindle speed, tool changing control
+	fbGantry				: FB_GantryHoldDown;		// Gantry hold down object. Includes servo control, pneumatic clamping control, robot following
+	fbEnclosure				: FB_Enclosure;				// Enclosure control. Includes table clamping, dust collection monitoring, door control
+	
+	// ============== Errors ==========================================================
+	pneumaticsOK	: BOOL;								// True if cylinders in assigned position and pressure ok.
+	bErrors			: BOOL;								// True if modules have errors or E stop.								
+	
+	// =============== State machine ================================================
+	
+	eSystemState			: E_MachineState := E_MachineState.INITIALIZATION;  // Current state 
+	eSystemStateRequested 	: E_MachineState;									// Requested state
+	
+	// =============== HMI buttons and states ========================================
+	// initialize.content buttons
+	bHMIHomeRobot			: BOOL; //
+	bHMIHomeMotors			: BOOL; //
+	bHMICloseDoor			: BOOL; //
+	bHMILockTables			: BOOL; //
+	bHMILowerRaiseRollers	: BOOL; //
+	
+	// initialize.content indicators
+	sHMIMotorsHomed			: BOOL; //Todo: Change colour/text when activated
+	sHMIDoorClosed			: BOOL; //Todo: Change colour/text when activated
+	sHMITablesLocked		: BOOL; //Todo: Change colour/text when activated
+	sHMIRollersRaised		: BOOL; //Todo: Change colour/text when activated
+	
+	// selectProgram.content inputs
+	programWallChoice	: STRING;
+	programOption1		: STRING;
+	programOption2		: STRING;
+	programOption3		: STRING;
+	
+	// run.content buttons
+	bHMIStart				: BOOL; // Button to start program. Called from Run.content
+	bHMIStop				: BOOL; // Button to return to initialization state. TODO: make
+	bHMIHold				: BOOL; // Button to hold program. Called from Run.content
+	bHMIResume				: BOOL; // Button to resume (run) program after hold. TODO: make
+	bHMILoadTool			: BOOL; // Button to activate tool load pushbutton. Called from Run.content
+	bHMIToolLoaded			: BOOL; // Button to confirm tool is loaded. Called from Run.content
+	bActivateRollers		: BOOL; // Button to make rollers follow robot. Called from Run.content
+	bHMIReset				: BOOL;	// Button to reset program. TODO: make
+	bHMIManual				: BOOL; // Button to switch state into manual mode. TODO: make
+	
+	// run.content indicators
+	sHMIPneumaticsOK		: BOOL; // Indicator light of pneumatic pressure, called from run.content
+	sHMIRobotHomed			: BOOL; // Indicator light of robot homed, called from run.content. Todo: Change colour/text when activated
+	sHMIRollersActivated	: BOOL; // Indicator light of rollers activated, called from run.content
+	sHMIeStopsOff			: BOOL; // Indicator light of e stops off, called from run.content
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbRobot();
-fbGantry(robot := fbRobot);
-fbSpindle();]]></ST>
+      <ST><![CDATA[// =========================================================
+// Getting errors of modules
+	
+//	bError := fbSeparateModule.bAxisError OR fbSeparateModule.bClampError OR fbSeparateModule.bBarrierError
+//			OR fbMetalSorting.bAxisError OR fbMetalSorting.bCylError 
+//			OR fbPlasticSorting.bAxisError OR fbPlasticSorting.bCylError;
+
+// =========================================================
+// Call of actions
+
+	// Init
+	
+	//HMI update
+	// Update each HMI indicator
+	
+	// Mode and state requests
+	Change_State();  // Changes state based on inputs
+	State_Machine(); // Calls functions based on state
+	
+	// Update robot IOs
+	fbRobot.Update_Status();
+	
+	// Enable for power supply, compressed air control and buttons
+	
+	// Input variables of separating and sorting modules
+	
+	// Output variables
+	
+	// State machine
+	
+	// Visualization;
+
+// =========================================================]]></ST>
     </Implementation>
+    <Folder Name="StateMachine" Id="{b4b3eed7-4e15-4350-a74a-294b50706019}" />
+    <Method Name="Change_State" Id="{11427209-76ae-4b9c-9f30-0498e05b4968}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Change_State
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error_Handling" Id="{270383da-a173-4601-b310-46f8333dc847}">
+      <Declaration><![CDATA[METHOD Error_Handling
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_Error" Id="{34eb4b26-0b5c-454b-a500-c33be7205698}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_Error
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_Hold" Id="{d9f86694-1d0b-4add-8c20-fb8a5acf1092}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_Hold
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_Initialization" Id="{a0909845-20b7-4f19-88c6-a128d86fcc8b}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_Initialization
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_ManualMove" Id="{e062f620-36f2-4ef0-9468-9f06db1c52fd}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_ManualMove
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_Reset" Id="{409ce780-c7de-4e8c-a0bb-25edc8e53879}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_Run" Id="{39f52282-3ce5-4d02-b41e-113893603b81}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_Run
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbRobot.Run_Robot();
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start_Operation" Id="{5ceab00d-041b-437c-a141-2f3947c899ed}">
+      <Declaration><![CDATA[METHOD Start_Operation : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="State_Machine" Id="{f466ced8-b935-49bf-a90d-d8b2d5bdc64e}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[// Calls functions based on state
+METHOD State_Machine 
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE eSystemState OF
+	E_MachineState.INITIALIZATION:
+		Operating_Initialization();
+	
+	E_MachineState.MANUALMOVE:
+		Operating_ManualMove();
+		
+	E_MachineState.RUN:
+		Operating_Run();
+		
+	E_MachineState.RESET:
+		Operating_Reset();
+		
+	E_MachineState.ERROR:
+		Operating_Error();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Machine">
+      <LineId Id="134" Count="4" />
+      <LineId Id="132" Count="1" />
+      <LineId Id="107" Count="3" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="178" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="115" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="116" Count="0" />
+      <LineId Id="118" Count="1" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="122" Count="0" />
+      <LineId Id="124" Count="1" />
+      <LineId Id="127" Count="1" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="104" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Change_State">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Error_Handling">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_Hold">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_Initialization">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_ManualMove">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_Reset">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_Run">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Start_Operation">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.State_Machine">
+      <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="34" Count="0" />
+      <LineId Id="11" Count="12" />
+      <LineId Id="10" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

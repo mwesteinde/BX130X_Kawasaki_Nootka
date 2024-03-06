@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Robot" Id="{d50c368b-652f-4516-b34d-9545576d1fa6}" SpecialFunc="None">
+    <Declaration><![CDATA[//Todo - Add flags for if communicating, program info, 
+FUNCTION_BLOCK FB_Robot
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	robotPose 		: Structure_RobotPose;
+	test_1			: BOOL;
+	x_pose_1 AT %I* : USINT;
+	x_pose_2 AT %I* : USINT;
+	y_pose_1 AT %I* : USINT;
+	y_pose_2 AT %I* : USINT;
+	z_pose_1 AT %I* : USINT;
+	z_pose_2 AT %I* : USINT;
+	o_pose_1 AT %I* : USINT;
+	o_pose_2 AT %I* : USINT;
+	a_pose_1 AT %I* : USINT;
+	a_pose_2 AT %I* : USINT;
+	t_pose_1 AT %I* : USINT;
+	t_pose_2 AT %I* : USINT;
+	
+	programChoice 	AT %Q* 		: INT;
+	programRun 		AT %Q*		: BOOL;
+	externalRunHold AT %Q* 		: BOOL;
+	
+	programWallChoice	: STRING;
+	programOption1		: STRING;
+	programOption2		: STRING;
+	programOption3		: STRING;
+	
+	isRobotHomed		: BOOL;
+	programChoiceIndex	: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Hold_Robot" Id="{feac628f-72cf-4100-8d56-47c2e35d8c99}">
+      <Declaration><![CDATA[METHOD Hold_Robot
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Home_Robot" Id="{eca540c4-31fc-4643-aeb8-caefcff4553d}">
+      <Declaration><![CDATA[//Send home command to robot
+METHOD Home_Robot
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Program_Select" Id="{5ccc5e7e-14d0-4912-bf3c-54f9c88aeb76}">
+      <Declaration><![CDATA[// Select the robot program based on HMI inputs
+
+METHOD Program_Select
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Robot_Manual_Control" Id="{ed6ccda4-2af5-42af-8ac3-98592d92e5da}">
+      <Declaration><![CDATA[METHOD Robot_Manual_Control
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Run_Robot" Id="{95ede5df-1a05-4c33-b6a8-dcc0ec83997b}">
+      <Declaration><![CDATA[//Start the Robot 
+METHOD Run_Robot
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update_Status" Id="{1be56ac6-764b-4729-954d-f7379608e62a}">
+      <Declaration><![CDATA[//Updates the robot pose, run status and IOs in Beckhoff system
+//TODO make flag that verifies pose is being sent
+METHOD Update_Status
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// RobotPose
+robotPose.xPose := UINT_TO_INT(x_pose_2)*256 + UINT_TO_INT(x_pose_1) - 4000;
+robotPose.yPose := UINT_TO_INT(y_pose_2)*256 + UINT_TO_INT(y_pose_1) - 4000;
+robotPose.zPose := UINT_TO_INT(z_pose_2)*256 + UINT_TO_INT(z_pose_1) - 4000;
+robotPose.oPose := UINT_TO_INT(o_pose_2)*256 + UINT_TO_INT(o_pose_1) - 400;
+robotPose.aPose := UINT_TO_INT(a_pose_2)*256 + UINT_TO_INT(a_pose_1) - 400;
+robotPose.tPose := UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400;
+
+// Robot is on
+
+// posedata.pc is running
+
+// ]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Robot">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Hold_Robot">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Home_Robot">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Program_Select">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Robot_Manual_Control">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Run_Robot">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Update_Status">
+      <LineId Id="17" Count="0" />
+      <LineId Id="6" Count="4" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

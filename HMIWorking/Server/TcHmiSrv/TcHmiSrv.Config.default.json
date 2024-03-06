@@ -6,7 +6,7 @@
     "CACHEMAXAGE": "P30D",
     "CACHEMAXENTRYSIZE": 1048576,
     "CACHEMAXSIZE": 2097152,
-    "CERTIFICATE": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURzekNDQXB1Z0F3SUJBZ0lKQUpZMHY0aTJNdUczTUEwR0NTcUdTSWIzRFFFQkN3VUFNRVV4Q3pBSkJnTlYKQkFZVEFrUkZNUnN3R1FZRFZRUUtEQkpVZDJsdVEwRlVJRWhOU1NCVFpYSjJaWEl4R1RBWEJnTlZCQU1NRUU1dgpiM1JyWVZKdlltOTBYM0p2YjNRd0lCY05NalF3TXpBME1qSXdNak0wV2hnUE1qQTJNakEzTURNeU1qQXlNelJhCk1FQXhDekFKQmdOVkJBWVRBa1JGTVJzd0dRWURWUVFLREJKVWQybHVRMEZVSUVoTlNTQlRaWEoyWlhJeEZEQVMKQmdOVkJBTU1DMDV2YjNScllWSnZZbTkwTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQwpBUUVBcHo1eGVFMXRQY0hDOTlraCtwdGFvZ1oyazB4STVLL3BpNnlOa2FWczA5clVUZTRKV1pQcTBLeDdUNmY5Ci9HMGNJbWVqNytTZ1RPSVFGR1Q2UW5BN1U3bm4wSVpzaitZTUcxbk84cTJvUElQN09VTG1pUk4vQmhZYzErTzcKUCtualIxWUtmQ09oN3Uwc1lRa2tmMFd0VzY1MEI4TGZWWnRrUnIyZlNlQUJFVHZCTW1yZGNMUzFhd2FuR1NCYgpNVlJ2TjI4bHNKb2hyN291aGYrUTZIRzQ5cGh0RElvVkRsTUZLT25VdStacUltVVFNd2ZVLzUxdGtpT2o4VVQ2CkoxWXRicllESktmQ3NGbzV4YmRkOEFRVUdHN3BQelpWb3RNdTA4ZnRBajdTQzBob3dkTlpEZjNDYlcyVmJVRkQKWHEySDRUVUlleEdUSUR2MWpWc1hJOUl6Q3dJREFRQUJvNEdvTUlHbE1IWUdBMVVkRVFSdk1HMkNDV3h2WTJGcwphRzl6ZEljRWZ3QUFBWWNRQUFBQUFBQUFBQUFBQUFBQUFBQUFBWUlMVG05dmRHdGhVbTlpYjNTQ0MwNXZiM1JyCllWSnZZbTkwaHdUQXFBQVlod1RBcUFBSmh4RCtnQUFBQUFBQUFFM0ViZEdTaTZldWh4RCtnQUFBQUFBQUFGVTcKSGgzcmlVaUFNQjBHQTFVZERnUVdCQlJLMFRuU1FBMkoxZ3pLUzA1YVdtNzZDTzFkMURBTUJnTlZIUk1CQWY4RQpBakFBTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFBSUI1OHRYTXloYXQvWURyQllDTTBqTUNFZEtjMy83UStYCisyQWJVL0kvdDJIeGs0azNIZEhBWHJDQmNOYU9DSEsxVTZHNnFUZ2M0SjZwMFFEdHhRQ0k2Z0dJUHJ4aWpqUUUKUWUrTGFxdHRQOWdhTCsxdURVYis0VDZ5SzVHbm5hMCt0WWpWZjlBb29ITFRYbG8zTHdobWZ1bDFHdnRZanFlYQoxNUw1dTVoc3hIaDUrUm5FNHYyUE02QVdsbExPK0tGR0wzUnQ3MlRicW1yZk4vQlpsa0g2U281N0F1OFBYMm5hCkx4cUhUUUpndklKamZTUExKWHlGUzFJQ0VvTTZ1eVRCSkYweWVaY1lQUTl4Vll5QW9xRktvQ0hIVmpjT2k4UXoKeWdleC9hdnEzWnFMdWZmcmZqZVZ2UHM0a3M5bVNXT2w0cmgyanZRc21KSE94Sk55ZkE1VQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlEdXpDQ0FxT2dBd0lCQWdJSkFMLytqYzVpa1ZuZE1BMEdDU3FHU0liM0RRRUJDd1VBTUVVeEN6QUpCZ05WCkJBWVRBa1JGTVJzd0dRWURWUVFLREJKVWQybHVRMEZVSUVoTlNTQlRaWEoyWlhJeEdUQVhCZ05WQkFNTUVFNXYKYjNScllWSnZZbTkwWDNKdmIzUXdJQmNOTWpRd016QTBNakl3TWpNMFdoZ1BNakEyTWpBM01ETXlNakF5TXpSYQpNRVV4Q3pBSkJnTlZCQVlUQWtSRk1Sc3dHUVlEVlFRS0RCSlVkMmx1UTBGVUlFaE5TU0JUWlhKMlpYSXhHVEFYCkJnTlZCQU1NRUU1dmIzUnJZVkp2WW05MFgzSnZiM1F3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXcKZ2dFS0FvSUJBUUM1Y3pkU0Q5TWdHRjVyTEZPemE3bGNTWHFLVXdvUGVnZFllTk5ZWm42SXVlQWV6MzdTOWZhRgp2NHZmaS82OXg3b282OEIzbEpYZVIxWXBPVXowUVhTYndPbEJtdzRKR3ZVRmJuWnBEdjlHMm1WbktnOWhQQ1dlCnN3UHhldFVoaVlER29ZUlNnOWEzRi9HNzV6MWhpYlhXOEU0WU5DcThRZmwzdWY3VUhJYTBMVDlrNnNaVDNVS2EKYWJqOVZPdEh3NmpiZzZvbDNNRml6SzhwVnpaL1NVMG1NQ1R6WlRFTXFtbG1YNDVLVHc0WlFJcERRYkNrblcwOAo3RjNtT0x5Y3lMQm95Yy9pd2Z5UUJxRDlBWGpMYW53NE0wRkVwSHBWS1VKRUQ2QldSTUp3cmNtN0pYNEVHK0JvCnF1VUN2Q1NXZm1hUCtvbmd4OTRQUXRSUURoV2wvOTdiQWdNQkFBR2pnYXN3Z2Fnd2RnWURWUjBSQkc4d2JZSUoKYkc5allXeG9iM04waHdSL0FBQUJoeEFBQUFBQUFBQUFBQUFBQUFBQUFBQUJnZ3RPYjI5MGEyRlNiMkp2ZElJTApUbTl2ZEd0aFVtOWliM1NIQk1Db0FCaUhCTUNvQUFtSEVQNkFBQUFBQUFBQVRjUnQwWktMcDY2SEVQNkFBQUFBCkFBQUFWVHNlSGV1SlNJQXdIUVlEVlIwT0JCWUVGRGFKVDZjS3VWTEhMOG9vT1NwUUM5WHJpcHY2TUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFIMDZUWjhIMlJmdHhsalNmYlRVRzFtLwpPN1ZBNUh0dEFRVFh3Wk4xdS9xWjA2QTlIZ1dlT1A2cDhZNlYzbCtFeS94aXc5d3IvT25hSmRsQnJyMXBaOHZGCnRxNVY3cFVQQmVYVkRLYkVoN1JoWlJnc3NrN0o4WkVDYXhkYy9kcWdMclByVU54dURGSVFGdFNhL0RreTU3RFcKVlFPelowak1oL1MwaUpNNFY3TXp5dWtad0pKMEZwK1hHQ3V1bjlFaUtqK1lnd0V6WW82TE9icXEwZG1iTXdrZQp3NHFjb3hCM2ZtK0RUTzJUcWhIV2dzZUs0WWNxRjV5U1pIb0lEdXhobU90VFBGV2wza2hzNlVXOXpmZjVLY2xpCmlGb0NGSHhOWTFqSWljb3JkOSttVGJLQmJuVHBVN0hVRUplbVI4eFZQcmdZQ21uYWNiWnpOUmpQblRpc2NDUT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
+    "CERTIFICATE": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURzekNDQXB1Z0F3SUJBZ0lKQUkwSzZjOURtc05GTUEwR0NTcUdTSWIzRFFFQkN3VUFNRVV4Q3pBSkJnTlYKQkFZVEFrUkZNUnN3R1FZRFZRUUtEQkpVZDJsdVEwRlVJRWhOU1NCVFpYSjJaWEl4R1RBWEJnTlZCQU1NRUU1dgpiM1JyWVZKdlltOTBYM0p2YjNRd0lCY05NalF3TWpBeE1UZ3lOakEzV2hnUE1qQTJNakEyTURFeE9ESTJNRGRhCk1FQXhDekFKQmdOVkJBWVRBa1JGTVJzd0dRWURWUVFLREJKVWQybHVRMEZVSUVoTlNTQlRaWEoyWlhJeEZEQVMKQmdOVkJBTU1DMDV2YjNScllWSnZZbTkwTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQwpBUUVBNGhoRXlFZnNGZ3lySThqYTErKytvN0dxWDV0YXlyYVQ2Z1NpTzBWanBwU3M3WVAxWllYY212VHRBTURVCnlndTd0WEUrb00xbEw4SkJOYzRJVVpWR2k4UHNMRitTdGlWQ2o2dVRiUGtOcW1qOGpHcXRNSVR6QXkzV0tpSzkKTnhlMnRleHBVeVZ4YWtLcHZmSzBCRklnNUg4a3RBOEU0QU40d0tGNGphdmJjbktmaUVacE83dUxjUVJxRVQwegpBWTNGYUxCaUNlcVFFNVNvN0w4L3htejUyUTFwQnFnN01hRFI0eGM5NHArUjB3NGViNWZ0VEF3eXN0YnRhMG5pCk5EVWZKU1JqTWcrZ2M0TWw3VWJXNmRveVAzTXJtL1d3NFJpVVdKcmtYTWV4WlZaK2lNS0VZMjBzYjBwOEZnM3MKK2RDWENPcFFiL2JaTnJYWm5mUE5ITkRrK1FJREFRQUJvNEdvTUlHbE1IWUdBMVVkRVFSdk1HMkNDV3h2WTJGcwphRzl6ZEljRWZ3QUFBWWNRQUFBQUFBQUFBQUFBQUFBQUFBQUFBWUlMVG05dmRHdGhVbTlpYjNTQ0MwNXZiM1JyCllWSnZZbTkwaHdTcC9sY2tod1RBcUFBUmh4RCtnQUFBQUFBQUFFM0ViZEdTaTZldWh4RCtnQUFBQUFBQUFGVTcKSGgzcmlVaUFNQjBHQTFVZERnUVdCQlQ2SXZBL2JCTks1S0ZHMGtJMm41Q3pLSytOQ2pBTUJnTlZIUk1CQWY4RQpBakFBTUEwR0NTcUdTSWIzRFFFQkN3VUFBNElCQVFCZWJwM2VwbkltdGM3cURQUnZkRDJBckwzV1pUZVNLK3VhCkVrOTQ1N0hpNHBSdU41MXlneU9Sd09sYmRaZ2M4a1N6c1ZxckJ0TnFOSnowNVBuZTVxamMwQU9hSVk0TG9XY3kKbzdZQy9WeTBET0gzc2JrMFZIdW5GU1IvMkw5aWl6ZnhKRHVZb1hMVGtqMGRpNGNCaTFjZEdTa0duTU1vTW82UgpySkFRK1FFN3dVdzdqa0FVbXMreVAwd3h5K2MyQkdyWmJSbnhJVDlXY2RRZ0VScTlFek4rbDlNaFl5RVZDMGxvCmpTbTNhZCt1YndxRFNKT1hzRUdxL21BV2VxN2ZTTjdtVUt5blY5UEtZSzZ3MlA3WjA5MmMvdWorNk0wbFFFRDUKRjJHRVJ0YSt1QzcwY0U5d013cm5pUmdNamhaaHpMdngwZldHL3M0aVoybEtCa0NzUFRGcwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlEdXpDQ0FxT2dBd0lCQWdJSkFLUVhadUg1ZVd1VE1BMEdDU3FHU0liM0RRRUJDd1VBTUVVeEN6QUpCZ05WCkJBWVRBa1JGTVJzd0dRWURWUVFLREJKVWQybHVRMEZVSUVoTlNTQlRaWEoyWlhJeEdUQVhCZ05WQkFNTUVFNXYKYjNScllWSnZZbTkwWDNKdmIzUXdJQmNOTWpRd01qQXhNVGd5TmpBM1doZ1BNakEyTWpBMk1ERXhPREkyTURkYQpNRVV4Q3pBSkJnTlZCQVlUQWtSRk1Sc3dHUVlEVlFRS0RCSlVkMmx1UTBGVUlFaE5TU0JUWlhKMlpYSXhHVEFYCkJnTlZCQU1NRUU1dmIzUnJZVkp2WW05MFgzSnZiM1F3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXcKZ2dFS0FvSUJBUURiQlFpZlQ5SFBSS3hHdlJRRmpXMlVCM0xjM21hemxXMWJNSFB5N1haOVliUWFMRlVGT0x1bAoxeUpVbnJNTjZrdHNoRW1BcHhJb0ZzZmhxMlFxY2ZwVisxbk1PMFcwYXVmTW9SRXA2dzN6MGJaeHROMDM5Y0tRCkFUVVBJdUM2SkFCNWJacnY3VThYSXltaDA4Q2NNblRTM29DU3EzbFU1U0Z5bFFOMVdOUTIwcE5GbXBxa1RicFUKUmxLdUU2eUtlNThTTXBZY29kcUdaYWNtUVJYeU5LUnl0aUxIa2htTldEbm9uNjJOUXUwL3lTTEtnUVllWUpnVgpHZW9ZQWJJdFhuYlp0RmIyaWErSU92S1REeUhCeXpYa2IxTDdFRlJGY2dwai95U3ZUbGx6S08raGdNNmgzM0Y1Ci8rMDZ3bGVmeVoyM0h6ME0vWE0zZ04vWXR1YUdnc0UvQWdNQkFBR2pnYXN3Z2Fnd2RnWURWUjBSQkc4d2JZSUoKYkc5allXeG9iM04waHdSL0FBQUJoeEFBQUFBQUFBQUFBQUFBQUFBQUFBQUJnZ3RPYjI5MGEyRlNiMkp2ZElJTApUbTl2ZEd0aFVtOWliM1NIQktuK1Z5U0hCTUNvQUJHSEVQNkFBQUFBQUFBQVRjUnQwWktMcDY2SEVQNkFBQUFBCkFBQUFWVHNlSGV1SlNJQXdIUVlEVlIwT0JCWUVGTDdlSkkwelBGRVNaTDBGMjYwQSt0M0t3SHBYTUE4R0ExVWQKRXdFQi93UUZNQU1CQWY4d0RRWUpLb1pJaHZjTkFRRUxCUUFEZ2dFQkFIM3BDZkd2OFlZQ2tJeUwxbjBYWjhrQwp1cW5iZjdYSC9wOTF5aXhYSUgwY0oyMFQ5RW9Rb0NtcWhTcmJqdjdOYW9QQjBKTWZiZXJydDc1MUduVGhPbXFiCkRPQURpdXQzR2NSdm9WTkdkU1cwOFh1Zng2MTlXWEZyMThUUVVoOG83NUpXTjVHT3Z3SHJmK1duUVRDVnY0VEgKa203WldvTVJnTi9Kb255SDBhNTVmZjNPYVM3aXBSU1pTZ3ljTFc0RVI5RHFQSVFHYnNkRWRWVzBBVFlKZEJyUQplT1A5Rlh5T2dvY1lUMGR3M2JMcitqckRFWitNTk9nYXRSNHI1UkVPem1UdE9XMWh1ZUp0TXk3UEx6UEpmUm0wCjNLVGxEcE5qUkRSY1hWbTZLeklNV080WVdrbERiby9IQ2h3eFJnT0V2bWNxbStJSHM2YlRnY2diUWZlenN3ND0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=",
     "CERTIFICATEEXPIRATION": "P14000D",
     "CHECKSUMENABLED": true,
     "CHUNKSIZE": 1048576,
@@ -34,8 +34,8 @@
     "DISCOVERY": 2,
     "ENABLE_SERVER_UPDATE": true,
     "ENDPOINTS": [
-        "http://127.0.0.1:13000",
-        "http://127.0.0.1:3000"
+        "http://127.0.0.1:13001",
+        "http://127.0.0.1:3001"
     ],
     "ETAGENABLED": true,
     "EXTENSIONS": {
@@ -96,7 +96,7 @@
     "HTTP_FLOODPROTECTION": 10,
     "INITTIMEOUT": "PT10S",
     "KEEP_ALIVE": "PT40S",
-    "KEY": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRQ25QbkY0VFcwOXdjTDMKMlNINm0xcWlCbmFUVEVqa3IrbUxySTJScFd6VDJ0Uk43Z2xaaytyUXJIdFBwLzM4YlJ3aVo2UHY1S0JNNGhBVQpaUHBDY0R0VHVlZlFobXlQNWd3YldjN3lyYWc4Zy9zNVF1YUpFMzhHRmh6WDQ3cy82ZU5IVmdwOEk2SHU3U3hoCkNTUi9SYTFicm5RSHd0OVZtMlJHdlo5SjRBRVJPOEV5YXQxd3RMVnJCcWNaSUZzeFZHODNieVd3bWlHdnVpNkYKLzVEb2NiajJtRzBNaWhVT1V3VW82ZFM3NW1vaVpSQXpCOVQvblcyU0k2UHhSUG9uVmkxdXRnTWtwOEt3V2puRgp0MTN3QkJRWWJ1ay9ObFdpMHk3VHgrMENQdElMU0dqQjAxa04vY0p0YlpWdFFVTmVyWWZoTlFoN0VaTWdPL1dOCld4Y2owak1MQWdNQkFBRUNnZ0VBT3hlQkdEU2pTSkxSeEtqZnJLQi9vWWdQRlhSNnZQSzYzak1Wd2tSazgyWDYKWlo2Wmh5RVFjcksrenlKWVIzeDEyR0l1Tm5EZGdzek5TYWQwRlUxNmFOYmk1WGJabk81M2tLSm0wTEF6SlU2cwowVXFtRWdEbGZNMExXK3lIR01vWEYvbDZzdW9VS1V0N3hyMW9POS91cE5vNi9STUp2a0d0YUtGUFN0YnZDWnMxCks0MDlteU5xa1orWmZIV3ZUaWVVc0p2NnY5cXloN3JLUGlvZ2MzeUprM2xEVDdNR0MwT1JDSkJMWHJqcXZCZ2UKVXpkQkdtay9IcnhxTzVGSHZzakJVV3dXQnBPZ2xMZkVhT21UNVJVWm54MHQyWEVKY1FwcTdEdGtJN3NkN3FOUwpCallCWkFxUFFSZFB0RCtuMG56TENoeXhFM1JUQW1PV21yWnlYSkQ2NFFLQmdRRFBIY3ZMMzVjclpGYVhMa0lECk1WRm9waWVBQndwSHFyams4RmdXWU5JS0ZtVS9FMi9aOWtDV0J5K3J3T2dRV2JDNThFa0s5bVM0SXZJRFdtVkwKdmVRWnlRWHlPRS9tVTVvVnhiV0R5Zk9FNkdocmNhc2t5WjNJc1hjQWMyZVl1MjJkd0d1dnVCZUJpRVE1L1lrVApocXBEZXhrZnRqMDVmcitka042WkxGUlkvd0tCZ1FET3Q0SUFpWXJLMkFLQVgzSkVyVWovVUNJK0dNT0ZRNFVpCmtnWWc2eWYyZzlWYXR3SmdRbC9jK2kyZnVoS2g1Z2xDb2pQaWo0cVhMOVJEcmZhQjRUeW4yc2habUN1OG0zUUYKdnF0dkR1ejVvSW56d2ZoTVlDelNBWVd0TXFXQURDTWg3Ym5VZVRCZ2hJSXdvbkx2VE8ycmlVU3cwNkRaUk9hWgpBdGUxc25mNTlRS0JnQldwOFRJdS9mbnM4ZDI0V2ZGSmpGRmM1ODdOYmJiWFZhV2t1aUlGR0pNemluMlJnK2FSCmltbm04SWFQay9aNTJ6Rm52OHdrdjU0L0VYOW1TaWdsQWFIczAvRmxFSDV3Q2pMeXppeXR5QW9ENFVBejBJbjEKaU1xQVBZbFBpT3VCMTFKajJSKzFLc2hDdjVndE85Uk9CcXN1U2c5MkdXdFZKYWZPaW1vTkovbHpBb0dCQUxzeQpDeFFaZWdwKzJxVU55aGpQSTQreExaRTJNN2oya0JYaVRwSjQ0Vk9ueHduRE9PK2FxOTBjNFR3SDhOK1R4VWNHClJCNGpCc29xa2ZwSUN6ZEtsUGNjZE5wTnB5M0JTS3Y3SXB3TDFDV3FiOExDSU94cEc2MkJtMkJnd09iWUZ1aWUKc3UzcVlSakdabTlNYlBDdnBYcjFiN01Cc21PT3RaUlNzcXpqMVNvUkFvR0JBSXRacW1CMGFSdVdhN3ozU1owZQpkM1dMRkhaRkVBTTVEQURBSCtEQWFBaVBQTlNGOGdadkpWdDhJZEdPc215Z0pvZmQ0Wkt6OVZHakJVVE5aR1ZZCnlUWDkzRzdXY005dmRwakFGaVBjRzVub2F1MHpSTUF5SFUyWmlyMW40TnJoUUFCN3dZbWQwZGtRaHNVcDZ2ZFgKdFlBUkxzcDJYWlFjT3RQMDJTUXVpYmF3Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K",
+    "KEY": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV3QUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktvd2dnU21BZ0VBQW9JQkFRRGlHRVRJUit3V0RLc2oKeU5yWDc3NmpzYXBmbTFyS3RwUHFCS0k3UldPbWxLenRnL1ZsaGR5YTlPMEF3TlRLQzd1MWNUNmd6V1V2d2tFMQp6Z2hSbFVhTHcrd3NYNUsySlVLUHE1TnMrUTJxYVB5TWFxMHdoUE1ETGRZcUlyMDNGN2ExN0dsVEpYRnFRcW05CjhyUUVVaURrZnlTMER3VGdBM2pBb1hpTnE5dHljcCtJUm1rN3U0dHhCR29SUFRNQmpjVm9zR0lKNnBBVGxLanMKdnovR2JQblpEV2tHcURzeG9OSGpGejNpbjVIVERoNXZsKzFNRERLeTF1MXJTZUkwTlI4bEpHTXlENkJ6Z3lYdApSdGJwMmpJL2N5dWI5YkRoR0pSWW11UmN4N0ZsVm42SXdvUmpiU3h2U253V0RlejUwSmNJNmxCdjl0azJ0ZG1kCjg4MGMwT1Q1QWdNQkFBRUNnZ0VCQUk2ZU9HVU4yVUpmWTJVRFFlaU1kbmpUaldFWm9qL1V3NkVPb3pjNElnL20KSU44Q0tqMk1Id2d3RDRBMkl3UUFPcnZOWDNBWG9BaHNSSzRuOU45aGhrcUxuK0t0dHVIbXh3SFJmUUYwYU1aaAp5MHpYemIrWlhhRlh2SXgvdFZPWFJjMmoveHhQdGljTlBmMXZwMVpDYURVNmJuQ1dPTUVGNzVtelFWUThZQVRrClVVTmpOeDE5ZWUrV2VaSG93YnhHVWVWamZQUTlrbHBGeloxSnNOVWkzZTlHZ2oyUVppbHBWUkVzTHFKWDBvS1EKclV3OXVucSt2eklIbC9qUHFyUk1XSlZweHlWTXV6Y3NJVjczVDVWNGx5Nnh0eFpXVGYzMXA5dXE4OHZraWxEbgpiZndreXRSMEtpck1XcUtQTTl4ODcvYndUcEl0SldYWmdXOXpURjVydzNFQ2dZRUErUE9IQ3JXNTZUbnBQWUlFClA5SVlSdGtGZ3lUWFplVHQ2dUJIbE1uMWhnSDA2dy93dWc3akpJcFk0czBYSDJtN1lNWjFOejFiMndYbnZGMjUKdTdXU0NRQ2pFUys3eVlVSXpqbDUwT0lGY2JwVHRDMm5VV1BXYXF3VFlmbFRuM3pMdVE5aDQ0Zy9nVjF2dEhrbApFSUpEaUZPUmVYRDNLazJHWUFZWWRkYW9sY01DZ1lFQTZIOFNGaEQycWZ5TC9zSEo3cDhNWVloSEFldnJxajdBClFhSTFKWlRIeWJyaE1oRkJEaGQ1UHhxUUNXYXdrY0YxNmxjbStzUllpMzF1dnVqT2JQZFN4cXM5aTY0SkI4ZHIKV203REdZVVh4ckUxVTl4TlRrd1JKL1RqOUh5M2g4R0xBRTVWbkttTGprc080eW9EbVJnT2sva0sxRUdJaERhWgpYenRWNTZ4MUlwTUNnWUVBeHBUVGNxcVZHc0pVRi9rL1ZIMU5XaTVCSkdSZDRXeWtqOGZKc1prTDNaSndBSlZkCmk3eldXVTUyS3F3NE5wbUxtMTJUSUxZME1GamNpamdsTU9OY0V3eE1CeWlSWGVWZHFjclZMZGN0U3BPN3N5ejcKbTRQTkJKZ3dlZVY5VytvYlE0cE9wa1lIaWpTekp6Mi9ZQlRZczhVZGRNYTBraXoyOUYvSVlTOFNtU3NDZ1lFQQoydFRIdkRkSlJDUXR6S0t3STBaV2kvS09DelA0aEN3K0gwakN4MVdyV3Fmb1VJekc4N0dLY0tmYXpNNTRBU2piCmlLOXhRL1RNOXJZZ0o5Yk9mT2VwWk05R3haTVFjdDd6bjVIRFZ1RGJ5U3VBYXlkZktBUVczY24xU1dpZUFreGMKUGZSOVJsQ2F4MXJFYjNKYklwenZFNzREd0ZiU1hNZGJRclNCbmViSDlic0NnWUVBM3M3YWJzVWZxUFJScVowRwpKdnovRUFVSk9BQ3h6bUluRVFWdHljOVFRTzgrTlZiUThNZE5LbG1FaVQwdVQwY3NiWlNFTEZwbGR5akNtU3hQCjdQVEFvYWxkeU81QTNCT3MvVnJtR3lrQ040dlZDdU1aQ3VZRWJKbGtjUmVPTVFnS29DMzdvVlNYSEJBRWFtdXQKbDhsdW1hTGkwNzlVUjV2OURHWTJLUUs3UTl3PQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
     "KEYPASSWORD": "",
     "LOCKOUT_PROTECTION_CLIENT_CERTIFICATE": true,
     "MAXCONNECTIONSPERCLIENT": 32,
@@ -442,14 +442,14 @@
         }
     },
     "PERMESSAGEDEFLATEENABLED": true,
-    "PROJECTNAME": "TcHmiProject1",
+    "PROJECTNAME": "HMIWorking",
     "PROJECTVERSION": "1.0.0.0",
     "REMOTESERVERS": {},
     "REMOTESERVERS_CERTIFICATES": [],
     "REQUIREAUTH": 0,
     "SAMESITE_ATTRIBUTE": 2,
-    "SELFSIGNEDROOTCA": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR1ekNDQXFPZ0F3SUJBZ0lKQUwvK2pjNWlrVm5kTUEwR0NTcUdTSWIzRFFFQkN3VUFNRVV4Q3pBSkJnTlYKQkFZVEFrUkZNUnN3R1FZRFZRUUtEQkpVZDJsdVEwRlVJRWhOU1NCVFpYSjJaWEl4R1RBWEJnTlZCQU1NRUU1dgpiM1JyWVZKdlltOTBYM0p2YjNRd0lCY05NalF3TXpBME1qSXdNak0wV2hnUE1qQTJNakEzTURNeU1qQXlNelJhCk1FVXhDekFKQmdOVkJBWVRBa1JGTVJzd0dRWURWUVFLREJKVWQybHVRMEZVSUVoTlNTQlRaWEoyWlhJeEdUQVgKQmdOVkJBTU1FRTV2YjNScllWSnZZbTkwWDNKdmIzUXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBdwpnZ0VLQW9JQkFRQzVjemRTRDlNZ0dGNXJMRk96YTdsY1NYcUtVd29QZWdkWWVOTllabjZJdWVBZXozN1M5ZmFGCnY0dmZpLzY5eDdvbzY4QjNsSlhlUjFZcE9VejBRWFNid09sQm13NEpHdlVGYm5acER2OUcybVZuS2c5aFBDV2UKc3dQeGV0VWhpWURHb1lSU2c5YTNGL0c3NXoxaGliWFc4RTRZTkNxOFFmbDN1ZjdVSElhMExUOWs2c1pUM1VLYQphYmo5Vk90SHc2amJnNm9sM01GaXpLOHBWelovU1UwbU1DVHpaVEVNcW1sbVg0NUtUdzRaUUlwRFFiQ2tuVzA4CjdGM21PTHljeUxCb3ljL2l3ZnlRQnFEOUFYakxhbnc0TTBGRXBIcFZLVUpFRDZCV1JNSndyY203Slg0RUcrQm8KcXVVQ3ZDU1dmbWFQK29uZ3g5NFBRdFJRRGhXbC85N2JBZ01CQUFHamdhc3dnYWd3ZGdZRFZSMFJCRzh3YllJSgpiRzlqWVd4b2IzTjBod1IvQUFBQmh4QUFBQUFBQUFBQUFBQUFBQUFBQUFBQmdndE9iMjkwYTJGU2IySnZkSUlMClRtOXZkR3RoVW05aWIzU0hCTUNvQUJpSEJNQ29BQW1IRVA2QUFBQUFBQUFBVGNSdDBaS0xwNjZIRVA2QUFBQUEKQUFBQVZUc2VIZXVKU0lBd0hRWURWUjBPQkJZRUZEYUpUNmNLdVZMSEw4b29PU3BRQzlYcmlwdjZNQThHQTFVZApFd0VCL3dRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUgwNlRaOEgyUmZ0eGxqU2ZiVFVHMW0vCk83VkE1SHR0QVFUWHdaTjF1L3FaMDZBOUhnV2VPUDZwOFk2VjNsK0V5L3hpdzl3ci9PbmFKZGxCcnIxcFo4dkYKdHE1VjdwVVBCZVhWREtiRWg3UmhaUmdzc2s3SjhaRUNheGRjL2RxZ0xyUHJVTnh1REZJUUZ0U2EvRGt5NTdEVwpWUU96WjBqTWgvUzBpSk00VjdNenl1a1p3SkowRnArWEdDdXVuOUVpS2orWWd3RXpZbzZMT2JxcTBkbWJNd2tlCnc0cWNveEIzZm0rRFRPMlRxaEhXZ3NlSzRZY3FGNXlTWkhvSUR1eGhtT3RUUEZXbDNraHM2VVc5emZmNUtjbGkKaUZvQ0ZIeE5ZMWpJaWNvcmQ5K21UYktCYm5UcFU3SFVFSmVtUjh4VlByZ1lDbW5hY2Jaek5SalBuVGlzY0NRPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
-    "SELFSIGNEDROOTCAKEY": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRQ25QbkY0VFcwOXdjTDMKMlNINm0xcWlCbmFUVEVqa3IrbUxySTJScFd6VDJ0Uk43Z2xaaytyUXJIdFBwLzM4YlJ3aVo2UHY1S0JNNGhBVQpaUHBDY0R0VHVlZlFobXlQNWd3YldjN3lyYWc4Zy9zNVF1YUpFMzhHRmh6WDQ3cy82ZU5IVmdwOEk2SHU3U3hoCkNTUi9SYTFicm5RSHd0OVZtMlJHdlo5SjRBRVJPOEV5YXQxd3RMVnJCcWNaSUZzeFZHODNieVd3bWlHdnVpNkYKLzVEb2NiajJtRzBNaWhVT1V3VW82ZFM3NW1vaVpSQXpCOVQvblcyU0k2UHhSUG9uVmkxdXRnTWtwOEt3V2puRgp0MTN3QkJRWWJ1ay9ObFdpMHk3VHgrMENQdElMU0dqQjAxa04vY0p0YlpWdFFVTmVyWWZoTlFoN0VaTWdPL1dOCld4Y2owak1MQWdNQkFBRUNnZ0VBT3hlQkdEU2pTSkxSeEtqZnJLQi9vWWdQRlhSNnZQSzYzak1Wd2tSazgyWDYKWlo2Wmh5RVFjcksrenlKWVIzeDEyR0l1Tm5EZGdzek5TYWQwRlUxNmFOYmk1WGJabk81M2tLSm0wTEF6SlU2cwowVXFtRWdEbGZNMExXK3lIR01vWEYvbDZzdW9VS1V0N3hyMW9POS91cE5vNi9STUp2a0d0YUtGUFN0YnZDWnMxCks0MDlteU5xa1orWmZIV3ZUaWVVc0p2NnY5cXloN3JLUGlvZ2MzeUprM2xEVDdNR0MwT1JDSkJMWHJqcXZCZ2UKVXpkQkdtay9IcnhxTzVGSHZzakJVV3dXQnBPZ2xMZkVhT21UNVJVWm54MHQyWEVKY1FwcTdEdGtJN3NkN3FOUwpCallCWkFxUFFSZFB0RCtuMG56TENoeXhFM1JUQW1PV21yWnlYSkQ2NFFLQmdRRFBIY3ZMMzVjclpGYVhMa0lECk1WRm9waWVBQndwSHFyams4RmdXWU5JS0ZtVS9FMi9aOWtDV0J5K3J3T2dRV2JDNThFa0s5bVM0SXZJRFdtVkwKdmVRWnlRWHlPRS9tVTVvVnhiV0R5Zk9FNkdocmNhc2t5WjNJc1hjQWMyZVl1MjJkd0d1dnVCZUJpRVE1L1lrVApocXBEZXhrZnRqMDVmcitka042WkxGUlkvd0tCZ1FET3Q0SUFpWXJLMkFLQVgzSkVyVWovVUNJK0dNT0ZRNFVpCmtnWWc2eWYyZzlWYXR3SmdRbC9jK2kyZnVoS2g1Z2xDb2pQaWo0cVhMOVJEcmZhQjRUeW4yc2habUN1OG0zUUYKdnF0dkR1ejVvSW56d2ZoTVlDelNBWVd0TXFXQURDTWg3Ym5VZVRCZ2hJSXdvbkx2VE8ycmlVU3cwNkRaUk9hWgpBdGUxc25mNTlRS0JnQldwOFRJdS9mbnM4ZDI0V2ZGSmpGRmM1ODdOYmJiWFZhV2t1aUlGR0pNemluMlJnK2FSCmltbm04SWFQay9aNTJ6Rm52OHdrdjU0L0VYOW1TaWdsQWFIczAvRmxFSDV3Q2pMeXppeXR5QW9ENFVBejBJbjEKaU1xQVBZbFBpT3VCMTFKajJSKzFLc2hDdjVndE85Uk9CcXN1U2c5MkdXdFZKYWZPaW1vTkovbHpBb0dCQUxzeQpDeFFaZWdwKzJxVU55aGpQSTQreExaRTJNN2oya0JYaVRwSjQ0Vk9ueHduRE9PK2FxOTBjNFR3SDhOK1R4VWNHClJCNGpCc29xa2ZwSUN6ZEtsUGNjZE5wTnB5M0JTS3Y3SXB3TDFDV3FiOExDSU94cEc2MkJtMkJnd09iWUZ1aWUKc3UzcVlSakdabTlNYlBDdnBYcjFiN01Cc21PT3RaUlNzcXpqMVNvUkFvR0JBSXRacW1CMGFSdVdhN3ozU1owZQpkM1dMRkhaRkVBTTVEQURBSCtEQWFBaVBQTlNGOGdadkpWdDhJZEdPc215Z0pvZmQ0Wkt6OVZHakJVVE5aR1ZZCnlUWDkzRzdXY005dmRwakFGaVBjRzVub2F1MHpSTUF5SFUyWmlyMW40TnJoUUFCN3dZbWQwZGtRaHNVcDZ2ZFgKdFlBUkxzcDJYWlFjT3RQMDJTUXVpYmF3Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K",
+    "SELFSIGNEDROOTCA": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR1ekNDQXFPZ0F3SUJBZ0lKQUtRWFp1SDVlV3VUTUEwR0NTcUdTSWIzRFFFQkN3VUFNRVV4Q3pBSkJnTlYKQkFZVEFrUkZNUnN3R1FZRFZRUUtEQkpVZDJsdVEwRlVJRWhOU1NCVFpYSjJaWEl4R1RBWEJnTlZCQU1NRUU1dgpiM1JyWVZKdlltOTBYM0p2YjNRd0lCY05NalF3TWpBeE1UZ3lOakEzV2hnUE1qQTJNakEyTURFeE9ESTJNRGRhCk1FVXhDekFKQmdOVkJBWVRBa1JGTVJzd0dRWURWUVFLREJKVWQybHVRMEZVSUVoTlNTQlRaWEoyWlhJeEdUQVgKQmdOVkJBTU1FRTV2YjNScllWSnZZbTkwWDNKdmIzUXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBdwpnZ0VLQW9JQkFRRGJCUWlmVDlIUFJLeEd2UlFGalcyVUIzTGMzbWF6bFcxYk1IUHk3WFo5WWJRYUxGVUZPTHVsCjF5SlVuck1ONmt0c2hFbUFweElvRnNmaHEyUXFjZnBWKzFuTU8wVzBhdWZNb1JFcDZ3M3owYlp4dE4wMzljS1EKQVRVUEl1QzZKQUI1YlpydjdVOFhJeW1oMDhDY01uVFMzb0NTcTNsVTVTRnlsUU4xV05RMjBwTkZtcHFrVGJwVQpSbEt1RTZ5S2U1OFNNcFljb2RxR1phY21RUlh5TktSeXRpTEhraG1OV0Rub242Mk5RdTAveVNMS2dRWWVZSmdWCkdlb1lBYkl0WG5iWnRGYjJpYStJT3ZLVER5SEJ5elhrYjFMN0VGUkZjZ3BqL3lTdlRsbHpLTytoZ002aDMzRjUKLyswNndsZWZ5WjIzSHowTS9YTTNnTi9ZdHVhR2dzRS9BZ01CQUFHamdhc3dnYWd3ZGdZRFZSMFJCRzh3YllJSgpiRzlqWVd4b2IzTjBod1IvQUFBQmh4QUFBQUFBQUFBQUFBQUFBQUFBQUFBQmdndE9iMjkwYTJGU2IySnZkSUlMClRtOXZkR3RoVW05aWIzU0hCS24rVnlTSEJNQ29BQkdIRVA2QUFBQUFBQUFBVGNSdDBaS0xwNjZIRVA2QUFBQUEKQUFBQVZUc2VIZXVKU0lBd0hRWURWUjBPQkJZRUZMN2VKSTB6UEZFU1pMMEYyNjBBK3QzS3dIcFhNQThHQTFVZApFd0VCL3dRRk1BTUJBZjh3RFFZSktvWklodmNOQVFFTEJRQURnZ0VCQUgzcENmR3Y4WVlDa0l5TDFuMFhaOGtDCnVxbmJmN1hIL3A5MXlpeFhJSDBjSjIwVDlFb1FvQ21xaFNyYmp2N05hb1BCMEpNZmJlcnJ0NzUxR25UaE9tcWIKRE9BRGl1dDNHY1J2b1ZOR2RTVzA4WHVmeDYxOVdYRnIxOFRRVWg4bzc1SldONUdPdndIcmYrV25RVENWdjRUSAprbTdaV29NUmdOL0pvbnlIMGE1NWZmM09hUzdpcFJTWlNneWNMVzRFUjlEcVBJUUdic2RFZFZXMEFUWUpkQnJRCmVPUDlGWHlPZ29jWVQwZHczYkxyK2pyREVaK01OT2dhdFI0cjVSRU96bVR0T1cxaHVlSnRNeTdQTHpQSmZSbTAKM0tUbERwTmpSRFJjWFZtNkt6SU1XTzRZV2tsRGJvL0hDaHd4UmdPRXZtY3FtK0lIczZiVGdjZ2JRZmV6c3c0PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+    "SELFSIGNEDROOTCAKEY": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV3QUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktvd2dnU21BZ0VBQW9JQkFRRGlHRVRJUit3V0RLc2oKeU5yWDc3NmpzYXBmbTFyS3RwUHFCS0k3UldPbWxLenRnL1ZsaGR5YTlPMEF3TlRLQzd1MWNUNmd6V1V2d2tFMQp6Z2hSbFVhTHcrd3NYNUsySlVLUHE1TnMrUTJxYVB5TWFxMHdoUE1ETGRZcUlyMDNGN2ExN0dsVEpYRnFRcW05CjhyUUVVaURrZnlTMER3VGdBM2pBb1hpTnE5dHljcCtJUm1rN3U0dHhCR29SUFRNQmpjVm9zR0lKNnBBVGxLanMKdnovR2JQblpEV2tHcURzeG9OSGpGejNpbjVIVERoNXZsKzFNRERLeTF1MXJTZUkwTlI4bEpHTXlENkJ6Z3lYdApSdGJwMmpJL2N5dWI5YkRoR0pSWW11UmN4N0ZsVm42SXdvUmpiU3h2U253V0RlejUwSmNJNmxCdjl0azJ0ZG1kCjg4MGMwT1Q1QWdNQkFBRUNnZ0VCQUk2ZU9HVU4yVUpmWTJVRFFlaU1kbmpUaldFWm9qL1V3NkVPb3pjNElnL20KSU44Q0tqMk1Id2d3RDRBMkl3UUFPcnZOWDNBWG9BaHNSSzRuOU45aGhrcUxuK0t0dHVIbXh3SFJmUUYwYU1aaAp5MHpYemIrWlhhRlh2SXgvdFZPWFJjMmoveHhQdGljTlBmMXZwMVpDYURVNmJuQ1dPTUVGNzVtelFWUThZQVRrClVVTmpOeDE5ZWUrV2VaSG93YnhHVWVWamZQUTlrbHBGeloxSnNOVWkzZTlHZ2oyUVppbHBWUkVzTHFKWDBvS1EKclV3OXVucSt2eklIbC9qUHFyUk1XSlZweHlWTXV6Y3NJVjczVDVWNGx5Nnh0eFpXVGYzMXA5dXE4OHZraWxEbgpiZndreXRSMEtpck1XcUtQTTl4ODcvYndUcEl0SldYWmdXOXpURjVydzNFQ2dZRUErUE9IQ3JXNTZUbnBQWUlFClA5SVlSdGtGZ3lUWFplVHQ2dUJIbE1uMWhnSDA2dy93dWc3akpJcFk0czBYSDJtN1lNWjFOejFiMndYbnZGMjUKdTdXU0NRQ2pFUys3eVlVSXpqbDUwT0lGY2JwVHRDMm5VV1BXYXF3VFlmbFRuM3pMdVE5aDQ0Zy9nVjF2dEhrbApFSUpEaUZPUmVYRDNLazJHWUFZWWRkYW9sY01DZ1lFQTZIOFNGaEQycWZ5TC9zSEo3cDhNWVloSEFldnJxajdBClFhSTFKWlRIeWJyaE1oRkJEaGQ1UHhxUUNXYXdrY0YxNmxjbStzUllpMzF1dnVqT2JQZFN4cXM5aTY0SkI4ZHIKV203REdZVVh4ckUxVTl4TlRrd1JKL1RqOUh5M2g4R0xBRTVWbkttTGprc080eW9EbVJnT2sva0sxRUdJaERhWgpYenRWNTZ4MUlwTUNnWUVBeHBUVGNxcVZHc0pVRi9rL1ZIMU5XaTVCSkdSZDRXeWtqOGZKc1prTDNaSndBSlZkCmk3eldXVTUyS3F3NE5wbUxtMTJUSUxZME1GamNpamdsTU9OY0V3eE1CeWlSWGVWZHFjclZMZGN0U3BPN3N5ejcKbTRQTkJKZ3dlZVY5VytvYlE0cE9wa1lIaWpTekp6Mi9ZQlRZczhVZGRNYTBraXoyOUYvSVlTOFNtU3NDZ1lFQQoydFRIdkRkSlJDUXR6S0t3STBaV2kvS09DelA0aEN3K0gwakN4MVdyV3Fmb1VJekc4N0dLY0tmYXpNNTRBU2piCmlLOXhRL1RNOXJZZ0o5Yk9mT2VwWk05R3haTVFjdDd6bjVIRFZ1RGJ5U3VBYXlkZktBUVczY24xU1dpZUFreGMKUGZSOVJsQ2F4MXJFYjNKYklwenZFNzREd0ZiU1hNZGJRclNCbmViSDlic0NnWUVBM3M3YWJzVWZxUFJScVowRwpKdnovRUFVSk9BQ3h6bUluRVFWdHljOVFRTzgrTlZiUThNZE5LbG1FaVQwdVQwY3NiWlNFTEZwbGR5akNtU3hQCjdQVEFvYWxkeU81QTNCT3MvVnJtR3lrQ040dlZDdU1aQ3VZRWJKbGtjUmVPTVFnS29DMzdvVlNYSEJBRWFtdXQKbDhsdW1hTGkwNzlVUjV2OURHWTJLUUs3UTl3PQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tCg==",
     "SESSIONSTORAGE": {},
     "SHOW_CONFIGURATION_HINTS": true,
     "SHOW_MAINTENANCE_MODE": true,
@@ -2418,6 +2418,361 @@
             },
             "USEMAPPING": true
         },
+        "Local.MAIN.fbMachine.bActivateRollers": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bActivateRollers",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to make rollers follow robot. Called from Run.content",
+                        "propertyOrder": 18
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMICloseDoor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMICloseDoor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Called from initialize.content",
+                        "propertyOrder": 11
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMIHomeMotors": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMIHomeMotors",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Called from initialize.content",
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMIHomeRobot": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMIHomeRobot",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Called from initialize.content",
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMILockTables": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMILockTables",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Called from initialize.content",
+                        "propertyOrder": 12
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMILowerRaiseRollers": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMILowerRaiseRollers",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Called from initialize.content",
+                        "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMIStart": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMIStart",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to start program. Called from Run.content",
+                        "propertyOrder": 18
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbGantry.rollersReady": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbGantry::rollersReady",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 25
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbRobot.isRobotHomed": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbRobot::isRobotHomed",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 23
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbRobot.programChoice": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programChoice",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 20
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbRobot.programOption1": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programOption1",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 25
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbRobot.programOption2": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programOption2",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 26
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbRobot.programOption3": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programOption3",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 27
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbRobot.programWallChoice": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programWallChoice",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 24
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.noErrors": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bErrors",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "True if modules have errors or E stop",
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.pneumaticsOK": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::pneumaticsOK",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.sHMIPneumaticsOK": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::sHMIPneumaticsOK",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of pneumatic pressure, called from run.content",
+                        "propertyOrder": 23
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.sHMIRobotHomed": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::sHMIRobotHomed",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of robot homed, called from run.content",
+                        "propertyOrder": 24
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.sHMIRollersActivated": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::sHMIRollersActivated",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of rollers activated, called from run.content",
+                        "propertyOrder": 25
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.sHMIeStopsOff": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::sHMIeStopsOff",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of e stops off, called from run.content",
+                        "propertyOrder": 26
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "LocalizeText": {
             "ACCESS": 3,
             "DOMAIN": "TcHmiSrv",
@@ -3424,9 +3779,35 @@
                 "ListEvents": 3,
                 "ListSymbols": 3,
                 "ListUserNames": 3,
+                "Local.MAIN.fbMachine.bActivateRollers": 3,
+                "Local.MAIN.fbMachine.bHMICloseDoor": 3,
+                "Local.MAIN.fbMachine.bHMIHomeMotors": 3,
+                "Local.MAIN.fbMachine.bHMIHomeRobot": 3,
+                "Local.MAIN.fbMachine.bHMILockTables": 3,
+                "Local.MAIN.fbMachine.bHMILowerRaiseRollers": 3,
+                "Local.MAIN.fbMachine.bHMIStart": 3,
+                "Local.MAIN.fbMachine.fbGantry.rollersReady": 3,
+                "Local.MAIN.fbMachine.fbRobot.isRobotHomed": 3,
+                "Local.MAIN.fbMachine.fbRobot.programChoice": 3,
+                "Local.MAIN.fbMachine.fbRobot.programChoiceString": 3,
+                "Local.MAIN.fbMachine.fbRobot.programOption1": 3,
+                "Local.MAIN.fbMachine.fbRobot.programOption2": 3,
+                "Local.MAIN.fbMachine.fbRobot.programOption3": 3,
+                "Local.MAIN.fbMachine.fbRobot.programWallChoice": 3,
+                "Local.MAIN.fbMachine.noErrors": 3,
+                "Local.MAIN.fbMachine.pneumaticsOK": 3,
+                "Local.MAIN.fbMachine.sHMIPneumaticsOK": 3,
+                "Local.MAIN.fbMachine.sHMIRobotHomed": 3,
+                "Local.MAIN.fbMachine.sHMIRollersActivated": 3,
+                "Local.MAIN.fbMachine.sHMIeStopsOff": 3,
                 "LocalizeText": 3,
                 "Login": 3,
                 "Logout": 3,
+                "PLC1.MAIN.Switch": 3,
+                "PLC1.MAIN.bProcess_Status": 3,
+                "PLC1.MAIN.bRun_Process": 3,
+                "PLC1.MAIN.bStop_Process": 3,
+                "PLC1.MAIN.tProcess_Duration": 3,
                 "SetLocale": 3,
                 "SubscribeEvents": 3,
                 "TcHmiSqliteLogger.Diagnostics": 1,
@@ -3472,11 +3853,12 @@
     "USERSELECTTYPE": 0,
     "VIDEOSEGMENTSIZE": 1048576,
     "VIRTUALDIRECTORIES": {
-        "/": "..\\..\\TcHmiProject1\\",
+        "/": "..\\..\\HMIWorking\\",
+        "/Beckhoff.TwinCAT.HMI.BA.Icons": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.BA.Icons.2.8.7\\runtimes\\native1.12-tchmi",
         "/Beckhoff.TwinCAT.HMI.Controls": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.760.59\\runtimes\\native1.12-tchmi",
         "/Beckhoff.TwinCAT.HMI.Functions": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.760.59\\runtimes\\native1.12-tchmi",
-        "/bin": "..\\..\\TcHmiProject1\\bin\\",
-        "/bin/framework": "..\\..\\TcHmiProject1\\bin\\framework",
+        "/bin": "..\\..\\HMIWorking\\bin\\",
+        "/bin/framework": "..\\..\\HMIWorking\\bin\\framework",
         "/framework": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.760.59\\runtimes\\native1.12-tchmi"
     }
 }

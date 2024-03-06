@@ -12,7 +12,7 @@
     <HmiTitle>Please enter your Title...</HmiTitle>
     <HmiVerboseLevel>2</HmiVerboseLevel>
     <HmiVersion>1.0.0.0</HmiVersion>
-    <HmiCommunicationServerPort>3000</HmiCommunicationServerPort>
+    <HmiCommunicationServerPort>3001</HmiCommunicationServerPort>
     <HmiLogTcHmiServerMessages>false</HmiLogTcHmiServerMessages>
     <HmiLogDesignerModeComMessages>false</HmiLogDesignerModeComMessages>
     <HmiServerVersion>Latest</HmiServerVersion>
@@ -26,7 +26,12 @@
     <HmiViewportMaximumScale />
     <HmiViewportUserScaleable>Default</HmiViewportUserScaleable>
     <HmiPostProcessing>True</HmiPostProcessing>
-    <Name>TcHmiProject1</Name>
+    <Name>HMIWorking</Name>
+    <HmiCommunicationRouterPort>10105</HmiCommunicationRouterPort>
+    <HmiCommunicationServerAuthPort>13001</HmiCommunicationServerAuthPort>
+    <HmiInitial>1.12.760.59</HmiInitial>
+    <HmiRecent>1.12.760.59</HmiRecent>
+    <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>
     <TwinCATHmi_Tasks>$(TcHmiDirectory)\MSBuild\Beckhoff.TwinCAT.HMI.tasks</TwinCATHmi_Tasks>
@@ -36,7 +41,7 @@
   <Import Project="$(TwinCATHmi_Targets)" />
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>771d0703-316f-4873-b31c-ab7d23ecfd25</ProjectGuid>
+    <ProjectGuid>b7abce6d-4f91-403a-9caf-217ebb86abf3</ProjectGuid>
     <RootNamespace>TwinCAT3HmiProject</RootNamespace>
     <AssemblyName>TwinCAT3HmiProject</AssemblyName>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
@@ -105,19 +110,83 @@
   <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)" />
   <Target Name="ReBuild" DependsOnTargets="Clean; Build" />
   <ItemGroup>
+    <Content Include="Content\Initialize.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\Run.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\SelectProgram.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Content\Startup.content">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Images\Back.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Images\Robot.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Images\Settings.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Imports\Images\Tools.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Views\Desktop.view">
+      <SubType>Content</SubType>
+    </Content>
+    <Folder Include="Fonts\" />
     <Folder Include="Images" />
     <Folder Include="Images\Manifest" />
     <Folder Include="Imports" />
     <Folder Include="Imports\Images" />
     <Folder Include="Imports\Videos" />
+    <Folder Include="KeyboardLayouts\" />
     <Folder Include="Localization" />
+    <Folder Include="Content" />
+    <Folder Include="Views" />
     <Folder Include="Themes" />
+    <Folder Include="Themes\Base-Dark\Images\" />
     <Folder Include="Themes\Base\" />
     <Folder Include="Themes\Base-Dark\" />
-    <Folder Include="Server" />
+    <Folder Include="Server">
+      <WorkingDirectory>HMI_VFD</WorkingDirectory>
+    </Folder>
     <Folder Include="Properties" />
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
+    </Content>
+    <Content Include="Images\NootkaLogo.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Storage.json">
+      <SubType>Content</SubType>
     </Content>
     <Content Include="tsconfig.tpl.json">
       <SubType>Content</SubType>
@@ -268,10 +337,6 @@
       <SubType>Content</SubType>
       <Visible>true</Visible>
     </Content>
-    <Content Include="Images\Beckhoff_Logo.svg">
-      <SubType>Content</SubType>
-      <Visible>true</Visible>
-    </Content>
     <Content Include="Images\Manifest\launcher-icon-0-75x.png">
       <SubType>Content</SubType>
       <Visible>true</Visible>
@@ -293,10 +358,6 @@
       <Visible>true</Visible>
     </Content>
     <Content Include="Images\Manifest\launcher-icon-4x.png">
-      <SubType>Content</SubType>
-      <Visible>true</Visible>
-    </Content>
-    <Content Include="Desktop.view">
       <SubType>Content</SubType>
       <Visible>true</Visible>
     </Content>
@@ -359,6 +420,7 @@
       <SubType>Content</SubType>
       <Visible>false</Visible>
     </Content>
+    <Folder Include="Themes\Base\Images\" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

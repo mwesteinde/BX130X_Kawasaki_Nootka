@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Enclosure" Id="{99e77f18-d45f-4cfb-8b39-3900b2091860}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Enclosure
+VAR
+	// =============== Table clamping  ================================================
+	pbTableWest				AT %I* : BOOL;
+	pbTableEast				AT %I* : BOOL;
+
+	pbTableWestLast: BOOL;
+	pbTableEastLast: BOOL;
+	cylinderTableWest		AT %Q* : BOOL := FALSE;
+	cylinderTableEast		AT %Q* : BOOL := FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Rolling_Door_Close" Id="{30d6fe7d-957f-4531-95df-ed9ab926cc71}">
+      <Declaration><![CDATA[METHOD Rolling_Door_Close
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Rolling_Door_Open" Id="{e6670138-e3c6-48c0-b523-307e04aaa8b1}">
+      <Declaration><![CDATA[METHOD Rolling_Door_Open
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Table_Clamp_Control" Id="{78b6b307-6e7b-4cd9-b1f5-bb2aefea736b}">
+      <Declaration><![CDATA[METHOD Table_Clamp_Control
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pbTableWest AND NOT pbTableWestLast THEN
+	cylinderTableWest := NOT cylinderTableWest;
+END_IF
+
+pbTableWestLast := pbTableWest;
+
+IF pbTableEast AND NOT pbTableEastLast THEN
+	cylinderTableEast := NOT cylinderTableEast;
+END_IF
+
+pbTableEastLast := pbTableEast;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Enclosure">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Enclosure.Rolling_Door_Close">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Enclosure.Rolling_Door_Open">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Enclosure.Table_Clamp_Control">
+      <LineId Id="6" Count="9" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

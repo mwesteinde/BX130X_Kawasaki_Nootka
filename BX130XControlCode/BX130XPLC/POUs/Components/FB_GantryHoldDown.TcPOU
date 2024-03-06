@@ -5,7 +5,7 @@
 
 FUNCTION_BLOCK FB_GantryHoldDown
 VAR_INPUT
-	robot				: FB_Robot; //robot_object
+	robotPoseGantry				: Structure_RobotPose; //robot_object
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -13,11 +13,10 @@ VAR
 	//MC_functions, called in methods
 	fbMC_PowerWest		: MC_Power;
 	fbMC_PowerEast		: MC_Power;
-	fbMC_SyncEastWest	: MC_MoveAbsolute;
-	fbMC_MoveAbsWest1	: MC_MoveAbsolute;
-	fbMC_MoveAbsWest2	: MC_MoveAbsolute;
 	fbMC_HomeWest		: MC_Home;
 	fbMC_HomeEast		: MC_Home;
+	fbMC_MoveAbsWest1	: MC_MoveAbsolute;
+	fbMC_MoveAbsWest2	: MC_MoveAbsolute;
 	fbMC_SyncAxes		: MC_GearIn;
 	Aborting			: MC_BufferMode;
 	
@@ -41,19 +40,11 @@ VAR
 	cylindersCentreNorth	AT %Q* : BOOL;
 	cylindersCentreSouth	AT %Q* : BOOL;
 	cylindersSouth			AT %Q* : BOOL;
-
-	pbTableWest				AT %I* : BOOL;
-	pbTableEast				AT %I* : BOOL;
-	
-	pbTableWestLast: BOOL;
-	pbTableEastLast: BOOL;
-	pbTableWestLastTrig: R_TRIG;
-	pbTableEastLastTriq: R_TRIG;
-	cylinderTableWest		AT %Q* : BOOL := FALSE;
-	cylinderTableEast		AT %Q* : BOOL := FALSE;
-	
 	//Variable to be set by program being run
 	LEN_WOOD : LREAL := 2133; //mm, length of wood being clamped
+	
+	rollersReady	: BOOL;
+
 
 END_VAR
 ]]></Declaration>
@@ -64,10 +55,10 @@ Enable_Axes();
 Home_Axes();
 Couple_Axes();
 Follow_Robot();
-Cylinder_Set_Cutting();
-Load_Tables();]]></ST>
+Cylinder_Set_Cutting();]]></ST>
     </Implementation>
-    <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}">
+    <Folder Name="Archive Individual actions" Id="{c3e285de-5c5b-4308-a0a2-e7733ef6d0f5}" />
+    <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}" FolderPath="Archive Individual actions\">
       <Declaration><![CDATA[METHOD Couple_Axes
 VAR_INPUT
 END_VAR
@@ -120,7 +111,7 @@ END_VAR]]></Declaration>
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Enable_Axes" Id="{c19824d3-7d09-4504-aec2-151759bbf50b}">
+    <Method Name="Enable_Axes" Id="{c19824d3-7d09-4504-aec2-151759bbf50b}" FolderPath="Archive Individual actions\">
       <Declaration><![CDATA[METHOD Enable_Axes : BOOL
 VAR_INPUT
 END_VAR]]></Declaration>
@@ -151,7 +142,7 @@ fbMC_PowerWest(
       </Implementation>
     </Method>
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
-      <Declaration><![CDATA[METHOD Follow_Robot
+      <Declaration><![CDATA[METHOD Follow_Robot : BOOL
 VAR_INPUT
 END_VAR
 
@@ -164,14 +155,12 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Set target position to middle of robot tool
-targetPosition := (robot.y_pose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+targetPosition := (robotPoseGantry.yPose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
 IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
 	targetPosition := GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST;
 ELSIF targetPosition > GVL_SERVO_ROBOT_CONST.MAX_POS_SERVOWEST THEN
 	targetPosition := GVL_SERVO_ROBOT_CONST.MAX_POS_SERVOWEST;
 END_IF
-
-//If target position - current position > threshold, hold robot
 
 followVariable := NOT followVariable;
 
@@ -197,13 +186,16 @@ IF executeFollow AND GVL_Axes.AxisWest.Status.Homed THEN
 		BufferMode:= Aborting);
 END_IF
 
-
-
-
+//If target position - current position > threshold, hold robot
+IF ABS(targetPosition - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD AND robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT THEN
+	Follow_Robot := FALSE; //Gantry isn't following, hold robot
+ELSE 
+	Follow_Robot := TRUE; //Gantry is following properly, keep robot on run
+END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Home_Axes" Id="{47d775d5-845e-4f32-9b48-f325228313c3}">
+    <Method Name="Home_Axes" Id="{47d775d5-845e-4f32-9b48-f325228313c3}" FolderPath="Archive Individual actions\">
       <Declaration><![CDATA[METHOD Home_Axes
 VAR_INPUT
 END_VAR
@@ -225,22 +217,47 @@ END_VAR
 //		bCalibrationCam:= NOT ls1NE);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Load_Tables" Id="{7ee35345-9ea6-48dd-a062-6897bfc4de67}">
-      <Declaration><![CDATA[METHOD Load_Tables
+    <Method Name="Initialize_Servos" Id="{40c1f2ee-aae6-427c-ae6f-0159b8da9b8e}">
+      <Declaration><![CDATA[//Enables, couples and homes hold down gantry
+//TODO: check if robot is above rollers before homing
+METHOD Initialize_Servos
 VAR_INPUT
+END_VAR
+
+VAR
+	executeEnable: BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF pbTableWest AND NOT pbTableWestLast THEN
-	cylinderTableWest := NOT cylinderTableWest;
-END_IF
-
-pbTableWestLast := pbTableWest;
-
-IF pbTableEast AND NOT pbTableEastLast THEN
-	cylinderTableEast := NOT cylinderTableEast;
-END_IF
-
-pbTableEastLast := pbTableEast;]]></ST>
+        <ST><![CDATA[executeEnable := TRUE;
+//Enable Axes
+fbMC_PowerWest(
+	Axis:= GVL_Axes.AxisWest, 
+	Enable:= executeEnable, 
+	Enable_Positive:= executeEnable, 
+	Enable_Negative:= executeEnable, 
+	Override:= 100.0);
+		
+fbMC_PowerWest(
+	Axis:= GVL_Axes.AxisEast, 
+	Enable:= executeEnable, 
+	Enable_Positive:= executeEnable, 
+	Enable_Negative:= executeEnable, 
+	Override:= 100.0);
+		
+//Couple Axes
+fbMC_SyncAxes(
+	Master:= GVL_Axes.AxisWest, 
+	Slave:= GVL_Axes.AxisEast, 
+	Execute:= executeEnable, 
+	RatioNumerator:= 1);
+	
+//Home Axes
+fbMC_HomeWest(
+	Axis:= GVL_Axes.AxisWest, 
+	Execute:= executeEnable, 
+	Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
+	HomingMode:= MC_DefaultHoming, 
+	bCalibrationCam:= NOT ls3NW);]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_GantryHoldDown">
@@ -251,7 +268,6 @@ pbTableEastLast := pbTableEast;]]></ST>
       <LineId Id="85" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="133" Count="0" />
-      <LineId Id="192" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Couple_Axes">
       <LineId Id="6" Count="4" />
@@ -293,8 +309,6 @@ pbTableEastLast := pbTableEast;]]></ST>
       <LineId Id="83" Count="0" />
       <LineId Id="85" Count="0" />
       <LineId Id="82" Count="0" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="86" Count="0" />
       <LineId Id="36" Count="1" />
       <LineId Id="35" Count="0" />
       <LineId Id="13" Count="0" />
@@ -306,10 +320,12 @@ pbTableEastLast := pbTableEast;]]></ST>
       <LineId Id="70" Count="2" />
       <LineId Id="53" Count="0" />
       <LineId Id="39" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="16" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="11" Count="0" />
+      <LineId Id="109" Count="1" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="111" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Home_Axes">
@@ -319,13 +335,17 @@ pbTableEastLast := pbTableEast;]]></ST>
       <LineId Id="13" Count="4" />
       <LineId Id="12" Count="0" />
     </LineIds>
-    <LineIds Name="FB_GantryHoldDown.Load_Tables">
-      <LineId Id="5" Count="1" />
+    <LineIds Name="FB_GantryHoldDown.Initialize_Servos">
+      <LineId Id="36" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="6" Count="11" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="22" Count="3" />
+      <LineId Id="21" Count="0" />
       <LineId Id="26" Count="1" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="2" />
-      <LineId Id="24" Count="1" />
-      <LineId Id="8" Count="0" />
+      <LineId Id="29" Count="4" />
+      <LineId Id="28" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

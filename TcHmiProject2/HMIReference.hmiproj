@@ -12,7 +12,7 @@
     <HmiTitle>Please enter your Title...</HmiTitle>
     <HmiVerboseLevel>2</HmiVerboseLevel>
     <HmiVersion>1.0.0.0</HmiVersion>
-    <HmiCommunicationServerPort>3002</HmiCommunicationServerPort>
+    <HmiCommunicationServerPort>3003</HmiCommunicationServerPort>
     <HmiLogTcHmiServerMessages>false</HmiLogTcHmiServerMessages>
     <HmiLogDesignerModeComMessages>false</HmiLogDesignerModeComMessages>
     <HmiServerVersion>Latest</HmiServerVersion>
@@ -21,9 +21,9 @@
     <TargetFrameworkMoniker>native,Version=v1.12.0,Profile=tchmi</TargetFrameworkMoniker>
     <TargetFramework>native1.12-tchmi</TargetFramework>
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
-    <Name>HMI</Name>
-    <HmiCommunicationRouterPort>10101</HmiCommunicationRouterPort>
-    <HmiCommunicationServerAuthPort>13002</HmiCommunicationServerAuthPort>
+    <Name>HMIReference</Name>
+    <HmiCommunicationRouterPort>10104</HmiCommunicationRouterPort>
+    <HmiCommunicationServerAuthPort>13003</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.760.59</HmiInitial>
     <HmiRecent>1.12.760.59</HmiRecent>
     <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
@@ -105,6 +105,12 @@
   <Target Name="Clean" DependsOnTargets="$(CleanDependsOn)" />
   <Target Name="ReBuild" DependsOnTargets="Clean; Build" />
   <ItemGroup>
+    <Content Include="Images\NootkaLogo.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="View1.view">
+      <SubType>Content</SubType>
+    </Content>
     <Folder Include="Fonts\" />
     <Folder Include="Images" />
     <Folder Include="Images\Manifest" />
@@ -117,9 +123,13 @@
     <Folder Include="Localization" />
     <Folder Include="Pages\" />
     <Folder Include="Server\ADS\" />
+    <Folder Include="Server\TcHmiEventLogger" />
     <Folder Include="Server\TcHmiLua\" />
+    <Folder Include="Server\TcHmiRecipeManagement" />
+    <Folder Include="Server\TcHmiSqliteHistorize" />
     <Folder Include="Server\TcHmiSqliteLogger\" />
     <Folder Include="Server\TcHmiSrv\" />
+    <Folder Include="Server\TcHmiTextStorage" />
     <Folder Include="Server\TcHmiUserManagement\" />
     <Folder Include="Themes" />
     <Folder Include="Themes\Base-Dark\Images\" />
@@ -129,7 +139,7 @@
     <Folder Include="Themes\Base\" />
     <Folder Include="Themes\Base-Dark\" />
     <Folder Include="Server">
-      <WorkingDirectory>TcHmiProject2</WorkingDirectory>
+      <WorkingDirectory>HMI</WorkingDirectory>
     </Folder>
     <Folder Include="Properties" />
     <Content Include=".eslintrc.json">

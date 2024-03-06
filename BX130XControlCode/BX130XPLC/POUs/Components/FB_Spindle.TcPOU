@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Spindle" Id="{3dc147eb-3dde-4052-8db8-ee0200a73c1f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Spindle
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	// ================= Manual tool changing ====================================
+	pbToolChange AT %I*: BOOL;
+	changeToolEnable: BOOL;
+	cylinderToolRelease1 AT %Q* : BOOL;
+	cylinderToolRelease2 AT %Q* : BOOL;
+	toolChangeTimer : TON;
+	
+	programLoadedString : STRING;
+	programLoadedIndex	: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Manual_Tool_Change();]]></ST>
+    </Implementation>
+    <Method Name="Grab_Tool" Id="{b157a71e-63d7-43c6-8cda-129fe8943333}">
+      <Declaration><![CDATA[METHOD Grab_Tool : BOOL //Sets tool change cylinders to closed, returns true if tool locked
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Manual_Tool_Change" Id="{caf02692-220f-45ea-9a62-11b6af7ca524}">
+      <Declaration><![CDATA[METHOD Manual_Tool_Change
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF changeToolEnable THEN
+	toolChangeTimer(IN:= pbToolChange, PT:=T#2S);
+	
+	IF pbToolChange THEN
+		IF toolChangeTimer.Q THEN
+			cylinderToolRelease1 := TRUE;
+			cylinderToolRelease2 := TRUE;
+		END_IF
+	ELSE
+		cylinderToolRelease1 := FALSE;
+		cylinderToolRelease2 := FALSE;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Release_Tool" Id="{44458576-a982-4dd8-917f-a23f3b30cecf}">
+      <Declaration><![CDATA[METHOD Release_Tool : BOOL; //Sets tool change cylinders to open, returns true if tool released
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Spindle_Warmup" Id="{6626f887-e6c9-4081-bd79-0ba0a3b91bcb}">
+      <Declaration><![CDATA[METHOD Spindle_Warmup
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start_Spindle" Id="{702c570c-7182-409d-ac49-a3e78d7a4915}">
+      <Declaration><![CDATA[METHOD Start_Spindle
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Spindle">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Grab_Tool">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Manual_Tool_Change">
+      <LineId Id="11" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Release_Tool">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Spindle_Warmup">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Start_Spindle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
