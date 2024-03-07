@@ -1795,19 +1795,11 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{AA011300-B948-BDEE-DEAD-5C54781551E0}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{47DC5F78-CFF1-7778-7BB6-A4C492022991}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
-						<Var>
-							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.x_pose_1</Name>
 							<Type>USINT</Type>
@@ -1879,17 +1871,17 @@ External Setpoint Generation:
 							<Name>MAIN.fbMachine.fbEnclosure.pbTableEast</Name>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.programChoice</Name>
 							<Type>INT</Type>
@@ -1934,6 +1926,14 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.fbMachine.fbEnclosure.cylinderTableEast</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2024-03-05T15:00:26">

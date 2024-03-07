@@ -25,11 +25,11 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="TextSelectedProgrsm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%f%%s%Local.MAIN.fbMachine.fbRobot.programWallChoice%/s% + &quot;: &quot; + %s%Local.MAIN.fbMachine.fbRobot.programOption1%/s% + &quot;/&quot; +%s%Local.MAIN.fbMachine.fbRobot.programOption2%/s%+ &quot;/&quot; +
-%s%Local.MAIN.fbMachine.fbRobot.programOption3%/s%%/f%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="543" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
+<div id="TextSelectedProgrsm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%f%%s%Local.MAIN.fbMachine.programWallChoice%/s% + &quot;: &quot; + %s%Local.MAIN.fbMachine.programOption1%/s% + &quot;/&quot; +%s%Local.MAIN.fbMachine.programOption2%/s%+ &quot;/&quot; +
+%s%Local.MAIN.fbMachine.programOption3%/s%%/f%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="543" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
 </div>
-<div id="ImageToolpath" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="227" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="%f%%s%Local.MAIN.fbMachine.fbGantry.rollersReady%/s%
-%/f%" data-tchmi-top="123" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
+<div id="ImageToolpath" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="227" data-tchmi-height-unit="px" data-tchmi-left="246" data-tchmi-left-unit="px" data-tchmi-text="Contour image
+" data-tchmi-top="122" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
 {
   "top": 3,

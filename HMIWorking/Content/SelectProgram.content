@@ -82,12 +82,16 @@
 
 
 </div>
-<div id="ButtonToRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="291" data-tchmi-left-unit="px" data-tchmi-text="Run Program" data-tchmi-top="407" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-vertical-alignment="Center" data-tchmi-is-enabled="false">
+<div id="ButtonToRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="292" data-tchmi-left-unit="px" data-tchmi-text="Run Program" data-tchmi-top="407" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-vertical-alignment="Center" data-tchmi-is-enabled="false">
+
+
+
+
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "ButtonToRun.onPressed",
+    "event": "ButtonToRun.onStatePressed",
     "actions": [
       {
         "objectType": "WriteToSymbol",
@@ -125,7 +129,7 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programWallChoice%/s%",
+                "symbolExpression": "%s%Local.MAIN.fbMachine.programWallChoice%/s%",
                 "value": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/String",
@@ -158,7 +162,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption1%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -173,7 +177,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption1%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -211,7 +215,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption2%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -226,7 +230,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption2%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -264,7 +268,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption3%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption3%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -279,7 +283,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption3%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption3%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -299,11 +303,11 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programChoiceString%/s%",
+                "symbolExpression": "%s%Local.MAIN.fbMachine.programWallChoice%/s%",
                 "value": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/String",
-                  "symbolExpression": "%f%%ctrl%ToggleRearWallSelect::Text%/ctrl%%/f%"
+                  "symbolExpression": "%ctrl%ToggleRearWallSelect::Text%/ctrl%"
                 },
                 "asyncWait": true
               },
@@ -332,7 +336,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption1%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -347,7 +351,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption1%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -385,7 +389,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption2%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -400,7 +404,7 @@
                       {
                         "objectType": "WriteToSymbol",
                         "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption2%/s%",
+                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
                         "value": {
                           "objectType": "Symbol",
                           "valueType": "tchmi:general#/definitions/String",
@@ -416,7 +420,7 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.programOption3%/s%",
+                "symbolExpression": "%s%Local.MAIN.fbMachine.programOption3%/s%",
                 "value": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/STRING(80)",
@@ -433,8 +437,6 @@
   }
 ]
 </script>
-
-
 </div>
 <div id="ToggleFrontWallSelect" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="125" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Front Wall" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 

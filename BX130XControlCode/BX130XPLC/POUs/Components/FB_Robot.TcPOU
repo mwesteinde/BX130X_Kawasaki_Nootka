@@ -27,10 +27,7 @@ VAR
 	programRun 		AT %Q*		: BOOL;
 	externalRunHold AT %Q* 		: BOOL;
 	
-	programWallChoice	: STRING;
-	programOption1		: STRING;
-	programOption2		: STRING;
-	programOption3		: STRING;
+	
 	
 	isRobotHomed		: BOOL;
 	programChoiceIndex	: INT;
@@ -39,15 +36,6 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="Hold_Robot" Id="{feac628f-72cf-4100-8d56-47c2e35d8c99}">
-      <Declaration><![CDATA[METHOD Hold_Robot
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Home_Robot" Id="{eca540c4-31fc-4643-aeb8-caefcff4553d}">
       <Declaration><![CDATA[//Send home command to robot
 METHOD Home_Robot
@@ -70,7 +58,8 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Robot_Manual_Control" Id="{ed6ccda4-2af5-42af-8ac3-98592d92e5da}">
-      <Declaration><![CDATA[METHOD Robot_Manual_Control
+      <Declaration><![CDATA[//Not Implemented
+METHOD Robot_Manual_Control
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -78,14 +67,24 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Run_Robot" Id="{95ede5df-1a05-4c33-b6a8-dcc0ec83997b}">
-      <Declaration><![CDATA[//Start the Robot 
-METHOD Run_Robot
+    <Method Name="RunHold_Robot" Id="{feac628f-72cf-4100-8d56-47c2e35d8c99}">
+      <Declaration><![CDATA[METHOD RunHold_Robot
+VAR_INPUT
+	RunHold : BOOL; //True for run, False for hold
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[externalRunHold := RunHold;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start_Robot" Id="{95ede5df-1a05-4c33-b6a8-dcc0ec83997b}">
+      <Declaration><![CDATA[//Resume the Robot 
+METHOD Start_Robot
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[externalRunHold := True;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Status" Id="{1be56ac6-764b-4729-954d-f7379608e62a}">
@@ -114,9 +113,6 @@ robotPose.tPose := UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400;
     <LineIds Name="FB_Robot">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Robot.Hold_Robot">
-      <LineId Id="5" Count="0" />
-    </LineIds>
     <LineIds Name="FB_Robot.Home_Robot">
       <LineId Id="5" Count="0" />
     </LineIds>
@@ -126,7 +122,10 @@ robotPose.tPose := UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400;
     <LineIds Name="FB_Robot.Robot_Manual_Control">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Robot.Run_Robot">
+    <LineIds Name="FB_Robot.RunHold_Robot">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Start_Robot">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Status">

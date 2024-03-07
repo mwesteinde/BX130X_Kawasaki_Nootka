@@ -2598,74 +2598,6 @@
             },
             "USEMAPPING": true
         },
-        "Local.MAIN.fbMachine.fbRobot.programOption1": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programOption1",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
-                    },
-                    {
-                        "propertyOrder": 25
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "Local.MAIN.fbMachine.fbRobot.programOption2": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programOption2",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
-                    },
-                    {
-                        "propertyOrder": 26
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "Local.MAIN.fbMachine.fbRobot.programOption3": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programOption3",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
-                    },
-                    {
-                        "propertyOrder": 27
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
-        "Local.MAIN.fbMachine.fbRobot.programWallChoice": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "Local::MAIN::fbMachine::fbRobot::programWallChoice",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
-                    },
-                    {
-                        "propertyOrder": 24
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
         "Local.MAIN.fbMachine.noErrors": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2696,6 +2628,75 @@
                     },
                     {
                         "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.programOption1": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::programOption1",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 19
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.programOption2": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::programOption2",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 20
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.programOption3": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::programOption3",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 21
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.programWallChoice": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::programWallChoice",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "comment": "selectProgram.content inputs",
+                        "propertyOrder": 18
                     }
                 ]
             },
@@ -3796,6 +3797,10 @@
                 "Local.MAIN.fbMachine.fbRobot.programWallChoice": 3,
                 "Local.MAIN.fbMachine.noErrors": 3,
                 "Local.MAIN.fbMachine.pneumaticsOK": 3,
+                "Local.MAIN.fbMachine.programOption1": 3,
+                "Local.MAIN.fbMachine.programOption2": 3,
+                "Local.MAIN.fbMachine.programOption3": 3,
+                "Local.MAIN.fbMachine.programWallChoice": 3,
                 "Local.MAIN.fbMachine.sHMIPneumaticsOK": 3,
                 "Local.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "Local.MAIN.fbMachine.sHMIRollersActivated": 3,
