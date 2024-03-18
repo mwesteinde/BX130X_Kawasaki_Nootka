@@ -16,11 +16,40 @@ VAR
 	
 	programLoadedString : STRING;
 	programLoadedIndex	: INT;
+	
+	//--------------------Spindle TCP communication --------
+	fbWriteRegs : FB_MBWriteRegs; //Function call
+	ipAddr      : STRING(15) := '192.168.1.5'; //IPADDRESS
+	eWriteState	: (WAIT, START, STOP, WRITE); //state machine
+	
+	//--------------------Warmup params-----------
+	spindleIsWarm 	: BOOL;
+	warmupSpeed1 	: INT := 12000;
+	warmupTime1 	: TIME := T#240S;
+	warmupSpeed2 	: INT := 18000;
+	warmupTime2 	: TIME := T#240S;
+	warmupSpeed3 	: INT := 24000;
+	warmupTime3 	: TIME := T#240S;
+	timerWarmup1	: TON;
+	triggerWarmup1	: R_TRIG;
+	timerWarmup2	: TON;
+	triggerWarmup2	: R_TRIG;
+	timerWarmup3	: TON;
+	triggerWarmup3	: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[Manual_Tool_Change();]]></ST>
     </Implementation>
+    <Method Name="Error_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
+      <Declaration><![CDATA[METHOD Error_Status : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Grab_Tool" Id="{b157a71e-63d7-43c6-8cda-129fe8943333}">
       <Declaration><![CDATA[METHOD Grab_Tool : BOOL //Sets tool change cylinders to closed, returns true if tool locked
 VAR_INPUT
@@ -61,25 +90,94 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Spindle_Warmup" Id="{6626f887-e6c9-4081-bd79-0ba0a3b91bcb}">
-      <Declaration><![CDATA[METHOD Spindle_Warmup
+      <Declaration><![CDATA[METHOD Spindle_Warmup : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[triggerWarmup1(CLK:=timerWarmup1.Q);
+triggerWarmup2(CLK:=timerWarmup2.Q);
+triggerWarmup3(CLK:=timerWarmup3.Q);
+
+timerWarmup1(IN:=TRUE, PT:= warmupTime1);
+
+IF triggerWarmup1.Q THEN
+	Start_Spindle(spindleSpeed := warmupSpeed2);
+	timerWarmup2(IN:=TRUE, PT:= warmupTime2);
+END_IF
+
+IF triggerWarmup2.Q THEN
+	Start_Spindle(spindleSpeed := warmupSpeed3);
+	timerWarmup3(IN:=TRUE, PT:= warmupTime3);
+END_IF
+
+IF triggerWarmup3.Q THEN
+	Stop_Spindle();
+	timerWarmup1(IN:=FALSE, PT:= warmupTime1);
+	timerWarmup2(IN:=FALSE, PT:= warmupTime2);
+	timerWarmup3(IN:=FALSE, PT:= warmupTime3);
+	Spindle_Warmup := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start_Spindle" Id="{702c570c-7182-409d-ac49-a3e78d7a4915}">
       <Declaration><![CDATA[METHOD Start_Spindle
 VAR_INPUT
+	spindleSpeed : INT; //Spindle speed RPM
+	
+END_VAR
+
+VAR
+	spindleFrequency : INT := (spindleSpeed - 12000) / 30 + 400; //Speed conversion to frequency
+	startValue  : ARRAY [0..1] OF WORD := [INT_TO_WORD(18), INT_TO_WORD(SpindleFrequency*10)];
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(startValue), 
+			pSrcAddr:= ADR(startValue), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop_Spindle" Id="{ef644fdc-e119-4b63-a532-fadf07840f86}">
+      <Declaration><![CDATA[METHOD Stop_Spindle
+VAR_INPUT
+END_VAR
+
+VAR
+	stopValue: ARRAY [0..1] OF WORD := [INT_TO_WORD(1), INT_TO_WORD(0)];
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(stopValue), 
+			pSrcAddr:= ADR(stopValue), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Spindle">
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Error_Status">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Grab_Tool">
       <LineId Id="5" Count="0" />
@@ -100,9 +198,27 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Spindle_Warmup">
-      <LineId Id="5" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="20" Count="3" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="25" Count="5" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Start_Spindle">
+      <LineId Id="19" Count="11" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Stop_Spindle">
+      <LineId Id="6" Count="11" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

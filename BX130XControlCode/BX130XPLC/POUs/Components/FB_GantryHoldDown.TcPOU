@@ -152,6 +152,11 @@ VAR
 	decel: LREAL:=600;
 	jer:   LREAL:=1200;
 	vel: LREAL:= 170;
+	
+	dustBootBottom : INT := 20;
+	dustBootLeft : INT := 20;
+	dustBootRight : INT := 20;
+	dustBootTop : INT := 20;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Set target position to middle of robot tool

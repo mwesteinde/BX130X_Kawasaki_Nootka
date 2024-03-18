@@ -10,7 +10,7 @@ VAR
 	// =============== Machine Modules ================================================
 	fbRobot					: FB_Robot;					// Robot object
 	fbSpindle				: FB_Spindle;				// Spindle Object. Includes spindle speed, tool changing control
-	fbGantry				: FB_GantryHoldDown;		// Gantry hold down object. Includes servo control, pneumatic clamping control, robot following
+	fbGantry				: FB_GantryHoldDown(robotPoseGantry := fbRobot.RobotPose);		// Gantry hold down object. Includes servo control, pneumatic clamping control, robot following
 	fbEnclosure				: FB_Enclosure;				// Enclosure control. Includes table clamping, dust collection monitoring, door control
 	
 	// ============== Errors ==========================================================
@@ -92,7 +92,6 @@ END_VAR
 	
 	// State machine
 	
-	// Visualization;
 
 // =========================================================]]></ST>
     </Implementation>
@@ -162,22 +161,20 @@ END_VAR
     </Method>
     <Method Name="Operating_Run" Id="{39f52282-3ce5-4d02-b41e-113893603b81}" FolderPath="StateMachine\">
       <Declaration><![CDATA[METHOD Operating_Run
-VAR_INPUT
+VAR
+	robotHold : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[fbRobot.Start_Robot();
+        <ST><![CDATA[//fbSpindle.Start_Spindle(spindleSpeed := toolSpeed);
+
+fbRobot.Start_Robot();
+robotHold := fbGantry.Follow_Robot();
+
+
+
 
 ]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Start_Operation" Id="{5ceab00d-041b-437c-a141-2f3947c899ed}">
-      <Declaration><![CDATA[METHOD Start_Operation : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="State_Machine" Id="{f466ced8-b935-49bf-a90d-d8b2d5bdc64e}" FolderPath="StateMachine\">
@@ -223,7 +220,7 @@ END_CASE]]></ST>
       <LineId Id="131" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="124" Count="1" />
-      <LineId Id="127" Count="1" />
+      <LineId Id="127" Count="0" />
       <LineId Id="130" Count="0" />
       <LineId Id="104" Count="0" />
     </LineIds>
@@ -249,12 +246,14 @@ END_CASE]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_Run">
-      <LineId Id="5" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="12" Count="0" />
       <LineId Id="7" Count="0" />
       <LineId Id="6" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Machine.Start_Operation">
-      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.State_Machine">
       <LineId Id="5" Count="0" />
