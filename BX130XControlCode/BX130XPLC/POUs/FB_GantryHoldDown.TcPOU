@@ -31,7 +31,7 @@ VAR
 	executeHomeWest		: BOOL;
 	executeHomeEast		: BOOL;
 	executeFollow		: BOOL;
-	executeSync			: BOOL := TRUE;
+	executeSync			: BOOL;
 	executeCylinders	: BOOL;
 	
 	followVariable		: BOOL:= TRUE; //Set for following robot
