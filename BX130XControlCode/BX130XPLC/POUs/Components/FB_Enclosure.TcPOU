@@ -11,31 +11,61 @@ VAR
 	pbTableEastLast: BOOL;
 	cylinderTableWest		AT %Q* : BOOL := FALSE;
 	cylinderTableEast		AT %Q* : BOOL := FALSE;
+	
+	// Door
+	openDoor				AT %Q* : BOOL;
+	closeDoor				AT %Q* : BOOL;
+	doorIsOpen				AT %I* : BOOL;
+	doorTimer				: TON;
+	startTimer: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[// Reverts door to pushbutton operation once 0.5s has passed
+IF startTimer THEN
+	doorTimer(IN:=TRUE, PT:=T#500MS);
+END_IF
+
+IF doorTimer.Q THEN
+	openDoor := FALSE;
+	closeDoor := FALSE;
+	doorTimer(IN:=FALSE);
+	startTimer := FALSE;
+END_IF]]></ST>
     </Implementation>
-    <Method Name="Rolling_Door_Close" Id="{30d6fe7d-957f-4531-95df-ed9ab926cc71}">
-      <Declaration><![CDATA[METHOD Rolling_Door_Close
+    <Method Name="Rolling_Door_HMI_Operation" Id="{30d6fe7d-957f-4531-95df-ed9ab926cc71}">
+      <Declaration><![CDATA[//Opens and closes door
+METHOD Rolling_Door_HMI_Operation
 VAR_INPUT
+	doorCommand : BOOL; //True to open, false to close
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IF doorCommand THEN
+	closeDoor := FALSE;
+	openDoor := TRUE;
+ELSE
+	closeDoor := TRUE;
+	openDoor := FALSE;
+END_IF
+startTimer := TRUE;
+]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Rolling_Door_Open" Id="{e6670138-e3c6-48c0-b523-307e04aaa8b1}">
-      <Declaration><![CDATA[METHOD Rolling_Door_Open
+    <Method Name="Table_Clamp_Control_HMI" Id="{e853bb91-f390-4b22-b7cb-ad932ff4f252}">
+      <Declaration><![CDATA[METHOD Table_Clamp_Control_HMI
 VAR_INPUT
+	eastTableLock : BOOL;
+	westTableLock : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[cylinderTableWest := westTableLock;
+cylinderTableEast := eastTableLock;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Table_Clamp_Control" Id="{78b6b307-6e7b-4cd9-b1f5-bb2aefea736b}">
-      <Declaration><![CDATA[METHOD Table_Clamp_Control
+    <Method Name="Table_Clamp_Control_Pushbutton" Id="{78b6b307-6e7b-4cd9-b1f5-bb2aefea736b}">
+      <Declaration><![CDATA[METHOD Table_Clamp_Control_Pushbutton
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -54,15 +84,29 @@ pbTableEastLast := pbTableEast;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Enclosure">
+      <LineId Id="31" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="34" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="28" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Enclosure.Rolling_Door_Close">
+    <LineIds Name="FB_Enclosure.Rolling_Door_HMI_Operation">
+      <LineId Id="14" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="2" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="24" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Enclosure.Rolling_Door_Open">
+    <LineIds Name="FB_Enclosure.Table_Clamp_Control_HMI">
+      <LineId Id="14" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Enclosure.Table_Clamp_Control">
+    <LineIds Name="FB_Enclosure.Table_Clamp_Control_Pushbutton">
       <LineId Id="6" Count="9" />
       <LineId Id="5" Count="0" />
     </LineIds>

@@ -2544,6 +2544,164 @@
             },
             "USEMAPPING": true
         },
+        "Local.MAIN.fbMachine.bHMIWarmupSpindle": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMIWarmupSpindle",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 15
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbEnclosure.cylinderTableEast": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbEnclosure::cylinderTableEast",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbEnclosure.cylinderTableWest": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbEnclosure::cylinderTableWest",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbEnclosure.doorIsOpen": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbEnclosure::doorIsOpen",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Input"
+                        },
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbGantry.cylindersCentreNorth": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbGantry::cylindersCentreNorth",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 20
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbGantry.cylindersCentreSouth": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbGantry::cylindersCentreSouth",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 21
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbGantry.cylindersNorth": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbGantry::cylindersNorth",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "comment": "Pneumatic cylinders",
+                        "propertyOrder": 19
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.fbGantry.cylindersSouth": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::fbGantry::cylindersSouth",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 22
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "Local.MAIN.fbMachine.fbGantry.rollersReady": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -3787,6 +3945,14 @@
                 "Local.MAIN.fbMachine.bHMILockTables": 3,
                 "Local.MAIN.fbMachine.bHMILowerRaiseRollers": 3,
                 "Local.MAIN.fbMachine.bHMIStart": 3,
+                "Local.MAIN.fbMachine.bHMIWarmupSpindle": 3,
+                "Local.MAIN.fbMachine.fbEnclosure.cylinderTableEast": 3,
+                "Local.MAIN.fbMachine.fbEnclosure.cylinderTableWest": 3,
+                "Local.MAIN.fbMachine.fbEnclosure.doorIsOpen": 3,
+                "Local.MAIN.fbMachine.fbGantry.cylindersCentreNorth": 3,
+                "Local.MAIN.fbMachine.fbGantry.cylindersCentreSouth": 3,
+                "Local.MAIN.fbMachine.fbGantry.cylindersNorth": 3,
+                "Local.MAIN.fbMachine.fbGantry.cylindersSouth": 3,
                 "Local.MAIN.fbMachine.fbGantry.rollersReady": 3,
                 "Local.MAIN.fbMachine.fbRobot.isRobotHomed": 3,
                 "Local.MAIN.fbMachine.fbRobot.programChoice": 3,

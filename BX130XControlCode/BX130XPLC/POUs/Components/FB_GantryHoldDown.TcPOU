@@ -4,9 +4,6 @@
     <Declaration><![CDATA[//TODO: set methods to enable all following, pneumatic cylinder activation, error handling
 
 FUNCTION_BLOCK FB_GantryHoldDown
-VAR_INPUT
-	robotPoseGantry				: Structure_RobotPose; //robot_object
-END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
@@ -18,44 +15,51 @@ VAR
 	fbMC_MoveAbsWest1	: MC_MoveAbsolute;
 	fbMC_MoveAbsWest2	: MC_MoveAbsolute;
 	fbMC_SyncAxes		: MC_GearIn;
+	fbReadStatus		: MC_ReadStatus;
 	Aborting			: MC_BufferMode;
 	
 	//Inputs
 	ls1NE AT %I* 		: BOOL;
 	ls3NW AT %I* 		: BOOL;
 	
-	//Enable bools
-	executeEnableWest	: BOOL;
-	executeEnableEast	: BOOL;
-	executeHomeWest		: BOOL;
-	executeHomeEast		: BOOL;
-	executeFollow		: BOOL;
-	executeSync			: BOOL := TRUE;
-	executeCylinders	: BOOL;
-	
-	followVariable		: BOOL:= TRUE; //Set for following robot
-	
 	//Pneumatic cylinders
 	cylindersNorth 			AT %Q* : BOOL;
 	cylindersCentreNorth	AT %Q* : BOOL;
 	cylindersCentreSouth	AT %Q* : BOOL;
 	cylindersSouth			AT %Q* : BOOL;
+	
 	//Variable to be set by program being run
 	LEN_WOOD : LREAL := 2133; //mm, length of wood being clamped
 	
-	rollersReady	: BOOL;
-
-
+	rollersReady		: BOOL;
+	
+	// Enable bools
+	executeEnable		: BOOL := FALSE;
+	executeHome 		: BOOL := FALSE;
+	executeCouple 		: BOOL := FALSE;
+	executeCylinders	: BOOL := FALSE;
+	followVariable		: BOOL:= TRUE; //Set for following robot
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
+      <ST><![CDATA[//GVL_Axes.AxisWest.ReadStatus();
+//GVL_Axes.AxisEast.ReadStatus();
+//Enable_Axes();
+//Home_Axes();
+//Couple_Axes();
+//Follow_Robot();
+//Cylinder_Set_Cutting();
+GVL_Axes.AxisWest.ReadStatus();
 GVL_Axes.AxisEast.ReadStatus();
-Enable_Axes();
-Home_Axes();
-Couple_Axes();
-Follow_Robot();
-Cylinder_Set_Cutting();]]></ST>
+
+// Movement functions
+Servo_Commands();
+
+// Enable and couple axes
+executeEnable := TRUE;
+IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 THEN
+	executeCouple := NOT executeCouple;
+END_IF]]></ST>
     </Implementation>
     <Folder Name="Archive Individual actions" Id="{c3e285de-5c5b-4308-a0a2-e7733ef6d0f5}" />
     <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}" FolderPath="Archive Individual actions\">
@@ -64,11 +68,11 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[fbMC_SyncAxes(
-	Master:= GVL_Axes.AxisWest, 
-	Slave:= GVL_Axes.AxisEast, 
-	Execute:= executeSync, 
-	RatioNumerator:= 1);]]></ST>
+        <ST><![CDATA[//fbMC_SyncAxes(
+//	Master:= GVL_Axes.AxisWest, 
+//	Slave:= GVL_Axes.AxisEast, 
+//	Execute:= executeSync, 
+//	RatioNumerator:= 1);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Cylinder_Set_Cutting" Id="{80c33305-3d27-491c-90ce-c1e0d842bbab}">
@@ -124,19 +128,19 @@ END_VAR]]></Declaration>
 //	executeEnableEast := TRUE;
 //END_IF
 
-fbMC_PowerWest(
-		Axis:= GVL_Axes.AxisWest, 
-		Enable:= executeEnableWest, 
-		Enable_Positive:= executeEnableWest, 
-		Enable_Negative:= executeEnableWest, 
-		Override:= 100.0);
+//fbMC_PowerWest(
+//		Axis:= GVL_Axes.AxisWest, 
+//		Enable:= executeEnableWest, 
+//		Enable_Positive:= executeEnableWest, 
+//		Enable_Negative:= executeEnableWest, 
+//		Override:= 100.0);
 		
-fbMC_PowerWest(
-		Axis:= GVL_Axes.AxisEast, 
-		Enable:= executeEnableEast, 
-		Enable_Positive:= executeEnableEast, 
-		Enable_Negative:= executeEnableEast, 
-		Override:= 100.0);
+//fbMC_PowerWest(
+//		Axis:= GVL_Axes.AxisEast, 
+//		Enable:= executeEnableEast, 
+//		Enable_Positive:= executeEnableEast, 
+//		Enable_Negative:= executeEnableEast, 
+//		Override:= 100.0);
 		
 ]]></ST>
       </Implementation>
@@ -144,6 +148,7 @@ fbMC_PowerWest(
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
       <Declaration><![CDATA[METHOD Follow_Robot : BOOL
 VAR_INPUT
+	robotPoseGantry : Structure_RobotPose;
 END_VAR
 
 VAR
@@ -169,7 +174,7 @@ END_IF
 
 followVariable := NOT followVariable;
 
-IF executeFollow AND GVL_Axes.AxisWest.Status.Homed THEN
+IF GVL_Axes.AxisWest.Status.Homed THEN
 	fbMC_MoveAbsWest1(
 		Axis:= GVL_Axes.AxisWest, 
 		Execute:= followVariable, 
@@ -207,12 +212,12 @@ END_VAR
 
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[	fbMC_HomeWest(
-		Axis:= GVL_Axes.AxisWest, 
-		Execute:= executeHomeWest, 
-		Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
-		HomingMode:= MC_DefaultHoming, 
-		bCalibrationCam:= NOT ls3NW);
+        <ST><![CDATA[//	fbMC_HomeWest(
+//		Axis:= GVL_Axes.AxisWest, 
+//		Execute:= executeHomeWest, 
+//		Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
+//		HomingMode:= MC_DefaultHoming, 
+//		bCalibrationCam:= NOT ls3NW);
 	
 //	fbMC_HomeEast(
 //		Axis:= GVL_Axes.AxisEast, 
@@ -222,19 +227,65 @@ END_VAR
 //		bCalibrationCam:= NOT ls1NE);]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Initialize_Servos" Id="{40c1f2ee-aae6-427c-ae6f-0159b8da9b8e}">
+    <Method Name="Home_Servos" Id="{40c1f2ee-aae6-427c-ae6f-0159b8da9b8e}">
       <Declaration><![CDATA[//Enables, couples and homes hold down gantry
 //TODO: check if robot is above rollers before homing
-METHOD Initialize_Servos
+//Returns True if can sucessfully home, false if robot too low
+METHOD Home_Servos : Structure_Error
 VAR_INPUT
+	robotPose	: Structure_RobotPose;
 END_VAR
 
 VAR
-	executeEnable: BOOL;
+
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[executeEnable := TRUE;
-//Enable Axes
+        <ST><![CDATA[//executeCouple := TRUE;
+////Couple Axes
+//fbMC_SyncAxes(
+//	Master:= GVL_Axes.AxisWest, 
+//	Slave:= GVL_Axes.AxisEast, 
+//	Execute:= executeCouple, 
+//	RatioNumerator:= 1);
+
+IF robotPose.zPose > GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT THEN
+	//Home Axes
+	IF GVL_Axes.AxisEast.NcToPlc.CoupleState = 3 THEN
+		executeHome := TRUE;
+		Home_Servos.isError := FALSE;
+		Home_Servos.errorMessage := 'No Error';
+	ELSE
+		Home_Servos.isError := TRUE;
+		Home_Servos.errorMessage := 'Axis not coupled properly';
+	END_IF
+ELSE
+	Home_Servos.isError := TRUE;
+	Home_Servos.errorMessage := 'Robot too low to home';
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Lower_Raise_Rollers" Id="{be41d060-f784-4b54-8d63-d2871638718b}">
+      <Declaration><![CDATA[METHOD Lower_Raise_Rollers
+VAR_INPUT
+	raiseRollers	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cylindersNorth 			:= raiseRollers;
+cylindersCentreNorth	:= raiseRollers;
+cylindersCentreSouth 	:= raiseRollers;
+cylindersSouth 			:= raiseRollers;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Servo_Commands" Id="{e822ca69-a3df-402b-82d4-4917018968fd}">
+      <Declaration><![CDATA[METHOD Servo_Commands
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//Enable Axes
 fbMC_PowerWest(
 	Axis:= GVL_Axes.AxisWest, 
 	Enable:= executeEnable, 
@@ -242,27 +293,33 @@ fbMC_PowerWest(
 	Enable_Negative:= executeEnable, 
 	Override:= 100.0);
 		
-fbMC_PowerWest(
+fbMC_PowerEast(
 	Axis:= GVL_Axes.AxisEast, 
 	Enable:= executeEnable, 
 	Enable_Positive:= executeEnable, 
 	Enable_Negative:= executeEnable, 
 	Override:= 100.0);
-		
+	
 //Couple Axes
 fbMC_SyncAxes(
 	Master:= GVL_Axes.AxisWest, 
 	Slave:= GVL_Axes.AxisEast, 
-	Execute:= executeEnable, 
+	Execute:= executeCouple, 
 	RatioNumerator:= 1);
-	
-//Home Axes
+
+//Home
 fbMC_HomeWest(
 	Axis:= GVL_Axes.AxisWest, 
-	Execute:= executeEnable, 
+	Execute:= executeHome, 
 	Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
 	HomingMode:= MC_DefaultHoming, 
-	bCalibrationCam:= NOT ls3NW);]]></ST>
+	bCalibrationCam:= NOT ls3NW);
+	
+IF fbMC_HomeWest.Done THEN
+	executeHome := FALSE;
+END_IF
+	
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_GantryHoldDown">
@@ -273,6 +330,15 @@ fbMC_HomeWest(
       <LineId Id="85" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="133" Count="0" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="197" Count="1" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="208" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Couple_Axes">
       <LineId Id="6" Count="4" />
@@ -340,17 +406,26 @@ fbMC_HomeWest(
       <LineId Id="13" Count="4" />
       <LineId Id="12" Count="0" />
     </LineIds>
-    <LineIds Name="FB_GantryHoldDown.Initialize_Servos">
-      <LineId Id="36" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="6" Count="11" />
+    <LineIds Name="FB_GantryHoldDown.Home_Servos">
+      <LineId Id="184" Count="5" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="169" Count="12" />
+      <LineId Id="55" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Lower_Raise_Rollers">
+      <LineId Id="13" Count="2" />
+      <LineId Id="11" Count="1" />
       <LineId Id="5" Count="0" />
-      <LineId Id="19" Count="1" />
-      <LineId Id="22" Count="3" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="26" Count="1" />
-      <LineId Id="29" Count="4" />
-      <LineId Id="28" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Servo_Commands">
+      <LineId Id="34" Count="14" />
+      <LineId Id="50" Count="4" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="6" Count="5" />
+      <LineId Id="55" Count="3" />
+      <LineId Id="30" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

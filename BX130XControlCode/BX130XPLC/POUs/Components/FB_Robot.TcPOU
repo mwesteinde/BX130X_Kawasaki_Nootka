@@ -8,29 +8,43 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	robotPose 		: Structure_RobotPose;
-	test_1			: BOOL;
-	x_pose_1 AT %I* : USINT;
-	x_pose_2 AT %I* : USINT;
-	y_pose_1 AT %I* : USINT;
-	y_pose_2 AT %I* : USINT;
-	z_pose_1 AT %I* : USINT;
-	z_pose_2 AT %I* : USINT;
-	o_pose_1 AT %I* : USINT;
-	o_pose_2 AT %I* : USINT;
-	a_pose_1 AT %I* : USINT;
-	a_pose_2 AT %I* : USINT;
-	t_pose_1 AT %I* : USINT;
-	t_pose_2 AT %I* : USINT;
+	robotPose 		: Structure_RobotPose;	//Stores robot pose
+
+	//----------Inputs From Robot ----------
+	x_pose_1 AT %I* : USINT; //Signal 1-8
+	x_pose_2 AT %I* : USINT; //Signal 9-16
+	y_pose_1 AT %I* : USINT; //Signal 17-25
+	y_pose_2 AT %I* : USINT; //Signal 26-32
+	z_pose_1 AT %I* : USINT; //Signal 33-40
+	z_pose_2 AT %I* : USINT; //Signal 41-48
+	o_pose_1 AT %I* : USINT; //Signal 49-56
+	o_pose_2 AT %I* : USINT; //Signal 57-64
+	a_pose_1 AT %I* : USINT; //Signal 65-72
+	a_pose_2 AT %I* : USINT; //Signal 73-80
+	t_pose_1 AT %I* : USINT; //Signal 81-88
+	t_pose_2 AT %I* : USINT; //Signal 89-96
+	motorIsOn		: BOOL; //Signal number 97
+	robotError		: BOOL; //Signal 98
+	robotAutomatic	: BOOL; //Signal 99
+	robotIsHomed				: BOOL; //Signal 100
+	robotInTeach				: BOOL; //Signal 101
+	robotCycleStart				: BOOL; //Signal 102
+	robotPowerOn				: BOOL; //Signal 103
+	robotPoseDataBeingSent		: BOOL; //Signal 104
+	robotEmergencyStop			: BOOL; //Signal 105
+	robotBatteryAlarm			: BOOL; //Signal 106
+	robotToolNumberCurrent		: BOOL; //Signal 107
+	robotToolNumberRequest		: BOOL; //Signal 108
 	
-	programChoice 	AT %Q* 		: INT;
-	programRun 		AT %Q*		: BOOL;
-	externalRunHold AT %Q* 		: BOOL;
-	
-	
-	
-	isRobotHomed		: BOOL;
-	programChoiceIndex	: INT;
+	//----------Outputs To Robot ----------
+	robotTurnMotorOn			: BOOL; //Signal 1001
+	robotResetError				: BOOL; //Signal 1002
+	robotStartCycle				: BOOL; //Signal 1003
+	robotResetProgram			: BOOL; //Signal 1004
+	robotRunProgram				: BOOL; //Signal 1005
+	externalRunHold		 		: BOOL; //Signal 1006
+	robotHome					: BOOL; //Signal 1007
+	robotProgramChoice	AT %Q*	: INT; //Signals 1017-1032
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -43,7 +57,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IF robotIsHomed THEN
+	robotHome := FALSE;
+ELSE 
+	robotHome := TRUE;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Program_Select" Id="{5ccc5e7e-14d0-4912-bf3c-54f9c88aeb76}">
@@ -114,6 +133,9 @@ robotPose.tPose := UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400;
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Home_Robot">
+      <LineId Id="10" Count="1" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="12" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Program_Select">

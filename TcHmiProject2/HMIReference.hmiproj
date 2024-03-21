@@ -108,6 +108,9 @@
     <Content Include="Images\NootkaLogo.png">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Server\ADS\ADS.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="View1.view">
       <SubType>Content</SubType>
     </Content>

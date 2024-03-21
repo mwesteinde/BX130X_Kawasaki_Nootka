@@ -7,10 +7,11 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	robotPose 		: Structure_RobotPose;
 	// =============== Machine Modules ================================================
 	fbRobot					: FB_Robot;					// Robot object
 	fbSpindle				: FB_Spindle;				// Spindle Object. Includes spindle speed, tool changing control
-	fbGantry				: FB_GantryHoldDown(robotPoseGantry := fbRobot.RobotPose);		// Gantry hold down object. Includes servo control, pneumatic clamping control, robot following
+	fbGantry				: FB_GantryHoldDown;		// Gantry hold down object. Includes servo control, pneumatic clamping control, robot following
 	fbEnclosure				: FB_Enclosure;				// Enclosure control. Includes table clamping, dust collection monitoring, door control
 	
 	// ============== Errors ==========================================================
@@ -18,17 +19,29 @@ VAR
 	bErrors			: BOOL;								// True if modules have errors or E stop.								
 	
 	// =============== State machine ================================================
-	
 	eSystemState			: E_MachineState := E_MachineState.INITIALIZATION;  // Current state 
 	eSystemStateRequested 	: E_MachineState;									// Requested state
 	
 	// =============== HMI buttons and states ========================================
 	// initialize.content buttons
 	bHMIHomeRobot			: BOOL; //
+	rTrigHomeRobot			: R_TRIG; //
 	bHMIHomeMotors			: BOOL; //
+	rTrigHomeMotors			: R_TRIG; //
 	bHMICloseDoor			: BOOL; //
+	rTrigCloseDoor			: R_TRIG; //
+	fTrigOpenDoor			: F_TRIG; //
 	bHMILockTables			: BOOL; //
+	rTrigLockTables			: R_TRIG; //
+	fTrigUnlockTables		: F_TRIG; //
 	bHMILowerRaiseRollers	: BOOL; //
+	rTrigRaiseRollers		: R_TRIG; //
+	fTrigLowerRollers		: F_TRIG; //
+	bHMIWarmupSpindle		: BOOL; //
+	rTrigWarmupSpindle		: R_TRIG; //
+	fTrigStopSpindle		: F_TRIG; //
+	
+	isCalledHomeMotors	: BOOL := FALSE;
 	
 	// initialize.content indicators
 	sHMIMotorsHomed			: BOOL; //Todo: Change colour/text when activated
@@ -59,18 +72,15 @@ VAR
 	sHMIRollersActivated	: BOOL; // Indicator light of rollers activated, called from run.content
 	sHMIeStopsOff			: BOOL; // Indicator light of e stops off, called from run.content
 	
+	// Error states
+	eInitializeServos : Structure_Error;
+	
+	Enable: BOOL;
+	StartEnable: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[// =========================================================
-// Getting errors of modules
-	
-//	bError := fbSeparateModule.bAxisError OR fbSeparateModule.bClampError OR fbSeparateModule.bBarrierError
-//			OR fbMetalSorting.bAxisError OR fbMetalSorting.bCylError 
-//			OR fbPlasticSorting.bAxisError OR fbPlasticSorting.bCylError;
-
-// =========================================================
-// Call of actions
+      <ST><![CDATA[// Call of actions
 
 	// Init
 	
@@ -91,9 +101,27 @@ END_VAR
 	// Output variables
 	
 	// State machine
+	rTrigHomeRobot(CLK := bHMIHomeRobot);
+	rTrigHomeMotors(CLK := bHMIHomeMotors);
+	rTrigCloseDoor(CLK := bHMICloseDoor);
+	rTrigLockTables(CLK := bHMILockTables);
+	rTrigRaiseRollers(CLK := bHMILowerRaiseRollers);
+	rTrigWarmupSpindle(CLK := bHMIWarmupSpindle);
 	
+	fTrigOpenDoor(CLK := bHMICloseDoor);
+	fTrigUnlockTables(CLK := bHMILockTables);
+	fTrigLowerRollers(CLK := bHMILowerRaiseRollers);
+	fTrigStopSpindle(CLK := bHMIWarmupSpindle);
 
-// =========================================================]]></ST>
+// ====================== Scrap ===================================
+
+//	IF Enable THEN
+//		fbSpindle.Stop_Spindle();
+//	END_IF
+	
+//	IF StartEnable THEN
+//		fbSpindle.Start_Spindle(spindleSpeed := 12000);
+//	END_IF]]></ST>
     </Implementation>
     <Folder Name="StateMachine" Id="{b4b3eed7-4e15-4350-a74a-294b50706019}" />
     <Method Name="Change_State" Id="{11427209-76ae-4b9c-9f30-0498e05b4968}" FolderPath="StateMachine\">
@@ -136,9 +164,54 @@ END_VAR
       <Declaration><![CDATA[METHOD Operating_Initialization
 VAR_INPUT
 END_VAR
+
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbGantry();
+fbEnclosure();
+fbSpindle();
+
+//Pushbuttons
+IF rTrigHomeRobot.Q THEN
+	fbRobot.Home_Robot(); //Todo: Implement in robot AS code
+END_IF
+
+IF rTrigHomeMotors.Q THEN
+	eInitializeServos := fbGantry.Home_Servos(robotPose := fbRobot.robotPose); //Done, tested
+END_IF
+
+//Toggle buttons
+IF rTrigCloseDoor.Q THEN
+	fbEnclosure.Rolling_Door_HMI_Operation(doorCommand := FALSE); //Done, tested no door
+END_IF
+
+IF fTrigOpenDoor.Q THEN
+	fbEnclosure.Rolling_Door_HMI_Operation(doorCommand := TRUE); //Done, tested no door
+END_IF
+
+IF rTrigLockTables.Q THEN
+	fbEnclosure.Table_Clamp_Control_HMI(eastTableLock := TRUE, westTableLock := TRUE); //Done, tested
+END_IF
+
+IF fTrigUnlockTables.Q THEN
+	fbEnclosure.Table_Clamp_Control_HMI(eastTableLock := FALSE, westTableLock := FALSE); //Done, tested
+END_IF
+
+IF rTrigRaiseRollers.Q THEN
+	fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE); //Done, tested
+END_IF
+
+IF fTrigLowerRollers.Q THEN
+	fbGantry.Lower_Raise_Rollers(raiseRollers := FALSE); //Done, tested
+END_IF
+
+IF rTrigWarmupSpindle.Q THEN
+	fbSpindle.Spindle_Warmup();
+END_IF
+
+IF fTrigStopSpindle.Q THEN
+	fbSpindle.Stop_Spindle();
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operating_ManualMove" Id="{e062f620-36f2-4ef0-9468-9f06db1c52fd}" FolderPath="StateMachine\">
@@ -169,7 +242,7 @@ END_VAR
         <ST><![CDATA[//fbSpindle.Start_Spindle(spindleSpeed := toolSpeed);
 
 fbRobot.Start_Robot();
-robotHold := fbGantry.Follow_Robot();
+//robotHold := fbGantry.Follow_Robot();
 
 
 
@@ -203,14 +276,12 @@ END_CASE]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Machine">
-      <LineId Id="134" Count="4" />
-      <LineId Id="132" Count="1" />
-      <LineId Id="107" Count="3" />
+      <LineId Id="108" Count="2" />
       <LineId Id="149" Count="0" />
       <LineId Id="178" Count="1" />
       <LineId Id="152" Count="0" />
       <LineId Id="113" Count="0" />
-      <LineId Id="151" Count="0" />
+      <LineId Id="370" Count="0" />
       <LineId Id="115" Count="0" />
       <LineId Id="188" Count="1" />
       <LineId Id="150" Count="0" />
@@ -219,10 +290,16 @@ END_CASE]]></ST>
       <LineId Id="118" Count="1" />
       <LineId Id="131" Count="0" />
       <LineId Id="122" Count="0" />
-      <LineId Id="124" Count="1" />
+      <LineId Id="124" Count="0" />
+      <LineId Id="346" Count="5" />
       <LineId Id="127" Count="0" />
+      <LineId Id="352" Count="0" />
+      <LineId Id="356" Count="2" />
+      <LineId Id="353" Count="0" />
       <LineId Id="130" Count="0" />
       <LineId Id="104" Count="0" />
+      <LineId Id="378" Count="6" />
+      <LineId Id="377" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Change_State">
       <LineId Id="5" Count="0" />
@@ -237,7 +314,33 @@ END_CASE]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_Initialization">
-      <LineId Id="5" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="19" Count="2" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="59" Count="2" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="27" Count="2" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="64" Count="2" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="68" Count="2" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="35" Count="2" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="72" Count="2" />
+      <LineId Id="71" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_ManualMove">
       <LineId Id="5" Count="0" />

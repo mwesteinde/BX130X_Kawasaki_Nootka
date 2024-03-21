@@ -25,21 +25,70 @@ VAR
 	//--------------------Warmup params-----------
 	spindleIsWarm 	: BOOL;
 	warmupSpeed1 	: INT := 12000;
-	warmupTime1 	: TIME := T#240S;
+	warmupTime1 	: TIME := T#30S;
 	warmupSpeed2 	: INT := 18000;
-	warmupTime2 	: TIME := T#240S;
+	warmupTime2 	: TIME := T#30S;
 	warmupSpeed3 	: INT := 24000;
-	warmupTime3 	: TIME := T#240S;
-	timerWarmup1	: TON;
-	triggerWarmup1	: R_TRIG;
-	timerWarmup2	: TON;
-	triggerWarmup2	: R_TRIG;
-	timerWarmup3	: TON;
-	triggerWarmup3	: R_TRIG;
+	warmupTime3 	: TIME := T#30S;
+	startTime		: TIME;
+	elapsedWarmupTime : TIME;
+	spindleWarmupOn	: BOOL;
+	triggerWarmup	: R_TRIG;
+	
+	warmUp3: BOOL;
+	warmUp2: BOOL;
+	warmUp1: BOOL;
+	triggerWarm1: R_TRIG;
+	triggerWarm2: R_TRIG;
+	triggerWarm3: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Manual_Tool_Change();]]></ST>
+      <ST><![CDATA[Manual_Tool_Change();
+
+//Spindle warmup routine, trigerred from Start_Spindle and stopped with Stop_Spindle
+	triggerWarmup(CLK:=spindleWarmupOn);
+	triggerWarm1(CLK:=warmUp1);
+	triggerWarm2(CLK:=warmUp2);
+	triggerWarm3(CLK:=warmUp3);
+	
+	IF spindleWarmupOn THEN
+	IF triggerWarmup.Q THEN
+		startTime := TIME(); 
+	END_IF
+		
+	elapsedWarmupTime := TIME() - startTime;
+	
+	IF elapsedWarmupTime > warmUpTime1 + warmupTime2 + warmupTime3 THEN
+		warmUp1 := FALSE;
+		warmUp2 := FALSE;
+		warmUp3 := FALSE;
+		Stop_Spindle();
+		spindleWarmupOn := FALSE;
+		spindleIsWarm := TRUE;
+	ELSIF elapsedWarmupTime > warmUpTime1 + warmupTime2 THEN
+		warmUp1 := FALSE;
+		warmUp2 := FALSE;
+		warmUp3 := TRUE;
+	ELSIF elapsedWarmupTime > warmUpTime1 THEN
+		warmUp1 := FALSE;
+		warmUp2 := TRUE;
+		warmUp3 := FALSE;
+	ELSIF elapsedWarmupTime > T#0S THEN
+		warmUp1 := TRUE;
+		warmUp2 := FALSE;
+		warmUp3 := FALSE;
+	END_IF
+	
+	IF triggerWarm1.Q THEN
+		Start_Spindle(spindleSpeed := warmupSpeed1);
+	ELSIF triggerWarm2.Q THEN
+		Start_Spindle(spindleSpeed := warmupSpeed2);
+	ELSIF triggerWarm3.Q THEN
+		Start_Spindle(spindleSpeed := warmupSpeed3);
+	END_IF
+
+END_IF]]></ST>
     </Implementation>
     <Method Name="Error_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
       <Declaration><![CDATA[METHOD Error_Status : BOOL
@@ -90,34 +139,12 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Spindle_Warmup" Id="{6626f887-e6c9-4081-bd79-0ba0a3b91bcb}">
-      <Declaration><![CDATA[METHOD Spindle_Warmup : BOOL
+      <Declaration><![CDATA[METHOD Spindle_Warmup
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[triggerWarmup1(CLK:=timerWarmup1.Q);
-triggerWarmup2(CLK:=timerWarmup2.Q);
-triggerWarmup3(CLK:=timerWarmup3.Q);
-
-timerWarmup1(IN:=TRUE, PT:= warmupTime1);
-
-IF triggerWarmup1.Q THEN
-	Start_Spindle(spindleSpeed := warmupSpeed2);
-	timerWarmup2(IN:=TRUE, PT:= warmupTime2);
-END_IF
-
-IF triggerWarmup2.Q THEN
-	Start_Spindle(spindleSpeed := warmupSpeed3);
-	timerWarmup3(IN:=TRUE, PT:= warmupTime3);
-END_IF
-
-IF triggerWarmup3.Q THEN
-	Stop_Spindle();
-	timerWarmup1(IN:=FALSE, PT:= warmupTime1);
-	timerWarmup2(IN:=FALSE, PT:= warmupTime2);
-	timerWarmup3(IN:=FALSE, PT:= warmupTime3);
-	Spindle_Warmup := TRUE;
-END_IF]]></ST>
+        <ST><![CDATA[spindleWarmupOn := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start_Spindle" Id="{702c570c-7182-409d-ac49-a3e78d7a4915}">
@@ -141,6 +168,20 @@ END_VAR
 			nMBAddr:= 16#2000, 
 			cbLength:= SIZEOF(startValue), 
 			pSrcAddr:= ADR(startValue), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(startValue), 
+			pSrcAddr:= ADR(startValue), 
 			bExecute:= TRUE, 
 			tTimeout:= , 
 			bBusy=> , 
@@ -155,10 +196,23 @@ END_VAR
 
 VAR
 	stopValue: ARRAY [0..1] OF WORD := [INT_TO_WORD(1), INT_TO_WORD(0)];
-	
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(stopValue), 
+			pSrcAddr:= ADR(stopValue), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+
+fbWriteRegs(
 			sIPAddr:= ipAddr, 
 			nTCPPort:= 502, 
 			nUnitID:= 16#FF, 
@@ -170,11 +224,51 @@ END_VAR]]></Declaration>
 			tTimeout:= , 
 			bBusy=> , 
 			bError=> , 
-			nErrId=> );]]></ST>
+			nErrId=> );
+			
+spindleWarmupOn := FALSE;
+warmup1 := FALSE;
+warmup2 := FALSE;
+warmup3 := FALSE;
+
+]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Spindle">
       <LineId Id="9" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="170" Count="1" />
+      <LineId Id="159" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="146" Count="1" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="178" Count="1" />
+      <LineId Id="161" Count="0" />
+      <LineId Id="150" Count="0" />
+      <LineId Id="176" Count="1" />
+      <LineId Id="163" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="174" Count="1" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="184" Count="2" />
+      <LineId Id="188" Count="3" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="77" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Error_Status">
       <LineId Id="5" Count="0" />
@@ -198,28 +292,24 @@ END_VAR]]></Declaration>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Spindle_Warmup">
-      <LineId Id="33" Count="0" />
-      <LineId Id="35" Count="1" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="20" Count="3" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="25" Count="5" />
-      <LineId Id="37" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Start_Spindle">
+      <LineId Id="42" Count="11" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="54" Count="0" />
       <LineId Id="19" Count="11" />
       <LineId Id="16" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Stop_Spindle">
+      <LineId Id="28" Count="11" />
+      <LineId Id="26" Count="1" />
       <LineId Id="6" Count="11" />
       <LineId Id="5" Count="0" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="25" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
