@@ -1208,6 +1208,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIRunProgram": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIRunProgram",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 34
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.programOption1": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1257,6 +1274,113 @@
                     {
                         "comment": "Front wall: True: Door lock, false, no lock Back wall: NA",
                         "propertyOrder": 34
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.programWallChoice": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::programWallChoice",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "comment": "1 for front wall, 2 for back wall, 3-16 for additional options",
+                        "propertyOrder": 31
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIDustCollectionOn": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIDustCollectionOn",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 49
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIPneumaticsOK": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIPneumaticsOK",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of pneumatic pressure, called from run.content",
+                        "propertyOrder": 45
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIRobotHomed": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIRobotHomed",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of robot homed, called from run.content. Todo: Change colour/text when activated",
+                        "propertyOrder": 46
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIRollersActivated": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIRollersActivated",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of rollers activated, called from run.content",
+                        "propertyOrder": 47
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIeStopsOff": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIeStopsOff",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Indicator light of e stops off, called from run.content",
+                        "propertyOrder": 48
                     }
                 ]
             },
@@ -3972,9 +4096,16 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
+                "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
                 "C1007.MAIN.fbMachine.programOption2": 3,
                 "C1007.MAIN.fbMachine.programOption3": 3,
+                "C1007.MAIN.fbMachine.programWallChoice": 3,
+                "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
+                "C1007.MAIN.fbMachine.sHMIPneumaticsOK": 3,
+                "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
+                "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,
+                "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,
                 "CreateEvent": 3,

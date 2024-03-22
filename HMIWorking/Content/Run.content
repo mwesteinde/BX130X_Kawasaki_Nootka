@@ -40,13 +40,13 @@
 </script>
 
 </div>
-<div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Tool &quot;toolname&quot; is loaded" data-tchmi-top="252" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+<div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Tool &quot;toolname&quot; is loaded" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
-<div id="ChecktablesLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Both tables are loaded" data-tchmi-top="288" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+<div id="ChecktablesLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Both tables are loaded" data-tchmi-top="291" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
-<div id="CheckNoOneInCell" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="No one is in cell" data-tchmi-top="324" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+<div id="CheckNoOneInCell" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="No one is in cell" data-tchmi-top="327" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
-<div id="TcHmiCheckbox_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Checkbox" data-tchmi-top="360" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+<div id="TcHmiCheckbox_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Checkbox" data-tchmi-top="363" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
 <div id="TextCurrentTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="72" data-tchmi-height-unit="px" data-tchmi-left="519" data-tchmi-left-unit="px" data-tchmi-text="Tool Info" data-tchmi-top="123" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
@@ -63,23 +63,23 @@
 </div>
 <div id="ButtonToolLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="544" data-tchmi-left-unit="px" data-tchmi-text="Tool Loaded" data-tchmi-top="295" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="IndicatorEStopsOff" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="212" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
+<div id="IndicatorEStopsOff" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="215" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
 </div>
-<div id="TextEStopsOff" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="E Stops Off" data-tchmi-top="216" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TextEStopsOff" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="E Stops Off" data-tchmi-top="219" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="IndicatorRollersActivated" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="172" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
+<div id="IndicatorRollersActivated" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="179" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
 </div>
-<div id="TextRollersFollowing" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Rollers Activated" data-tchmi-top="176" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TextRollersFollowing" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Rollers Activated" data-tchmi-top="179" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="IndicatorRobotHomed" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="132" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
+<div id="IndicatorRobotHomed" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="139" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
 </div>
-<div id="TestRobotHomed" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Robot Homed" data-tchmi-top="136" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TestRobotHomed" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Robot Homed" data-tchmi-top="143" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="IndicatorPneumaticPressureOK" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="96" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
+<div id="IndicatorPneumaticPressureOK" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="103" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
 </div>
-<div id="TextPressureOK" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Pneumatic Pressure OK" data-tchmi-top="96" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TextPressureOK" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Pneumatic Pressure OK" data-tchmi-top="103" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="buttonErrorFix" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Error Screen" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="buttonErrorFix" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Error Screen" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
@@ -157,7 +157,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.isRobotHomed%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIPneumaticsOK%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -171,7 +171,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.rollersReady%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIRobotHomed%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -185,7 +185,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.noErrors%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIRollersActivated%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -199,12 +199,12 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.pneumaticsOK%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIeStopsOff%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": true
+                  "value": false
                 },
                 "compareOperator": "==",
                 "logic": "AND"
@@ -214,7 +214,7 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%ctrl%buttonStartRobot::IsEnabled%/ctrl%",
+                "symbolExpression": "%ctrl%ToggleStartStop::IsEnabled%/ctrl%",
                 "value": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/Boolean",
@@ -229,7 +229,7 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%ctrl%buttonStartRobot::IsEnabled%/ctrl%",
+                "symbolExpression": "%ctrl%ToggleStartStop::IsEnabled%/ctrl%",
                 "value": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/Boolean",
@@ -256,7 +256,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbRobot.isRobotHomed%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIRobotHomed%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -313,7 +313,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.noErrors%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIeStopsOff%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -370,7 +370,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.pneumaticsOK%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIPneumaticsOK%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -427,7 +427,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.rollersReady%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIRollersActivated%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -460,6 +460,63 @@
                 "objectType": "WriteToSymbol",
                 "active": true,
                 "symbolExpression": "%ctrl%IndicatorRollersActivated::FillColor%/ctrl%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(249, 23, 23, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
+      },
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIDustCollectionOn%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%IndicatorDustOn::FillColor%/ctrl%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(26, 171, 26, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%IndicatorDustOn::FillColor%/ctrl%",
                 "value": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
@@ -706,6 +763,74 @@
           }
         ],
         "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleStartStop::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "Condition",
+        "active": true,
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIDustCollectionOn%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%IndicatorDustOn::FillColor%/ctrl%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(26, 171, 26, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%IndicatorDustOn::FillColor%/ctrl%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/Color",
+                  "value": {
+                    "color": "rgba(249, 23, 23, 1)"
+                  }
+                },
+                "asyncWait": true
+              }
+            ]
+          }
+        ],
+        "asyncWait": true
       }
     ]
   }
@@ -715,8 +840,12 @@
 
 
 </div>
-<div id="ToggleHoldRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="418" data-tchmi-left-unit="px" data-tchmi-text="Hold" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ToggleHoldRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="395" data-tchmi-left-unit="px" data-tchmi-text="Hold" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="ToggleStartStop" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="223" data-tchmi-left-unit="px" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text="Start">
+<div id="ToggleStartStop" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="215" data-tchmi-left-unit="px" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text="Start">
+</div>
+<div id="IndicatorDustOn" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="63" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
+</div>
+<div id="TextPressureOK_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Dust Collection On" data-tchmi-top="67" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 </div>

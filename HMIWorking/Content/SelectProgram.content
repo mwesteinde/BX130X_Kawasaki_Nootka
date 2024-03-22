@@ -82,7 +82,7 @@
 
 
 </div>
-<div id="ButtonToRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="292" data-tchmi-left-unit="px" data-tchmi-text="Run Program" data-tchmi-top="407" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-vertical-alignment="Center" data-tchmi-is-enabled="false">
+<div id="ButtonToRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="292" data-tchmi-left-unit="px" data-tchmi-text="Run Program" data-tchmi-top="407" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-vertical-alignment="Center" data-tchmi-is-enabled="false" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIRunProgram%/s%">
 
 
 
@@ -113,13 +113,13 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/Boolean",
-                  "symbolExpression": "%ctrl%ToggleFrontWallSelect::IsAttached%/ctrl%"
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                  "symbolExpression": "%ctrl%ToggleFrontWallSelect::ToggleState%/ctrl%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/Boolean",
-                  "value": true
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                  "value": "Active"
                 },
                 "compareOperator": "==",
                 "logic": null
@@ -129,171 +129,12 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%s%Local.MAIN.fbMachine.programWallChoice%/s%",
+                "symbolExpression": "%s%C1007.MAIN.fbMachine.programWallChoice%/s%",
                 "value": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "symbolExpression": "%ctrl%ToggleFrontWallSelect::Text%/ctrl%"
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/INT",
+                  "value": "1"
                 },
-                "asyncWait": true
-              },
-              {
-                "objectType": "Condition",
-                "active": true,
-                "parts": [
-                  {
-                    "if": [
-                      {
-                        "compare1": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "symbolExpression": "%ctrl%ToggleECut::IsAttached%/ctrl%"
-                        },
-                        "compare2": {
-                          "objectType": "StaticValue",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "value": true
-                        },
-                        "compareOperator": "==",
-                        "logic": null
-                      }
-                    ],
-                    "then": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleECut::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  },
-                  {
-                    "else": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleNoECut::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  }
-                ],
-                "asyncWait": true
-              },
-              {
-                "objectType": "Condition",
-                "active": true,
-                "parts": [
-                  {
-                    "if": [
-                      {
-                        "compare1": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "symbolExpression": "%ctrl%ToggleWoodDoor::IsAttached%/ctrl%"
-                        },
-                        "compare2": {
-                          "objectType": "StaticValue",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "value": true
-                        },
-                        "compareOperator": "==",
-                        "logic": null
-                      }
-                    ],
-                    "then": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleWoodDoor::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  },
-                  {
-                    "else": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleGlassDoor::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  }
-                ],
-                "asyncWait": true
-              },
-              {
-                "objectType": "Condition",
-                "active": true,
-                "parts": [
-                  {
-                    "if": [
-                      {
-                        "compare1": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "symbolExpression": "%ctrl%ToggleLock::IsAttached%/ctrl%"
-                        },
-                        "compare2": {
-                          "objectType": "StaticValue",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "value": true
-                        },
-                        "compareOperator": "==",
-                        "logic": null
-                      }
-                    ],
-                    "then": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption3%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleLock::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  },
-                  {
-                    "else": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption3%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleNoLock::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  }
-                ],
                 "asyncWait": true
               }
             ]
@@ -303,128 +144,11 @@
               {
                 "objectType": "WriteToSymbol",
                 "active": true,
-                "symbolExpression": "%s%Local.MAIN.fbMachine.programWallChoice%/s%",
-                "value": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "symbolExpression": "%ctrl%ToggleRearWallSelect::Text%/ctrl%"
-                },
-                "asyncWait": true
-              },
-              {
-                "objectType": "Condition",
-                "active": true,
-                "parts": [
-                  {
-                    "if": [
-                      {
-                        "compare1": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "symbolExpression": "%ctrl%ToggleNoWindow::IsAttached%/ctrl%"
-                        },
-                        "compare2": {
-                          "objectType": "StaticValue",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "value": true
-                        },
-                        "compareOperator": "==",
-                        "logic": null
-                      }
-                    ],
-                    "then": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleNoWindow::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  },
-                  {
-                    "else": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption1%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleStandardWindow::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  }
-                ],
-                "asyncWait": true
-              },
-              {
-                "objectType": "Condition",
-                "active": true,
-                "parts": [
-                  {
-                    "if": [
-                      {
-                        "compare1": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "symbolExpression": "%ctrl%ToggleNoChimney::IsAttached%/ctrl%"
-                        },
-                        "compare2": {
-                          "objectType": "StaticValue",
-                          "valueType": "tchmi:general#/definitions/Boolean",
-                          "value": true
-                        },
-                        "compareOperator": "==",
-                        "logic": null
-                      }
-                    ],
-                    "then": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleNoChimney::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  },
-                  {
-                    "else": [
-                      {
-                        "objectType": "WriteToSymbol",
-                        "active": true,
-                        "symbolExpression": "%s%Local.MAIN.fbMachine.programOption2%/s%",
-                        "value": {
-                          "objectType": "Symbol",
-                          "valueType": "tchmi:general#/definitions/String",
-                          "symbolExpression": "%ctrl%ToggleChimney::Text%/ctrl%"
-                        },
-                        "asyncWait": true
-                      }
-                    ]
-                  }
-                ],
-                "asyncWait": true
-              },
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%s%Local.MAIN.fbMachine.programOption3%/s%",
+                "symbolExpression": "%s%C1007.MAIN.fbMachine.programWallChoice%/s%",
                 "value": {
                   "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/STRING(80)",
-                  "value": "\"\""
+                  "valueType": "tchmi:general#/definitions/INT",
+                  "value": "2"
                 },
                 "asyncWait": true
               }
@@ -1045,6 +769,68 @@
             ]
           },
           {
+            "elseif": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/String",
+                  "symbolExpression": "%ctrl%ToggleOption3::ToggleState%/ctrl%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                  "value": "Active"
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%ButtonToRun::IsEnabled%/ctrl%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/Boolean",
+                  "value": true
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "elseif": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/String",
+                  "symbolExpression": "%ctrl%ToggleOption4::ToggleState%/ctrl%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                  "value": "Active"
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%ctrl%ButtonToRun::IsEnabled%/ctrl%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/Boolean",
+                  "value": true
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
             "else": [
               {
                 "objectType": "WriteToSymbol",
@@ -1066,4 +852,256 @@
   }
 ]
 </script>
+<div id="ToggleOption3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="125" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option3" data-tchmi-top="214" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "ToggleFrontWallSelect_1.onStatePressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoWindow::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleStandardWindow::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "ToggleFrontWallSelect_1.onStateReleased",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoWindow::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleStandardWindow::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="ToggleOption4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="125" data-tchmi-height-unit="px" data-tchmi-left="416" data-tchmi-left-unit="px" data-tchmi-text="Option4" data-tchmi-top="214" data-tchmi-top-unit="px" data-tchmi-width="129" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "ToggleRearWallSelect_1.onStatePressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleECut::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleGlassDoor::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleLock::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoECut::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoLock::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleWoodDoor::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "ToggleRearWallSelect_1.onStateReleased",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleECut::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleGlassDoor::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleLock::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoECut::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleNoLock::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleWoodDoor::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
 </div>
