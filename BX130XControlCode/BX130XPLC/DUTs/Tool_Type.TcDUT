@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="Tool_Type" Id="{ec2149ba-28e5-4063-89d2-01852d05b58d}">
+    <Declaration><![CDATA[TYPE Tool_Type :
+STRUCT
+	speed 				: INT;
+	toolNumber 			: INT;
+	signalKawasaki		: INT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

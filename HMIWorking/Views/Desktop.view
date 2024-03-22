@@ -1,4 +1,4 @@
-<div id="Desktop" data-tchmi-type="TcHmi.Controls.System.TcHmiView" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width-mode="Value" data-tchmi-min-width="100" data-tchmi-min-width-unit="%" data-tchmi-height-mode="Value" data-tchmi-min-height="100" data-tchmi-min-height-unit="%" data-tchmi-width="1024" data-tchmi-height="600">
+<div id="Desktop" data-tchmi-type="TcHmi.Controls.System.TcHmiView" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width-mode="Value" data-tchmi-min-width="100" data-tchmi-min-width-unit="%" data-tchmi-height-mode="Value" data-tchmi-min-height="100" data-tchmi-min-height-unit="%" data-tchmi-width="800" data-tchmi-height="600">
 
 
 
@@ -7,7 +7,7 @@
   "color": "rgba(255, 255, 255, 1)"
 }
 </script>
-<div id="RegionMain" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="500" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="90" data-tchmi-top-unit="px" data-tchmi-width="1004" data-tchmi-width-unit="px" data-tchmi-target-content="Content/Startup.content">
+<div id="RegionMain" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="500" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="90" data-tchmi-top-unit="px" data-tchmi-width="780" data-tchmi-width-unit="px" data-tchmi-target-content="Content/Startup.content">
 </div>
 <div id="TcHmiButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="" data-tchmi-top="16" data-tchmi-top-unit="px" data-tchmi-width="50" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-background-image="Images/Back.png" data-tchmi-background-image-width="50">
 
@@ -138,9 +138,9 @@
 </div>
 <div id="TcHmiButton_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="70" data-tchmi-left-unit="px" data-tchmi-text="" data-tchmi-top="16" data-tchmi-top-unit="px" data-tchmi-width="50" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-background-image="Images/Settings.png" data-tchmi-background-image-width="50">
 </div>
-<div id="Time" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="773" data-tchmi-left-unit="px" data-tchmi-text="Time" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="Time" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="549" data-tchmi-left-unit="px" data-tchmi-text="Time" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="PastJobs" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="663" data-tchmi-left-unit="px" data-tchmi-text="Past jobs" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="PastJobs" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="439" data-tchmi-left-unit="px" data-tchmi-text="Past jobs" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
@@ -161,7 +161,7 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="ButtonHome" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="883" data-tchmi-left-unit="px" data-tchmi-text="" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="131" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-background-image="Images/NootkaLogo.png" data-tchmi-background-image-width="131">
+<div id="ButtonHome" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="659" data-tchmi-left-unit="px" data-tchmi-text="" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="131" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-background-image="Images/NootkaLogo.png" data-tchmi-background-image-width="131">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [

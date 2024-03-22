@@ -50,10 +50,10 @@ VAR
 	sHMIRollersRaised		: BOOL; //Todo: Change colour/text when activated
 	
 	// selectProgram.content inputs
-	programWallChoice	: STRING;
-	programOption1		: STRING;
-	programOption2		: STRING;
-	programOption3		: STRING;
+	programWallChoice	: INT; // 1 for front wall, 2 for back wall, 3-16 for additional options
+	programOption1		: BOOL; //Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window
+	programOption2		: BOOL; //Front wall: True: glass door, False, wood door Back wall: True: Chimney cut, False, no chimney cut
+	programOption3		: BOOL; //Front wall: True: Door lock, false, no lock Back wall: NA
 	
 	// run.content buttons
 	bHMIStart				: BOOL; // Button to start program. Called from Run.content
@@ -92,7 +92,7 @@ END_VAR
 	State_Machine(); // Calls functions based on state
 	
 	// Update robot IOs
-	fbRobot.Update_Status();
+	fbRobot();
 	
 	// Enable for power supply, compressed air control and buttons
 	
@@ -173,7 +173,7 @@ fbSpindle();
 
 //Pushbuttons
 IF rTrigHomeRobot.Q THEN
-	fbRobot.Home_Robot(); //Todo: Implement in robot AS code
+	fbRobot.Home_Robot(); //Done, tested
 END_IF
 
 IF rTrigHomeMotors.Q THEN
@@ -206,11 +206,11 @@ IF fTrigLowerRollers.Q THEN
 END_IF
 
 IF rTrigWarmupSpindle.Q THEN
-	fbSpindle.Spindle_Warmup();
+	fbSpindle.Spindle_Warmup(); //Done, tested. TODO: Change spindle is warm flag if spindle hasn't been on for >3 hours, make sure sawblade isn't present
 END_IF
 
 IF fTrigStopSpindle.Q THEN
-	fbSpindle.Stop_Spindle();
+	fbSpindle.Stop_Spindle(); //Done, tested
 END_IF]]></ST>
       </Implementation>
     </Method>

@@ -6,85 +6,15 @@
   "color": "rgba(255, 255, 255, 1)"
 }
 </script>
-<div id="ButtonHomeMotors" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Home Motors" data-tchmi-top="156" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ButtonHomeMotors" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Home Motors" data-tchmi-top="156" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeMotors%/s%">
 
-<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
-[
-  {
-    "event": "ButtonHomeMotors.onStatePressed",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMIHomeMotors%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
-      }
-    ]
-  },
-  {
-    "event": "ButtonHomeMotors.onStateReleased",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMIHomeMotors%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
-        },
-        "asyncWait": true
-      }
-    ]
-  }
-]
-</script>
+
 </div>
-<div id="ButtonHomeRobot" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Home Robot" data-tchmi-top="96" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ButtonHomeRobot" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Home Robot" data-tchmi-top="96" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeRobot%/s%">
 
 
 
-<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
-[
-  {
-    "event": "ButtonHomeRobot.onStatePressed",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMIHomeRobot%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
-      }
-    ]
-  },
-  {
-    "event": "ButtonHomeRobot.onStateReleased",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMIHomeRobot%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
-        },
-        "asyncWait": true
-      }
-    ]
-  }
-]
-</script>
+
 </div>
 <div id="InitializeMenu" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Initialize Menu" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="274" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
 </div>
@@ -132,7 +62,7 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="ToggleOpenCloseDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Close Door" data-tchmi-top="216" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ToggleOpenCloseDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Close Door" data-tchmi-top="216" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMICloseDoor%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -149,17 +79,6 @@
           "value": "Open Door"
         },
         "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMICloseDoor%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
       }
     ]
   },
@@ -174,17 +93,6 @@
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/String",
           "value": "Close Door"
-        },
-        "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMICloseDoor%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
         },
         "asyncWait": true
       }
@@ -251,7 +159,7 @@
 ]
 </script>
 </div>
-<div id="ToggleTableLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Lock Tables" data-tchmi-top="276" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ToggleTableLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Lock Tables" data-tchmi-top="276" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILockTables%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -268,17 +176,6 @@
           "value": "Release Tables"
         },
         "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMILockTables%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
       }
     ]
   },
@@ -293,17 +190,6 @@
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/String",
           "value": "Lock Tables"
-        },
-        "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMILockTables%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
         },
         "asyncWait": true
       }
@@ -384,7 +270,7 @@
 ]
 </script>
 </div>
-<div id="ToggleRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="336" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ToggleRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="336" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILowerRaiseRollers%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -401,17 +287,6 @@
           "value": "Lower Rollers"
         },
         "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMILowerRaiseRollers%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
       }
     ]
   },
@@ -426,17 +301,6 @@
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/String",
           "value": "Raise Rollers"
-        },
-        "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMILowerRaiseRollers%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
         },
         "asyncWait": true
       }
@@ -545,7 +409,7 @@
 ]
 </script>
 </div>
-<div id="ToggleSpindleWarmup" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Warmup Spindle" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ToggleSpindleWarmup" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Warmup Spindle" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIWarmupSpindle%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -562,17 +426,6 @@
           "value": "Stop Spindle"
         },
         "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMIWarmupSpindle%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
       }
     ]
   },
@@ -587,17 +440,6 @@
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/String",
           "value": "Warmup Spindle"
-        },
-        "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bHMIWarmupSpindle%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
         },
         "asyncWait": true
       }

@@ -1208,6 +1208,60 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.programOption1": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::programOption1",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window",
+                        "propertyOrder": 32
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.programOption2": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::programOption2",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Front wall: True: glass door, False, wood door Back wall: True: Chimney cut, False, no chimney cut",
+                        "propertyOrder": 33
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.programOption3": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::programOption3",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Front wall: True: Door lock, false, no lock Back wall: NA",
+                        "propertyOrder": 34
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "ChangeUserSettings": {
             "ACCESS": 3,
             "DOMAIN": "TcHmiSrv",
@@ -3918,6 +3972,9 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
+                "C1007.MAIN.fbMachine.programOption1": 3,
+                "C1007.MAIN.fbMachine.programOption2": 3,
+                "C1007.MAIN.fbMachine.programOption3": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,
                 "CreateEvent": 3,

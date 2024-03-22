@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_ProgramMap" Id="{b14c27ee-bf95-4b5a-8777-1459222a287c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_ProgramMap :
+(
+	FrontWall := 1,
+	BackWall := 2,
+	Option3 := 3,
+	Option4 := 4,
+	Option5 := 5,
+	Option6 := 6,
+	Option7 := 7,
+	Option8 := 8,
+	Option9 := 9,
+	Option10 := 10
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

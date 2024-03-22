@@ -711,44 +711,9 @@
   }
 ]
 </script>
-<div id="buttonActivateRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="563" data-tchmi-left-unit="px" data-tchmi-text="Activate Rollers (follow robot)" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
+<div id="buttonActivateRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="563" data-tchmi-left-unit="px" data-tchmi-text="Activate Rollers (follow robot)" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bActivateRollers%/s%">
 
-<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
-[
-  {
-    "event": "buttonActivateRollers.onStatePressed",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bActivateRollers%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
-      }
-    ]
-  },
-  {
-    "event": "buttonActivateRollers.onStateReleased",
-    "actions": [
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%Local.MAIN.fbMachine.bActivateRollers%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
-        },
-        "asyncWait": true
-      }
-    ]
-  }
-]
-</script>
+
 </div>
 <div id="ToggleHoldRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="418" data-tchmi-left-unit="px" data-tchmi-text="Hold" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>

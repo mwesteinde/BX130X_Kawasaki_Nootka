@@ -21,10 +21,16 @@
     <Compile Include="DUTs\E_MachineState.TcTLEO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\E_ProgramMap.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\Structure_Error.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Structure_RobotPose.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Tool_Type.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GVLs\GVL_Axes.TcGVL">

@@ -1796,7 +1796,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{9099F301-1C43-5AAC-8C0D-3E78E15CA749}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{6B26230E-DD75-CD4D-A391-DA61CB3F6412}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1870,6 +1870,18 @@ External Setpoint Generation:
 							<Type>USINT</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs97104</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs105112</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs113120</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.fbMachine.fbSpindle.pbToolChange</Name>
 							<Comment><![CDATA[ ================= Manual tool changing ====================================]]></Comment>
 							<Type>BOOL</Type>
@@ -1908,9 +1920,28 @@ External Setpoint Generation:
 							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbRobot.robotProgramChoice</Name>
-							<Comment><![CDATA[Signals 1017-1032]]></Comment>
-							<Type>INT</Type>
+							<Name>MAIN.fbMachine.fbRobot.sigs10011008</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs10091016</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs10171024</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs10251032</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs10331040</Name>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.sigs10411048</Name>
+							<Type>USINT</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbSpindle.cylinderToolRelease1</Name>
@@ -3638,120 +3669,120 @@ External Setpoint Generation:
 						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
 						<Fmmu>0000000000000000001600010100000002000000000000000000000000000000</Fmmu>
 						<Pdo Name="TxPDO" Index="#x1a00" Flags="#x0000" SyncMan="3">
-							<Entry Name="SubIndex 001" Index="#x2000" Sub="#x01">
+							<Entry Name="1-8" Index="#x2000" Sub="#x01">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 002" Index="#x2000" Sub="#x02">
+							<Entry Name="9-16" Index="#x2000" Sub="#x02">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 003" Index="#x2000" Sub="#x03">
+							<Entry Name="17-24" Index="#x2000" Sub="#x03">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 004" Index="#x2000" Sub="#x04">
+							<Entry Name="25-32" Index="#x2000" Sub="#x04">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 005" Index="#x2000" Sub="#x05">
+							<Entry Name="33-40" Index="#x2000" Sub="#x05">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 006" Index="#x2000" Sub="#x06">
+							<Entry Name="41-48" Index="#x2000" Sub="#x06">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 007" Index="#x2000" Sub="#x07">
+							<Entry Name="49-56" Index="#x2000" Sub="#x07">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 008" Index="#x2000" Sub="#x08">
+							<Entry Name="57-64" Index="#x2000" Sub="#x08">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 009" Index="#x2000" Sub="#x09">
+							<Entry Name="65-72" Index="#x2000" Sub="#x09">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 010" Index="#x2000" Sub="#x0a">
+							<Entry Name="73-80" Index="#x2000" Sub="#x0a">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 011" Index="#x2000" Sub="#x0b">
+							<Entry Name="81-88" Index="#x2000" Sub="#x0b">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 012" Index="#x2000" Sub="#x0c">
+							<Entry Name="89-96" Index="#x2000" Sub="#x0c">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 013" Index="#x2000" Sub="#x0d">
+							<Entry Name="97-104" Index="#x2000" Sub="#x0d">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 014" Index="#x2000" Sub="#x0e">
+							<Entry Name="105-112" Index="#x2000" Sub="#x0e">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 015" Index="#x2000" Sub="#x0f">
+							<Entry Name="113-120" Index="#x2000" Sub="#x0f">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 016" Index="#x2000" Sub="#x10">
+							<Entry Name="121-128" Index="#x2000" Sub="#x10">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 017" Index="#x2000" Sub="#x11">
+							<Entry Name="129-136" Index="#x2000" Sub="#x11">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 018" Index="#x2000" Sub="#x12">
+							<Entry Name="137-144" Index="#x2000" Sub="#x12">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 019" Index="#x2000" Sub="#x13">
+							<Entry Name="145-152" Index="#x2000" Sub="#x13">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 020" Index="#x2000" Sub="#x14">
+							<Entry Name="153-160" Index="#x2000" Sub="#x14">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 021" Index="#x2000" Sub="#x15">
+							<Entry Name="161-168" Index="#x2000" Sub="#x15">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 022" Index="#x2000" Sub="#x16">
+							<Entry Name="169-176" Index="#x2000" Sub="#x16">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 023" Index="#x2000" Sub="#x17">
+							<Entry Name="177-184" Index="#x2000" Sub="#x17">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 024" Index="#x2000" Sub="#x18">
+							<Entry Name="185-192" Index="#x2000" Sub="#x18">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 025" Index="#x2000" Sub="#x19">
+							<Entry Name="193-200" Index="#x2000" Sub="#x19">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 026" Index="#x2000" Sub="#x1a">
+							<Entry Name="201-208" Index="#x2000" Sub="#x1a">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 027" Index="#x2000" Sub="#x1b">
+							<Entry Name="209-216" Index="#x2000" Sub="#x1b">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 028" Index="#x2000" Sub="#x1c">
+							<Entry Name="217-224" Index="#x2000" Sub="#x1c">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 029" Index="#x2000" Sub="#x1d">
+							<Entry Name="225-232" Index="#x2000" Sub="#x1d">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 030" Index="#x2000" Sub="#x1e">
+							<Entry Name="233-240" Index="#x2000" Sub="#x1e">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 031" Index="#x2000" Sub="#x1f">
+							<Entry Name="241-248" Index="#x2000" Sub="#x1f">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 032" Index="#x2000" Sub="#x20">
+							<Entry Name="249-256" Index="#x2000" Sub="#x20">
 								<Type>USINT</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="RxPDO" Index="#x1600" InOut="1" Flags="#x0000" SyncMan="2">
-							<Entry Name="SubIndex 001" Index="#x2100" Sub="#x01">
+							<Entry Name="1001-1008" Index="#x2100" Sub="#x01">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 002" Index="#x2100" Sub="#x02">
+							<Entry Name="1009-1016" Index="#x2100" Sub="#x02">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 003" Index="#x2100" Sub="#x03">
+							<Entry Name="1017-1024" Index="#x2100" Sub="#x03">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 004" Index="#x2100" Sub="#x04">
+							<Entry Name="1025-1032" Index="#x2100" Sub="#x04">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 005" Index="#x2100" Sub="#x05">
+							<Entry Name="1033-1040" Index="#x2100" Sub="#x05">
 								<Type>USINT</Type>
 							</Entry>
-							<Entry Name="SubIndex 006" Index="#x2100" Sub="#x06">
+							<Entry Name="1041-1048" Index="#x2100" Sub="#x06">
 								<Type>USINT</Type>
 							</Entry>
 							<Entry Name="SubIndex 007" Index="#x2100" Sub="#x07">
@@ -3878,18 +3909,27 @@ External Setpoint Generation:
 		</OwnerA>
 		<OwnerA Name="TIPC^BX130XPLC^BX130XPLC Instance">
 			<OwnerB Name="TIID^PortLAN1X102^Box 14 (ECT I/F for KHI Robot Controller)">
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.a_pose_1" VarB="TxPDO^SubIndex 009"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.a_pose_2" VarB="TxPDO^SubIndex 010"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.o_pose_1" VarB="TxPDO^SubIndex 007"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.o_pose_2" VarB="TxPDO^SubIndex 008"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.t_pose_1" VarB="TxPDO^SubIndex 011"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.t_pose_2" VarB="TxPDO^SubIndex 012"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.x_pose_1" VarB="TxPDO^SubIndex 001"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.x_pose_2" VarB="TxPDO^SubIndex 002"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.y_pose_1" VarB="TxPDO^SubIndex 003"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.y_pose_2" VarB="TxPDO^SubIndex 004"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_1" VarB="TxPDO^SubIndex 005"/>
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_2" VarB="TxPDO^SubIndex 006"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.a_pose_1" VarB="TxPDO^65-72"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.a_pose_2" VarB="TxPDO^73-80"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.o_pose_1" VarB="TxPDO^49-56"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.o_pose_2" VarB="TxPDO^57-64"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.sigs105112" VarB="TxPDO^105-112"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.sigs113120" VarB="TxPDO^113-120"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.sigs97104" VarB="TxPDO^97-104"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.t_pose_1" VarB="TxPDO^81-88"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.t_pose_2" VarB="TxPDO^89-96"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.x_pose_1" VarB="TxPDO^1-8"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.x_pose_2" VarB="TxPDO^9-16"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.y_pose_1" VarB="TxPDO^17-24"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.y_pose_2" VarB="TxPDO^25-32"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_1" VarB="TxPDO^33-40"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_2" VarB="TxPDO^41-48"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10011008" VarB="RxPDO^1001-1008"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10091016" VarB="RxPDO^1009-1016"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10171024" VarB="RxPDO^1017-1024"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10251032" VarB="RxPDO^1025-1032"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10331040" VarB="RxPDO^1033-1040"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10411048" VarB="RxPDO^1041-1048"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 10 (EL2008)">
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreSouth" VarB="Channel 1^SV9WorkHoldDownSouthCentre"/>
@@ -3901,6 +3941,8 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.pbToolChange" VarB="Channel 8^SpindleToolChange"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 6 (EL1008)">
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.pbTableEast" VarB="Channel 3^TablePBEast"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.pbTableWest" VarB="Channel 4^TablePBWest"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls1NE" VarB="Channel 1^LimitSwitchEast"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls3NW" VarB="Channel 2^LimitSwitchWest"/>
 			</OwnerB>

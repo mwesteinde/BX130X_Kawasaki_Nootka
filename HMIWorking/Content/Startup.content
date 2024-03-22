@@ -1,4 +1,4 @@
-<div id="Startup_1" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="1024" data-tchmi-height="500">
+<div id="Startup_1" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="780" data-tchmi-height="500">
 
 
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
@@ -6,7 +6,7 @@
   "color": "rgba(255, 255, 255, 1)"
 }
 </script>
-<div id="TcHmi_Controls_Beckhoff_TcHmiImage_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="280" data-tchmi-height-unit="px" data-tchmi-left="271" data-tchmi-left-unit="px" data-tchmi-src="Images/NootkaLogo.png" data-tchmi-top="89" data-tchmi-top-unit="px" data-tchmi-width="641" data-tchmi-width-unit="px" data-tchmi-height-mode="Value" data-tchmi-width-mode="Content">
+<div id="TcHmi_Controls_Beckhoff_TcHmiImage_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiImage" data-tchmi-height="280" data-tchmi-height-unit="px" data-tchmi-left="121" data-tchmi-left-unit="px" data-tchmi-src="Images/NootkaLogo.png" data-tchmi-top="97" data-tchmi-top-unit="px" data-tchmi-width="641" data-tchmi-width-unit="px" data-tchmi-height-mode="Value" data-tchmi-width-mode="Content">
 </div>
 
 <script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
@@ -27,7 +27,7 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="ButtonStartProgram" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="500" data-tchmi-height-unit="px" data-tchmi-left="0" data-tchmi-left-unit="px" data-tchmi-text="Button" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="1024" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-opacity="0">
+<div id="ButtonStartProgram" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="500" data-tchmi-height-unit="px" data-tchmi-left="0" data-tchmi-left-unit="px" data-tchmi-text="Button" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="780" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-opacity="0">
 
 
 

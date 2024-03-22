@@ -27,7 +27,7 @@
 </script>
 <div id="TextSelectProgram" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="59" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Select Program" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="459" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
 </div>
-<div id="ToggleNoECut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="No E cut" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupEcut">
+<div id="ToggleNoECut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="No E cut" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupEcut"  >
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -38,7 +38,7 @@
 ]
 </script>
 </div>
-<div id="ToggleECut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="E cut" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupEcut">
+<div id="ToggleECut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="E cut" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupEcut" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption1%/s%">
 
 
 </div>
@@ -46,7 +46,7 @@
 
 
 </div>
-<div id="ToggleGlassDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Glass Door" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupDoor">
+<div id="ToggleGlassDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Glass Door" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupDoor" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%">
 
 
 </div>
@@ -54,17 +54,17 @@
 
 
 </div>
-<div id="ToggleLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Lock" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupLock">
+<div id="ToggleLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Lock" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupLock" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption3%/s%">
 
 
 </div>
-<div id="ToggleNoWindow" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="NoWindow" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWindow">
+<div id="ToggleNoWindow" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="NoWindow" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWindow" >
 
 
 
 
 </div>
-<div id="ToggleStandardWindow" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="STD Window" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWindow">
+<div id="ToggleStandardWindow" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="STD Window" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWindow" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption1%/s%">
 
 
 
@@ -76,7 +76,7 @@
 
 
 </div>
-<div id="ToggleChimneyCut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Chimney Cut" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney">
+<div id="ToggleChimneyCut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Chimney Cut" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%">
 
 
 
