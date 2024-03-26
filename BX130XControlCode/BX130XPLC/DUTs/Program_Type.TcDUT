@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="Program_Type" Id="{8ade5d9a-31c1-4046-bdec-e263b83943d2}">
+    <Declaration><![CDATA[TYPE Program_Type :
+STRUCT
+	index 				: INT;
+	option1true			: STRING;
+	option1false		: STRING;
+	option2true			: STRING;
+	option2false		: STRING;
+	option3true			: STRING;
+	option3false		: STRING;
+	programName			: STRING;
+	firstTool			: Tool_Type;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

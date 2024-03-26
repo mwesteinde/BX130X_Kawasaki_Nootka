@@ -23,7 +23,7 @@ VAR
 	a_pose_2 AT %I* : USINT; //Signal 73-80
 	t_pose_1 AT %I* : USINT; //Signal 81-88
 	t_pose_2 AT %I* : USINT; //Signal 89-96
-	inRobotMotorOn		: BOOL; //Signal number 97
+	inRobotMotorOn			: BOOL; //Signal number 97
 	inRobotError		: BOOL; //Signal 98
 	inRobotAutomaticMode	: BOOL; //Signal 99
 	inRobotAtHome				: BOOL; //Signal 100
@@ -50,8 +50,10 @@ VAR
 	outRobotStartProgram				: BOOL; //Signal 1005
 	outRobotRunHold		 		: BOOL; //Signal 1006
 	outRobotHome					: BOOL; //Signal 1007
-	outRobotToolReleased			: BOOL; //Signal 1008
-	outRobotToolGrabbed				: BOOL; //Signal 1009
+	outRobotTurnMotorOff			: BOOL; //1008
+	outRobotToolReleased			: BOOL; //Signal 1009
+	outRobotToolGrabbed				: BOOL; //Signal 1010
+	outRobotCurrentTool					: BOOL; //Signal 1011
 	outRobotProgramChoice			: USINT; //Signals 1017-1020
 	outRobotProgramOption1			: BOOL; //Signal 1021
 	outRobotProgramOption2			: BOOL; //Signal 1022
@@ -130,13 +132,22 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[outRobotRunHold := True;]]></ST>
+        <ST><![CDATA[outRobotTurnMotorOn := TRUE;
+outRobotStartProgram := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Update_Status" Id="{1be56ac6-764b-4729-954d-f7379608e62a}">
-      <Declaration><![CDATA[//Updates the robot pose, run status and IOs in Beckhoff system
-//TODO make flag that verifies pose is being sent
-METHOD Update_Status
+    <Method Name="Tool_Change" Id="{5647195d-a2e9-4cc5-9fac-af39fc1690e1}">
+      <Declaration><![CDATA[METHOD Tool_Change : BOOL
+VAR_INPUT
+	currentTool : Tool_Type;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update_Pose" Id="{095f6df8-3cda-4049-b351-7910f936202a}">
+      <Declaration><![CDATA[METHOD Update_Pose : Structure_RobotPose
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -149,42 +160,55 @@ robotPose.oPose := UINT_TO_INT(o_pose_2)*256 + UINT_TO_INT(o_pose_1) - 400;
 robotPose.aPose := UINT_TO_INT(a_pose_2)*256 + UINT_TO_INT(a_pose_1) - 400;
 robotPose.tPose := UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400;
 
-// Robot signals
-sigs10011008.0 := outRobotTurnMotorOn;
-sigs10011008.1 := outRobotResetError;
-sigs10011008.2 := outRobotStartCycle;
-sigs10011008.3 := outRobotResetProgram;
-sigs10011008.4 := outRobotStartProgram;
-sigs10011008.5 := outRobotRunHold;
-sigs10011008.6 := outRobotHome;
-sigs10011008.7 := outRobotToolReleased;
-sigs10091016.0 := outRobotToolGrabbed;
-sigs10171024   := outRobotProgramChoice;
-sigs10171024.4 := outRobotProgramOption1;
-sigs10171024.5 := outRobotProgramOption2;
-sigs10171024.6 := outRobotProgramOption3;
+Update_Pose := robotPose;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update_Status" Id="{1be56ac6-764b-4729-954d-f7379608e62a}">
+      <Declaration><![CDATA[//Updates the robot pose, run status and IOs in Beckhoff system
+//TODO make flag that verifies pose is being sent
+METHOD Update_Status
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Robot signals
+sigs10011008.0 := outRobotTurnMotorOn; // 1001
+sigs10011008.1 := outRobotResetError; //1002
+sigs10011008.2 := outRobotStartCycle; //1003
+sigs10011008.3 := outRobotResetProgram; //1004
+sigs10011008.4 := outRobotStartProgram; //1005
+sigs10011008.5 := outRobotRunHold; //1006
+sigs10011008.6 := outRobotHome; //1007
+sigs10011008.7 := outRobotTurnMotorOff; //1008
+sigs10091016.0 := outRobotToolReleased; //1009
+sigs10091016.1 := outRobotToolGrabbed; //1010
+sigs10091016.2 := outRobotCurrentTool; //1011
+sigs10171024   := outRobotProgramChoice; //1017-1020
+sigs10171024.4 := outRobotProgramOption1; //1021
+sigs10171024.5 := outRobotProgramOption2; //1022
+sigs10171024.6 := outRobotProgramOption3; //1023
 
-inRobotMotorOn := sigs97104.0;
-inRobotError := sigs97104.1;
-inRobotAutomaticMode := sigs97104.2;
-inRobotAtHome := sigs97104.3;
-inRobotInTeach := sigs97104.4;
-inRobotCycleStart := sigs97104.5;
-inRobotPowerOn := sigs97104.6;
-inRobotPoseDataIsSent := sigs97104.7;
-inRobotEStopOn := sigs105112.0;
-inRobotBatteryAlarm := sigs105112.1;
+inRobotMotorOn := sigs97104.0; //97
+inRobotError := sigs97104.1; //98
+inRobotAutomaticMode := sigs97104.2; //99
+inRobotAtHome := sigs97104.3; //100
+inRobotInTeach := sigs97104.4; //101
+inRobotCycleStart := sigs97104.5; //102
+inRobotPowerOn := sigs97104.6; //103
+inRobotPoseDataIsSent := sigs97104.7; //104
+inRobotEStopOn := sigs105112.0; //105
+inRobotBatteryAlarm := sigs105112.1; //106
 inRobotToolNumberCurrent := 0;
-inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.2) * 1);
-inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.3) * 2);
-inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.4) * 4);
+inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.2) * 1); //107
+inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.3) * 2); //108
+inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.4) * 4); //109
 
 inRobotToolNumberRequest := 0;
-inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.5) * 1);
-inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.6) * 2);
-inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.7) * 4);
-inRobotReleaseTool := sigs113120.0;
-inRobotGrabTool := sigs113120.1;
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.5) * 1); //110
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.6) * 2); //111
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.7) * 4); //112
+inRobotReleaseTool := sigs113120.0; //113
+inRobotGrabTool := sigs113120.1; //114
 inProgramRunning := sigs113120.2; // Signal 115
 
 // posedata.pc is running
@@ -214,17 +238,25 @@ inProgramRunning := sigs113120.2; // Signal 115
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Start_Robot">
+      <LineId Id="10" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Tool_Change">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Robot.Update_Status">
-      <LineId Id="17" Count="0" />
-      <LineId Id="6" Count="4" />
+    <LineIds Name="FB_Robot.Update_Pose">
+      <LineId Id="6" Count="5" />
       <LineId Id="5" Count="0" />
-      <LineId Id="19" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Update_Status">
       <LineId Id="18" Count="0" />
       <LineId Id="31" Count="6" />
+      <LineId Id="104" Count="0" />
       <LineId Id="30" Count="0" />
-      <LineId Id="38" Count="1" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="39" Count="0" />
       <LineId Id="94" Count="2" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />

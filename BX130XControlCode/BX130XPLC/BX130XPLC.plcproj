@@ -24,6 +24,9 @@
     <Compile Include="DUTs\E_ProgramMap.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Program_Type.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\Structure_Error.TcDUT">
       <SubType>Code</SubType>
     </Compile>

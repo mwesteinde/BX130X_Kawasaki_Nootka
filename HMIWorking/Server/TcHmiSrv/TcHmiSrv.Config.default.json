@@ -1225,6 +1225,57 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIRunProgramScreen": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIRunProgramScreen",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 36
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbSpindle::currentTool::modelName",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbSpindle::currentTool::name",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 4
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.programOption1": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1381,6 +1432,23 @@
                     {
                         "comment": "Indicator light of e stops off, called from run.content",
                         "propertyOrder": 48
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sProgramString": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sProgramString",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 56
                     }
                 ]
             },
@@ -4097,6 +4165,9 @@
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
+                "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
+                "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
+                "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
                 "C1007.MAIN.fbMachine.programOption2": 3,
                 "C1007.MAIN.fbMachine.programOption3": 3,
@@ -4106,6 +4177,7 @@
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,
                 "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,
+                "C1007.MAIN.fbMachine.sProgramString": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,
                 "CreateEvent": 3,

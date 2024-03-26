@@ -25,8 +25,7 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="TextSelectedProgrsm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%f%%s%Local.MAIN.fbMachine.programWallChoice%/s% + &quot;: &quot; + %s%Local.MAIN.fbMachine.programOption1%/s% + &quot;/&quot; +%s%Local.MAIN.fbMachine.programOption2%/s%+ &quot;/&quot; +
-%s%Local.MAIN.fbMachine.programOption3%/s%%/f%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="543" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
+<div id="TextSelectedProgrsm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.sProgramString%/s%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="543" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
 </div>
 <div id="ImageToolpath" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="227" data-tchmi-height-unit="px" data-tchmi-left="246" data-tchmi-left-unit="px" data-tchmi-text="Contour image
 " data-tchmi-top="122" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
@@ -40,7 +39,7 @@
 </script>
 
 </div>
-<div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Tool &quot;toolname&quot; is loaded" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+<div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;Tool&quot; + %s%C1007.MAIN.fbMachine.fbSpindle.currentTool.name%/s% + &quot; is loaded&quot;%/f%" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
 <div id="ChecktablesLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Both tables are loaded" data-tchmi-top="291" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
@@ -48,7 +47,7 @@
 </div>
 <div id="TcHmiCheckbox_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Checkbox" data-tchmi-top="363" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
-<div id="TextCurrentTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="72" data-tchmi-height-unit="px" data-tchmi-left="519" data-tchmi-left-unit="px" data-tchmi-text="Tool Info" data-tchmi-top="123" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
+<div id="TextCurrentTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="72" data-tchmi-height-unit="px" data-tchmi-left="519" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.fbSpindle.currentTool.name%/s%" data-tchmi-top="112" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
 {
   "top": 3,
@@ -204,7 +203,7 @@
                 "compare2": {
                   "objectType": "StaticValue",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": false
+                  "value": true
                 },
                 "compareOperator": "==",
                 "logic": "AND"
@@ -836,16 +835,14 @@
   }
 ]
 </script>
-<div id="buttonActivateRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="563" data-tchmi-left-unit="px" data-tchmi-text="Activate Rollers (follow robot)" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bActivateRollers%/s%">
-
-
-</div>
 <div id="ToggleHoldRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="395" data-tchmi-left-unit="px" data-tchmi-text="Hold" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="ToggleStartStop" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="215" data-tchmi-left-unit="px" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text="Start">
+<div id="ToggleStartStop" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="213" data-tchmi-left-unit="px" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text="Start">
 </div>
 <div id="IndicatorDustOn" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="63" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
 </div>
 <div id="TextPressureOK_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Dust Collection On" data-tchmi-top="67" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiToggleButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="80" data-tchmi-height-unit="px" data-tchmi-left="578" data-tchmi-left-unit="px" data-tchmi-text="Activate Rollers (follow robot)" data-tchmi-top="13" data-tchmi-top-unit="px" data-tchmi-width="184" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bActivateRollers%/s%">
 </div>
 </div>

@@ -41,6 +41,7 @@ VAR
 	rTrigWarmupSpindle		: R_TRIG; //
 	fTrigStopSpindle		: F_TRIG; //
 	
+	fTrigInProgramRunning 		: F_TRIG; //Trigger for when robot finishes program
 //	isCalledHomeMotors	: BOOL := FALSE;
 	
 	// initialize.content indicators
@@ -48,23 +49,36 @@ VAR
 	sHMIDoorClosed			: BOOL; //Todo: Change colour/text when activated
 	sHMITablesLocked		: BOOL; //Todo: Change colour/text when activated
 	sHMIRollersRaised		: BOOL; //Todo: Change colour/text when activated
+	sDustCollectionOn		: BOOL;
 	
 	// selectProgram.content inputs
 	programWallChoice	: USINT; // 1 for front wall, 2 for back wall, 3-16 for additional options
 	programOption1		: BOOL; //Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window
 	programOption2		: BOOL; //Front wall: True: glass door, False, wood door Back wall: True: Chimney cut, False, no chimney cut
 	programOption3		: BOOL; //Front wall: True: Door lock, false, no lock Back wall: NA
-	bHMIRunProgram		: BOOL; 
-	rTrigRunProgram		: R_TRIG; //
+	bHMIRunProgramScreen		: BOOL; 
+	rTrigRunProgramScreen		: R_TRIG; //
+	//=============Programs====================
+	FrontWall : Program_Type := (index := 0, option1true := 'E cut', option1false := 'No E cut', option2true := 'Glass Door', option2false := 'Wood Door', option3true := 'Lock', option3false := 'No Lock', programName := 'Front Wall', firstTool := fbSpindle.quarterInchUpcut);
+	BackWall : Program_Type := (index := 1, option1true := 'STD Window', option1false := 'No Window', option2true := 'Chimney Cut', option2false := 'No Chimney', option3true := '', option3false := '', programName := 'Back Wall', firstTool := fbSpindle.quarterInchUpcut);	
+	Option3 : Program_Type := (index := 2, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := fbSpindle.quarterInchUpcut);
+	Option4 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := fbSpindle.quarterInchUpcut);
+	selectedProgram : Program_Type;
 	
 	// run.content buttons
 	bHMIStart				: BOOL; // Button to start program. Called from Run.content
-	bHMIStop				: BOOL; // Button to return to initialization state. TODO: make
+	rTrigStartProgram		: R_TRIG; //
+	fTrigStopProgram		: F_TRIG; //
 	bHMIHold				: BOOL; // Button to hold program. Called from Run.content
-	bHMIResume				: BOOL; // Button to resume (run) program after hold. TODO: make
+	rTrigHoldRobot			: R_TRIG; //
+	fTrigRunRobot			: F_TRIG; //
 	bHMILoadTool			: BOOL; // Button to activate tool load pushbutton. Called from Run.content
+	rTrigLoadTool			: R_TRIG; //
 	bHMIToolLoaded			: BOOL; // Button to confirm tool is loaded. Called from Run.content
+	rTrigToolLoaded			: R_TRIG; //
 	bActivateRollers		: BOOL; // Button to make rollers follow robot. Called from Run.content
+//	rTrigActivateRollers	: R_TRIG; //
+//	fTrigDeActivateRollers	: F_TRIG;
 	bHMIReset				: BOOL;	// Button to reset program. TODO: make
 	bHMIManual				: BOOL; // Button to switch state into manual mode. TODO: make
 	
@@ -74,12 +88,12 @@ VAR
 	sHMIRollersActivated	: BOOL; // Indicator light of rollers activated, called from run.content
 	sHMIeStopsOff			: BOOL; // Indicator light of e stops off, called from run.content
 	sHMIDustCollectionOn	: BOOL;
+	sProgramString			: STRING;
 	
 	// Error states
 	eInitializeServos : Structure_Error;
-	
-	Enable: BOOL;
-	StartEnable: BOOL;
+
+//	startUp: BOOL; // for operating run, first actions upon starting program
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -89,20 +103,23 @@ END_VAR
 	
 	//HMI update
 	// Update each HMI indicator
+	sHMIRobotHomed := fbRobot.inRobotAtHome;
+	sHMIRollersActivated := bActivateRollers AND GVL_Axes.AxisWest.Status.Homed;
+	sDustCollectionOn := fbEnclosure.dustCollectionOn;
+	sHMIPneumaticsOK := fbGantry.Check_Pneumatics();
+	sHMIeStopsOff := NOT fbRobot.inRobotError;
 	
 	// Mode and state requests
 	Change_State();  // Changes state based on inputs
 	State_Machine(); // Calls functions based on state
+	fbSpindle.Drive_Status();
 	
 	// Update robot IOs
 	fbRobot();
+	robotPose := fbRobot.Update_Pose();
 	fbGantry();
 	fbEnclosure();
 	fbSpindle();
-	
-	// Enable for power supply, compressed air control and buttons
-	
-	// Input variables of separating and sorting modules
 	
 	// Output variables
 	
@@ -113,22 +130,24 @@ END_VAR
 	rTrigLockTables(CLK := bHMILockTables);
 	rTrigRaiseRollers(CLK := bHMILowerRaiseRollers);
 	rTrigWarmupSpindle(CLK := bHMIWarmupSpindle);
-	rTrigRunProgram(CLK := bHMIRunProgram);
+	rTrigRunProgramScreen(CLK := bHMIRunProgramScreen);
+	rTrigStartProgram(CLK := bHMIStart);
+	rTrigHoldRobot(CLK := bHMIHold);
+	rTrigLoadTool(CLK := bHMILoadTool);
+	rTrigToolLoaded(CLK := bHMIToolLoaded);
+//	rTrigActivateRollers(CLK := bActivateRollers);
+	
 	
 	fTrigOpenDoor(CLK := bHMICloseDoor);
 	fTrigUnlockTables(CLK := bHMILockTables);
 	fTrigLowerRollers(CLK := bHMILowerRaiseRollers);
 	fTrigStopSpindle(CLK := bHMIWarmupSpindle);
-
-// ====================== Scrap ===================================
-
-//	IF Enable THEN
-//		fbSpindle.Stop_Spindle();
-//	END_IF
+	fTrigInProgramRunning(CLK := fbRobot.inProgramRunning);
+	fTrigStopProgram(CLK := bHMIStart);
+	fTrigRunRobot(CLK := bHMIHold);
+//	fTrigDeActivateRollers(CLK := bActivateRollers);
 	
-//	IF StartEnable THEN
-//		fbSpindle.Start_Spindle(spindleSpeed := 12000);
-//	END_IF]]></ST>
+]]></ST>
     </Implementation>
     <Folder Name="StateMachine" Id="{b4b3eed7-4e15-4350-a74a-294b50706019}" />
     <Method Name="Change_State" Id="{11427209-76ae-4b9c-9f30-0498e05b4968}" FolderPath="StateMachine\">
@@ -170,11 +189,11 @@ END_VAR
     <Method Name="Operating_Initialization" Id="{a0909845-20b7-4f19-88c6-a128d86fcc8b}" FolderPath="StateMachine\">
       <Declaration><![CDATA[METHOD Operating_Initialization
 VAR_INPUT
-END_VAR
-
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Pushbuttons
+        <ST><![CDATA[fbEnclosure.Table_Clamp_Control_Pushbutton();
+
+//Pushbuttons
 IF rTrigHomeRobot.Q THEN
 	fbRobot.Home_Robot(); //Done, tested
 END_IF
@@ -216,8 +235,14 @@ IF fTrigStopSpindle.Q THEN
 	fbSpindle.Stop_Spindle(); //Done, tested
 END_IF
 
-IF rTrigRunProgram.Q THEN
+IF rTrigRunProgramScreen.Q THEN
 	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3);
+	Update_Program_String();
+	bHMIRunProgramScreen := FALSE;
+END_IF
+
+IF bActivateRollers AND GVL_Axes.AxisWest.Status.Homed THEN
+	fbGantry.Follow_Robot(robotPoseGantry := robotPose);
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -243,18 +268,41 @@ END_VAR
       <Declaration><![CDATA[METHOD Operating_Run
 VAR
 	robotHold : BOOL;
+	toolNumber: INT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//fbSpindle.Start_Spindle(spindleSpeed := toolSpeed);
+        <ST><![CDATA[//Startup
+IF rTrigStartProgram.Q THEN
+	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3);
+	fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
+	fbRobot.Start_Robot();
+END_IF
 
-fbRobot.Start_Robot();
-//robotHold := fbGantry.Follow_Robot();
+// Follow and hold
+robotHold := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
+fbRobot.RunHold_Robot(RunHold := NOT robotHold);
 
+//Tool change logic
+fbRobot.Tool_Change(currentTool := fbSpindle.currentTool);
 
+IF fbRobot.inRobotToolNumberRequest <> fbSpindle.currentTool.toolNumber THEN
+	IF fbRobot.inRobotReleaseTool THEN
+		fbSpindle.Stop_Spindle();
+	END_IF
+	IF fbSpindle.spindleIsStopped THEN
+		fbSpindle.Manual_Tool_Change(changeToolEnable := TRUE);
+	END_IF
+	IF bHMIToolLoaded THEN
+		fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberRequest);
+		fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
+	END_IF
+END_IF
 
-
-]]></ST>
+IF fTrigInProgramRunning.Q THEN
+	startUp := TRUE;
+	//quit run mode
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="State_Machine" Id="{f466ced8-b935-49bf-a90d-d8b2d5bdc64e}" FolderPath="StateMachine\">
@@ -282,33 +330,76 @@ END_VAR
 END_CASE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Update_Program_String" Id="{65642f34-04a0-419f-b222-9cff5bf3d802}">
+      <Declaration><![CDATA[METHOD Update_Program_String
+VAR
+	option1string			: STRING;
+	option2string			: STRING;
+	option3string			: STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE programWallChoice OF
+        1: selectedProgram := FrontWall;
+        2: selectedProgram := BackWall;
+        3: selectedProgram := Option3;
+        4: selectedProgram := Option4;
+        // Add more cases for additional options if needed
+        ELSE
+            // Handle invalid program wall choice
+    END_CASE;
+
+IF programOption1 THEN
+	option1string := selectedProgram.option1true;
+ELSE
+	option1string := selectedProgram.option1false;
+END_IF
+
+IF programOption2 THEN
+	option2string := selectedProgram.option2true;
+ELSE
+	option2string := selectedProgram.option2false;
+END_IF
+
+IF programOption3 THEN
+	option3string := selectedProgram.option3true;
+ELSE
+	option3string := selectedProgram.option3false;
+END_IF
+
+sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.programName,' - '), option1string),' - '),option2string),' - '), option3string);]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Machine">
-      <LineId Id="108" Count="2" />
-      <LineId Id="149" Count="0" />
-      <LineId Id="178" Count="1" />
+      <LineId Id="108" Count="1" />
+      <LineId Id="602" Count="1" />
+      <LineId Id="605" Count="4" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="610" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="113" Count="0" />
       <LineId Id="370" Count="0" />
       <LineId Id="115" Count="0" />
+      <LineId Id="550" Count="0" />
       <LineId Id="188" Count="1" />
       <LineId Id="150" Count="0" />
+      <LineId Id="572" Count="0" />
       <LineId Id="464" Count="1" />
       <LineId Id="463" Count="0" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="118" Count="1" />
       <LineId Id="131" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="124" Count="0" />
       <LineId Id="346" Count="5" />
       <LineId Id="127" Count="0" />
       <LineId Id="468" Count="0" />
+      <LineId Id="585" Count="2" />
+      <LineId Id="590" Count="1" />
+      <LineId Id="589" Count="0" />
       <LineId Id="352" Count="0" />
       <LineId Id="356" Count="2" />
       <LineId Id="353" Count="0" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="104" Count="0" />
-      <LineId Id="378" Count="6" />
+      <LineId Id="561" Count="0" />
+      <LineId Id="594" Count="2" />
+      <LineId Id="593" Count="0" />
       <LineId Id="377" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Change_State">
@@ -324,6 +415,7 @@ END_CASE]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_Initialization">
+      <LineId Id="91" Count="1" />
       <LineId Id="15" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="1" />
@@ -348,7 +440,11 @@ END_CASE]]></ST>
       <LineId Id="72" Count="2" />
       <LineId Id="71" Count="0" />
       <LineId Id="81" Count="2" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="89" Count="0" />
       <LineId Id="80" Count="0" />
+      <LineId Id="94" Count="0" />
+      <LineId Id="96" Count="2" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_ManualMove">
       <LineId Id="5" Count="0" />
@@ -357,20 +453,51 @@ END_CASE]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_Run">
-      <LineId Id="16" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="53" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="11" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="15" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="37" Count="0" />
       <LineId Id="12" Count="0" />
+      <LineId Id="42" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="43" Count="4" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="55" Count="0" />
       <LineId Id="6" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="59" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.State_Machine">
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="11" Count="12" />
       <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Update_Program_String">
+      <LineId Id="21" Count="7" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="40" Count="4" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="46" Count="4" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

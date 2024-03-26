@@ -1796,7 +1796,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{C5A0E7FE-4213-6EAE-338A-93D9C4EA0142}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{7CDF7234-5E3D-99E2-6948-1E3A37FDC125}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1883,7 +1883,7 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbSpindle.pbToolChange</Name>
-							<Comment><![CDATA[ ================= Manual tool changing ====================================]]></Comment>
+							<Comment><![CDATA[ ================= Tool Changing ====================================]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>

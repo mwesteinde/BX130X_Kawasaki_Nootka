@@ -5,7 +5,8 @@
 STRUCT
 	speed 				: INT;
 	toolNumber 			: INT;
-	signalKawasaki		: INT;
+	modelName			: STRING;
+	name				: STRING;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

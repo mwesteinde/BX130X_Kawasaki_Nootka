@@ -18,6 +18,8 @@ VAR
 	doorIsOpen				AT %I* : BOOL;
 	doorTimer				: TON;
 	startTimer: BOOL;
+	
+	dustCollectionOn : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>

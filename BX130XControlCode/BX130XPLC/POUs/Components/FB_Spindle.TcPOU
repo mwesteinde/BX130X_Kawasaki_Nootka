@@ -7,29 +7,41 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	// ================= Manual tool changing ====================================
+	// ================= Tool Changing ====================================
 	pbToolChange AT %I*: BOOL;
-	changeToolEnable: BOOL;
 	cylinderToolRelease1 AT %Q* : BOOL;
 	cylinderToolRelease2 AT %Q* : BOOL;
 	toolChangeTimer : TON;
 	
-	programLoadedString : STRING;
-	programLoadedIndex	: INT;
+	currentTool : Tool_Type;
+	
+	// ================= Tool Types ====================================
+	quarterInchUpcut : Tool_Type := (speed := 18000, toolNumber := 0, modelname := 'Dimar', name := 'Quarter Inch Upcut');
+	halfInchUpcut : Tool_Type := (speed := 18000, toolNumber := 1, modelname := 'Dimar', name := 'Half Inch Upcut');
+	sawblade : Tool_Type := (speed := 10000, toolNumber := 3, modelname := 'Hunter Precision Tools', name := 'Sawblade');
+	dovetail : Tool_Type := (speed := 18000, toolNumber := 4, modelname := 'Dimar', name := 'Dovetail');
+	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 5, modelname := 'Dimar', name := 'Half Inch Ball');
 	
 	//--------------------Spindle TCP communication --------
 	fbWriteRegs : FB_MBWriteRegs; //Function call
+	fbWriteRegs2 : FB_MBWriteRegs; //Error reset
+	fbReadReg	: FB_MBReadRegs; //Drive run/stop
+	fbReadReg2	: FB_MBReadRegs; //Error
 	ipAddr      : STRING(15) := '192.168.1.5'; //IPADDRESS
 	eWriteState	: (WAIT, START, STOP, WRITE); //state machine
+	spindleRunStatus : WORD;
+	spindleErrorStatus	: WORD;
+	spindleIsStopped	: BOOL;
+	spindleError		: BOOL;
 	
 	//--------------------Warmup params-----------
 	spindleIsWarm 	: BOOL;
 	warmupSpeed1 	: INT := 12000;
-	warmupTime1 	: TIME := T#30S;
+	warmupTime1 	: TIME := T#240S;
 	warmupSpeed2 	: INT := 18000;
-	warmupTime2 	: TIME := T#30S;
+	warmupTime2 	: TIME := T#240S;
 	warmupSpeed3 	: INT := 24000;
-	warmupTime3 	: TIME := T#30S;
+	warmupTime3 	: TIME := T#240S;
 	startTime		: TIME;
 	elapsedWarmupTime : TIME;
 	spindleWarmupOn	: BOOL;
@@ -44,9 +56,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Manual_Tool_Change();
-
-//Spindle warmup routine, trigerred from Start_Spindle and stopped with Stop_Spindle
+      <ST><![CDATA[//Spindle warmup routine, trigerred from Start_Spindle and stopped with Stop_Spindle
 	triggerWarmup(CLK:=spindleWarmupOn);
 	triggerWarm1(CLK:=warmUp1);
 	triggerWarm2(CLK:=warmUp2);
@@ -90,13 +100,85 @@ END_VAR
 
 END_IF]]></ST>
     </Implementation>
-    <Method Name="Error_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
-      <Declaration><![CDATA[METHOD Error_Status : BOOL
+    <Method Name="Drive_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
+      <Declaration><![CDATA[METHOD Drive_Status : BOOL
 VAR_INPUT
+END_VAR
+VAR
+	runStatus : USINT;
+	errorStatus : USINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbReadReg(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2101, 
+			cbLength:= SIZEOF(spindleRunStatus), 
+			pDestAddr := ADR(spindleRunStatus), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbReadReg(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2101, 
+			cbLength:= SIZEOF(spindleRunStatus), 
+			pDestAddr := ADR(spindleRunStatus), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbReadReg2(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2226, 
+			cbLength:= SIZEOF(spindleErrorStatus), 
+			pDestAddr := ADR(spindleErrorStatus), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+
+fbReadReg2(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2226, 
+			cbLength:= SIZEOF(spindleErrorStatus), 
+			pDestAddr := ADR(spindleErrorStatus), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+runStatus := WORD_TO_USINT(spindleRunStatus);
+IF runStatus.0 = 0 AND runStatus.1 = 0 THEN
+	spindleIsStopped := TRUE;
+ELSE 
+	spindleIsStopped := FALSE;
+END_IF
+
+errorStatus := WORD_TO_USINT(spindleErrorStatus);
+IF errorStatus.3 = 1 AND errorStatus.2 = 0 THEN
+	spindleError := TRUE;
+ELSE 
+	spindleError := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Grab_Tool" Id="{b157a71e-63d7-43c6-8cda-129fe8943333}">
@@ -111,6 +193,7 @@ END_VAR
     <Method Name="Manual_Tool_Change" Id="{caf02692-220f-45ea-9a62-11b6af7ca524}">
       <Declaration><![CDATA[METHOD Manual_Tool_Change
 VAR_INPUT
+	changeToolEnable : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -136,6 +219,43 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset_Error" Id="{9a8ab2d1-8aed-4c9c-967c-6e187f19fbf4}">
+      <Declaration><![CDATA[METHOD Reset_Error
+VAR_INPUT
+END_VAR
+VAR
+	errorReset : WORD := INT_TO_WORD(2);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbWriteRegs2(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2002, 
+			cbLength:= SIZEOF(errorReset), 
+			pSrcAddr:= ADR(errorReset), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbWriteRegs2(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2002, 
+			cbLength:= SIZEOF(errorReset), 
+			pSrcAddr:= ADR(errorReset), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );]]></ST>
       </Implementation>
     </Method>
     <Method Name="Spindle_Warmup" Id="{6626f887-e6c9-4081-bd79-0ba0a3b91bcb}">
@@ -234,9 +354,43 @@ warmup3 := FALSE;
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Update_Current_Tool" Id="{d316eb47-28e5-4b11-bbfd-0a31ae49903c}">
+      <Declaration><![CDATA[METHOD Update_Current_Tool : BOOL
+VAR_INPUT
+	toolNumber : INT;
+END_VAR
+VAR
+	updatedTool : Tool_Type;
+	success : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE toolNumber OF
+		0:
+			updatedTool := quarterInchUpcut;
+		1:
+			updatedTool := halfInchUpcut;
+		3:
+			updatedTool := sawblade;
+		4:
+			updatedTool := dovetail;
+		5:
+			updatedTool := halfInchBall;
+		ELSE
+			// Handle invalid tool number
+			success := FALSE;
+	END_CASE
+		
+currentTool := updatedTool;
+	
+// Successfully updated the current tool
+IF NOT success THEN
+	Update_Current_Tool := FALSE;
+ELSE
+	Update_Current_Tool := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Spindle">
-      <LineId Id="9" Count="0" />
-      <LineId Id="50" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="158" Count="0" />
       <LineId Id="167" Count="0" />
@@ -270,8 +424,23 @@ warmup3 := FALSE;
       <LineId Id="141" Count="0" />
       <LineId Id="77" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Spindle.Error_Status">
+    <LineIds Name="FB_Spindle.Drive_Status">
+      <LineId Id="9" Count="14" />
+      <LineId Id="35" Count="10" />
       <LineId Id="5" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="49" Count="11" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="62" Count="12" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="75" Count="1" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="88" Count="4" />
+      <LineId Id="85" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Grab_Tool">
       <LineId Id="5" Count="0" />
@@ -289,6 +458,10 @@ warmup3 := FALSE;
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Release_Tool">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Reset_Error">
+      <LineId Id="6" Count="25" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Spindle_Warmup">
@@ -310,6 +483,15 @@ warmup3 := FALSE;
       <LineId Id="44" Count="1" />
       <LineId Id="43" Count="0" />
       <LineId Id="25" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Update_Current_Tool">
+      <LineId Id="7" Count="13" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="25" Count="2" />
+      <LineId Id="29" Count="1" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="31" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

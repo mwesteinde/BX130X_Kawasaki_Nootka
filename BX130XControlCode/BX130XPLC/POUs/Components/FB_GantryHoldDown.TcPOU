@@ -42,14 +42,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//GVL_Axes.AxisWest.ReadStatus();
-//GVL_Axes.AxisEast.ReadStatus();
-//Enable_Axes();
-//Home_Axes();
-//Couple_Axes();
-//Follow_Robot();
-//Cylinder_Set_Cutting();
-GVL_Axes.AxisWest.ReadStatus();
+      <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
 GVL_Axes.AxisEast.ReadStatus();
 
 // Movement functions
@@ -62,6 +55,15 @@ IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 THEN
 END_IF]]></ST>
     </Implementation>
     <Folder Name="Archive Individual actions" Id="{c3e285de-5c5b-4308-a0a2-e7733ef6d0f5}" />
+    <Method Name="Check_Pneumatics" Id="{53ecf6cd-303e-4078-9884-7bcc9af1828f}">
+      <Declaration><![CDATA[METHOD Check_Pneumatics : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Check_Pneumatics := TRUE;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}" FolderPath="Archive Individual actions\">
       <Declaration><![CDATA[METHOD Couple_Axes
 VAR_INPUT
@@ -323,13 +325,6 @@ END_IF
       </Implementation>
     </Method>
     <LineIds Name="FB_GantryHoldDown">
-      <LineId Id="23" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="86" Count="0" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="133" Count="0" />
       <LineId Id="189" Count="1" />
       <LineId Id="200" Count="0" />
       <LineId Id="188" Count="0" />
@@ -339,6 +334,9 @@ END_IF
       <LineId Id="207" Count="0" />
       <LineId Id="195" Count="0" />
       <LineId Id="208" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Check_Pneumatics">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Couple_Axes">
       <LineId Id="6" Count="4" />
