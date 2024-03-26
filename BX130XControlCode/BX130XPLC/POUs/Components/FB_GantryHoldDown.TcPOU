@@ -16,7 +16,10 @@ VAR
 	fbMC_MoveAbsWest2	: MC_MoveAbsolute;
 	fbMC_SyncAxes		: MC_GearIn;
 	fbReadStatus		: MC_ReadStatus;
+	fbMC_Stop			: MC_Stop;
 	Aborting			: MC_BufferMode;
+	fbMC_Reset			: MC_Reset;
+	fbSOEReset			: FB_SoEReset;
 	
 	//Inputs
 	ls1NE AT %I* 		: BOOL;
@@ -27,6 +30,12 @@ VAR
 	cylindersCentreNorth	AT %Q* : BOOL;
 	cylindersCentreSouth	AT %Q* : BOOL;
 	cylindersSouth			AT %Q* : BOOL;
+	pressureSwitchSpindle	AT %I* : BOOL;
+	pressureSwitchHoldDown	AT %I* : BOOL;
+	pressureSwitchTableClamps AT %I* : BOOL;
+	
+	//Pneumatic switches
+	
 	
 	//Variable to be set by program being run
 	LEN_WOOD : LREAL := 2133; //mm, length of wood being clamped
@@ -39,12 +48,14 @@ VAR
 	executeCouple 		: BOOL := FALSE;
 	executeCylinders	: BOOL := FALSE;
 	followVariable		: BOOL:= TRUE; //Set for following robot
+	stopGantry			: BOOL := FALSE;
+	resetExec			: BOOL := FALSE;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
 GVL_Axes.AxisEast.ReadStatus();
-
+	
 // Movement functions
 Servo_Commands();
 
@@ -54,29 +65,6 @@ IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 THEN
 	executeCouple := NOT executeCouple;
 END_IF]]></ST>
     </Implementation>
-    <Folder Name="Archive Individual actions" Id="{c3e285de-5c5b-4308-a0a2-e7733ef6d0f5}" />
-    <Method Name="Check_Pneumatics" Id="{53ecf6cd-303e-4078-9884-7bcc9af1828f}">
-      <Declaration><![CDATA[METHOD Check_Pneumatics : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[Check_Pneumatics := TRUE;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Couple_Axes" Id="{5d338716-a070-49d0-a1b0-90505ad66513}" FolderPath="Archive Individual actions\">
-      <Declaration><![CDATA[METHOD Couple_Axes
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//fbMC_SyncAxes(
-//	Master:= GVL_Axes.AxisWest, 
-//	Slave:= GVL_Axes.AxisEast, 
-//	Execute:= executeSync, 
-//	RatioNumerator:= 1);]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Cylinder_Set_Cutting" Id="{80c33305-3d27-491c-90ce-c1e0d842bbab}">
       <Declaration><![CDATA[METHOD Cylinder_Set_Cutting
 VAR_INPUT
@@ -115,36 +103,6 @@ END_VAR]]></Declaration>
 			cylindersCentreSouth := 0;
 	END_IF
 END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Enable_Axes" Id="{c19824d3-7d09-4504-aec2-151759bbf50b}" FolderPath="Archive Individual actions\">
-      <Declaration><![CDATA[METHOD Enable_Axes : BOOL
-VAR_INPUT
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//IF GVL_Axes.AxisWest.Status.Disabled THEN
-//	executeEnableWest := TRUE;
-//END_IF
-
-//IF GVL_Axes.AxisEast.Status.Disabled THEN
-//	executeEnableEast := TRUE;
-//END_IF
-
-//fbMC_PowerWest(
-//		Axis:= GVL_Axes.AxisWest, 
-//		Enable:= executeEnableWest, 
-//		Enable_Positive:= executeEnableWest, 
-//		Enable_Negative:= executeEnableWest, 
-//		Override:= 100.0);
-		
-//fbMC_PowerWest(
-//		Axis:= GVL_Axes.AxisEast, 
-//		Enable:= executeEnableEast, 
-//		Enable_Positive:= executeEnableEast, 
-//		Enable_Negative:= executeEnableEast, 
-//		Override:= 100.0);
-		
-]]></ST>
       </Implementation>
     </Method>
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
@@ -207,28 +165,6 @@ END_IF
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Home_Axes" Id="{47d775d5-845e-4f32-9b48-f325228313c3}" FolderPath="Archive Individual actions\">
-      <Declaration><![CDATA[METHOD Home_Axes
-VAR_INPUT
-END_VAR
-
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//	fbMC_HomeWest(
-//		Axis:= GVL_Axes.AxisWest, 
-//		Execute:= executeHomeWest, 
-//		Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
-//		HomingMode:= MC_DefaultHoming, 
-//		bCalibrationCam:= NOT ls3NW);
-	
-//	fbMC_HomeEast(
-//		Axis:= GVL_Axes.AxisEast, 
-//		Execute:= executeHomeEast, 
-//		Position:= 403, 
-//		HomingMode:= MC_DefaultHoming, 
-//		bCalibrationCam:= NOT ls1NE);]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Home_Servos" Id="{40c1f2ee-aae6-427c-ae6f-0159b8da9b8e}">
       <Declaration><![CDATA[//Enables, couples and homes hold down gantry
 //TODO: check if robot is above rollers before homing
@@ -242,15 +178,7 @@ VAR
 
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//executeCouple := TRUE;
-////Couple Axes
-//fbMC_SyncAxes(
-//	Master:= GVL_Axes.AxisWest, 
-//	Slave:= GVL_Axes.AxisEast, 
-//	Execute:= executeCouple, 
-//	RatioNumerator:= 1);
-
-IF robotPose.zPose > GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT THEN
+        <ST><![CDATA[IF robotPose.zPose > GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT THEN
 	//Home Axes
 	IF GVL_Axes.AxisEast.NcToPlc.CoupleState = 3 THEN
 		executeHome := TRUE;
@@ -281,8 +209,32 @@ cylindersSouth 			:= raiseRollers;
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Pneumatics_Error" Id="{53ecf6cd-303e-4078-9884-7bcc9af1828f}">
+      <Declaration><![CDATA[//TODO: Write
+METHOD Pneumatics_Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Pneumatics_Error := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset_Servos" Id="{a5d370ca-8c90-416a-969e-b60ae3e560f6}">
+      <Declaration><![CDATA[//Resets servo errors
+METHOD Reset_Servos : BOOL // Returns true if errors reset successfully
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stopGantry := FALSE;
+resetExec := TRUE;
+
+Reset_Servos := NOT GVL_Axes.AxisWest.Status.Error;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Servo_Commands" Id="{e822ca69-a3df-402b-82d4-4917018968fd}">
-      <Declaration><![CDATA[METHOD Servo_Commands
+      <Declaration><![CDATA[//All the servo motions. Triggered in separate methods by their execute flags
+METHOD Servo_Commands
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -321,12 +273,32 @@ IF fbMC_HomeWest.Done THEN
 	executeHome := FALSE;
 END_IF
 	
+//Stop
+fbMC_Stop(
+	Axis:= GVL_Axes.AxisWest, 
+	Execute:= stopGantry, 
+	);
+	
+//Reset
+fbMC_Reset(
+	Axis := GVL_Axes.AxisWest,
+	Execute := ResetExec);
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop_Servos" Id="{7d8e10e5-888f-4c22-837f-e643348693b1}">
+      <Declaration><![CDATA[//Stops gantry
+METHOD Stop_Servos : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[stopGantry := TRUE;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_GantryHoldDown">
       <LineId Id="189" Count="1" />
-      <LineId Id="200" Count="0" />
+      <LineId Id="266" Count="0" />
       <LineId Id="188" Count="0" />
       <LineId Id="186" Count="0" />
       <LineId Id="199" Count="0" />
@@ -334,12 +306,6 @@ END_IF
       <LineId Id="207" Count="0" />
       <LineId Id="195" Count="0" />
       <LineId Id="208" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_GantryHoldDown.Check_Pneumatics">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_GantryHoldDown.Couple_Axes">
-      <LineId Id="6" Count="4" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Cylinder_Set_Cutting">
       <LineId Id="52" Count="0" />
@@ -358,18 +324,6 @@ END_IF
       <LineId Id="82" Count="3" />
       <LineId Id="81" Count="0" />
       <LineId Id="53" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_GantryHoldDown.Enable_Axes">
-      <LineId Id="6" Count="1" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="18" Count="2" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="9" Count="5" />
-      <LineId Id="8" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="23" Count="4" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="15" Count="1" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Follow_Robot">
       <LineId Id="98" Count="0" />
@@ -397,16 +351,7 @@ END_IF
       <LineId Id="111" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
-    <LineIds Name="FB_GantryHoldDown.Home_Axes">
-      <LineId Id="6" Count="4" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="13" Count="4" />
-      <LineId Id="12" Count="0" />
-    </LineIds>
     <LineIds Name="FB_GantryHoldDown.Home_Servos">
-      <LineId Id="184" Count="5" />
-      <LineId Id="182" Count="1" />
       <LineId Id="169" Count="12" />
       <LineId Id="55" Count="0" />
     </LineIds>
@@ -414,6 +359,14 @@ END_IF
       <LineId Id="13" Count="2" />
       <LineId Id="11" Count="1" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Pneumatics_Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Reset_Servos">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Servo_Commands">
       <LineId Id="34" Count="14" />
@@ -423,7 +376,17 @@ END_IF
       <LineId Id="29" Count="0" />
       <LineId Id="6" Count="5" />
       <LineId Id="55" Count="3" />
-      <LineId Id="30" Count="1" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="62" Count="1" />
+      <LineId Id="65" Count="1" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="67" Count="1" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Stop_Servos">
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

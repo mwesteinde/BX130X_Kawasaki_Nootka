@@ -1796,7 +1796,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{7CDF7234-5E3D-99E2-6948-1E3A37FDC125}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{04882566-9928-43E5-9CAC-7DB275D8A177}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1887,12 +1887,32 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
+							<Name>MAIN.fbMachine.fbSpindle.spindleToolLocked</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbSpindle.spindleToolOpen</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
 							<Name>MAIN.fbMachine.fbGantry.ls1NE</Name>
 							<Comment><![CDATA[Inputs]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbGantry.ls3NW</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbGantry.pressureSwitchSpindle</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbGantry.pressureSwitchHoldDown</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbGantry.pressureSwitchTableClamps</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -1949,6 +1969,11 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbSpindle.cylinderToolRelease2</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbSpindle.dustHoodCylinder</Name>
+							<Comment><![CDATA[Dust Hood]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -3938,7 +3963,12 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^LightBuzzer"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchHoldDown" VarB="Channel 2^PressureSwitch2HoldDown"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchSpindle" VarB="Channel 1^PressureSwitch1Spindle"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchTableClamps" VarB="Channel 3^PressureSwitch3TableClamps"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.pbToolChange" VarB="Channel 8^SpindleToolChange"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.spindleToolLocked" VarB="Channel 7^SpindleToolLocked"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.spindleToolOpen" VarB="Channel 6^SpindleToolOpen"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 6 (EL1008)">
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.pbTableEast" VarB="Channel 3^TablePBEast"/>

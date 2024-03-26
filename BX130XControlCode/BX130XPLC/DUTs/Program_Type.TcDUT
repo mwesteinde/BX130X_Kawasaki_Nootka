@@ -11,7 +11,7 @@ STRUCT
 	option3true			: STRING;
 	option3false		: STRING;
 	programName			: STRING;
-	firstTool			: Tool_Type;
+	firstTool			: INT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

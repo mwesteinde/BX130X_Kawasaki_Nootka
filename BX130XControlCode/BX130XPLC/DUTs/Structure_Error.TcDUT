@@ -5,6 +5,7 @@
 STRUCT
 	isError : BOOL := FALSE;
 	errorMessage : STRING;
+	errorType	: INT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

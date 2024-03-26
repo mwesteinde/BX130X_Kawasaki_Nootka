@@ -54,6 +54,7 @@ VAR
 	outRobotToolReleased			: BOOL; //Signal 1009
 	outRobotToolGrabbed				: BOOL; //Signal 1010
 	outRobotCurrentTool					: BOOL; //Signal 1011
+	outRobotNoEStop					: BOOL := TRUE; //Signal 1012
 	outRobotProgramChoice			: USINT; //Signals 1017-1020
 	outRobotProgramOption1			: BOOL; //Signal 1021
 	outRobotProgramOption2			: BOOL; //Signal 1022
@@ -68,11 +69,36 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Update_Status();
 
+//Turn off startRobot once program started 
+	IF inProgramRunning THEN
+		outRobotStartProgram := FALSE;
+	END_IF
+
 //Change request to home robot once robot is in home position
 	IF inRobotAtHome OR inRobotError THEN 
 		outRobotHome := FALSE;
-	END_IF]]></ST>
+	END_IF
+	
+//Turn off error reset and motor when on
+	IF NOT inRobotError THEN
+		outRobotResetError := FALSE;
+	END_IF
+	
+	IF inRobotMotorOn THEN		
+		outRobotTurnMotorOn := TRUE;
+	END_IF
+]]></ST>
     </Implementation>
+    <Method Name="EStop_OFF" Id="{11b55d3b-4c86-4338-971e-1665e9d7cb48}">
+      <Declaration><![CDATA[//Turns external Estop off
+METHOD EStop_OFF : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotNoEStop := TRUE;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Home_Robot" Id="{eca540c4-31fc-4643-aeb8-caefcff4553d}">
       <Declaration><![CDATA[//Send home command to robot
 METHOD Home_Robot
@@ -80,16 +106,24 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF inRobotAtHome THEN
-	outRobotHome := FALSE;
-ELSE 
-	outRobotHome := TRUE;
-END_IF]]></ST>
+        <ST><![CDATA[outRobotHome := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init_Robot" Id="{5fa8699b-d302-47dd-8fe6-b7724c082bbc}">
+      <Declaration><![CDATA[METHOD Init_Robot : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotResetError := TRUE;
+outRobotTurnMotorOn := TRUE;
+outRobotRunHold := TRUE;
+outRobotStartCycle := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Program_Select" Id="{5ccc5e7e-14d0-4912-bf3c-54f9c88aeb76}">
       <Declaration><![CDATA[// Select the robot program based on HMI inputs
-
 METHOD Program_Select
 VAR_INPUT
 	programChoice :	USINT;
@@ -105,8 +139,24 @@ outRobotProgramOption2	:= option2;
 outRobotProgramOption3	:= option3;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Reset_Robot" Id="{77e8bcdc-f7d0-483d-81fa-3d726fa4ee3a}">
+      <Declaration><![CDATA[//Resets robot errors
+METHOD Reset_Robot : BOOL //Returns true if robot reset successfully
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotNoEStop := TRUE;
+outRobotResetError := TRUE;
+outRobotResetProgram := TRUE;
+outRobotTurnMotorOn := TRUE;
+outRobotTurnMotorOff := FALSE;
+
+Reset_Robot := NOT(inRobotError OR inRobotEStopOn);]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Robot_Manual_Control" Id="{ed6ccda4-2af5-42af-8ac3-98592d92e5da}">
-      <Declaration><![CDATA[//Not Implemented
+      <Declaration><![CDATA[//TODO: Implement
 METHOD Robot_Manual_Control
 VAR_INPUT
 END_VAR
@@ -116,7 +166,8 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="RunHold_Robot" Id="{feac628f-72cf-4100-8d56-47c2e35d8c99}">
-      <Declaration><![CDATA[METHOD RunHold_Robot
+      <Declaration><![CDATA[//Holds robot if false
+METHOD RunHold_Robot
 VAR_INPUT
 	RunHold : BOOL; //True for run, False for hold
 END_VAR
@@ -126,7 +177,7 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Start_Robot" Id="{95ede5df-1a05-4c33-b6a8-dcc0ec83997b}">
-      <Declaration><![CDATA[//Resume the Robot 
+      <Declaration><![CDATA[//STart robot program
 METHOD Start_Robot
 VAR_INPUT
 END_VAR
@@ -136,18 +187,20 @@ END_VAR
 outRobotStartProgram := TRUE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Tool_Change" Id="{5647195d-a2e9-4cc5-9fac-af39fc1690e1}">
-      <Declaration><![CDATA[METHOD Tool_Change : BOOL
+    <Method Name="Stop_Robot" Id="{cd69170d-edd1-4221-b229-919e555987e2}">
+      <Declaration><![CDATA[//E-stop to robot
+METHOD Stop_Robot : BOOL
 VAR_INPUT
-	currentTool : Tool_Type;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[outRobotNoEStop := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Pose" Id="{095f6df8-3cda-4049-b351-7910f936202a}">
-      <Declaration><![CDATA[METHOD Update_Pose : Structure_RobotPose
+      <Declaration><![CDATA[//Updates current robot pose
+//TODO make flag that verifies pose is being sent
+METHOD Update_Pose : Structure_RobotPose
 VAR_INPUT
 END_VAR
 ]]></Declaration>
@@ -164,8 +217,7 @@ Update_Pose := robotPose;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Status" Id="{1be56ac6-764b-4729-954d-f7379608e62a}">
-      <Declaration><![CDATA[//Updates the robot pose, run status and IOs in Beckhoff system
-//TODO make flag that verifies pose is being sent
+      <Declaration><![CDATA[//Updates run status and IOs in Beckhoff system
 METHOD Update_Status
 VAR_INPUT
 END_VAR
@@ -183,6 +235,7 @@ sigs10011008.7 := outRobotTurnMotorOff; //1008
 sigs10091016.0 := outRobotToolReleased; //1009
 sigs10091016.1 := outRobotToolGrabbed; //1010
 sigs10091016.2 := outRobotCurrentTool; //1011
+sigs10091016.3 := outRobotNoEStop; //1011
 sigs10171024   := outRobotProgramChoice; //1017-1020
 sigs10171024.4 := outRobotProgramOption1; //1021
 sigs10171024.5 := outRobotProgramOption2; //1022
@@ -218,18 +271,37 @@ inProgramRunning := sigs113120.2; // Signal 115
     </Method>
     <LineIds Name="FB_Robot">
       <LineId Id="9" Count="0" />
+      <LineId Id="138" Count="4" />
       <LineId Id="73" Count="0" />
       <LineId Id="68" Count="1" />
       <LineId Id="71" Count="1" />
+      <LineId Id="143" Count="4" />
+      <LineId Id="151" Count="1" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="154" Count="0" />
+      <LineId Id="149" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.EStop_OFF">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Home_Robot">
-      <LineId Id="10" Count="1" />
-      <LineId Id="13" Count="1" />
+      <LineId Id="14" Count="0" />
       <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Init_Robot">
+      <LineId Id="5" Count="3" />
     </LineIds>
     <LineIds Name="FB_Robot.Program_Select">
       <LineId Id="15" Count="2" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Reset_Robot">
+      <LineId Id="8" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Robot_Manual_Control">
       <LineId Id="5" Count="0" />
@@ -240,7 +312,7 @@ inProgramRunning := sigs113120.2; // Signal 115
     <LineIds Name="FB_Robot.Start_Robot">
       <LineId Id="10" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Robot.Tool_Change">
+    <LineIds Name="FB_Robot.Stop_Robot">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Pose">
@@ -256,6 +328,7 @@ inProgramRunning := sigs113120.2; // Signal 115
       <LineId Id="30" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="103" Count="0" />
+      <LineId Id="110" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="94" Count="2" />
       <LineId Id="43" Count="0" />

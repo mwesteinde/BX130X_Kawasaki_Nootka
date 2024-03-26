@@ -1208,6 +1208,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.GVL_Axes.AxisWest.Status.Homed": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Axes::AxisWest::Status::Homed",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "StateDWord bit 1",
+                        "propertyOrder": 27
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIRunProgram": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1242,6 +1260,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbRobot::inRobotAtHome",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Signal 100",
+                        "propertyOrder": 17
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1271,6 +1307,24 @@
                     },
                     {
                         "propertyOrder": 4
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbSpindle::spindleIsWarm",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "--------------------Warmup params-----------",
+                        "propertyOrder": 24
                     }
                 ]
             },
@@ -4164,10 +4218,13 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
+                "C1007.GVL_Axes.AxisWest.Status.Homed": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
+                "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
+                "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
                 "C1007.MAIN.fbMachine.programOption2": 3,
                 "C1007.MAIN.fbMachine.programOption3": 3,

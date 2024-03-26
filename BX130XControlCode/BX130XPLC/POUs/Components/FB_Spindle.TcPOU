@@ -9,18 +9,23 @@ END_VAR
 VAR
 	// ================= Tool Changing ====================================
 	pbToolChange AT %I*: BOOL;
+	spindleToolLocked AT %I* : BOOL;
+	spindleToolOpen AT %I* : BOOL;
 	cylinderToolRelease1 AT %Q* : BOOL;
 	cylinderToolRelease2 AT %Q* : BOOL;
 	toolChangeTimer : TON;
+	
+	//Dust Hood
+	dustHoodCylinder AT %Q*		: BOOL;
 	
 	currentTool : Tool_Type;
 	
 	// ================= Tool Types ====================================
 	quarterInchUpcut : Tool_Type := (speed := 18000, toolNumber := 0, modelname := 'Dimar', name := 'Quarter Inch Upcut');
 	halfInchUpcut : Tool_Type := (speed := 18000, toolNumber := 1, modelname := 'Dimar', name := 'Half Inch Upcut');
-	sawblade : Tool_Type := (speed := 10000, toolNumber := 3, modelname := 'Hunter Precision Tools', name := 'Sawblade');
-	dovetail : Tool_Type := (speed := 18000, toolNumber := 4, modelname := 'Dimar', name := 'Dovetail');
-	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 5, modelname := 'Dimar', name := 'Half Inch Ball');
+	sawblade : Tool_Type := (speed := 10000, toolNumber := 2, modelname := 'Hunter Precision Tools', name := 'Sawblade');
+	dovetail : Tool_Type := (speed := 18000, toolNumber := 3, modelname := 'Dimar', name := 'Dovetail');
+	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 4, modelname := 'Dimar', name := 'Half Inch Ball');
 	
 	//--------------------Spindle TCP communication --------
 	fbWriteRegs : FB_MBWriteRegs; //Function call
@@ -100,8 +105,243 @@ END_VAR
 
 END_IF]]></ST>
     </Implementation>
-    <Method Name="Drive_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
-      <Declaration><![CDATA[METHOD Drive_Status : BOOL
+    <Method Name="Grab_Tool" Id="{b157a71e-63d7-43c6-8cda-129fe8943333}">
+      <Declaration><![CDATA[//Sets tool change cylinders to closed, returns true if tool locked
+METHOD Grab_Tool : BOOL 
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[cylinderToolRelease1 := FALSE;
+cylinderToolRelease2 := FALSE;
+Grab_Tool := spindleToolLocked;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Manual_Tool_Change" Id="{caf02692-220f-45ea-9a62-11b6af7ca524}">
+      <Declaration><![CDATA[METHOD Manual_Tool_Change
+VAR_INPUT
+	changeToolEnable : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF changeToolEnable THEN
+	toolChangeTimer(IN:= pbToolChange, PT:=T#2S);
+	
+	IF pbToolChange THEN
+		IF toolChangeTimer.Q THEN
+			cylinderToolRelease1 := TRUE;
+			cylinderToolRelease2 := TRUE;
+		END_IF
+	ELSE
+		cylinderToolRelease1 := FALSE;
+		cylinderToolRelease2 := FALSE;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Release_Tool" Id="{44458576-a982-4dd8-917f-a23f3b30cecf}">
+      <Declaration><![CDATA[METHOD Release_Tool : BOOL; //Sets tool change cylinders to open, returns true if tool released
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF spindleIsStopped THEN
+	cylinderToolRelease1 := FALSE;
+	cylinderToolRelease2 := FALSE;
+	Release_Tool := spindleToolOpen;
+ELSE
+	Release_Tool := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset_Drive" Id="{9a8ab2d1-8aed-4c9c-967c-6e187f19fbf4}">
+      <Declaration><![CDATA[//Resets drive, returns true if no drive error
+METHOD Reset_Drive : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	errorReset : WORD := INT_TO_WORD(2);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbWriteRegs2(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2002, 
+			cbLength:= SIZEOF(errorReset), 
+			pSrcAddr:= ADR(errorReset), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbWriteRegs2(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#2002, 
+			cbLength:= SIZEOF(errorReset), 
+			pSrcAddr:= ADR(errorReset), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+IF VFD_Status() THEN
+	Reset_Drive := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Spindle_Warmup" Id="{6626f887-e6c9-4081-bd79-0ba0a3b91bcb}">
+      <Declaration><![CDATA[//Starts spindle warmup, called in fbSpindle
+METHOD Spindle_Warmup
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[spindleWarmupOn := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start_Spindle" Id="{702c570c-7182-409d-ac49-a3e78d7a4915}">
+      <Declaration><![CDATA[//Description:
+//This method is responsible for starting the spindle motor based on the input speed provided in revolutions per minute (RPM). It converts the spindle speed into frequency and initiates the spindle motor accordingly.
+
+//Parameters:
+//- spindleSpeed: INT - The desired spindle speed in RPM.
+
+//Returns:
+//This method does not return any value.
+METHOD Start_Spindle
+VAR_INPUT
+	spindleSpeed : INT; //Spindle speed RPM
+	
+END_VAR
+
+VAR
+	spindleFrequency : INT := (spindleSpeed - 12000) / 30 + 400; //Speed conversion to frequency
+	startValue  : ARRAY [0..1] OF WORD := [INT_TO_WORD(18), INT_TO_WORD(SpindleFrequency*10)];
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(startValue), 
+			pSrcAddr:= ADR(startValue), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(startValue), 
+			pSrcAddr:= ADR(startValue), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Stop_Spindle" Id="{ef644fdc-e119-4b63-a532-fadf07840f86}">
+      <Declaration><![CDATA[//Stops spindle
+METHOD Stop_Spindle
+VAR_INPUT
+END_VAR
+
+VAR
+	stopValue: ARRAY [0..1] OF WORD := [INT_TO_WORD(1), INT_TO_WORD(0)];
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(stopValue), 
+			pSrcAddr:= ADR(stopValue), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+
+fbWriteRegs(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 2, 
+			nMBAddr:= 16#2000, 
+			cbLength:= SIZEOF(stopValue), 
+			pSrcAddr:= ADR(stopValue), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+spindleWarmupOn := FALSE;
+warmup1 := FALSE;
+warmup2 := FALSE;
+warmup3 := FALSE;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update_Current_Tool" Id="{d316eb47-28e5-4b11-bbfd-0a31ae49903c}">
+      <Declaration><![CDATA[//Updates the current tool based on an integer
+METHOD Update_Current_Tool : BOOL
+VAR_INPUT
+	toolNumber : INT;
+END_VAR
+VAR
+	updatedTool : Tool_Type;
+	success : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE toolNumber OF
+		0:
+			updatedTool := quarterInchUpcut;
+		1:
+			updatedTool := halfInchUpcut;
+		2:
+			updatedTool := sawblade;
+		3:
+			updatedTool := dovetail;
+		4:
+			updatedTool := halfInchBall;
+		ELSE
+			// Handle invalid tool number
+			success := FALSE;
+	END_CASE
+		
+currentTool := updatedTool;
+	
+// Successfully updated the current tool
+IF NOT success THEN
+	Update_Current_Tool := FALSE;
+ELSE
+	Update_Current_Tool := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="VFD_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
+      <Declaration><![CDATA[//Updates the status of the VFD: whether it's stopped and whether it is in error state
+METHOD VFD_Status : BOOL //returns true if drive has no error
 VAR_INPUT
 END_VAR
 VAR
@@ -178,216 +418,9 @@ IF errorStatus.3 = 1 AND errorStatus.2 = 0 THEN
 	spindleError := TRUE;
 ELSE 
 	spindleError := FALSE;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Grab_Tool" Id="{b157a71e-63d7-43c6-8cda-129fe8943333}">
-      <Declaration><![CDATA[METHOD Grab_Tool : BOOL //Sets tool change cylinders to closed, returns true if tool locked
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Manual_Tool_Change" Id="{caf02692-220f-45ea-9a62-11b6af7ca524}">
-      <Declaration><![CDATA[METHOD Manual_Tool_Change
-VAR_INPUT
-	changeToolEnable : BOOL;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF changeToolEnable THEN
-	toolChangeTimer(IN:= pbToolChange, PT:=T#2S);
-	
-	IF pbToolChange THEN
-		IF toolChangeTimer.Q THEN
-			cylinderToolRelease1 := TRUE;
-			cylinderToolRelease2 := TRUE;
-		END_IF
-	ELSE
-		cylinderToolRelease1 := FALSE;
-		cylinderToolRelease2 := FALSE;
-	END_IF
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Release_Tool" Id="{44458576-a982-4dd8-917f-a23f3b30cecf}">
-      <Declaration><![CDATA[METHOD Release_Tool : BOOL; //Sets tool change cylinders to open, returns true if tool released
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Reset_Error" Id="{9a8ab2d1-8aed-4c9c-967c-6e187f19fbf4}">
-      <Declaration><![CDATA[METHOD Reset_Error
-VAR_INPUT
-END_VAR
-VAR
-	errorReset : WORD := INT_TO_WORD(2);
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[fbWriteRegs2(
-			sIPAddr:= ipAddr, 
-			nTCPPort:= 502, 
-			nUnitID:= 16#FF, 
-			nQuantity:= 1, 
-			nMBAddr:= 16#2002, 
-			cbLength:= SIZEOF(errorReset), 
-			pSrcAddr:= ADR(errorReset), 
-			bExecute:= FALSE, 
-			tTimeout:= , 
-			bBusy=> , 
-			bError=> , 
-			nErrId=> );
-			
-fbWriteRegs2(
-			sIPAddr:= ipAddr, 
-			nTCPPort:= 502, 
-			nUnitID:= 16#FF, 
-			nQuantity:= 1, 
-			nMBAddr:= 16#2002, 
-			cbLength:= SIZEOF(errorReset), 
-			pSrcAddr:= ADR(errorReset), 
-			bExecute:= TRUE, 
-			tTimeout:= , 
-			bBusy=> , 
-			bError=> , 
-			nErrId=> );]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Spindle_Warmup" Id="{6626f887-e6c9-4081-bd79-0ba0a3b91bcb}">
-      <Declaration><![CDATA[METHOD Spindle_Warmup
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[spindleWarmupOn := TRUE;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Start_Spindle" Id="{702c570c-7182-409d-ac49-a3e78d7a4915}">
-      <Declaration><![CDATA[METHOD Start_Spindle
-VAR_INPUT
-	spindleSpeed : INT; //Spindle speed RPM
-	
-END_VAR
+END_IF
 
-VAR
-	spindleFrequency : INT := (spindleSpeed - 12000) / 30 + 400; //Speed conversion to frequency
-	startValue  : ARRAY [0..1] OF WORD := [INT_TO_WORD(18), INT_TO_WORD(SpindleFrequency*10)];
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[fbWriteRegs(
-			sIPAddr:= ipAddr, 
-			nTCPPort:= 502, 
-			nUnitID:= 16#FF, 
-			nQuantity:= 2, 
-			nMBAddr:= 16#2000, 
-			cbLength:= SIZEOF(startValue), 
-			pSrcAddr:= ADR(startValue), 
-			bExecute:= FALSE, 
-			tTimeout:= , 
-			bBusy=> , 
-			bError=> , 
-			nErrId=> );
-			
-fbWriteRegs(
-			sIPAddr:= ipAddr, 
-			nTCPPort:= 502, 
-			nUnitID:= 16#FF, 
-			nQuantity:= 2, 
-			nMBAddr:= 16#2000, 
-			cbLength:= SIZEOF(startValue), 
-			pSrcAddr:= ADR(startValue), 
-			bExecute:= TRUE, 
-			tTimeout:= , 
-			bBusy=> , 
-			bError=> , 
-			nErrId=> );]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Stop_Spindle" Id="{ef644fdc-e119-4b63-a532-fadf07840f86}">
-      <Declaration><![CDATA[METHOD Stop_Spindle
-VAR_INPUT
-END_VAR
-
-VAR
-	stopValue: ARRAY [0..1] OF WORD := [INT_TO_WORD(1), INT_TO_WORD(0)];
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[fbWriteRegs(
-			sIPAddr:= ipAddr, 
-			nTCPPort:= 502, 
-			nUnitID:= 16#FF, 
-			nQuantity:= 2, 
-			nMBAddr:= 16#2000, 
-			cbLength:= SIZEOF(stopValue), 
-			pSrcAddr:= ADR(stopValue), 
-			bExecute:= FALSE, 
-			tTimeout:= , 
-			bBusy=> , 
-			bError=> , 
-			nErrId=> );
-
-fbWriteRegs(
-			sIPAddr:= ipAddr, 
-			nTCPPort:= 502, 
-			nUnitID:= 16#FF, 
-			nQuantity:= 2, 
-			nMBAddr:= 16#2000, 
-			cbLength:= SIZEOF(stopValue), 
-			pSrcAddr:= ADR(stopValue), 
-			bExecute:= TRUE, 
-			tTimeout:= , 
-			bBusy=> , 
-			bError=> , 
-			nErrId=> );
-			
-spindleWarmupOn := FALSE;
-warmup1 := FALSE;
-warmup2 := FALSE;
-warmup3 := FALSE;
-
-]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Update_Current_Tool" Id="{d316eb47-28e5-4b11-bbfd-0a31ae49903c}">
-      <Declaration><![CDATA[METHOD Update_Current_Tool : BOOL
-VAR_INPUT
-	toolNumber : INT;
-END_VAR
-VAR
-	updatedTool : Tool_Type;
-	success : BOOL;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[CASE toolNumber OF
-		0:
-			updatedTool := quarterInchUpcut;
-		1:
-			updatedTool := halfInchUpcut;
-		3:
-			updatedTool := sawblade;
-		4:
-			updatedTool := dovetail;
-		5:
-			updatedTool := halfInchBall;
-		ELSE
-			// Handle invalid tool number
-			success := FALSE;
-	END_CASE
-		
-currentTool := updatedTool;
-	
-// Successfully updated the current tool
-IF NOT success THEN
-	Update_Current_Tool := FALSE;
-ELSE
-	Update_Current_Tool := TRUE;
-END_IF]]></ST>
+VFD_Status := NOT spindleError;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Spindle">
@@ -424,26 +457,10 @@ END_IF]]></ST>
       <LineId Id="141" Count="0" />
       <LineId Id="77" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Spindle.Drive_Status">
-      <LineId Id="9" Count="14" />
-      <LineId Id="35" Count="10" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="47" Count="0" />
-      <LineId Id="49" Count="11" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="62" Count="12" />
-      <LineId Id="61" Count="0" />
-      <LineId Id="75" Count="1" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="77" Count="0" />
-      <LineId Id="79" Count="1" />
-      <LineId Id="78" Count="0" />
-      <LineId Id="86" Count="0" />
-      <LineId Id="88" Count="4" />
-      <LineId Id="85" Count="0" />
-    </LineIds>
     <LineIds Name="FB_Spindle.Grab_Tool">
-      <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Manual_Tool_Change">
       <LineId Id="11" Count="1" />
@@ -458,11 +475,16 @@ END_IF]]></ST>
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Release_Tool">
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="2" />
     </LineIds>
-    <LineIds Name="FB_Spindle.Reset_Error">
+    <LineIds Name="FB_Spindle.Reset_Drive">
       <LineId Id="6" Count="25" />
       <LineId Id="5" Count="0" />
+      <LineId Id="42" Count="3" />
     </LineIds>
     <LineIds Name="FB_Spindle.Spindle_Warmup">
       <LineId Id="24" Count="0" />
@@ -492,6 +514,10 @@ END_IF]]></ST>
       <LineId Id="29" Count="1" />
       <LineId Id="33" Count="1" />
       <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.VFD_Status">
+      <LineId Id="109" Count="69" />
+      <LineId Id="100" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
