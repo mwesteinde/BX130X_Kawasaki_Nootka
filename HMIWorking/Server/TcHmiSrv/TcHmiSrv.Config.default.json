@@ -1226,6 +1226,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIHold": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIHold",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to hold program. Called from Run.content",
+                        "propertyOrder": 47
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIRunProgram": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1255,6 +1273,24 @@
                     },
                     {
                         "propertyOrder": 36
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIStart": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIStart",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to start program. Called from Run.content",
+                        "propertyOrder": 44
                     }
                 ]
             },
@@ -4219,8 +4255,10 @@
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
                 "C1007.GVL_Axes.AxisWest.Status.Homed": 3,
+                "C1007.MAIN.fbMachine.bHMIHold": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
+                "C1007.MAIN.fbMachine.bHMIStart": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,

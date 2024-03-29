@@ -106,7 +106,7 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
-      <Declaration><![CDATA[METHOD Follow_Robot : BOOL
+      <Declaration><![CDATA[METHOD Follow_Robot : BOOL //returns false if robot too far away (1"), true if it is
 VAR_INPUT
 	robotPoseGantry : Structure_RobotPose;
 END_VAR

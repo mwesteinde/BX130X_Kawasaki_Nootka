@@ -52,9 +52,10 @@ VAR
 	outRobotHome					: BOOL; //Signal 1007
 	outRobotTurnMotorOff			: BOOL; //1008
 	outRobotToolReleased			: BOOL; //Signal 1009
-	outRobotToolGrabbed				: BOOL; //Signal 1010
-	outRobotCurrentTool					: BOOL; //Signal 1011
-	outRobotNoEStop					: BOOL := TRUE; //Signal 1012
+	outRobotCurrentTool				: USINT; //Signal 1011-1013
+	outRobotNoEStop					: BOOL := TRUE; //Signal 1014
+	outRobotToolChangeAuto			: BOOL; // Signal 1015
+	outRobotSpindleOn				: BOOL; //Signal 1016
 	outRobotProgramChoice			: USINT; //Signals 1017-1020
 	outRobotProgramOption1			: BOOL; //Signal 1021
 	outRobotProgramOption2			: BOOL; //Signal 1022
@@ -233,9 +234,13 @@ sigs10011008.5 := outRobotRunHold; //1006
 sigs10011008.6 := outRobotHome; //1007
 sigs10011008.7 := outRobotTurnMotorOff; //1008
 sigs10091016.0 := outRobotToolReleased; //1009
-sigs10091016.1 := outRobotToolGrabbed; //1010
-sigs10091016.2 := outRobotCurrentTool; //1011
-sigs10091016.3 := outRobotNoEStop; //1011
+//sigs10091016.1 := outRobotToolGrabbed; //1010 No longer using
+sigs10091016.2 := outRobotCurrentTool.0; //1011
+sigs10091016.3 := outRobotCurrentTool.1; //1012
+sigs10091016.4 := outRobotCurrentTool.2; //1013
+sigs10091016.5 := outRobotNoEStop; //1014
+sigs10091016.6 := outRobotToolChangeAuto; //1015
+sigs10091016.7 := outRobotSpindleOn; //1016
 sigs10171024   := outRobotProgramChoice; //1017-1020
 sigs10171024.4 := outRobotProgramOption1; //1021
 sigs10171024.5 := outRobotProgramOption2; //1022
@@ -328,7 +333,9 @@ inProgramRunning := sigs113120.2; // Signal 115
       <LineId Id="30" Count="0" />
       <LineId Id="38" Count="0" />
       <LineId Id="103" Count="0" />
+      <LineId Id="115" Count="1" />
       <LineId Id="110" Count="0" />
+      <LineId Id="121" Count="1" />
       <LineId Id="39" Count="0" />
       <LineId Id="94" Count="2" />
       <LineId Id="43" Count="0" />
