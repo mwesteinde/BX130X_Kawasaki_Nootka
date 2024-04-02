@@ -54,7 +54,7 @@ VAR
 	outRobotToolReleased			: BOOL; //Signal 1009
 	outRobotCurrentTool				: USINT; //Signal 1011-1013
 	outRobotNoEStop					: BOOL := TRUE; //Signal 1014
-	outRobotToolChangeAuto			: BOOL; // Signal 1015
+	outRobotToolChangeAuto			: BOOL := TRUE; // Signal 1015
 	outRobotSpindleOn				: BOOL; //Signal 1016
 	outRobotProgramChoice			: USINT; //Signals 1017-1020
 	outRobotProgramOption1			: BOOL; //Signal 1021
@@ -138,6 +138,16 @@ END_VAR
 outRobotProgramOption1 := option1;
 outRobotProgramOption2	:= option2;
 outRobotProgramOption3	:= option3;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Release_Update" Id="{dba9479c-b587-4cb4-8aba-4cf3f2e05c5d}">
+      <Declaration><![CDATA[METHOD Release_Update
+VAR_INPUT
+	release : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotToolReleased := release;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Reset_Robot" Id="{77e8bcdc-f7d0-483d-81fa-3d726fa4ee3a}">
@@ -298,6 +308,9 @@ inProgramRunning := sigs113120.2; // Signal 115
     </LineIds>
     <LineIds Name="FB_Robot.Program_Select">
       <LineId Id="15" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Release_Update">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Reset_Robot">

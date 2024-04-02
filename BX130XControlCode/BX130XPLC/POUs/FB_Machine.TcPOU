@@ -60,10 +60,6 @@ VAR
 	bHMIRunProgramScreen		: BOOL; 
 	rTrigRunProgramScreen		: R_TRIG; //
 	//=============Programs====================
-	FrontWall : Program_Type := (index := 0, option1true := 'E cut', option1false := 'No E cut', option2true := 'Glass Door', option2false := 'Wood Door', option3true := 'Lock', option3false := 'No Lock', programName := 'Front Wall', firstTool := 0);
-	BackWall : Program_Type := (index := 1, option1true := 'STD Window', option1false := 'No Window', option2true := 'Chimney Cut', option2false := 'No Chimney', option3true := '', option3false := '', programName := 'Back Wall', firstTool := 1);	
-	Option3 : Program_Type := (index := 2, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := 0);
-	Option4 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := 0);
 	selectedProgram : Program_Type;
 	
 	// run.content buttons
@@ -308,8 +304,8 @@ END_IF
 IF rTrigRunProgramScreen.Q THEN
 	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3);
 	Update_Program_String();
-	fbSpindle.Update_Current_Tool(toolNumber := selectedProgram.firstTool);
-	fbRobot.Update_Current_
+	fbSpindle.Update_Current_Tool(toolNumber := selectedProgram.firstTool.toolNumber);
+//	fbRobot.Update_Current_
 	bHMIRunProgramScreen := FALSE;
 END_IF
 
@@ -390,11 +386,20 @@ END_IF]]></ST>
       <Declaration><![CDATA[METHOD Operating_ToolChange : BOOL
 VAR_INPUT
 END_VAR
+VAR
+	
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF fbRobot.outRobotToolChangeAuto THEN
 	//Tool change auto
-	
+	IF fbRobot.inRobotReleaseTool THEN
+		fbSpindle.Release_Tool();
+		fbRobot.Release_Update(release := fbSpindle.spindleToolOpen);
+	ELSE
+		fbSpindle.Grab_Tool();
+		fbRobot.Release_Update(release := NOT fbSpindle.spindleToolOpen);
+	END_IF
 ELSE
 	//Tool change manual
 	IF fbSpindle.spindleIsStopped AND fbRobot.inRobotReleaseTool THEN
@@ -502,10 +507,10 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE programWallChoice OF
-        1: selectedProgram := FrontWall;
-        2: selectedProgram := BackWall;
-        3: selectedProgram := Option3;
-        4: selectedProgram := Option4;
+        1: selectedProgram := GVL_Programs.FrontWall;
+        2: selectedProgram := GVL_Programs.BackWall;
+        3: selectedProgram := GVL_Programs.Option3;
+        4: selectedProgram := GVL_Programs.Option4;
         // Add more cases for additional options if needed
         ELSE
             // Handle invalid program wall choice
@@ -699,6 +704,12 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="28" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="30" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="27" Count="0" />
       <LineId Id="21" Count="5" />

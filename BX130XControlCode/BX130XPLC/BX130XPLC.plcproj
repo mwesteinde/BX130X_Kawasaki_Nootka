@@ -40,6 +40,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="GVLs\GVL_Programs.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="GVLs\GVL_SERVO_ROBOT_CONST.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>

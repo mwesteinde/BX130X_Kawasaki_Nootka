@@ -20,14 +20,6 @@ VAR
 	
 	currentTool : Tool_Type;
 	
-	// ================= Tool Types ====================================
-	quarterInchUpcut : Tool_Type := (speed := 18000, toolNumber := 0, modelname := 'Dimar', name := 'Quarter Inch Upcut');
-	halfInchUpcut : Tool_Type := (speed := 18000, toolNumber := 1, modelname := 'Dimar', name := 'Half Inch Upcut');
-	sawblade : Tool_Type := (speed := 10000, toolNumber := 2, modelname := 'Hunter Precision Tools', name := 'Sawblade');
-	dovetail : Tool_Type := (speed := 18000, toolNumber := 3, modelname := 'Dimar', name := 'Dovetail');
-	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 4, modelname := 'Dimar', name := 'Half Inch Ball');
-	quarterInchBall : Tool_Type := (speed := 18000, toolNumber := 5, modelname := 'Dimar', name := 'Quarter Inch Ball');
-	
 	//--------------------Spindle TCP communication --------
 	fbWriteRegs : FB_MBWriteRegs; //Function call
 	fbWriteRegs2 : FB_MBWriteRegs; //Error reset
@@ -149,10 +141,12 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF spindleIsStopped THEN
-	cylinderToolRelease1 := FALSE;
-	cylinderToolRelease2 := FALSE;
+	cylinderToolRelease1 := TRUE;
+	cylinderToolRelease2 := TRUE;
 	Release_Tool := spindleToolOpen;
 ELSE
+	cylinderToolRelease1 := FALSE;
+	cylinderToolRelease2 := FALSE;
 	Release_Tool := FALSE;
 END_IF]]></ST>
       </Implementation>
@@ -318,15 +312,16 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[CASE toolNumber OF
 		0:
-			updatedTool := quarterInchUpcut;
-		1:
-			updatedTool := halfInchUpcut;
+			updatedTool := GVL_Programs.sawblade;
+		6:
+			updatedTool := GVL_Programs.halfInchBall;
 		2:
-			updatedTool := sawblade;
-		3:
-			updatedTool := dovetail;
+			updatedTool := GVL_Programs.quarterInchUpcut;
+		5:
+			updatedTool := GVL_Programs.dovetail;
 		4:
-			updatedTool := halfInchBall;
+			updatedTool := GVL_Programs.halfInchUpcut;
+			
 		ELSE
 			// Handle invalid tool number
 			success := FALSE;
@@ -483,7 +478,9 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="5" Count="0" />
-      <LineId Id="12" Count="2" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="18" Count="1" />
+      <LineId Id="13" Count="1" />
     </LineIds>
     <LineIds Name="FB_Spindle.Reset_Drive">
       <LineId Id="6" Count="25" />
@@ -511,7 +508,9 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Update_Current_Tool">
-      <LineId Id="7" Count="13" />
+      <LineId Id="7" Count="10" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="18" Count="2" />
       <LineId Id="5" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="25" Count="2" />
