@@ -101,6 +101,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_NcDrive">
       <DefaultResolution>Tc2_NcDrive, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_NcDrive</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -110,9 +111,16 @@
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="TcMatrix">
+      <DefaultResolution>TcMatrix, * (Burks Engineering)</DefaultResolution>
+      <Namespace>TcMatrix</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

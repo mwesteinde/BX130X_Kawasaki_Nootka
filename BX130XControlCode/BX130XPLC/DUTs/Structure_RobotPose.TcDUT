@@ -3,9 +3,9 @@
   <DUT Name="Structure_RobotPose" Id="{e2223736-10fa-4632-bd16-3b0278ad8845}">
     <Declaration><![CDATA[TYPE Structure_RobotPose :
 STRUCT
-	xPose : INT;
-	yPose : INT;
-	zPose : INT;
+	xPose : LREAL;
+	yPose : LREAL;
+	zPose : LREAL;
 	oPose : INT;
 	aPose : INT;
 	tPose : INT;

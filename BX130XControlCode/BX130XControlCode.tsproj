@@ -1796,7 +1796,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{4AE79DCB-1B55-677E-7BE4-A23A5CF23742}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{31096DAA-1285-21A1-8B7A-AC082F379255}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1867,6 +1867,66 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.t_pose_2</Name>
 							<Comment><![CDATA[Signal 89-96]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.xtool_pose_1</Name>
+							<Comment><![CDATA[Signal 129]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.xtool_pose_2</Name>
+							<Comment><![CDATA[Signal ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.ytool_pose_1</Name>
+							<Comment><![CDATA[Signal 137]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.ytool_pose_2</Name>
+							<Comment><![CDATA[Signal ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.ztool_pose_1</Name>
+							<Comment><![CDATA[Signal 145]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.ztool_pose_2</Name>
+							<Comment><![CDATA[Signal ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.otool_pose_1</Name>
+							<Comment><![CDATA[Signal 153]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.otool_pose_2</Name>
+							<Comment><![CDATA[Signal ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.atool_pose_1</Name>
+							<Comment><![CDATA[Signal 161]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.atool_pose_2</Name>
+							<Comment><![CDATA[Signal ]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.ttool_pose_1</Name>
+							<Comment><![CDATA[Signal 169]]></Comment>
+							<Type>USINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbRobot.ttool_pose_2</Name>
+							<Comment><![CDATA[Signal ]]></Comment>
 							<Type>USINT</Type>
 						</Var>
 						<Var>
@@ -3936,19 +3996,31 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^PortLAN1X102^Box 14 (ECT I/F for KHI Robot Controller)">
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.a_pose_1" VarB="TxPDO^65-72"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.a_pose_2" VarB="TxPDO^73-80"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.atool_pose_1" VarB="TxPDO^193-200"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.atool_pose_2" VarB="TxPDO^201-208"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.o_pose_1" VarB="TxPDO^49-56"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.o_pose_2" VarB="TxPDO^57-64"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.otool_pose_1" VarB="TxPDO^177-184"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.otool_pose_2" VarB="TxPDO^185-192"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.sigs105112" VarB="TxPDO^105-112"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.sigs113120" VarB="TxPDO^113-120"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.sigs97104" VarB="TxPDO^97-104"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.t_pose_1" VarB="TxPDO^81-88"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.t_pose_2" VarB="TxPDO^89-96"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.ttool_pose_1" VarB="TxPDO^209-216"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.ttool_pose_2" VarB="TxPDO^217-224"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.x_pose_1" VarB="TxPDO^1-8"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.x_pose_2" VarB="TxPDO^9-16"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.xtool_pose_1" VarB="TxPDO^129-136"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.xtool_pose_2" VarB="TxPDO^137-144"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.y_pose_1" VarB="TxPDO^17-24"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.y_pose_2" VarB="TxPDO^25-32"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.ytool_pose_1" VarB="TxPDO^145-152"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.ytool_pose_2" VarB="TxPDO^153-160"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_1" VarB="TxPDO^33-40"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.z_pose_2" VarB="TxPDO^41-48"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.ztool_pose_1" VarB="TxPDO^161-168"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbRobot.ztool_pose_2" VarB="TxPDO^169-176"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10011008" VarB="RxPDO^1001-1008"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10091016" VarB="RxPDO^1009-1016"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10171024" VarB="RxPDO^1017-1024"/>
