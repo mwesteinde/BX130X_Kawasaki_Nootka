@@ -173,17 +173,20 @@ CASE eSystemState OF
 	E_MachineState.RUN:
 		IF (fTrigStopProgram.Q OR fTrigInProgramRunning.Q) AND NOT errorState.isError THEN
 			eSystemState := E_MachineState.INITIALIZATION;
+			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 			fbSpindle.Stop_Spindle();
 			bHMIStart := FALSE;
 		END_IF
 		
 		IF errorState.isError THEN
 			eSystemState := E_MachineState.ERROR;
+			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 		END_IF
 		
 		IF fbRobot.inRobotToolNumberRequest <> fbSpindle.currentTool.toolNumber THEN
 			fbSpindle.Stop_Spindle();
 			eSystemState := E_MachineState.TOOLCHANGE;
+			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 		END_IF
 		
 		
@@ -366,6 +369,9 @@ END_IF
 
 // Follow and hold
 robotRun := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
+
+//dust boot
+fbSpindle.Dust_Hood(x_pose := fbRobot.robotPose.xPose, enable := TRUE);
 
 IF bHMIHold THEN
 	fbRobot.RunHold_Robot(RunHold := FALSE);
@@ -575,15 +581,19 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="25" Count="1" />
       <LineId Id="13" Count="5" />
       <LineId Id="27" Count="0" />
+      <LineId Id="101" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="65" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="36" Count="2" />
+      <LineId Id="102" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="91" Count="0" />
-      <LineId Id="79" Count="1" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="80" Count="0" />
       <LineId Id="77" Count="0" />
       <LineId Id="43" Count="1" />
       <LineId Id="39" Count="0" />
@@ -686,6 +696,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="53" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="11" Count="0" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="91" Count="0" />
       <LineId Id="79" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="80" Count="0" />

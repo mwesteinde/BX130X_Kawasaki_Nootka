@@ -11,30 +11,20 @@ VAR
 	robotPose 		: Structure_RobotPose;	//Stores robot pose
 
 	//----------Inputs From Robot ----------
-	x_pose_1 AT %I* : USINT; //Signal 1-8
-	x_pose_2 AT %I* : USINT; //Signal 9-16
-	y_pose_1 AT %I* : USINT; //Signal 17-25
-	y_pose_2 AT %I* : USINT; //Signal 26-32
-	z_pose_1 AT %I* : USINT; //Signal 33-40
-	z_pose_2 AT %I* : USINT; //Signal 41-48
-	o_pose_1 AT %I* : USINT; //Signal 49-56
-	o_pose_2 AT %I* : USINT; //Signal 57-64
-	a_pose_1 AT %I* : USINT; //Signal 65-72
-	a_pose_2 AT %I* : USINT; //Signal 73-80
-	t_pose_1 AT %I* : USINT; //Signal 81-88
-	t_pose_2 AT %I* : USINT; //Signal 89-96
-	xtool_pose_1 AT %I* : USINT; //Signal 129
-	xtool_pose_2 AT %I* : USINT; //Signal 
-	ytool_pose_1 AT %I* : USINT; //Signal 137
-	ytool_pose_2 AT %I* : USINT; //Signal 
-	ztool_pose_1 AT %I* : USINT; //Signal 145
+	jt1_pose_1 AT %I* : USINT; //Signal 1-8
+	jt1_pose_2 AT %I* : USINT; //Signal 9-16
+	jt2_pose_1 AT %I* : USINT; //Signal 17-25
+	jt2_pose_2 AT %I* : USINT; //Signal 26-32
+	jt3_pose_1 AT %I* : USINT; //Signal 33-40
+	jt3_pose_2 AT %I* : USINT; //Signal 41-48
+	jt4_pose_1 AT %I* : USINT; //Signal 49-56
+	jt4_pose_2 AT %I* : USINT; //Signal 57-64
+	jt5_pose_1 AT %I* : USINT; //Signal 65-72
+	jt5_pose_2 AT %I* : USINT; //Signal 73-80
+	jt6_pose_1 AT %I* : USINT; //Signal 81-88
+	jt6_pose_2 AT %I* : USINT; //Signal 89-96
+	ztool_pose_1 AT %I* : USINT; //Signal 129
 	ztool_pose_2 AT %I* : USINT; //Signal 
-	otool_pose_1 AT %I* : USINT; //Signal 153
-	otool_pose_2 AT %I* : USINT; //Signal 
-	atool_pose_1 AT %I* : USINT; //Signal 161
-	atool_pose_2 AT %I* : USINT; //Signal 
-	ttool_pose_1 AT %I* : USINT; //Signal 169
-	ttool_pose_2 AT %I* : USINT; //Signal 
 	inRobotMotorOn			: BOOL; //Signal number 97
 	inRobotError		: BOOL; //Signal 98
 	inRobotAutomaticMode	: BOOL; //Signal 99
@@ -220,42 +210,6 @@ END_VAR
         <ST><![CDATA[outRobotNoEStop := FALSE;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Transform_Matrix" Id="{44628c20-9019-4a7c-bbf3-07145b104f24}">
-      <Declaration><![CDATA[METHOD Transform_Matrix : Array2DStaticMatrix
-VAR_INPUT
-	data: ARRAY[1..4,1..4] OF LREAL;
-	y : LREAL;
-	z0 : LREAL;
-	z1: LREAL;
-	xpose: LREAL;
-	ypose: LREAL;
-	zpose: LREAL;
-END_VAR
-
-VAR
-	TCP: INT;
-	SetI: INT;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[//TCP(Data := data);
-//toolInv.SetI(0, COS(y)*COS(z0)*COS(z1)-SIN(z0)*SIN(z1));
-//toolInv.SetI(1, -COS(z1)*SIN(z0)-COS(y)*COS(z0)*SIN(z1));
-//toolInv.SetI(2, SIN(y)*COS(z0));
-//toolInv.SetI(3, xpose);
-//toolInv.SetI(4, COS(y)*COS(z1)*SIN(z0)+COS(z0)*SIN(z1));
-//toolInv.SetI(5, COS(z0)*COS(z1)-COS(y)*SIN(z0)*SIN(z1));
-//toolInv.SetI(6, SIN(y)*SIN(z0));
-//toolInv.SetI(7, ypose);
-//toolInv.SetI(8, -SIN(y)*COS(z1));
-//toolInv.SetI(9, SIN(y)*SIN(z1));
-//toolInv.SetI(10, COS(y));
-//toolInv.SetI(11, zpose);
-//toolInv.SetI(12, 0);
-//toolInv.SetI(13, 0);
-//toolInv.SetI(14, 0);
-//toolInv.SetI(15, 1);]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Update_Pose" Id="{095f6df8-3cda-4049-b351-7910f936202a}">
       <Declaration><![CDATA[//Updates current robot pose
 //TODO make flag that verifies pose is being sent
@@ -263,139 +217,64 @@ METHOD Update_Pose : Structure_RobotPose
 VAR_INPUT
 END_VAR
 VAR
-	xposeTool : LREAL;
-	yposeTool : LREAL;
-	zposeTool : LREAL;
-	oposeTool : LREAL;
-	aposeTool : LREAL;
-	tposeTool : LREAL;
-	
-	xposeTCP : LREAL;
-	yposeTCP : LREAL;
-	zposeTCP : LREAL;
-	oposeTCP : LREAL;
-	aposeTCP : LREAL;
-	tposeTCP : LREAL;
-	
 	dustBoot : Array2DStaticMatrix; //This instance is the matrix that the code will interact with
 	dustBoot_Data : ARRAY[1..4,1..1] OF LREAL := [-58.997,133.95,455.3,1];; //This array will act as the memory for the matrix
 	
-	toolInv : Array2DStaticMatrix; //This instance is the initial column vector
-	toolInv_Data : ARRAY[1..4,1..4] OF LREAL; //This array will act as the memory for the initial column vector, prepopulated
+	joints : ARRAY[1..6] OF LREAL;
+	jointsrad : ARRAY[1..6] OF LREAL;
+	alpha : ARRAY[1..6] OF LREAL := [-PI/2,PI,PI/2,PI/2,PI/2,0];
+	theta : ARRAY[1..6] OF LREAL := [PI/2,PI/2,-PI,-PI,PI,PI/2];
+	d : ARRAY[1..6] OF LREAL := [530,0,0,1650,0,225];
+	a : ARRAY[1..6] OF LREAL := [200,-1160,230,0,0,0];
 	
-	TCP : Array2DStaticMatrix; //This instance is the initial column vector
-	TCP_Data : ARRAY[1..4,1..4] OF LREAL; //This array will act as the memory for the initial column vector, prepopulated
-	
-	Intermediate : Array2DStaticMatrix;
-	Intermediate_Data : ARRAY[1..4,1..4] OF LREAL;
+	dh : ARRAY[1..6] OF Array2DStaticMatrix;
+	dh_data : ARRAY[1..6] OF ARRAY[1..4,1..4] OF LREAL;
+	temp : ARRAY[1..5] OF Array2DStaticMatrix;
+	temp_data : ARRAY[1..5] OF ARRAY[1..4,1..4] OF LREAL;
+	i : INT;
 	
 	Result : Array2DStaticMatrix; //This instance is the resulting column vector
 	Result_Data : ARRAY[1..4,1..1] OF LREAL := [1, 2, 3,1]; //This array will act as the memory for the resulting column vector
 	
-	success1 : BOOL; //records success or failure of the matrix multiplication
-	success2 : BOOL; //records success or failure of the matrix multiplication
+	success : ARRAY[1..7] OF BOOL; //records success or failure of the matrix multiplication
 	equal : BOOL; //records success if the resulting vector is equal to the first
-	y: LREAL;
-	z0: LREAL;
-	z1:LREAL;
-	xpose:LREAL;
-	ypose:LREAL;
 	zpose:LREAL;
-	test: LREAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[// RobotPose
-//robotPose.xPose := UINT_TO_INT(x_pose_2)*256 + UINT_TO_INT(x_pose_1) - 4000;
-//robotPose.yPose := UINT_TO_INT(y_pose_2)*256 + UINT_TO_INT(y_pose_1) - 4000;
-//robotPose.zPose := UINT_TO_INT(z_pose_2)*256 + UINT_TO_INT(z_pose_1) - 4000;
-//robotPose.oPose := UINT_TO_INT(o_pose_2)*256 + UINT_TO_INT(o_pose_1) - 400;
-//robotPose.aPose := UINT_TO_INT(a_pose_2)*256 + UINT_TO_INT(a_pose_1) - 400;
-//robotPose.tPose := UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400;
+joints[1] := -((UINT_TO_LREAL(jt1_pose_2)*256 + UINT_TO_LREAL(jt1_pose_1) - 40000)/100);
+joints[2] := ((UINT_TO_LREAL(jt2_pose_2)*256 + UINT_TO_LREAL(jt2_pose_1) - 40000)/100);
+joints[3] := ((UINT_TO_LREAL(jt3_pose_2)*256 + UINT_TO_LREAL(jt3_pose_1) - 40000)/100);
+joints[4] := ((UINT_TO_LREAL(jt4_pose_2)*256 + UINT_TO_LREAL(jt4_pose_1) - 40000)/100);
+joints[5] := ((UINT_TO_LREAL(jt5_pose_2)*256 + UINT_TO_LREAL(jt5_pose_1) - 40000)/100);
+joints[6] := ((UINT_TO_LREAL(jt6_pose_2)*256 + UINT_TO_LREAL(jt6_pose_1) - 40000)/100);
 
-xPoseTCP := UINT_TO_INT(x_pose_2)*256 + UINT_TO_INT(x_pose_1) - 4000;
-yPoseTCP := UINT_TO_INT(y_pose_2)*256 + UINT_TO_INT(y_pose_1) - 4000;
-zPoseTCP := UINT_TO_INT(z_pose_2)*256 + UINT_TO_INT(z_pose_1) - 4000;
-oPoseTCP := DEG_TO_RAD(UINT_TO_INT(o_pose_2)*256 + UINT_TO_INT(o_pose_1) - 400);
-aPoseTCP := DEG_TO_RAD(UINT_TO_INT(a_pose_2)*256 + UINT_TO_INT(a_pose_1) - 400);
-tPoseTCP := DEG_TO_RAD(UINT_TO_INT(t_pose_2)*256 + UINT_TO_INT(t_pose_1) - 400);
-
-xPoseTool := UINT_TO_INT(xtool_pose_2)*256 + UINT_TO_INT(xtool_pose_1) - 4000;
-yPoseTool := UINT_TO_INT(ytool_pose_2)*256 + UINT_TO_INT(ytool_pose_1) - 4000;
-zPoseTool := UINT_TO_INT(ztool_pose_2)*256 + UINT_TO_INT(ztool_pose_1) - 4000;
-oPoseTool := DEG_TO_RAD(UINT_TO_INT(otool_pose_2)*256 + UINT_TO_INT(otool_pose_1) - 400);
-aPoseTool := DEG_TO_RAD(UINT_TO_INT(atool_pose_2)*256 + UINT_TO_INT(atool_pose_1) - 400);
-tPoseTool := DEG_TO_RAD(UINT_TO_INT(ttool_pose_2)*256 + UINT_TO_INT(ttool_pose_1) - 400);
+zpose := ((UINT_TO_LREAL(ztool_pose_2)*256 + UINT_TO_LREAL(ztool_pose_1) - 4000));
 
 dustBoot(Data := dustBoot_Data);
-toolInv(Data := toolInv_Data);
-TCP(Data := TCP_Data);
-Intermediate(Data := Intermediate_Data);
 Result(Data := Result_Data);
+FOR i := 1 TO 6 DO
+	jointsrad[i] := DEG_TO_RAD(joints[i]);
+	dh[i](Data := dh_Data[i]);
+	dh[i].Denavit_Hartenberg(jt := jointsrad[i], theta := theta[i], alpha := alpha[i], d := d[i], a := a[i]);
+END_FOR
 
-z0 := oposeTool;
-y := aposeTool;
-z1 := tposeTool;
-xpose := xposeTool;
-ypose := yposetool;
-zpose := zposetool;
-toolInv.SetI(0, COS(y)*COS(z0)*COS(z1)-SIN(z0)*SIN(z1));
-toolInv.SetI(1, -COS(z1)*SIN(z0)-COS(y)*COS(z0)*SIN(z1));
-toolInv.SetI(2, SIN(y)*COS(z0));
-toolInv.SetI(3, xpose);
-toolInv.SetI(4, COS(y)*COS(z1)*SIN(z0)+COS(z0)*SIN(z1));
-toolInv.SetI(5, COS(z0)*COS(z1)-COS(y)*SIN(z0)*SIN(z1));
-toolInv.SetI(6, SIN(y)*SIN(z0));
-toolInv.SetI(7, ypose);
-toolInv.SetI(8, -SIN(y)*COS(z1));
-toolInv.SetI(9, SIN(y)*SIN(z1));
-toolInv.SetI(10, COS(y));
-toolInv.SetI(11, zpose);
-toolInv.SetI(12, 0);
-toolInv.SetI(13, 0);
-toolInv.SetI(14, 0);
-toolInv.SetI(15, 1);
+FOR i := 1 TO 5 DO
+	temp[i](Data := temp_data[i]);
+END_FOR
 
-z0 := oposeTCP;
-y := aposeTCP;
-z1 := tposeTCP;
-xpose := xposeTCP;
-ypose := yposeTCP;
-zpose := zposeTCP;
-TCP.SetI(0, COS(y)*COS(z0)*COS(z1)-SIN(z0)*SIN(z1));
-TCP.SetI(1, -COS(z1)*SIN(z0)-COS(y)*COS(z0)*SIN(z1));
-TCP.SetI(2, SIN(y)*COS(z0));
-TCP.SetI(3, xpose);
-TCP.SetI(4, COS(y)*COS(z1)*SIN(z0)+COS(z0)*SIN(z1));
-TCP.SetI(5, COS(z0)*COS(z1)-COS(y)*SIN(z0)*SIN(z1));
-TCP.SetI(6, SIN(y)*SIN(z0));
-TCP.SetI(7, ypose);
-TCP.SetI(8, -SIN(y)*COS(z1));
-TCP.SetI(9, SIN(y)*SIN(z1));
-TCP.SetI(10, COS(y));
-TCP.SetI(11, zpose);
-TCP.SetI(12, 0);
-TCP.SetI(13, 0);
-TCP.SetI(14, 0);
-TCP.SetI(15, 1);
+success[1] := Matrix_Product(dh[1], dh[2], temp[1]);
 
-//toolInv := Transform_Matrix(data := toolInv_Data, y := aposeTool, z0 := tposeTool, z1 := oposeTool, xpose := -xposeTool, ypose := -yposetool, zpose := -zposetool);
-//TCP := Transform_Matrix(data := TCP_Data, y := aposeTCP, z0 := tposeTCP, z1 := oposeTCP, xpose := xposeTCP, ypose := yposeTCP, zpose := zposeTCP);
-toolInv.InvertSquare(1E-20);
+FOR i := 2 TO 5 DO
+	success[i] := Matrix_Product(temp[i-1], dh[i+1], temp[i]);
+END_FOR
 
-success1 := Matrix_Product(TCP, toolInv, Intermediate);
-success2 := Matrix_Product(Intermediate, dustBoot, Result);
-
+success[7] := Matrix_Product(temp[5],dustBoot,Result);
 
 robotPose.xPose := Result.GetI(0);
 robotPose.yPose := Result.GetI(1);
-robotPose.zPose := Result.GetI(2);
-//robotPose.yPose := 
-//robotPose.zPose := 
-//robotPose.oPose := 
-//robotPose.aPose := 
-//robotPose.tPose := 
-
+robotPose.zPose := zpose;
 Update_Pose := robotPose;]]></ST>
       </Implementation>
     </Method>
@@ -505,48 +384,30 @@ inProgramRunning := sigs113120.2; // Signal 115
     <LineIds Name="FB_Robot.Stop_Robot">
       <LineId Id="5" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Robot.Transform_Matrix">
-      <LineId Id="28" Count="0" />
-      <LineId Id="12" Count="14" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
     <LineIds Name="FB_Robot.Update_Pose">
-      <LineId Id="6" Count="5" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="20" Count="0" />
+      <LineId Id="6" Count="0" />
       <LineId Id="36" Count="4" />
       <LineId Id="19" Count="0" />
-      <LineId Id="42" Count="5" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="74" Count="1" />
-      <LineId Id="79" Count="1" />
-      <LineId Id="83" Count="0" />
-      <LineId Id="159" Count="0" />
-      <LineId Id="161" Count="0" />
-      <LineId Id="123" Count="0" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="128" Count="0" />
-      <LineId Id="126" Count="0" />
-      <LineId Id="125" Count="0" />
-      <LineId Id="124" Count="0" />
-      <LineId Id="108" Count="14" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="160" Count="0" />
-      <LineId Id="137" Count="0" />
-      <LineId Id="139" Count="18" />
-      <LineId Id="135" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="100" Count="1" />
-      <LineId Id="178" Count="1" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="104" Count="0" />
+      <LineId Id="260" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="258" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="256" Count="1" />
+      <LineId Id="250" Count="1" />
+      <LineId Id="247" Count="2" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="252" Count="0" />
       <LineId Id="103" Count="0" />
       <LineId Id="49" Count="1" />
       <LineId Id="72" Count="1" />
-      <LineId Id="51" Count="3" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="13" Count="0" />
       <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Status">

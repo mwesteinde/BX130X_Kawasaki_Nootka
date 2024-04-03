@@ -100,6 +100,25 @@ END_VAR
 
 END_IF]]></ST>
     </Implementation>
+    <Method Name="Dust_Hood" Id="{75eb1e7d-7e88-4ff3-acdf-1fc2cf420d06}">
+      <Declaration><![CDATA[METHOD Dust_Hood : BOOL
+VAR_INPUT
+	x_pose : LREAL;
+	enable : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF enable THEN
+	IF x_pose < -1085 THEN
+		dustHoodCylinder := FALSE;
+	ELSE
+		dustHoodCylinder := TRUE;
+	END_IF
+ELSE
+	dustHoodCylinder := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Grab_Tool" Id="{b157a71e-63d7-43c6-8cda-129fe8943333}">
       <Declaration><![CDATA[//Sets tool change cylinders to closed, returns true if tool locked
 METHOD Grab_Tool : BOOL 
@@ -321,6 +340,8 @@ END_VAR]]></Declaration>
 			updatedTool := GVL_Programs.dovetail;
 		4:
 			updatedTool := GVL_Programs.halfInchUpcut;
+		7:
+			updatedTool := GVL_Programs.noTool;
 			
 		ELSE
 			// Handle invalid tool number
@@ -456,6 +477,14 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="141" Count="0" />
       <LineId Id="77" Count="0" />
     </LineIds>
+    <LineIds Name="FB_Spindle.Dust_Hood">
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="14" Count="1" />
+    </LineIds>
     <LineIds Name="FB_Spindle.Grab_Tool">
       <LineId Id="12" Count="0" />
       <LineId Id="11" Count="0" />
@@ -509,6 +538,7 @@ VFD_Status := NOT spindleError;]]></ST>
     </LineIds>
     <LineIds Name="FB_Spindle.Update_Current_Tool">
       <LineId Id="7" Count="10" />
+      <LineId Id="53" Count="1" />
       <LineId Id="44" Count="0" />
       <LineId Id="18" Count="2" />
       <LineId Id="5" Count="0" />

@@ -113,6 +113,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Utilities">
       <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -120,7 +121,6 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcMatrix">
       <DefaultResolution>TcMatrix, * (Burks Engineering)</DefaultResolution>
-      <Namespace>TcMatrix</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,8 @@
 //Position of the robot at the centre of the gantry at max and min travel of the gantry.
 
 VAR_GLOBAL CONSTANT
-	MIN_POS_ROBOT : LREAL := 969.619; // Position of robot at min travel servo
-	MAX_POS_ROBOT : LREAL := 3337.2225; // Position of robot at max travel servo
+	MIN_POS_ROBOT : LREAL := 969.619 - 10; // Position of robot at min travel servo
+	MAX_POS_ROBOT : LREAL := 3337.2225 - 10; // Position of robot at max travel servo
 	MAX_POS_SERVOWEST : LREAL := 2375.2591; // max travel of servo
  	MIN_POS_SERVOWEST : LREAL := 0.1; // min travel of servo
 	DIFFERENCE_ROBOT : LREAL := MAX_POS_ROBOT - MIN_POS_ROBOT;

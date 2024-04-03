@@ -6,11 +6,11 @@
   "color": "rgba(255, 255, 255, 1)"
 }
 </script>
-<div id="ButtonHomeMotors" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Home Motors" data-tchmi-top="156" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeMotors%/s%">
+<div id="ButtonHomeMotors" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Home Motors" data-tchmi-top="200" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeMotors%/s%">
 
 
 </div>
-<div id="ButtonHomeRobot" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Home Robot" data-tchmi-top="96" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeRobot%/s%">
+<div id="ButtonHomeRobot" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Home Robot" data-tchmi-top="140" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeRobot%/s%">
 
 
 
@@ -71,7 +71,7 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="ToggleOpenCloseDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Close Door" data-tchmi-top="216" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMICloseDoor%/s%">
+<div id="ToggleOpenCloseDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Close Door" data-tchmi-top="260" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMICloseDoor%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -168,7 +168,7 @@
 ]
 </script>
 </div>
-<div id="ToggleTableLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Lock Tables" data-tchmi-top="276" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILockTables%/s%">
+<div id="ToggleTableLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Lock Tables" data-tchmi-top="320" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILockTables%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -279,7 +279,7 @@
 ]
 </script>
 </div>
-<div id="ToggleRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="336" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILowerRaiseRollers%/s%">
+<div id="ToggleRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="380" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILowerRaiseRollers%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -418,7 +418,7 @@
 ]
 </script>
 </div>
-<div id="ToggleSpindleWarmup" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="42" data-tchmi-left-unit="px" data-tchmi-text="Warmup Spindle" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIWarmupSpindle%/s%">
+<div id="ToggleSpindleWarmup" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Warmup Spindle" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIWarmupSpindle%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -810,4 +810,67 @@
   }
 ]
 </script>
+<div id="TcHmiRequestedTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="true" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="104" data-tchmi-top-unit="px" data-tchmi-width="223" data-tchmi-width-unit="px" data-tchmi-text="Current Tool">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-src-data" type="application/json">
+[
+  {
+    "text": "Sawblade",
+    "value": 0.0
+  },
+  {
+    "text": "None",
+    "value": 7
+  },
+  {
+    "text": "Half Inch",
+    "value": 4.0
+  },
+  {
+    "text": "Quarter Inch",
+    "value": 2
+  }
+]
+</script>
+</div>
+<div id="TcHmiCurrentTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="true" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-top="68" data-tchmi-top-unit="px" data-tchmi-width="223" data-tchmi-width-unit="px" data-tchmi-text="Current Tool">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-src-data" type="application/json">
+[
+  {
+    "text": "Sawblade",
+    "value": 0.0
+  },
+  {
+    "text": "None",
+    "value": 7.0
+  },
+  {
+    "text": "Half Inch",
+    "value": 4.0
+  },
+  {
+    "text": "Quarter Inch"
+  }
+]
+</script>
+</div>
 </div>
