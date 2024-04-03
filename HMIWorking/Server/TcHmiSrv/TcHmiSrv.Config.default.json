@@ -1226,6 +1226,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIChangeTool": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIChangeTool",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 27
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIHold": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1291,6 +1308,24 @@
                     {
                         "comment": "Button to start program. Called from Run.content",
                         "propertyOrder": 44
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIToolLoaded": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIToolLoaded",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to confirm tool is loaded. Called from Run.content",
+                        "propertyOrder": 52
                     }
                 ]
             },
@@ -1438,6 +1473,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.sHMICurrentTool": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMICurrentTool",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 33
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.sHMIDustCollectionOn": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1468,6 +1520,23 @@
                     {
                         "comment": "Indicator light of pneumatic pressure, called from run.content",
                         "propertyOrder": 45
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIRequestedTool": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIRequestedTool",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 34
                     }
                 ]
             },
@@ -4255,10 +4324,12 @@
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
                 "C1007.GVL_Axes.AxisWest.Status.Homed": 3,
+                "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIStart": 3,
+                "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
@@ -4267,8 +4338,10 @@
                 "C1007.MAIN.fbMachine.programOption2": 3,
                 "C1007.MAIN.fbMachine.programOption3": 3,
                 "C1007.MAIN.fbMachine.programWallChoice": 3,
+                "C1007.MAIN.fbMachine.sHMICurrentTool": 3,
                 "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
                 "C1007.MAIN.fbMachine.sHMIPneumaticsOK": 3,
+                "C1007.MAIN.fbMachine.sHMIRequestedTool": 3,
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,
                 "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,

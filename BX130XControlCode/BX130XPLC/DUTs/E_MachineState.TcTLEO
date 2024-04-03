@@ -11,7 +11,8 @@ TYPE E_MachineState :
 	ERROR	 		:= 3,
 	RESET			:= 4,
 	MANUALMOVE  	:= 5,
-	TOOLCHANGE		:= 6
+	TOOLCHANGERUN	:= 6,
+	TOOLCHANGEINIT 	:= 7
 );
 END_TYPE
 ]]></Declaration>
@@ -50,8 +51,13 @@ END_TYPE
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"TOOLCHANGE"</v>
+              <v n="TextID">"TOOLCHANGERUN"</v>
               <v n="TextDefault">"6"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"TOOLCHANGEINIT"</v>
+              <v n="TextDefault">"7"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

@@ -12,8 +12,8 @@ VAR_GLOBAL CONSTANT
 	DIFFERENCE_ROBOT : LREAL := MAX_POS_ROBOT - MIN_POS_ROBOT;
 	DIFFERENCE_SERVOWEST : LREAL := MAX_POS_SERVOWEST - MIN_POS_SERVOWEST;
 	POSITION_LIMIT_SWITCH : LREAL := 400;
-	FOLLOW_THRESHOLD : LREAL := 25.4; //Amount the servos can be away from the target and keep moving
-	ROLLERS_Z_HEIGHT : LREAL := 800; // Robot tool z height at rollers
+	FOLLOW_THRESHOLD : LREAL := 35; //Amount the servos can be away from the target and keep moving
+	ROLLERS_Z_HEIGHT : LREAL := 630; // Robot tool z height at rollers
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

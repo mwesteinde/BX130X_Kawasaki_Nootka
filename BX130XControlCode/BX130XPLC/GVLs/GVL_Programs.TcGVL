@@ -18,6 +18,7 @@ VAR_GLOBAL
 	BackWall : Program_Type := (index := 1, option1true := 'STD Window', option1false := 'No Window', option2true := 'Chimney Cut', option2false := 'No Chimney', option3true := '', option3false := '', programName := 'Back Wall', firstTool := halfInchUpcut);	
 	Option3 : Program_Type := (index := 2, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := quarterInchUpcut);
 	Option4 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := quarterInchUpcut);
+	ToolChange : Program_Type := (index := 10, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'ToolChange', firstTool := quarterInchUpcut);
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

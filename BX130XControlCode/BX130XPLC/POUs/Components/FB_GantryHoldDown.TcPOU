@@ -78,31 +78,30 @@ VAR
 	FACTOR_OF_SAFETY : LREAL := 100; //mm, distance from edge of table cylinders will rise
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF executeCylinders THEN
-	IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTH THEN
-		cylindersNorth := 1;
-	ELSE
-		cylindersNorth := 0;
-	END_IF
-	
-	IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTHCENTRE THEN
-		cylindersCentreNorth := 1;
-	ELSE
-		cylindersCentreNorth := 0;
-	END_IF
-	
-	IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
-		cylindersSouth := 1;
-	ELSE
-		cylindersSouth := 0;
-	END_IF
-	
-	IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
-			cylindersCentreSouth := 1;
-	ELSE 
-			cylindersCentreSouth := 0;
-	END_IF
-END_IF]]></ST>
+        <ST><![CDATA[IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTH THEN
+	cylindersNorth := 1;
+ELSE
+	cylindersNorth := 0;
+END_IF
+
+IF GVL_Axes.AxisWest.NcToPlc.ActPos < POS_TABLE_NORTH + FACTOR_OF_SAFETY - POS_CYLINDER_NORTHCENTRE THEN
+	cylindersCentreNorth := 1;
+ELSE
+	cylindersCentreNorth := 0;
+END_IF
+
+IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
+	cylindersSouth := 1;
+ELSE
+	cylindersSouth := 0;
+END_IF
+
+IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
+		cylindersCentreSouth := 1;
+ELSE 
+		cylindersCentreSouth := 0;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
@@ -308,7 +307,6 @@ END_VAR
       <LineId Id="208" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Cylinder_Set_Cutting">
-      <LineId Id="52" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="47" Count="1" />

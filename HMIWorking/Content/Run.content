@@ -58,9 +58,7 @@
 </script>
 
 </div>
-<div id="ButtonWillLoadTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="544" data-tchmi-left-unit="px" data-tchmi-text="Load Tool" data-tchmi-top="194" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
-</div>
-<div id="ButtonToolLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="544" data-tchmi-left-unit="px" data-tchmi-text="Tool Loaded" data-tchmi-top="295" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="ButtonToolLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="544" data-tchmi-left-unit="px" data-tchmi-text="Tool Loaded" data-tchmi-top="295" data-tchmi-top-unit="px" data-tchmi-width="195" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIToolLoaded%/s%">
 </div>
 <div id="IndicatorEStopsOff" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEllipse" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-top="215" data-tchmi-top-unit="px" data-tchmi-width="30" data-tchmi-width-unit="px">
 </div>

@@ -55,6 +55,7 @@ VAR
 	outRobotTurnMotorOff			: BOOL; //1008
 	outRobotToolReleased			: BOOL; //Signal 1009
 	outRobotCurrentTool				: USINT; //Signal 1011-1013
+	outRobotRequestedTool			: USINT; //Signal TODO
 	outRobotNoEStop					: BOOL := TRUE; //Signal 1014
 	outRobotToolChangeAuto			: BOOL := TRUE; // Signal 1015
 	outRobotSpindleOn				: BOOL; //Signal 1016
@@ -306,6 +307,9 @@ sigs10171024   := outRobotProgramChoice; //1017-1020
 sigs10171024.4 := outRobotProgramOption1; //1021
 sigs10171024.5 := outRobotProgramOption2; //1022
 sigs10171024.6 := outRobotProgramOption3; //1023
+sigs10171024.7 := outRobotRequestedTool.0; //1024
+sigs10251032.0 := outRobotRequestedTool.1; //1025
+sigs10251032.1 := outRobotRequestedTool.2; //1026
 
 inRobotMotorOn := sigs97104.0; //97
 inRobotError := sigs97104.1; //98
@@ -333,6 +337,18 @@ inProgramRunning := sigs113120.2; // Signal 115
 // posedata.pc is running
 
 // ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update_Tool" Id="{8cd56187-8f55-4d53-8738-7ee602877016}">
+      <Declaration><![CDATA[METHOD Update_Tool : BOOL
+VAR_INPUT
+	current : USINT;
+	request : USINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotCurrentTool := current;
+outRobotRequestedTool := request;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Robot">
@@ -422,6 +438,7 @@ inProgramRunning := sigs113120.2; // Signal 115
       <LineId Id="121" Count="1" />
       <LineId Id="39" Count="0" />
       <LineId Id="94" Count="2" />
+      <LineId Id="127" Count="2" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />
       <LineId Id="54" Count="0" />
@@ -436,6 +453,10 @@ inProgramRunning := sigs113120.2; // Signal 115
       <LineId Id="20" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="22" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Update_Tool">
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
