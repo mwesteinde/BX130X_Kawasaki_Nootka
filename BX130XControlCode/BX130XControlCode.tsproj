@@ -1796,7 +1796,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{093980D9-2186-FA92-5F6A-344591850EC4}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{EE05F2B5-17A2-CC9E-2CBE-920655B1AFDB}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -1863,12 +1863,12 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.ztool_pose_1</Name>
-							<Comment><![CDATA[Signal 129]]></Comment>
+							<Comment><![CDATA[Signal 129-136]]></Comment>
 							<Type>USINT</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.ztool_pose_2</Name>
-							<Comment><![CDATA[Signal ]]></Comment>
+							<Comment><![CDATA[Signal 137-144]]></Comment>
 							<Type>USINT</Type>
 						</Var>
 						<Var>

@@ -23,8 +23,8 @@ VAR
 	jt5_pose_2 AT %I* : USINT; //Signal 73-80
 	jt6_pose_1 AT %I* : USINT; //Signal 81-88
 	jt6_pose_2 AT %I* : USINT; //Signal 89-96
-	ztool_pose_1 AT %I* : USINT; //Signal 129
-	ztool_pose_2 AT %I* : USINT; //Signal 
+	ztool_pose_1 AT %I* : USINT; //Signal 129-136
+	ztool_pose_2 AT %I* : USINT; //Signal 137-144
 	inRobotMotorOn			: BOOL; //Signal number 97
 	inRobotError		: BOOL; //Signal 98
 	inRobotAutomaticMode	: BOOL; //Signal 99
@@ -38,7 +38,6 @@ VAR
 	inRobotToolNumberCurrent		: USINT; //Signal 107-109
 	inRobotToolNumberRequest		: USINT; //Signal 110-112
 	inRobotReleaseTool			: BOOL; //Signal 113
-	inRobotGrabTool				: BOOL; //Signal 114
 	inProgramRunning				: BOOL; //Signal 115
 	sigs97104 AT %I*			: USINT;
 	sigs105112 AT %I*			: USINT;
@@ -55,7 +54,7 @@ VAR
 	outRobotTurnMotorOff			: BOOL; //1008
 	outRobotToolReleased			: BOOL; //Signal 1009
 	outRobotCurrentTool				: USINT; //Signal 1011-1013
-	outRobotRequestedTool			: USINT; //Signal TODO
+	outRobotRequestedTool			: USINT; //Signal 1024-1026
 	outRobotNoEStop					: BOOL := TRUE; //Signal 1014
 	outRobotToolChangeAuto			: BOOL := TRUE; // Signal 1015
 	outRobotSpindleOn				: BOOL; //Signal 1016
@@ -331,7 +330,6 @@ inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112
 inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.6) * 2); //111
 inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.7) * 4); //112
 inRobotReleaseTool := sigs113120.0; //113
-inRobotGrabTool := sigs113120.1; //114
 inProgramRunning := sigs113120.2; // Signal 115
 
 // posedata.pc is running
@@ -447,7 +445,6 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="84" Count="2" />
       <LineId Id="88" Count="4" />
       <LineId Id="74" Count="0" />
-      <LineId Id="97" Count="0" />
       <LineId Id="62" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="20" Count="0" />

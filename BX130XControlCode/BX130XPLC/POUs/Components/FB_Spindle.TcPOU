@@ -109,7 +109,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF enable THEN
-	IF x_pose < -1085 THEN
+	IF x_pose < -1060 THEN
 		dustHoodCylinder := FALSE;
 	ELSE
 		dustHoodCylinder := TRUE;
