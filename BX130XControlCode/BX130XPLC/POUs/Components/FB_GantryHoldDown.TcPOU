@@ -125,6 +125,17 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Set target position to middle of robot tool
 targetPosition := (robotPoseGantry.yPose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+
+//If target position - current position > threshold, hold robot
+IF ABS(targetPosition - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD
+AND (robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT) THEN
+//OR ((cylindersCentreNorth OR cylindersNorth) AND NOT GVL_Axes.AxisWest.Status.PositiveDirection)
+//OR ((cylindersCentreSouth OR cylindersSouth) AND NOT GVL_Axes.AxisWest.Status.NegativeDirection)) THEN
+		Follow_Robot := FALSE; //Gantry isn't following, hold robot
+ELSE 
+	Follow_Robot := TRUE; //Gantry is following properly, keep robot on run
+END_IF
+
 IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
 	targetPosition := GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST;
 ELSIF targetPosition > GVL_SERVO_ROBOT_CONST.MAX_POS_SERVOWEST THEN
@@ -153,13 +164,6 @@ IF GVL_Axes.AxisWest.Status.Homed THEN
 		Deceleration:= decel,
 		Jerk:= jer, 
 		BufferMode:= Aborting);
-END_IF
-
-//If target position - current position > threshold, hold robot
-IF ABS(targetPosition - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD AND robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT THEN
-	Follow_Robot := FALSE; //Gantry isn't following, hold robot
-ELSE 
-	Follow_Robot := TRUE; //Gantry is following properly, keep robot on run
 END_IF
 ]]></ST>
       </Implementation>
@@ -326,6 +330,10 @@ END_VAR
     <LineIds Name="FB_GantryHoldDown.Follow_Robot">
       <LineId Id="98" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="137" Count="7" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="134" Count="0" />
       <LineId Id="80" Count="1" />
       <LineId Id="83" Count="0" />
       <LineId Id="85" Count="0" />
@@ -341,12 +349,6 @@ END_VAR
       <LineId Id="70" Count="2" />
       <LineId Id="53" Count="0" />
       <LineId Id="39" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="109" Count="1" />
-      <LineId Id="112" Count="0" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="111" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Home_Servos">

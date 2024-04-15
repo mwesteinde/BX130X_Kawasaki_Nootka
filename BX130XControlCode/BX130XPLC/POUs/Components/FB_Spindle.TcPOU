@@ -13,6 +13,7 @@ VAR
 	spindleToolOpen AT %I* : BOOL;
 	cylinderToolRelease1 AT %Q* : BOOL;
 	cylinderToolRelease2 AT %Q* : BOOL;
+	spindleClean AT %Q* : BOOL;
 	toolChangeTimer : TON;
 	
 	//Dust Hood
@@ -55,7 +56,6 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[VFD_Status();
-
 //Spindle warmup routine, trigerred from Start_Spindle and stopped with Stop_Spindle
 	triggerWarmup(CLK:=spindleWarmupOn);
 	triggerWarm1(CLK:=warmUp1);
@@ -269,7 +269,9 @@ fbWriteRegs(
 			tTimeout:= , 
 			bBusy=> , 
 			bError=> , 
-			nErrId=> );]]></ST>
+			nErrId=> );
+			
+spindleClean := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Stop_Spindle" Id="{ef644fdc-e119-4b63-a532-fadf07840f86}">
@@ -314,6 +316,7 @@ spindleWarmupOn := FALSE;
 warmup1 := FALSE;
 warmup2 := FALSE;
 warmup3 := FALSE;
+spindleClean := FALSE;
 
 ]]></ST>
       </Implementation>
@@ -443,7 +446,7 @@ VFD_Status := NOT spindleError;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Spindle">
-      <LineId Id="311" Count="1" />
+      <LineId Id="311" Count="0" />
       <LineId Id="48" Count="0" />
       <LineId Id="158" Count="0" />
       <LineId Id="167" Count="0" />
@@ -525,6 +528,7 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="54" Count="0" />
       <LineId Id="19" Count="11" />
       <LineId Id="16" Count="0" />
+      <LineId Id="73" Count="1" />
     </LineIds>
     <LineIds Name="FB_Spindle.Stop_Spindle">
       <LineId Id="28" Count="11" />
@@ -533,6 +537,7 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="5" Count="0" />
       <LineId Id="40" Count="2" />
       <LineId Id="44" Count="1" />
+      <LineId Id="53" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="25" Count="0" />
     </LineIds>
