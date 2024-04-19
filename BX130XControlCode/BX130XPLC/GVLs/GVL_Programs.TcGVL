@@ -5,7 +5,7 @@
 VAR_GLOBAL
 	// ================= Tool Types ====================================
 	quarterInchUpcut : Tool_Type := (speed := 18000, toolNumber := 2, modelname := 'Dimar', name := 'Quarter Inch Upcut');
-	halfInchUpcut : Tool_Type := (speed := 18000, toolNumber := 4, modelname := 'Dimar', name := 'Half Inch Upcut');
+	halfInchUpcut : Tool_Type := (speed := 22000, toolNumber := 4, modelname := 'Dimar', name := 'Half Inch Upcut');
 	sawblade : Tool_Type := (speed := 10000, toolNumber := 0, modelname := 'Hunter Precision Tools', name := 'Sawblade');
 	dovetail : Tool_Type := (speed := 18000, toolNumber := 5, modelname := 'Dimar', name := 'Dovetail');
 	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 6, modelname := 'Dimar', name := 'Half Inch Ball');

@@ -36,10 +36,6 @@ VAR
 	
 	//Pneumatic switches
 	
-	
-	//Variable to be set by program being run
-	LEN_WOOD : LREAL := 2133; //mm, length of wood being clamped
-	
 	rollersReady		: BOOL;
 	
 	// Enable bools
@@ -90,13 +86,13 @@ ELSE
 	cylindersCentreNorth := 0;
 END_IF
 
-IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
+IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + GVL_SERVO_ROBOT_CONST.LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
 	cylindersSouth := 1;
 ELSE
 	cylindersSouth := 0;
 END_IF
 
-IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
+IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + GVL_SERVO_ROBOT_CONST.LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
 		cylindersCentreSouth := 1;
 ELSE 
 		cylindersCentreSouth := 0;
