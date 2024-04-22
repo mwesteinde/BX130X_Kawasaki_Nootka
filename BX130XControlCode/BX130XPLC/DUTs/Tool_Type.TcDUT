@@ -7,6 +7,9 @@ STRUCT
 	toolNumber 			: INT;
 	modelName			: STRING;
 	name				: STRING;
+	x_coord				: INT;
+	y_coord				: INT;
+	z_coord				: INT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>

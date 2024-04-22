@@ -4,9 +4,10 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL
 	// ================= Tool Types ====================================
-	quarterInchUpcut : Tool_Type := (speed := 18000, toolNumber := 2, modelname := 'Dimar', name := 'Quarter Inch Upcut');
-	halfInchUpcut : Tool_Type := (speed := 22000, toolNumber := 4, modelname := 'Dimar', name := 'Half Inch Upcut');
-	sawblade : Tool_Type := (speed := 10000, toolNumber := 0, modelname := 'Hunter Precision Tools', name := 'Sawblade');
+	//TODO: change 
+	quarterInchUpcut : Tool_Type := (speed := 18000, toolNumber := 2, modelname := 'Dimar', name := 'Quarter Inch Upcut', x_coord := 0, y_coord := 125, z_coord := 446);
+	halfInchUpcut : Tool_Type := (speed := 22000, toolNumber := 4, modelname := 'Dimar', name := 'Half Inch Upcut', x_coord := 0, y_coord := 134, z_coord := 455);
+	sawblade : Tool_Type := (speed := 10000, toolNumber := 0, modelname := 'Hunter Precision Tools', name := 'Sawblade', x_coord := 74, y_coord := 192, z_coord := 509);
 	dovetail : Tool_Type := (speed := 18000, toolNumber := 5, modelname := 'Dimar', name := 'Dovetail');
 	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 6, modelname := 'Dimar', name := 'Half Inch Ball');
 //	quarterInchBall : Tool_Type := (speed := 18000, toolNumber := 7, modelname := 'Dimar', name := 'Quarter Inch Ball');

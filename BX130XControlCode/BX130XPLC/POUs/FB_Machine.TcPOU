@@ -282,6 +282,7 @@ END_VAR]]></Declaration>
 IF NOT fbSpindle.spindleWarmupOn THEN
 	fbSpindle.Stop_Spindle();
 END_IF
+fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool);
 IF powerUp THEN
 	fbRobot.Init_Robot();
 	powerUp := FALSE;
@@ -399,6 +400,11 @@ END_IF
 // Follow and hold
 robotRun := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
 fbGantry.Cylinder_Set_Cutting();
+
+IF NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool) THEN
+	//Error flag
+	fbRobot.RunHold_Robot(RunHold := FALSE);
+END_IF
 
 //dust boot
 fbSpindle.Dust_Hood(x_pose := fbRobot.robotPose.xPose, enable := TRUE);
@@ -697,6 +703,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="91" Count="0" />
       <LineId Id="110" Count="0" />
       <LineId Id="126" Count="1" />
+      <LineId Id="130" Count="0" />
       <LineId Id="105" Count="0" />
       <LineId Id="103" Count="0" />
       <LineId Id="111" Count="0" />
@@ -763,6 +770,11 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="14" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="97" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="113" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="89" Count="0" />
       <LineId Id="91" Count="0" />
