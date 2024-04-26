@@ -401,10 +401,10 @@ END_IF
 robotRun := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
 fbGantry.Cylinder_Set_Cutting();
 
-IF NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool) THEN
-	//Error flag
-	fbRobot.RunHold_Robot(RunHold := FALSE);
-END_IF
+//IF NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool) THEN
+//	//Error flag
+//	fbRobot.RunHold_Robot(RunHold := FALSE);
+//END_IF
 
 //dust boot
 fbSpindle.Dust_Hood(x_pose := fbRobot.robotPose.xPose, enable := TRUE);

@@ -259,10 +259,11 @@ VAR
 	dustBoot_NW : ARRAY[1..4,1..1] OF LREAL := [-101.4,156.4,284,1];
 	dustBoot_SRightCorner : ARRAY[1..4,1..1] OF LREAL := [-211, 32, 405.187,1];
 	dustBoot_NRightCorner : ARRAY[1..4,1..1] OF LREAL := [-210.197,98.825,339.353,1];
-	dustBootCorners : ARRAY[1..6] OF ARRAY[1..4,1..1] OF LREAL := [dustBoot_NE, dustBoot_SE, dustBoot_SW, dustBoot_NW, dustBoot_SRightCorner, dustBoot_NRightCorner];
+	dustBootCornersMatrix : ARRAY[1..6] OF Array2DStaticMatrix;
+	dustBootCornersData : ARRAY[1..6] OF ARRAY[1..4,1..1] OF LREAL := [[102.900,157.511, 283,1], [104.4,-25.4,463.580,1], [-100.52,-23.366,463.9,1], [-101.4,156.4,284,1], [-211, 32, 405.187,1], [-210.197,98.825,339.353,1]];
 	
-	maxY : LREAL := 5000;
-	minY : LREAL := -5000;
+	maxY : LREAL;
+	minY : LREAL;
 	
 	joints : ARRAY[1..6] OF LREAL;
 	jointsrad : ARRAY[1..6] OF LREAL;
@@ -318,9 +319,12 @@ FOR i := 2 TO 5 DO
 END_FOR
 
 success[7] := Matrix_Product(temp[5],dustBoot,Result);
-
+maxY := -5000;
+minY := 5000;
 FOR i := 1 TO 6 DO
-	success[i+7] := Matrix_Product(temp[5],dustBootCorners[i],corners[i]);
+	Corners[i](Data := Corners_Data[i]);
+	dustBootCornersMatrix[i](Data := dustBootCornersdata[i]);
+	success[i+7] := Matrix_Product(temp[5],dustBootCornersMatrix[i],corners[i]);
 	IF corners[i].GetI(1) > maxY THEN
 		maxY := corners[i].GetI(1);
 	END_IF
@@ -486,7 +490,12 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="242" Count="0" />
       <LineId Id="252" Count="0" />
       <LineId Id="103" Count="0" />
-      <LineId Id="306" Count="5" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="363" Count="0" />
+      <LineId Id="307" Count="0" />
+      <LineId Id="362" Count="0" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="308" Count="3" />
       <LineId Id="316" Count="1" />
       <LineId Id="315" Count="0" />
       <LineId Id="305" Count="0" />
