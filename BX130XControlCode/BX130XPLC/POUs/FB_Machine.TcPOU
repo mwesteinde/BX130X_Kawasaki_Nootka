@@ -321,11 +321,11 @@ END_IF
 
 //Toggle buttons
 IF rTrigCloseDoor.Q THEN
-	fbEnclosure.Rolling_Door_HMI_Operation(doorCommand := FALSE); //Done, tested no door
+	fbEnclosure.Rolling_Door_HMI_Operation(); //Done, tested no door
 END_IF
 
 IF fTrigOpenDoor.Q THEN
-	fbEnclosure.Rolling_Door_HMI_Operation(doorCommand := TRUE); //Done, tested no door
+	fbEnclosure.Rolling_Door_HMI_Operation(); //Done, tested no door
 END_IF
 
 IF rTrigLockTables.Q THEN
@@ -417,7 +417,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Startup
+        <ST><![CDATA[//On start program, start robot program and turn on spindle
 IF rTrigStartProgram.Q THEN
 	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3);
 	IF NOT disableSpindle THEN
@@ -426,7 +426,7 @@ IF rTrigStartProgram.Q THEN
 	fbRobot.Start_Robot();
 END_IF
 
-// Follow and hold
+// Follow robot
 IF fbRobot.inRobotPoseDataIsSent THEN
 	robotRun := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
 ELSE 

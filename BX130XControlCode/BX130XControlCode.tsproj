@@ -1920,7 +1920,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{708C7F8B-834A-5CEF-CB63-E1E41A43210F}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{ACE60092-92D4-25E1-F8F5-061472E0465A}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -2160,12 +2160,12 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbEnclosure.openDoor</Name>
+							<Name>MAIN.fbMachine.fbEnclosure.openCloseDoor</Name>
 							<Comment><![CDATA[ Door]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbEnclosure.closeDoor</Name>
+							<Name>MAIN.fbMachine.fbEnclosure.enableRollingDoor</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2749,7 +2749,7 @@ External Setpoint Generation:
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="RobotTeachMode" Index="#x6030" Sub="#x01">
+								<Entry Name="rollingDoorOpen" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2952,37 +2952,37 @@ External Setpoint Generation:
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="SV10WorkHoldDownSouth" Index="#x7010" Sub="#x01">
+								<Entry Name="RobotX91ControlPowerON" Index="#x7010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="RobotX91ControlPowerON" Index="#x7020" Sub="#x01">
+								<Entry Name="enableRollingDoor" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1603" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="RobotX95MotorPowerON" Index="#x7030" Sub="#x01">
+								<Entry Name="OpenCloseDoor" Index="#x7030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1604" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="RobotX97MotorHold" Index="#x7040" Sub="#x01">
+								<Entry Name="LightGreen" Index="#x7040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1605" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="LightGreen" Index="#x7050" Sub="#x01">
+								<Entry Name="LightYellow" Index="#x7050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1606" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="LightYellow" Index="#x7060" Sub="#x01">
+								<Entry Name="LightRed" Index="#x7060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1607" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="LightRed" Index="#x7070" Sub="#x01">
+								<Entry Name="LightBuzzer" Index="#x7070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2995,7 +2995,7 @@ External Setpoint Generation:
 							<SyncMan>000f01004400010003000000000000000000000f44090000</SyncMan>
 							<Fmmu>0000000000000000000f00020100000001000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="LightBuzzer" Index="#x7000" Sub="#x01">
+								<Entry Name="SV10WorkHoldDownSouth" Index="#x7000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4632,12 +4632,15 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.sigs10411048" VarB="RxPDO^1041-1048"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 10 (EL2008)">
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbEnclosure.enableRollingDoor" VarB="Channel 3^enableRollingDoor"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbEnclosure.openCloseDoor" VarB="Channel 4^OpenCloseDoor"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersCentreSouth" VarB="Channel 1^SV9WorkHoldDownSouthCentre"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 11 (EL2008)">
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^LightBuzzer"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^SV10WorkHoldDownSouth"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.doorIsOpen" VarB="Channel 4^rollingDoorOpen"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchHoldDown" VarB="Channel 2^PressureSwitch2HoldDown"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchSpindle" VarB="Channel 1^PressureSwitch1Spindle"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchTableClamps" VarB="Channel 3^PressureSwitch3TableClamps"/>
