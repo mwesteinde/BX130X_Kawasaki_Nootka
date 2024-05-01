@@ -27,7 +27,88 @@
     "DEFAULTTIMEFORMATLOCALE": "client",
     "DEFAULTTIMEZONE": "client",
     "DEFAULTUSERGROUP": "__SystemUsers",
-    "DEFINITIONS": {},
+    "DEFINITIONS": {
+        "C1007.E_MachineState": {
+            "attributes": {
+                "generate_implicit_init_function": "",
+                "qualified_only": "",
+                "strict": "",
+                "textlistenumeration": ""
+            },
+            "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+            ],
+            "options": [
+                {
+                    "label": "INITIALIZATION",
+                    "value": 0
+                },
+                {
+                    "label": "RUN",
+                    "value": 1
+                },
+                {
+                    "label": "HOLD",
+                    "value": 2
+                },
+                {
+                    "label": "ERROR",
+                    "value": 3
+                },
+                {
+                    "label": "RESET",
+                    "value": 4
+                },
+                {
+                    "label": "MANUALMOVE",
+                    "value": 5
+                },
+                {
+                    "label": "TOOLCHANGERUN",
+                    "value": 6
+                },
+                {
+                    "label": "TOOLCHANGEINIT",
+                    "value": 7
+                }
+            ],
+            "type": "integer"
+        },
+        "C1007.Tc2_Utilities.T_ULARGE_INTEGER": {
+            "properties": {
+                "dwHighPart": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/DWORD"
+                        },
+                        {
+                            "comment": "Higher double word",
+                            "propertyOrder": 2
+                        }
+                    ]
+                },
+                "dwLowPart": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/DWORD"
+                        },
+                        {
+                            "comment": "Lower double word",
+                            "propertyOrder": 1
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        }
+    },
     "DEFLATECOMPRESSIONLEVEL": 5,
     "DIAGNOSTICS_DOMAINS": [],
     "DISABLED_CONFIGURATION_HINTS": [],
@@ -1226,6 +1307,57 @@
             },
             "USEMAPPING": true
         },
+        "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::Global_Variables::DATE_AND_TIME_SECPERDAY",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/DWORD"
+                    },
+                    {
+                        "comment": "Number of seconds per day"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::Global_Variables::SYSTEMTIME_DATE_AND_TIME_MAX",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "comment": "Max. DT value as file time DT#2106-02-06-06:28:15"
+                    },
+                    {
+                        "$ref": "tchmi:server#/definitions/C1007.Tc2_Utilities.T_ULARGE_INTEGER"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::Global_Variables::SYSTEMTIME_DATE_AND_TIME_MAX64",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/ULINT"
+                    },
+                    {
+                        "comment": "Max. DT value as file time DT#2106-02-06-06:28:15"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIChangeTool": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1256,6 +1388,24 @@
                     {
                         "comment": "Button to hold program. Called from Run.content",
                         "propertyOrder": 47
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to reset program. TODO: make",
+                        "propertyOrder": 55
                     }
                 ]
             },
@@ -1326,6 +1476,24 @@
                     {
                         "comment": "Button to confirm tool is loaded. Called from Run.content",
                         "propertyOrder": 52
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.eSystemState": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::eSystemState",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/C1007.E_MachineState"
+                    },
+                    {
+                        "comment": "Current state",
+                        "propertyOrder": 8
                     }
                 ]
             },
@@ -1502,6 +1670,40 @@
                     },
                     {
                         "propertyOrder": 49
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIErrorDisplay": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIErrorDisplay",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIIsError": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIIsError",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 67
                     }
                 ]
             },
@@ -4324,12 +4526,17 @@
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
                 "C1007.GVL_Axes.AxisWest.Status.Homed": 3,
+                "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": 3,
+                "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
+                "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
                 "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
+                "C1007.MAIN.fbMachine.bHMIReset": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIStart": 3,
                 "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
+                "C1007.MAIN.fbMachine.eSystemState": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
@@ -4340,6 +4547,8 @@
                 "C1007.MAIN.fbMachine.programWallChoice": 3,
                 "C1007.MAIN.fbMachine.sHMICurrentTool": 3,
                 "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
+                "C1007.MAIN.fbMachine.sHMIErrorDisplay": 3,
+                "C1007.MAIN.fbMachine.sHMIIsError": 3,
                 "C1007.MAIN.fbMachine.sHMIPneumaticsOK": 3,
                 "C1007.MAIN.fbMachine.sHMIRequestedTool": 3,
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
@@ -4367,6 +4576,7 @@
                 "ListSymbols": 3,
                 "ListUserNames": 3,
                 "Local.MAIN.fbMachine.bActivateRollers": 3,
+                "Local.MAIN.fbMachine.bHMIChangeTool": 3,
                 "Local.MAIN.fbMachine.bHMICloseDoor": 3,
                 "Local.MAIN.fbMachine.bHMIHomeMotors": 3,
                 "Local.MAIN.fbMachine.bHMIHomeRobot": 3,

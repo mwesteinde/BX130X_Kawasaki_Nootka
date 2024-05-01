@@ -62,7 +62,7 @@ END_VAR
 	triggerWarm2(CLK:=warmUp2);
 	triggerWarm3(CLK:=warmUp3);
 	
-	IF spindleWarmupOn THEN
+IF spindleWarmupOn THEN
 	IF triggerWarmup.Q THEN
 		startTime := TIME(); 
 	END_IF

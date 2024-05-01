@@ -209,13 +209,28 @@ cylindersSouth 			:= raiseRollers;
       </Implementation>
     </Method>
     <Method Name="Pneumatics_Error" Id="{53ecf6cd-303e-4078-9884-7bcc9af1828f}">
-      <Declaration><![CDATA[//TODO: Write
-METHOD Pneumatics_Error : BOOL
+      <Declaration><![CDATA[METHOD Pneumatics_Error : Structure_Error
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Pneumatics_Error := FALSE;]]></ST>
+        <ST><![CDATA[Pneumatics_Error.errorMessage := '';
+IF pressureSwitchSpindle AND pressureSwitchHoldDown AND pressureSwitchTableClamps THEN
+	Pneumatics_Error.isError := FALSE;
+ELSE
+	Pneumatics_Error.isError := TRUE;
+	IF NOT pressureSwitchSpindle THEN
+		Pneumatics_Error.errorMessage := CONCAT(Pneumatics_Error.errorMessage, '\nPressure Switch Spindle Off');
+	END_IF
+	IF NOT pressureSwitchHoldDown THEN
+		Pneumatics_Error.errorMessage := CONCAT(Pneumatics_Error.errorMessage, '\nPressure Switch HoldDown Off');
+	END_IF
+	IF NOT pressureSwitchTableClamps THEN
+		Pneumatics_Error.errorMessage := CONCAT(Pneumatics_Error.errorMessage, '\nPressure Switch Table Clamps Off');
+	END_IF
+END_IF
+
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Reset_Servos" Id="{a5d370ca-8c90-416a-969e-b60ae3e560f6}">
@@ -357,6 +372,18 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Pneumatics_Error">
+      <LineId Id="21" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="11" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Reset_Servos">

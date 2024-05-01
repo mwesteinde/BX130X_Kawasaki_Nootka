@@ -4,8 +4,8 @@
     <Declaration><![CDATA[TYPE Structure_Error :
 STRUCT
 	isError : BOOL := FALSE;
-	errorMessage : STRING;
-	errorType	: INT;
+	errorMessage : STRING(300);
+	errorType	: USINT;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
