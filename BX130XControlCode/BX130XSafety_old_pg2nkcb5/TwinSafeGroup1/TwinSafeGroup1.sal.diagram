@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplicationLanguageDiagram Crc="928244675" dslVersion="1.5.0.0" Id="bb95cdd8-de1c-47b1-8704-28ece24051ea" absoluteBounds="0, 0, 11, 8.5" name="TwinSAFE">
+<safetyApplicationLanguageDiagram Crc="2814338098" dslVersion="1.4.0.0" Id="bb95cdd8-de1c-47b1-8704-28ece24051ea" absoluteBounds="0, 0, 11, 8.5" name="TwinSAFE">
   <safetyApplicationMoniker name="/" />
   <nestedChildShapes>
     <networkSwimLane Id="00f2462e-41b3-4c7b-871c-021178c9b2d8" absoluteBounds="0, 0, 11, 5.95">
