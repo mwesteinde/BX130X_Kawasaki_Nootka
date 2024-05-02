@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SafetyDeviceDesc Crc="3780036223" FileFormatVersion="1.8">
+<SafetyDeviceDesc Crc="1343534001" FileFormatVersion="1.8">
   <AliasDeviceType>
     <Type>4</Type>
     <SubType>1050494</SubType>
@@ -8,9 +8,9 @@
   <SDSID>7</SDSID>
   <SafetyAliasDevice>
     <ObjectId>0</ObjectId>
-    <LinkingMode>Automatic</LinkingMode>
+    <LinkingMode>Local</LinkingMode>
     <ConnectionId>7</ConnectionId>
-    <ConnectionMode>master</ConnectionMode>
+    <ConnectionMode>slave</ConnectionMode>
     <ConnectionType>FSoE</ConnectionType>
     <MapDiag>false</MapDiag>
     <MapInputs>false</MapInputs>
@@ -405,6 +405,7 @@
           <BitOffsData>-1</BitOffsData>
         </IO>
       </Messages>
+      <InternalDirectMappings />
     </Params>
   </SafetyAliasDevice>
 </SafetyDeviceDesc>
