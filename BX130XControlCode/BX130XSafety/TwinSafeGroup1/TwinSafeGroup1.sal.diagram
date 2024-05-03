@@ -1,70 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplicationLanguageDiagram Crc="928244675" dslVersion="1.5.0.0" Id="bb95cdd8-de1c-47b1-8704-28ece24051ea" absoluteBounds="0, 0, 11, 8.5" name="TwinSAFE">
+<safetyApplicationLanguageDiagram Crc="419036282" dslVersion="1.5.0.0" Id="e2436b34-4f31-4af9-8def-519ad1d0f3f4" absoluteBounds="0, 0, 11, 8.5" name="TwinSAFE">
   <safetyApplicationMoniker name="/" />
   <nestedChildShapes>
-    <networkSwimLane Id="00f2462e-41b3-4c7b-871c-021178c9b2d8" absoluteBounds="0, 0, 11, 5.95">
+    <networkSwimLane Id="a0c18286-a90d-4cd0-971a-93a7e7a58b5b" absoluteBounds="0, 0, 11, 5.45">
       <networkMoniker name="//Network1" />
       <nestedChildShapes>
-        <fBEstopShape Id="293379dc-af6f-4105-be79-863178d280b4" absoluteBounds="2.75, 1.25, 3.35, 4.45">
+        <fBEstopShape Id="c23395f2-a6a6-4e78-a00d-9fab7e9acb47" absoluteBounds="4.375, 0.75, 3.35, 4.45">
           <fBEstopMoniker name="//Network1/FBEstop1" />
           <relativeChildShapes>
-            <inPortShape Id="02ac6d41-c797-4483-bf11-27270e6477d7" absoluteBounds="2.67, 1.995, 0.15, 0.15">
+            <inPortShape Id="01cec489-1b94-4815-82da-c08604ab1a56" absoluteBounds="4.295, 1.495, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/Restart" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="4b288df6-cf8e-4548-aab7-3396aba9087a" absoluteBounds="2.67, 2.5575, 0.15, 0.15">
+            <inPortShape Id="6e6d6b61-f639-41f9-8840-01046581225b" absoluteBounds="4.295, 2.0575, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn1" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="688b1127-552b-4c90-a6fc-0afd561f8472" absoluteBounds="2.67, 2.7825, 0.15, 0.15">
+            <inPortShape Id="5743c9a3-3d6a-4831-98e3-598f78e1ab1c" absoluteBounds="4.295, 2.2825, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn2" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="2316a9a1-019c-4ccd-af71-259070037264" absoluteBounds="2.67, 3.0975, 0.15, 0.15">
+            <inPortShape Id="dd7a3e70-1760-44e4-ae8c-e2c5a2167c12" absoluteBounds="4.295, 2.5975, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn3" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="2db6b50f-f003-44a5-afff-5a1d81e3dda9" absoluteBounds="2.67, 3.3225000000000002, 0.15, 0.15">
+            <inPortShape Id="02ed1626-9656-44fa-bbc9-fa72ed47809e" absoluteBounds="4.295, 2.8225000000000002, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn4" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="587dccd1-5575-4ff1-9030-c710a99a48d3" absoluteBounds="2.67, 3.6375, 0.15, 0.15">
+            <inPortShape Id="a3176a9c-c836-49c1-90a5-2b4dabcebd76" absoluteBounds="4.295, 3.1375, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn5" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="2e45d01b-fe88-4d40-bd3d-1c0250ad5b09" absoluteBounds="2.67, 3.8625000000000003, 0.15, 0.15">
+            <inPortShape Id="8942b757-fce8-4457-b680-90894231a1c7" absoluteBounds="4.295, 3.3625000000000003, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn6" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="8837f54b-f5cc-4314-a74f-447907ed21e8" absoluteBounds="2.67, 4.1775, 0.15, 0.15">
+            <inPortShape Id="c323b178-cb02-4d24-82b0-2a2fd178035d" absoluteBounds="4.295, 3.6775, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn7" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="3bf6e2c9-e9e5-4897-a553-97435320aea5" absoluteBounds="2.67, 4.4025, 0.15, 0.15">
+            <inPortShape Id="ea72420d-4f1b-426b-b88e-e8fc56f73c8f" absoluteBounds="4.295, 3.9025000000000003, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EStopIn8" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="f9510f20-427c-443d-845c-032a29a1c993" absoluteBounds="2.67, 4.9875000000000007, 0.15, 0.15">
+            <inPortShape Id="30b3aff8-a7c8-4cf4-8578-0c91db9ea922" absoluteBounds="4.295, 4.4875000000000007, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EDM1" />
               <relativeChildShapes />
             </inPortShape>
-            <inPortShape Id="660a3e3f-0eda-4998-9de9-77677fda1717" absoluteBounds="2.67, 5.2125, 0.15, 0.15">
+            <inPortShape Id="9a06dd3f-f00c-44af-ac77-50560c1379c0" absoluteBounds="4.295, 4.7125, 0.15, 0.15">
               <inPortMoniker name="//Network1/FBEstop1/EDM2" />
               <relativeChildShapes />
             </inPortShape>
-            <outPortShape Id="cab0d2db-0d6c-45b3-82c6-ad3095a45feb" absoluteBounds="6, 2.535, 0.15, 0.15">
+            <outPortShape Id="51f5b914-8633-48dc-a11e-68cd72d3d086" absoluteBounds="7.625, 2.035, 0.15, 0.15">
               <outPortMoniker name="//Network1/FBEstop1/Error" />
               <relativeChildShapes />
             </outPortShape>
-            <outPortShape Id="907b2e8a-9713-4f0d-a72d-6b08f58ae12b" absoluteBounds="6, 4.4250000000000007, 0.15, 0.15">
+            <outPortShape Id="c4eafeb6-e22b-4035-b603-0e795601eaed" absoluteBounds="7.625, 3.9250000000000003, 0.15, 0.15">
               <outPortMoniker name="//Network1/FBEstop1/EStopOut" />
               <relativeChildShapes />
             </outPortShape>
-            <outPortShape Id="77e1ca45-0f6c-42c7-b937-a2acaf9e786a" absoluteBounds="6, 4.695, 0.15, 0.15">
+            <outPortShape Id="aa96ff1e-a05b-499e-9d5d-c0cfdd9d7333" absoluteBounds="7.625, 4.195, 0.15, 0.15">
               <outPortMoniker name="//Network1/FBEstop1/EStopDelOut" />
               <relativeChildShapes />
             </outPortShape>
-            <paramPortShape Id="aebd6caf-0554-4282-961f-8c415aebf023" absoluteBounds="4.32, 4.525, 0.7, 0.2">
+            <paramPortShape Id="78eba66e-7c9d-41c1-9b32-98765335352e" absoluteBounds="5.945, 4.025, 0.7, 0.2">
               <parameterPortMoniker name="//Network1/FBEstop1/Delay Time (ms)" />
               <relativeChildShapes />
             </paramPortShape>

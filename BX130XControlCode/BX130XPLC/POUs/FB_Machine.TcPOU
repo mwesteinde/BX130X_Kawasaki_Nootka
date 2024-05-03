@@ -19,8 +19,9 @@ VAR
 	Run AT %Q* : BOOL := TRUE;
 	ErrorAcknowledge AT %Q* : BOOL;
 	errorReset AT %Q* : BOOL;
+	errorSafety AT %I* : BOOL;
+	safetyEStop AT %I* : BOOL;
 	
-	CommError AT %I* : BOOL;
 	// ============== Errors ==========================================================
 	pneumaticsOK	: BOOL;								// True if cylinders in assigned position and pressure ok.
 	bErrors			: BOOL;								// True if modules have errors or E stop.								
@@ -136,6 +137,11 @@ END_VAR
 	fbGantry();
 	fbEnclosure();
 	fbSpindle();
+	
+	//Safety
+//	IF NOT safetyEStop OR errorSafety THEN
+//		ErrorAcknowledge := TRUE;
+//	END_IF
 	
 	// Output variables
 	
@@ -669,6 +675,8 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="572" Count="0" />
       <LineId Id="464" Count="1" />
       <LineId Id="463" Count="0" />
+      <LineId Id="1130" Count="2" />
+      <LineId Id="1134" Count="1" />
       <LineId Id="131" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="124" Count="0" />

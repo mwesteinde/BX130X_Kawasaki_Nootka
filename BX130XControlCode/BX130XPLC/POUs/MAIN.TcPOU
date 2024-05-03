@@ -4,6 +4,10 @@
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	fbMachine				: FB_Machine;
+	Run AT %Q* : BOOL := TRUE;
+	ErrorAcknowledge AT %Q* : BOOL;
+	errorReset AT %Q* : BOOL;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -1424,6 +1424,15 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 		<DataType>
+			<Name GUID="{18071995-0000-0000-0000-002000000010}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BYTE</Name>
+			<BitSize>16</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>2</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety" TcBaseType="true">FSOE_6</Name>
 			<BitSize>48</BitSize>
 			<SubItem>
@@ -1480,21 +1489,12 @@ External Setpoint Generation:
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" BitType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
+			<Name GUID="{18071995-0000-0000-0000-002000000005}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..4] OF BIT</Name>
 			<BitSize>5</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000010}">BIT</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>5</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{18071995-0000-0000-0000-002000000010}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..1] OF BYTE</Name>
-			<BitSize>16</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>2</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -1862,11 +1862,19 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{ACE60092-92D4-25E1-F8F5-061472E0465A}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{14138E12-579D-FCF3-D2CF-B7CA602FAAEF}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.jt1_pose_1</Name>
 							<Comment><![CDATA[Signal 1-8]]></Comment>
@@ -2017,24 +2025,40 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.CommError</Name>
+							<Name>MAIN.fbMachine.errorSafety</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.safetyEStop</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.sHMIDustCollectionOn</Name>
 							<Type>BOOL</Type>
 						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.Run</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ErrorAcknowledge</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.errorReset</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.sigs10011008</Name>
 							<Type>USINT</Type>
@@ -2123,14 +2147,6 @@ External Setpoint Generation:
 							<Name>MAIN.fbMachine.errorReset</Name>
 							<Type>BOOL</Type>
 						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2024-03-05T15:00:26">
 						<OwnerA Name="InputDst" Prefix="TIPC^BX130XPLC^BX130XPLC Instance" Type="1">
@@ -2164,7 +2180,7 @@ External Setpoint Generation:
 			</Project>
 		</Plc>
 		<Safety>
-			<Project GUID="{C7D6B023-F052-4AFA-8019-7F1146AA0D5F}" Name="BX130XSafety" PrjFilePath="BX130XSafety\BX130XSafety.splcProj" TmcFilePath="BX130XSafety\BX130XSafety.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
+			<Project GUID="{F0E1EFC9-A7E7-4D03-AF74-E6659EF5EAEC}" Name="BX130XSafety" PrjFilePath="BX130XSafety\BX130XSafety.splcProj" TmcFilePath="BX130XSafety\BX130XSafety.tmc" GeneralArchiveSettings="#x000f" TargetArchiveSettings="#x0007" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010010" KeepUnrestoredLinks="2">
 					<Name>BX130XSafety Instance</Name>
 					<TmcDesc GUID="{72A6D5B8-E98C-4604-8B90-09D1F8AB38A9}">
@@ -2206,126 +2222,6 @@ External Setpoint Generation:
 						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x077e3052" RevisionNo="#x00110000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="2" Type="EL1918, 8Ch. Safety Input 24V, TwinSAFE" Desc="EL1918" PortABoxInfo="#x01000001">
 							<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
 							<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
-							<SyncMan>00121e002400010003000000000000000800001224010000</SyncMan>
-							<SyncMan>001d1a002000010004000000000000000900001d20010000</SyncMan>
-							<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
-							<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
-							<Fmmu>0000000000000000001200020100000001000000060000000200000000000000</Fmmu>
-							<Fmmu>0000000000000000001d00010100000002000000060000000300000000000000</Fmmu>
-							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
-							<Fmmu>0000000000000000000000020000000001000000060000000400010000000000</Fmmu>
-							<Fmmu>0000000000000000000000010000000002000000060000000500010000000000</Fmmu>
-							<BootStrapData>0010f400f410f400</BootStrapData>
-							<SuName></SuName>
-							<SuName></SuName>
-							<SuTask>#x00000000</SuTask>
-							<SuTask>#x00000000</SuTask>
-							<MBoxUserCmdData>004003000a0000001f000000000000000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
-							<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
-								<Entry Name="Message_10 TxPDO" Index="#x7000" Sub="#x01">
-									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
-								</Entry>
-								<Entry Name="Message_11 TxPDO" Index="#x7000" Sub="#x02">
-									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
-								<Entry Name="Message_10 RxPDO" Index="#x6000" Sub="#x01">
-									<Type GUID="{B05FDAB7-3241-ACD3-D16C-0FDAF8825BC9}">FSOE_7</Type>
-								</Entry>
-								<Entry Name="Message_11 RxPDO" Index="#x6000" Sub="#x02">
-									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
-								<Entry Name="Standard In Var 1" Index="#x6000" Sub="#x01">
-									<Type>BIT</Type>
-								</Entry>
-								<Entry Name="Standard In Var 2" Index="#x6000" Sub="#x02">
-									<Type>BIT</Type>
-								</Entry>
-								<Entry Name="Standard In Var 6" Index="#x6000" Sub="#x03">
-									<Type>BIT</Type>
-								</Entry>
-								<Entry>
-									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x0011" SyncMan="3">
-								<Entry Name="Message_4 TxPDO" BitLen="48" Index="#x7000" Sub="#x01">
-									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
-								</Entry>
-								<Entry Name="Message_5 TxPDO" BitLen="48" Index="#x7000" Sub="#x02">
-									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x0011" SyncMan="2">
-								<Entry Name="Message_4 RxPDO" BitLen="56" Index="#x6000" Sub="#x01">
-									<Type GUID="{B05FDAB7-3241-ACD3-D16C-0FDAF8825BC9}">FSOE_7</Type>
-								</Entry>
-								<Entry Name="Message_5 RxPDO" BitLen="48" Index="#x6000" Sub="#x02">
-									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x0011" SyncMan="2">
-								<Entry Name="Standard In Var 1" BitLen="1" Index="#x6000" Sub="#x01">
-									<Type>BIT</Type>
-								</Entry>
-								<Entry Name="Standard In Var 2" BitLen="1" Index="#x6000" Sub="#x02">
-									<Type>BIT</Type>
-								</Entry>
-								<Entry Name="Standard In Var 6" BitLen="1" Index="#x6000" Sub="#x03">
-									<Type>BIT</Type>
-								</Entry>
-								<Entry BitLen="5">
-									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0091" SyncMan="3">
-								<Entry Name="Safe Logic State" BitLen="8" Index="#xf100" Sub="#x01">
-									<Type>USINT</Type>
-								</Entry>
-								<Entry Name="Cycle Counter" BitLen="8" Index="#xf100" Sub="#x02">
-									<Type>USINT</Type>
-								</Entry>
-							</Pdo>
-							<Pdo Name="FSLOGIC Outputs" Index="#x17ff" InOut="1" Flags="#x0091" SyncMan="2">
-								<Entry BitLen="16">
-									<Type GUID="{18071995-0000-0000-0000-002000000010}">ARRAY [0..1] OF BYTE</Type>
-								</Entry>
-							</Pdo>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="12522377"/>
-							<CoeProfile ProfileNo="45290377"/>
-							<Slot Name="FSOE-Slot">
-								<SlotData>0000000001000400000000000000000000000000000000000000000000000000</SlotData>
-								<ModuleIdent>17827710</ModuleIdent>
-							</Slot>
-							<Slot Name="FSLOGIC">
-								<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
-								<ModuleIdent>691</ModuleIdent>
-								<Module Id="#x03090002" Type="FSLOGIC" Class="FSLOGIC">
-									<Name>Module 2 (FSLOGIC)</Name>
-									<ImageId>406</ImageId>
-									<ModuleData>02000000b3020000000004000000000000000000000000000000000000000000</ModuleData>
-									<PdoIndex>7167</PdoIndex>
-									<PdoIndex>6143</PdoIndex>
-								</Module>
-							</Slot>
-						</EtherCAT>
-					</Box>
-					<Box Id="3" BoxType="9099" BoxFlags="#x00000020">
-						<Name>Term 3 (EL1918)</Name>
-						<ImageId>1001</ImageId>
-						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x077e3052" RevisionNo="#x00110000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="2" Type="EL1918, 8Ch. Safety Input 24V, TwinSAFE" Desc="EL1918" PortABoxInfo="#x01000002">
-							<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
-							<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
 							<SyncMan>001208002400010003000000000000000800001224010000</SyncMan>
 							<SyncMan>001d09002000010004000000000000000900001d20010000</SyncMan>
 							<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
@@ -2340,7 +2236,7 @@ External Setpoint Generation:
 							<SuName></SuName>
 							<SuTask>#x00000000</SuTask>
 							<SuTask>#x00000000</SuTask>
-							<MBoxUserCmdData>004003000a0000001f000000030010000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
+							<MBoxUserCmdData>004003000a0000001f000000000000000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
 							<Pdo Name="FSoE Inputs" Index="#x1a00" Flags="#x0091" SyncMan="3">
 								<Entry Name="FSOE__FSoE Command" Index="#x6080" Sub="#x01">
 									<Type>USINT</Type>
@@ -2436,15 +2332,15 @@ External Setpoint Generation:
 								</Entry>
 							</Pdo>
 							<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0091" SyncMan="3">
-								<Entry Name="Safe Logic State" Index="#xf100" Sub="#x01">
+								<Entry Name="Safe Logic State" BitLen="8" Index="#xf100" Sub="#x01">
 									<Type>USINT</Type>
 								</Entry>
-								<Entry Name="Cycle Counter" Index="#xf100" Sub="#x02">
+								<Entry Name="Cycle Counter" BitLen="8" Index="#xf100" Sub="#x02">
 									<Type>USINT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="FSLOGIC Outputs" Index="#x17ff" InOut="1" Flags="#x0091" SyncMan="2">
-								<Entry>
+								<Entry BitLen="16">
 									<Type GUID="{18071995-0000-0000-0000-002000000010}">ARRAY [0..1] OF BYTE</Type>
 								</Entry>
 							</Pdo>
@@ -2460,7 +2356,7 @@ External Setpoint Generation:
 							<Slot Name="FSOE-Slot">
 								<SlotData>0000000001000400000000000000000000000000000000000000000000000000</SlotData>
 								<ModuleIdent>17827710</ModuleIdent>
-								<Module Id="#x03090003" Type="FSOE" Class="1918">
+								<Module Id="#x03090004" Type="FSOE" Class="1918">
 									<Name>Module 1 (FSOE)</Name>
 									<ImageId>406</ImageId>
 									<ModuleData>020000007e07100100002c000000000000000000000000000000000000000000</ModuleData>
@@ -2472,7 +2368,97 @@ External Setpoint Generation:
 							<Slot Name="FSLOGIC">
 								<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
 								<ModuleIdent>691</ModuleIdent>
-								<Module Id="#x03090004" Type="FSLOGIC" Class="FSLOGIC">
+								<Module Id="#x03090002" Type="FSLOGIC" Class="FSLOGIC">
+									<Name>Module 2 (FSLOGIC)</Name>
+									<ImageId>406</ImageId>
+									<ModuleData>02000000b3020000000004000000000000000000000000000000000000000000</ModuleData>
+									<PdoIndex>7167</PdoIndex>
+									<PdoIndex>6143</PdoIndex>
+								</Module>
+							</Slot>
+						</EtherCAT>
+					</Box>
+					<Box Id="3" BoxType="9099" BoxFlags="#x00000020">
+						<Name>Term 3 (EL1918)</Name>
+						<ImageId>1001</ImageId>
+						<EtherCAT SlaveType="2" PdiType="#x0005" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="3" FoeType="1" VendorId="#x00000002" ProductCode="#x077e3052" RevisionNo="#x00110000" InfoDataAddr="true" RepeatSupport="true" TimeoutStateChange1="5000" TimeoutMailbox2="10000" TComSupport="true" PortPhys="51" DebugMemory="8" SafetyLogicSupported="true" MaxSlotCount="2" Type="EL1918, 8Ch. Safety Input 24V, TwinSAFE" Desc="EL1918" PortABoxInfo="#x01000002">
+							<SyncMan>001000012600010001000000000100010001001026010000</SyncMan>
+							<SyncMan>001100012200010002000000000100010001001122010000</SyncMan>
+							<SyncMan>001210002400010003000000000000000800001224010000</SyncMan>
+							<SyncMan>001d0e002000010004000000000000000900001d20010000</SyncMan>
+							<SyncMan>002e00002400000003000000000000000000002e24000000</SyncMan>
+							<SyncMan>002f00002000000004000000000000000000002f20000000</SyncMan>
+							<Fmmu>0000000000000000001200020100000001000000060000000200000000000000</Fmmu>
+							<Fmmu>0000000000000000001d00010100000002000000060000000300000000000000</Fmmu>
+							<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+							<Fmmu>0000000000000000000000020000000001000000060000000400010000000000</Fmmu>
+							<Fmmu>0000000000000000000000010000000002000000060000000500010000000000</Fmmu>
+							<BootStrapData>0010f400f410f400</BootStrapData>
+							<SuName></SuName>
+							<SuName></SuName>
+							<SuTask>#x00000000</SuTask>
+							<SuTask>#x00000000</SuTask>
+							<MBoxUserCmdData>004003000a0000001f000000000000000000000000000000000000000000000020f31005020000000100456e61626c6520446961674d65737361676520617320656d657267656e637900</MBoxUserCmdData>
+							<Pdo Name="ConnectionInputs" Index="#x1a00" Flags="#x2011" SyncMan="3">
+								<Entry Name="Message_3 TxPDO" Index="#x7000" Sub="#x01">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+								<Entry Name="Message_4 TxPDO" Index="#x7000" Sub="#x02">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="ConnectionOutputs" Index="#x1600" InOut="1" Flags="#x2011" SyncMan="2">
+								<Entry Name="Message_3 RxPDO" Index="#x6000" Sub="#x01">
+									<Type GUID="{B05FDAB7-3241-ACD3-D16C-0FDAF8825BC9}">FSOE_7</Type>
+								</Entry>
+								<Entry Name="Message_4 RxPDO" Index="#x6000" Sub="#x02">
+									<Type GUID="{2438F91B-E188-4ED7-8594-54354F9ED6A4}" Namespace="Safety">FSOE_6</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="StandardOutputs" Index="#x17f0" InOut="1" Flags="#x2011" SyncMan="2">
+								<Entry Name="Standard In Var 1" Index="#x6000" Sub="#x01">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard In Var 2" Index="#x6000" Sub="#x02">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry Name="Standard In Var 6" Index="#x6000" Sub="#x03">
+									<Type>BIT</Type>
+								</Entry>
+								<Entry>
+									<Type GUID="{18071995-0000-0000-0000-002000000005}">ARRAY [0..4] OF BIT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="FSLOGIC Inputs" Index="#x1bff" Flags="#x0091" SyncMan="3">
+								<Entry Name="Safe Logic State" BitLen="8" Index="#xf100" Sub="#x01">
+									<Type>USINT</Type>
+								</Entry>
+								<Entry Name="Cycle Counter" BitLen="8" Index="#xf100" Sub="#x02">
+									<Type>USINT</Type>
+								</Entry>
+							</Pdo>
+							<Pdo Name="FSLOGIC Outputs" Index="#x17ff" InOut="1" Flags="#x0091" SyncMan="2">
+								<Entry BitLen="16">
+									<Type GUID="{18071995-0000-0000-0000-002000000010}">ARRAY [0..1] OF BYTE</Type>
+								</Entry>
+							</Pdo>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="12522377"/>
+							<CoeProfile ProfileNo="45290377"/>
+							<Slot Name="FSOE-Slot">
+								<SlotData>0000000001000400000000000000000000000000000000000000000000000000</SlotData>
+								<ModuleIdent>17827710</ModuleIdent>
+							</Slot>
+							<Slot Name="FSLOGIC">
+								<SlotData>0000010001000400000000000000000000000000000000000000000000000000</SlotData>
+								<ModuleIdent>691</ModuleIdent>
+								<Module Id="#x03090001" Type="FSLOGIC" Class="FSLOGIC">
 									<Name>Module 2 (FSLOGIC)</Name>
 									<ImageId>406</ImageId>
 									<ModuleData>02000000b3020000000004000000000000000000000000000000000000000000</ModuleData>
@@ -4047,14 +4033,14 @@ External Setpoint Generation:
 		<MappingInfo Identifier="{03040040-0040-0304-4000-040340000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
 		<OwnerA Name="TIID^PortLAN1X102">
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 2 (EL1918)">
-				<Link VarA="Term 1 (EK1100)^Term 3 (EL1918)^Module 1 (FSOE)^FSoE Outputs^FSOE" VarB="ConnectionInputs^Message_10 TxPDO"/>
+				<Link VarA="Term 1 (EK1100)^Term 3 (EL1918)^ConnectionOutputs^Message_3 RxPDO" VarB="Module 1 (FSOE)^FSoE Inputs^FSOE"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 3 (EL1918)">
-				<Link VarA="Term 1 (EK1100)^Term 2 (EL1918)^ConnectionOutputs^Message_10 RxPDO" VarB="Module 1 (FSOE)^FSoE Inputs^FSOE"/>
+				<Link VarA="Term 1 (EK1100)^Term 2 (EL1918)^Module 1 (FSOE)^FSoE Outputs^FSOE" VarB="ConnectionInputs^Message_3 TxPDO"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 4 (EL2904)">
-				<Link VarA="Term 1 (EK1100)^Term 2 (EL1918)^ConnectionInputs^Message_11 TxPDO" VarB="Module 1 (FSOES)^RxPDO^FSOE"/>
-				<Link VarA="Term 1 (EK1100)^Term 2 (EL1918)^ConnectionOutputs^Message_11 RxPDO" VarB="Module 1 (FSOES)^TxPDO^FSOE"/>
+				<Link VarA="Term 1 (EK1100)^Term 3 (EL1918)^ConnectionInputs^Message_4 TxPDO" VarB="Module 1 (FSOES)^RxPDO^FSOE"/>
+				<Link VarA="Term 1 (EK1100)^Term 3 (EL1918)^ConnectionOutputs^Message_4 RxPDO" VarB="Module 1 (FSOES)^TxPDO^FSOE"/>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis East">
@@ -4128,10 +4114,10 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 11 (EL2008)">
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^SV10WorkHoldDownSouth"/>
 			</OwnerB>
-			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 2 (EL1918)">
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.ErrorAcknowledge" VarB="StandardOutputs^Standard In Var 1"/>
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.Run" VarB="StandardOutputs^Standard In Var 2"/>
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.errorReset" VarB="StandardOutputs^Standard In Var 6"/>
+			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 3 (EL1918)">
+				<Link VarA="PlcTask Outputs^MAIN.ErrorAcknowledge" VarB="StandardOutputs^Standard In Var 1"/>
+				<Link VarA="PlcTask Outputs^MAIN.Run" VarB="StandardOutputs^Standard In Var 2"/>
+				<Link VarA="PlcTask Outputs^MAIN.errorReset" VarB="StandardOutputs^Standard In Var 6"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.doorIsOpen" VarB="Channel 4^rollingDoorOpen"/>
