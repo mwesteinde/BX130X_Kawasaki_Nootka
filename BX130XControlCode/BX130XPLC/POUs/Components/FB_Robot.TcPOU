@@ -55,6 +55,7 @@ VAR
 	
 	
 	//----------Outputs To Robot ----------
+	outRobotControlPowerOn AT %Q*	: BOOL := TRUE;
 	outRobotTurnMotorOn				: BOOL; //Signal 1001
 	outRobotResetError				: BOOL; //Signal 1002
 	outRobotStartCycle				: BOOL; //Signal 1003
