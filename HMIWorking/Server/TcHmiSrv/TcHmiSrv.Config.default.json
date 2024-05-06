@@ -1709,6 +1709,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.sHMILastErrorMessage": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMILastErrorMessage",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "maxLength": 300,
+                        "propertyOrder": 17
+                    },
+                    {
+                        "$ref": "tchmi:general#/definitions/String"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.sHMIPneumaticsOK": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -4549,6 +4567,7 @@
                 "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
                 "C1007.MAIN.fbMachine.sHMIErrorDisplay": 3,
                 "C1007.MAIN.fbMachine.sHMIIsError": 3,
+                "C1007.MAIN.fbMachine.sHMILastErrorMessage": 3,
                 "C1007.MAIN.fbMachine.sHMIPneumaticsOK": 3,
                 "C1007.MAIN.fbMachine.sHMIRequestedTool": 3,
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,

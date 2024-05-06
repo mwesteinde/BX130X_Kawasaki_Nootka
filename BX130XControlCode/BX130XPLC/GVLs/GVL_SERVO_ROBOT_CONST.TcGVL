@@ -16,7 +16,7 @@ VAR_GLOBAL CONSTANT
 	ROLLERS_Z_HEIGHT : LREAL := 800; // Robot tool z height at rollers
 		
 	//Variable to be set by program being run
-	LEN_WOOD : LREAL := 2438; //mm, length of wood being clamped
+	LEN_WOOD : LREAL := 2133; //mm, length of wood being clamped
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

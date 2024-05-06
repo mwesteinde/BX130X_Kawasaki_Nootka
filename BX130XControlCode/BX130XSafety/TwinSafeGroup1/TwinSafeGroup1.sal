@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<safetyApplication Crc="1981585455" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="c77b55d2-2be8-4db3-b263-81cf5b141b02" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
+<safetyApplication Crc="2536421509" xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.5.0.0" Id="c77b55d2-2be8-4db3-b263-81cf5b141b02" name="" mapState="false" mapDiag="false" groupOrderId="0" passificationAllowed="false" temporaryDeactivationAllowed="false" permamentDeactivationAllowed="false" xmlid="0" analogFBOutputReplacementValues="Zero" verifyAnalogFBInputsIfStart="false" userFbId="00000000-0000-0000-0000-000000000000" xmlns="http://schemas.microsoft.com/dsltools/SafetyApplicationLanguage">
   <networks>
     <safetyApplicationHasNetworks Id="2ca08d56-b84b-429e-aa1d-9c22f07d0b08">
       <Network Id="938f3686-9d6a-44d6-bff3-c94d055d7174" name="Network1" networkName="Network1" intId="1" networkOrderId="0">
@@ -218,17 +218,20 @@
           <variableHasTargetUsages Id="011819b3-659d-4e5a-a5bb-af8fa042df07">
             <variableUsages Id="fa29929d-792c-445e-876f-0d10c6d4a00e">
               <usages>
-                <variableUsagesHasUsages Id="26d3daca-1ec3-46a3-b4dd-e14905b1e555">
-                  <aliasDeviceIoUsage Id="ef3f5bbd-75b7-45ff-9521-e85797fd295e" sdsId="4" channelId="1" functionId="1879113985" />
+                <variableUsagesHasUsages Id="c3accd7a-8971-47ad-824c-67e5c41ca1f8">
+                  <aliasDeviceIoUsage Id="753ce69b-f089-47b7-8b21-6325bdf5f9b3" sdsId="9" channelId="1" functionId="1131179972" />
                 </variableUsagesHasUsages>
-                <variableUsagesHasUsages Id="93fc1da4-3801-4e79-a324-e917cb27adcd">
-                  <aliasDeviceIoUsage Id="8737c64a-0b54-472c-9875-5707c32503e4" sdsId="4" channelId="2" functionId="1879114241" />
+                <variableUsagesHasUsages Id="72270dd0-d4ce-41ac-ae6e-d182724dfac8">
+                  <aliasDeviceIoUsage Id="182bec62-3000-4c28-914d-1643b3d49d4e" sdsId="4" channelId="1" functionId="1879113985" />
                 </variableUsagesHasUsages>
-                <variableUsagesHasUsages Id="6fcc11f3-2a8b-47f2-b342-a3b639ec03f6">
-                  <aliasDeviceIoUsage Id="3073f10e-eac4-4682-9cb0-7ffee8d45076" sdsId="4" channelId="3" functionId="1879114497" />
+                <variableUsagesHasUsages Id="6f3ca274-84d2-404d-bbea-b53c2cb1f6f7">
+                  <aliasDeviceIoUsage Id="67db6cfa-6781-45d3-82fc-ccfaf9c98664" sdsId="4" channelId="2" functionId="1879114241" />
                 </variableUsagesHasUsages>
-                <variableUsagesHasUsages Id="3452b902-c1b9-46e3-9841-9bbd2003de07">
-                  <aliasDeviceIoUsage Id="a9faea7c-9735-4de5-be7d-3c522c8e845f" sdsId="4" channelId="4" functionId="1879114753" />
+                <variableUsagesHasUsages Id="0c5f2931-580a-404f-9d7a-0e205d146a05">
+                  <aliasDeviceIoUsage Id="2a924828-0d82-42de-a06f-94e7adc46e86" sdsId="4" channelId="3" functionId="1879114497" />
+                </variableUsagesHasUsages>
+                <variableUsagesHasUsages Id="fabf1b4b-c05c-47a2-ae11-f7584acab026">
+                  <aliasDeviceIoUsage Id="6a0c8923-8f63-4465-a426-caa051011295" sdsId="4" channelId="4" functionId="1879114753" />
                 </variableUsagesHasUsages>
               </usages>
             </variableUsages>
@@ -387,8 +390,136 @@
           <variableHasTargetUsages Id="c1e6025a-d332-4f47-8b8e-ebfd8a36b548">
             <variableUsages Id="462b511d-40f5-434d-bc90-98c5de933d02">
               <usages>
-                <variableUsagesHasUsages Id="b9376d44-1e42-442b-917c-3b86a2a3f1fa">
-                  <aliasDeviceIoUsage Id="300f85f2-814f-46d6-b6f1-d6b260509789" sdsId="7" channelId="1" functionId="1131179972" />
+                <variableUsagesHasUsages Id="4d71410b-075f-4481-9590-fb1c48ac9a6d">
+                  <aliasDeviceIoUsage Id="a7da7526-2b14-488a-ab9d-452fc3d3d581" sdsId="8" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="1addddc9-347b-4965-bdcd-3ff5f9ea4c82">
+      <variable Id="3d499523-96a3-4619-9e04-295ffee26170" name="ComError" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="fd2d1a1a-40d1-4ea0-9011-646b1dbcb181">
+            <variableUsages Id="df3ac713-eb39-4aeb-99f4-25f2d6fa4490">
+              <usages>
+                <variableUsagesHasUsages Id="62ac261b-bdb5-4ebc-aa36-4bbdd6ac3b88">
+                  <groupPortUsage Id="a61464b1-5224-44e1-90c5-964780d0a544">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="8c7d67c7-0bc8-4d3f-8cad-602b0fdee5a0">
+                        <twinSAFEGroupAliasPortMoniker name="//ComErr" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="bef48200-13c7-4024-acef-a6019368358e">
+            <variableUsages Id="dd594655-c146-4b54-9fd9-b679fe3008a1">
+              <usages>
+                <variableUsagesHasUsages Id="8feb364b-8689-4aa6-9410-c2f39a1ae241">
+                  <aliasDeviceIoUsage Id="6f058638-13cd-4e35-96b8-6cfe38307930" sdsId="11" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="592fb5a9-4bd8-4d3b-af3a-ff701ff8b434">
+      <variable Id="aa6d0308-46d3-4c43-b197-3dfd0203ebcc" name="blockRunning" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="be700769-c9ae-4a88-bc92-9009250f44ac">
+            <variableUsages Id="d788f5a2-3ea8-4bd9-bd92-a66b1bbf30ab">
+              <usages>
+                <variableUsagesHasUsages Id="ade759e1-ccc2-487a-b70c-d79c0248496c">
+                  <groupPortUsage Id="e348bf6d-6138-48c1-a37e-d6f7469f48bb">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="18017568-c652-485f-b981-8685bf063b93">
+                        <twinSAFEGroupAliasPortMoniker name="//InRun" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="724ecb8c-e265-4600-99d3-777ba5dae008">
+            <variableUsages Id="cc397f4a-1c5d-465e-b081-74f104b0f601">
+              <usages>
+                <variableUsagesHasUsages Id="5e2ec815-0da9-4097-b935-42dd8d5e92f8">
+                  <aliasDeviceIoUsage Id="86b01185-a5a4-43d7-ac8b-fce085f5101f" sdsId="13" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="91ea14fc-db77-4129-b60b-fcf7a80e9fd7">
+      <variable Id="985cd3d1-c729-498a-b85d-c610a8c04519" name="FBErr" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="6393ce08-7b21-46f0-9e7a-65feb12b8a38">
+            <variableUsages Id="ac61449b-4b47-43da-bb51-2c341a3929f8">
+              <usages>
+                <variableUsagesHasUsages Id="11714205-3376-4421-ac82-7e8bc489a10b">
+                  <groupPortUsage Id="35a408a6-0c80-4eb3-b756-13744548bcce">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="f947c7c9-beb6-4291-ab1a-f3a8bfb8c393">
+                        <twinSAFEGroupAliasPortMoniker name="//FbErr" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="f47c9bda-41ac-485c-b7a2-d16003f1f0b0">
+            <variableUsages Id="3f726a6b-c8e4-4195-ae0b-09e610d670e5">
+              <usages>
+                <variableUsagesHasUsages Id="3690acf2-0c12-4547-aa0b-bfc671d6510a">
+                  <aliasDeviceIoUsage Id="ba53358b-9b28-4d12-be91-b50a3059ee59" sdsId="10" channelId="1" functionId="1131179972" />
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasTargetUsages>
+        </targetUsages>
+      </variable>
+    </safetyApplicationHasVariables>
+    <safetyApplicationHasVariables Id="8edb15e8-01c6-45d8-afab-da5ff7b00c40">
+      <variable Id="62e725f0-8869-4c83-bc9f-239eb3db5ea1" name="OtherErr" isLocal="false">
+        <sourceUsages>
+          <variableHasSourceUsages Id="a33d9d3d-8203-4542-add0-d64b60bf9ad7">
+            <variableUsages Id="9d8f0354-e6dc-4da1-9b2b-f83026c52a4b">
+              <usages>
+                <variableUsagesHasUsages Id="12124795-ce0d-462c-bd8d-8457c50be2cd">
+                  <groupPortUsage Id="03ee6297-a3ab-446b-b6f9-0357d9575425">
+                    <twinSAFEGroupAliasPort>
+                      <groupPortUsageReferencesTwinSAFEGroupAliasPort Id="5862da97-8888-4f6a-8793-dbc082642cca">
+                        <twinSAFEGroupAliasPortMoniker name="//OtherErr" />
+                      </groupPortUsageReferencesTwinSAFEGroupAliasPort>
+                    </twinSAFEGroupAliasPort>
+                  </groupPortUsage>
+                </variableUsagesHasUsages>
+              </usages>
+            </variableUsages>
+          </variableHasSourceUsages>
+        </sourceUsages>
+        <targetUsages>
+          <variableHasTargetUsages Id="ab89648e-8644-44c3-87af-452249b6f85c">
+            <variableUsages Id="77a52b90-0f8b-4444-b5ba-ba655f326f90">
+              <usages>
+                <variableUsagesHasUsages Id="361f71f3-3cdb-43ec-a084-09bb6c7d84bf">
+                  <aliasDeviceIoUsage Id="60e02bd5-c99a-48e3-b45e-76824b113a56" sdsId="12" channelId="1" functionId="1131179972" />
                 </variableUsagesHasUsages>
               </usages>
             </variableUsages>

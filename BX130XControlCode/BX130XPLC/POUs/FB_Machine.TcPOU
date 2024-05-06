@@ -19,12 +19,17 @@ VAR
 	Run AT %Q* : BOOL := TRUE;
 	ErrorAcknowledge AT %Q* : BOOL;
 	errorReset AT %Q* : BOOL;
-	errorSafety AT %I* : BOOL;
-	safetyEStop AT %I* : BOOL;
+	safetyPLCError AT %I* : BOOL;
+	safetyPLCEStopOut AT %I* : BOOL;
+	safetyPLCComErr AT %I* : BOOL;
+	safetyPLCEStopBlockRun AT %I* : BOOL;
+	safetyPLCFBErr AT %I* : BOOL;
+	safetyPLCOtherErr AT %I* : BOOL;
 	
 	// ============== Errors ==========================================================
 	pneumaticsOK	: BOOL;								// True if cylinders in assigned position and pressure ok.
-	bErrors			: BOOL;								// True if modules have errors or E stop.								
+	bErrors			: BOOL;								// True if modules have errors or E stop.	
+	sHMILastErrorMessage : STRING(300);							
 	
 	// =============== State machine ================================================
 	eSystemState			: E_MachineState := E_MachineState.INITIALIZATION;  // Current state 
@@ -142,7 +147,8 @@ END_VAR
 //	IF NOT safetyEStop OR errorSafety THEN
 //		ErrorAcknowledge := TRUE;
 //	END_IF
-	
+	ErrorAcknowledge := safetyPLCError OR safetyPLCEStopOut OR safetyPLCComErr OR safetyPLCFBErr OR safetyPLCOtherErr;
+
 	// Output variables
 	
 	// HMI button triggers
@@ -191,12 +197,17 @@ END_IF
 IF errorState.isError THEN
 	IF errorState.errorType.2 = 1 OR (eSystemState <> E_MachineState.INITIALIZATION AND eSystemState <> E_MachineState.ERROR AND eSystemState <> E_MachineState.RESET) THEN //If E stop is pressed, stop functionality always. Else, only when running
 		eSystemState := E_MachineState.ERROR;
+		sHMILastErrorMessage := errorState.errorMessage;
 		fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
-		JMP _End_Case; // Skip case statements
+		eSystemState := E_MachineState.ERROR; 
 	END_IF
 END_IF
 
 CASE eSystemState OF
+	E_MachineState.ERROR:
+		IF rTrigResetErrors.Q THEN
+			eSystemState := E_MachineState.RESET;
+		END_IF
 	E_MachineState.INITIALIZATION:
 		IF rTrigStartProgram.Q AND NOT errorState.isError THEN
 			eSystemState := E_MachineState.RUN;
@@ -219,6 +230,7 @@ CASE eSystemState OF
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 			fbSpindle.Stop_Spindle();
 			fbRobot.Stop_Robot_Program();
+			fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE);
 			bHMIStart := FALSE;
 		END_IF
 		
@@ -233,11 +245,7 @@ CASE eSystemState OF
 			eSystemState := E_MachineState.INITIALIZATION;
 			bActivateRollers := FALSE;
 			resetSuccessful := FALSE;
-		END_IF
-		
-	E_MachineState.ERROR:
-		IF rTrigResetErrors.Q THEN
-			eSystemState := E_MachineState.RESET;
+			sHMILastErrorMessage := '';
 		END_IF
 		
 	E_MachineState.TOOLCHANGERUN:
@@ -255,7 +263,6 @@ CASE eSystemState OF
 			eSystemState := E_MachineState.INITIALIZATION;
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 			fbSpindle.Stop_Spindle();
-			
 			bHMIStart := FALSE;
 		END_IF
 		
@@ -273,7 +280,7 @@ CASE eSystemState OF
 		END_IF
 END_CASE
 
-_End_Case:]]></ST>
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operating_Error" Id="{34eb4b26-0b5c-454b-a500-c33be7205698}" FolderPath="StateMachine\">
@@ -309,6 +316,7 @@ END_VAR]]></Declaration>
 IF NOT fbSpindle.spindleWarmupOn THEN
 	fbSpindle.Stop_Spindle();
 END_IF
+
 fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool);
 
 IF powerUp THEN
@@ -322,6 +330,7 @@ IF rTrigHomeRobot.Q THEN
 END_IF
 
 IF rTrigHomeMotors.Q THEN
+	fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE); //Done, tested
 	eInitializeServos := fbGantry.Home_Servos(robotPose := fbRobot.robotPose); //Done, tested
 END_IF
 
@@ -409,9 +418,14 @@ robotReset := fbRobot.Reset_Robot();
 gantryReset := fbGantry.Reset_Servos();
 //VFD Reset
 spindleReset := fbSpindle.Reset_Drive();
+//Safety Reset
+IF NOT safetyPLCEStopOut THEN
+	errorReset := NOT errorReset;
+END_IF
 
-IF robotReset AND gantryReset AND spindleReset THEN
+IF robotReset AND gantryReset AND spindleReset AND safetyPLCEStopOut THEN
 	resetSuccessful := TRUE;
+	errorReset := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -433,16 +447,20 @@ IF rTrigStartProgram.Q THEN
 END_IF
 
 // Follow robot
-IF fbRobot.inRobotPoseDataIsSent THEN
+IF fbRobot.inRobotPoseDataIsSent AND NOT fbSpindle.spindleIsStopped THEN
 	robotRun := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
 ELSE 
 	robotRun := FALSE;
-	sHMIErrorDisplay := 'Robot pose data not being sent';
+	sHMIErrorDisplay := CONCAT(sHMIErrorDisplay, '/n Robot pose data not being sent or spindle is stopped'); //This is called after Run_Error so all good, but not clean. TODO: make better
+END_IF
+
+IF fbSpindle.spindleIsStopped THEN
+	fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
 END_IF
 fbGantry.Cylinder_Set_Cutting();
 
 IF NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool) THEN
-	//Error flag
+	sHMIErrorDisplay := CONCAT(sHMIErrorDisplay, '/n Robot tool value different'); //TODO: Stop program, let user change tool
 	fbRobot.RunHold_Robot(RunHold := FALSE);
 END_IF
 
@@ -550,7 +568,12 @@ END_IF
 
 //Torque sensor error Todo: implement
 
-//E-stop/safety system error Todo: Implement
+//E-stop/safety system error Todo: 
+IF NOT safetyPLCEStopOut THEN
+	Run_Error.isError := TRUE;
+	Run_Error.errorType.2 := TRUE;
+	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nSafety PLC in Error');
+END_IF
 
 //Door error
 IF fbEnclosure.doorIsOpen THEN
@@ -677,7 +700,8 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="463" Count="0" />
       <LineId Id="1130" Count="2" />
       <LineId Id="1134" Count="1" />
-      <LineId Id="131" Count="0" />
+      <LineId Id="1255" Count="0" />
+      <LineId Id="1264" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="124" Count="0" />
       <LineId Id="346" Count="5" />
@@ -700,11 +724,16 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="227" Count="3" />
       <LineId Id="165" Count="0" />
       <LineId Id="190" Count="0" />
-      <LineId Id="166" Count="2" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="167" Count="1" />
       <LineId Id="191" Count="0" />
       <LineId Id="163" Count="0" />
       <LineId Id="54" Count="0" />
-      <LineId Id="10" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="241" Count="2" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="11" Count="1" />
       <LineId Id="25" Count="1" />
       <LineId Id="123" Count="2" />
       <LineId Id="127" Count="0" />
@@ -716,6 +745,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="101" Count="0" />
       <LineId Id="66" Count="0" />
       <LineId Id="193" Count="0" />
+      <LineId Id="255" Count="0" />
       <LineId Id="65" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="76" Count="0" />
@@ -729,11 +759,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="47" Count="0" />
       <LineId Id="180" Count="0" />
       <LineId Id="52" Count="0" />
+      <LineId Id="254" Count="0" />
       <LineId Id="48" Count="0" />
-      <LineId Id="22" Count="1" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="45" Count="1" />
-      <LineId Id="81" Count="0" />
+      <LineId Id="22" Count="0" />
       <LineId Id="83" Count="0" />
       <LineId Id="82" Count="0" />
       <LineId Id="86" Count="0" />
@@ -746,7 +774,6 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="157" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="145" Count="2" />
-      <LineId Id="192" Count="0" />
       <LineId Id="143" Count="1" />
       <LineId Id="122" Count="0" />
       <LineId Id="114" Count="2" />
@@ -777,6 +804,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="137" Count="0" />
       <LineId Id="110" Count="0" />
       <LineId Id="126" Count="1" />
+      <LineId Id="142" Count="0" />
       <LineId Id="130" Count="0" />
       <LineId Id="138" Count="0" />
       <LineId Id="105" Count="0" />
@@ -787,7 +815,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="15" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="16" Count="1" />
-      <LineId Id="19" Count="2" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="21" Count="0" />
       <LineId Id="18" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="23" Count="2" />
@@ -836,9 +866,12 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="11" Count="1" />
       <LineId Id="10" Count="0" />
       <LineId Id="17" Count="0" />
+      <LineId Id="29" Count="3" />
       <LineId Id="19" Count="0" />
       <LineId Id="18" Count="0" />
-      <LineId Id="20" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="21" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_Run">
       <LineId Id="39" Count="0" />
@@ -854,6 +887,8 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="121" Count="1" />
       <LineId Id="124" Count="0" />
       <LineId Id="123" Count="0" />
+      <LineId Id="141" Count="2" />
+      <LineId Id="140" Count="0" />
       <LineId Id="97" Count="0" />
       <LineId Id="111" Count="0" />
       <LineId Id="110" Count="0" />
@@ -914,6 +949,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="14" Count="0" />
       <LineId Id="31" Count="0" />
       <LineId Id="15" Count="0" />
+      <LineId Id="122" Count="1" />
+      <LineId Id="126" Count="1" />
+      <LineId Id="124" Count="0" />
       <LineId Id="32" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="33" Count="0" />

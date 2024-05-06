@@ -33,6 +33,7 @@ VAR
 	pressureSwitchSpindle	AT %I* : BOOL;
 	pressureSwitchHoldDown	AT %I* : BOOL;
 	pressureSwitchTableClamps AT %I* : BOOL;
+	pressureSwitchTimer : TON;
 	
 	//Pneumatic switches
 	
@@ -54,7 +55,6 @@ GVL_Axes.AxisEast.ReadStatus();
 	
 // Movement functions
 Servo_Commands();
-
 // Enable and couple axes
 executeEnable := TRUE;
 IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 THEN
@@ -215,7 +215,15 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[Pneumatics_Error.errorMessage := '';
-IF pressureSwitchSpindle AND pressureSwitchHoldDown AND pressureSwitchTableClamps THEN
+
+IF NOT (pressureSwitchSpindle AND  pressureSwitchHoldDown AND pressureSwitchTableClamps) THEN
+	pressureSwitchTimer(IN:= TRUE, PT:=T#3S);
+ELSE
+	pressureSwitchTimer(IN:= FALSE, PT:=T#3S);
+END_IF
+
+
+IF NOT pressureSwitchTimer.Q THEN
 	Pneumatics_Error.isError := FALSE;
 ELSE
 	Pneumatics_Error.isError := TRUE;
@@ -243,7 +251,10 @@ END_VAR
         <ST><![CDATA[stopGantry := FALSE;
 resetExec := TRUE;
 
-Reset_Servos := NOT GVL_Axes.AxisWest.Status.Error;]]></ST>
+Reset_Servos := NOT GVL_Axes.AxisWest.Status.Error;
+IF Reset_Servos THEN
+	resetExec := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Servo_Commands" Id="{e822ca69-a3df-402b-82d4-4917018968fd}">
@@ -297,6 +308,10 @@ fbMC_Stop(
 fbMC_Reset(
 	Axis := GVL_Axes.AxisWest,
 	Execute := ResetExec);
+	
+	fbMC_Reset(
+	Axis := GVL_Axes.AxisEast,
+	Execute := ResetExec);
 ]]></ST>
       </Implementation>
     </Method>
@@ -315,7 +330,6 @@ END_VAR
       <LineId Id="266" Count="0" />
       <LineId Id="188" Count="0" />
       <LineId Id="186" Count="0" />
-      <LineId Id="199" Count="0" />
       <LineId Id="197" Count="1" />
       <LineId Id="207" Count="0" />
       <LineId Id="195" Count="0" />
@@ -373,6 +387,11 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Pneumatics_Error">
       <LineId Id="21" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="40" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="33" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="14" Count="1" />
@@ -390,6 +409,7 @@ END_VAR
       <LineId Id="5" Count="1" />
       <LineId Id="8" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="2" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Servo_Commands">
       <LineId Id="34" Count="14" />
@@ -406,6 +426,9 @@ END_VAR
       <LineId Id="67" Count="1" />
       <LineId Id="70" Count="1" />
       <LineId Id="69" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="78" Count="1" />
+      <LineId Id="77" Count="0" />
       <LineId Id="31" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Stop_Servos">
