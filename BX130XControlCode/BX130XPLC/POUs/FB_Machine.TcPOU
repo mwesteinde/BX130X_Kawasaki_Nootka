@@ -375,7 +375,6 @@ IF rTrigRunProgramScreen.Q THEN
 	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3);
 	Update_Program_String();
 	fbSpindle.Update_Current_Tool(toolNumber := selectedProgram.firstTool.toolNumber);
-//	fbRobot.Update_Current_
 	bHMIRunProgramScreen := FALSE;
 END_IF
 
@@ -843,7 +842,6 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="81" Count="2" />
       <LineId Id="90" Count="0" />
       <LineId Id="116" Count="0" />
-      <LineId Id="123" Count="0" />
       <LineId Id="89" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="139" Count="0" />

@@ -74,6 +74,7 @@ VAR
 	outRobotProgramOption2			: BOOL; //Signal 1022
 	outRobotProgramOption3			: BOOL; //Signal 1023
 	outRobotRequestedTool			: USINT; //Signal 1024-1026
+	outRobotProgramSelected			: BOOL; //Signal 1027
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
 	sigs10171024	AT %Q*			: USINT;
@@ -171,7 +172,8 @@ END_VAR
         <ST><![CDATA[outRobotProgramChoice := programChoice;
 outRobotProgramOption1 := option1;
 outRobotProgramOption2	:= option2;
-outRobotProgramOption3	:= option3;]]></ST>
+outRobotProgramOption3	:= option3;
+outRobotProgramSelected := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Release_Update" Id="{dba9479c-b587-4cb4-8aba-4cf3f2e05c5d}">
@@ -401,6 +403,7 @@ sigs10171024.6 := outRobotProgramOption3; //1023
 sigs10171024.7 := outRobotRequestedTool.0; //1024
 sigs10251032.0 := outRobotRequestedTool.1; //1025
 sigs10251032.1 := outRobotRequestedTool.2; //1026
+sigs10251032.2 := outRobotProgramSelected; //1027
 
 inRobotMotorOn := sigs97104.0; //97
 inRobotError := sigs97104.1; //98
@@ -475,6 +478,7 @@ outRobotRequestedTool := request;]]></ST>
     <LineIds Name="FB_Robot.Program_Select">
       <LineId Id="15" Count="2" />
       <LineId Id="5" Count="0" />
+      <LineId Id="26" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Release_Update">
       <LineId Id="5" Count="0" />
@@ -559,6 +563,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="39" Count="0" />
       <LineId Id="94" Count="2" />
       <LineId Id="127" Count="2" />
+      <LineId Id="139" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />
       <LineId Id="54" Count="0" />
