@@ -217,9 +217,9 @@ END_VAR
         <ST><![CDATA[Pneumatics_Error.errorMessage := '';
 
 IF NOT (pressureSwitchSpindle AND  pressureSwitchHoldDown AND pressureSwitchTableClamps) THEN
-	pressureSwitchTimer(IN:= TRUE, PT:=T#3S);
+	pressureSwitchTimer(IN:= TRUE, PT:=T#5S);
 ELSE
-	pressureSwitchTimer(IN:= FALSE, PT:=T#3S);
+	pressureSwitchTimer(IN:= FALSE, PT:=T#5S);
 END_IF
 
 
