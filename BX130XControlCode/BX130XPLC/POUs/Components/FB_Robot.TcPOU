@@ -33,11 +33,10 @@ VAR
 	inRobotPoseDataIsSent	: BOOL; //Signal 104
 	inRobotEStopOn			: BOOL; //Signal 105
 	inRobotBatteryAlarm		: BOOL; //Signal 106
-	inRobotToolNumberCurrent: USINT; //Signal 107-109
-	inRobotToolNumberRequest: USINT; //Signal 110-112
-	inRobotReleaseTool		: BOOL; //Signal 113
-	inRobotProgramRunning		: BOOL; //Signal 115
-	inRobotProgramNumber	: BOOL; //Signal 116
+	inRobotToolNumberCurrent: USINT; //Signal 107-110
+	inRobotToolNumberRequest: USINT; //Signal 111-114
+	inRobotReleaseTool		: BOOL; //Signal 115
+	inRobotProgramRunning		: BOOL; //Signal 116
 	inRobotToolUpdated		: BOOL; //Signal 117
 	inRobotStartofProgram	: BOOL; //Signal 118
 	sigs97104 AT %I*		: USINT;
@@ -67,7 +66,7 @@ VAR
 	outRobotHome					: BOOL; //Signal 1007
 	outRobotTurnMotorOff			: BOOL; //1008
 	outRobotToolReleased			: BOOL; //Signal 1009
-	outRobotCurrentTool				: USINT; //Signal 1011-1013
+	outRobotCurrentTool				: USINT; //Signal 1010-1013
 	outRobotNoEStop					: BOOL := TRUE; //Signal 1014
 	outRobotSpindleOn				: BOOL; //Signal 1016
 	outRobotProgramChoice			: USINT; //Signals 1017-1020
@@ -385,10 +384,10 @@ sigs10011008.5 := outRobotRunHold; //1006
 sigs10011008.6 := outRobotHome; //1007
 sigs10011008.7 := outRobotTurnMotorOff; //1008
 sigs10091016.0 := outRobotToolReleased; //1009
-//sigs10091016.1 := outRobotToolGrabbed; //1010 No longer using
-sigs10091016.2 := outRobotCurrentTool.0; //1011
-sigs10091016.3 := outRobotCurrentTool.1; //1012
-sigs10091016.4 := outRobotCurrentTool.2; //1013
+sigs10091016.1 := outRobotCurrentTool.0; //1010
+sigs10091016.2 := outRobotCurrentTool.1; //1011
+sigs10091016.3 := outRobotCurrentTool.2; //1012
+sigs10091016.4 := outRobotCurrentTool.4; //1013
 sigs10091016.5 := outRobotNoEStop; //1014
 sigs10091016.7 := outRobotSpindleOn; //1016
 sigs10171024   := outRobotProgramChoice; //1017-1020
@@ -398,7 +397,8 @@ sigs10171024.6 := outRobotProgramOption3; //1023
 sigs10171024.7 := outRobotRequestedTool.0; //1024
 sigs10251032.0 := outRobotRequestedTool.1; //1025
 sigs10251032.1 := outRobotRequestedTool.2; //1026
-sigs10251032.2 := outRobotProgramSelected; //1027
+sigs10251032.2 := outRobotRequestedTool.3; //1027
+sigs10251032.3 := outRobotProgramSelected; //1028
 
 inRobotMotorOn := sigs97104.0; //97
 inRobotError := sigs97104.1; //98
@@ -414,14 +414,15 @@ inRobotToolNumberCurrent := 0;
 inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.2) * 1); //107
 inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.3) * 2); //108
 inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.4) * 4); //109
+inRobotToolNumberCurrent := inRobotToolNumberCurrent OR (BIT_TO_USINT(sigs105112.5) * 8); //110
 
 inRobotToolNumberRequest := 0;
-inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.5) * 1); //110
-inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.6) * 2); //111
-inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.7) * 4); //112
-inRobotReleaseTool := sigs113120.0; //113
-inRobotProgramRunning := sigs113120.2; // Signal 115
-inRobotProgramNumber := sigs113120.3; // Signal 116
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.6) * 1); //111
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs105112.7) * 2); //112
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs113120.0) * 4); //113
+inRobotToolNumberRequest := inRobotToolNumberRequest OR (BIT_TO_USINT(sigs113120.1) * 8); //114
+inRobotReleaseTool := sigs113120.2; //115
+inRobotProgramRunning := sigs113120.3; // Signal 116
 inRobotToolUpdated := sigs113120.4; // Signal 117
 inRobotStartofProgram := sigs113120.5; // Signal 118
 // posedata.pc is running
@@ -555,14 +556,15 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="31" Count="6" />
       <LineId Id="104" Count="0" />
       <LineId Id="30" Count="0" />
-      <LineId Id="38" Count="0" />
       <LineId Id="103" Count="0" />
       <LineId Id="115" Count="1" />
+      <LineId Id="149" Count="0" />
       <LineId Id="110" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="94" Count="2" />
       <LineId Id="127" Count="2" />
+      <LineId Id="152" Count="0" />
       <LineId Id="139" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />
@@ -570,10 +572,11 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="63" Count="1" />
       <LineId Id="78" Count="0" />
       <LineId Id="84" Count="2" />
+      <LineId Id="150" Count="0" />
       <LineId Id="88" Count="4" />
+      <LineId Id="151" Count="0" />
       <LineId Id="74" Count="0" />
       <LineId Id="62" Count="0" />
-      <LineId Id="134" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="21" Count="0" />
       <LineId Id="20" Count="0" />

@@ -180,6 +180,7 @@ END_VAR
 	//TODO: find better spot for this
 	IF rTrigHMILeaveRunScreen.Q THEN
 		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+		bHMIStart := FALSE;
 		HMILeaveRunScreen := FALSE;
 	ELSE
 		HMILeaveRunScreen := FALSE;
@@ -230,11 +231,16 @@ CASE eSystemState OF
 		END_IF
 		
 		IF rTrigChangeTool.Q THEN
-			eSystemState := E_MachineState.TOOLCHANGEINIT;
-			fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
-			fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool);
-			fbRobot.Program_Select(programChoice := 10, option1 := FALSE, option2 := FALSE, option3 := FALSE);
-			fbRobot.Start_Robot();
+			IF fbSpindle.Check_Tool_Change(sHMICurrentTool, sHMIRequestedTool) THEN
+				eSystemState := E_MachineState.TOOLCHANGEINIT;
+				fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
+				fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool);
+				fbRobot.Program_Select(programChoice := 10, option1 := FALSE, option2 := FALSE, option3 := FALSE);
+				fbRobot.Start_Robot();
+			ELSE
+				//TODO: Error popup message
+				bHMIChangeTool := FALSE;
+			END_IF
 		END_IF
 	
 //	E_MachineState.MANUALMOVE: TODO: Implement
@@ -254,8 +260,12 @@ CASE eSystemState OF
 		
 		IF fbRobot.inRobotToolNumberRequest <> fbSpindle.currentTool.toolNumber THEN
 			fbSpindle.Stop_Spindle();
-			eSystemState := E_MachineState.TOOLCHANGERUN;
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
+			IF fbSpindle.Check_Tool_Change(fbSpindle.currentTool.toolNumber, fbRobot.inRobotToolNumberRequest) THEN
+				eSystemState := E_MachineState.TOOLCHANGERUN;
+			ELSE
+				fbRobot.RunHold_Robot(RunHold := FALSE);//TODO: Error
+			END_IF
 		END_IF
 		
 		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#3S);
@@ -734,6 +744,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="1387" Count="0" />
       <LineId Id="1392" Count="0" />
       <LineId Id="1388" Count="2" />
+      <LineId Id="1518" Count="0" />
       <LineId Id="1393" Count="2" />
       <LineId Id="1391" Count="0" />
     </LineIds>
@@ -762,10 +773,12 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="12" Count="0" />
       <LineId Id="265" Count="0" />
       <LineId Id="25" Count="1" />
-      <LineId Id="123" Count="2" />
-      <LineId Id="127" Count="0" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="128" Count="1" />
+      <LineId Id="123" Count="1" />
+      <LineId Id="300" Count="0" />
+      <LineId Id="304" Count="3" />
+      <LineId Id="301" Count="2" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="299" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="13" Count="4" />
       <LineId Id="277" Count="0" />
@@ -781,8 +794,10 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="76" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="91" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="294" Count="0" />
       <LineId Id="79" Count="0" />
-      <LineId Id="103" Count="0" />
+      <LineId Id="295" Count="2" />
       <LineId Id="80" Count="0" />
       <LineId Id="269" Count="0" />
       <LineId Id="272" Count="0" />

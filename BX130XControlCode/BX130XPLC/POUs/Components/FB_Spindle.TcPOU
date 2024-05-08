@@ -15,8 +15,16 @@ VAR
 	cylinderToolRelease2 AT %Q* : BOOL;
 	spindleClean AT %Q* : BOOL;
 	toolChangeTimer : TON;
-	
-	
+	tool0 AT %I* : BOOL;
+	tool1 AT %I* : BOOL;
+	tool2 AT %I* : BOOL;
+	tool3 AT %I* : BOOL;
+	tool4 AT %I* : BOOL;
+	tool5 AT %I* : BOOL;
+	tool6 AT %I* : BOOL;
+	tool7 AT %I* : BOOL;
+	tool8 AT %I* : BOOL;
+	toolLimitSwitchArray : ARRAY[0..8] OF BOOL := [tool0, tool1, tool2, tool3, tool4, tool5, tool6, tool7];
 	//Dust Hood
 	dustHoodCylinder AT %Q*		: BOOL;
 	
@@ -362,6 +370,24 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Verify_Tool_Change_Request" Id="{93de9ffd-c991-4212-b109-f473dd00ac57}">
+      <Declaration><![CDATA[METHOD Verify_Tool_Change_Request : BOOL
+VAR_INPUT
+	toolToDrop : UINT;
+	toolToPickup : UINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+//NC contacts. Detect if current tool holder is empty and requested tool holder is full. If no tool is selected, checks if spindle is empty
+IF ((toolLimitSwitchArray[toolToDrop]) AND (NOT toolLimitSwitchArray[toolToPickup] OR toolToPickup = 8) AND (toolToDrop <> 8 OR spindleToolOpen)) THEN 
+	Verify_Tool_Change_Request := TRUE;
+ELSE
+	Verify_Tool_Change_Request := FALSE;
+END_IF
+Verify_Tool_Change_Request := TRUE; //TODO: remove once wired!!]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="VFD_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
       <Declaration><![CDATA[//Updates the status of the VFD: whether it's stopped and whether it is in error state
 METHOD VFD_Status : BOOL //returns true if drive has no error
@@ -553,6 +579,14 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="29" Count="1" />
       <LineId Id="33" Count="1" />
       <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Verify_Tool_Change_Request">
+      <LineId Id="13" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.VFD_Status">
       <LineId Id="109" Count="69" />
