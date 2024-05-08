@@ -231,7 +231,7 @@ CASE eSystemState OF
 		END_IF
 		
 		IF rTrigChangeTool.Q THEN
-			IF fbSpindle.Check_Tool_Change(sHMICurrentTool, sHMIRequestedTool) THEN
+			IF fbSpindle.Verify_Tool_Change_Request(sHMICurrentTool, sHMIRequestedTool) THEN
 				eSystemState := E_MachineState.TOOLCHANGEINIT;
 				fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
 				fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool);
@@ -261,7 +261,7 @@ CASE eSystemState OF
 		IF fbRobot.inRobotToolNumberRequest <> fbSpindle.currentTool.toolNumber THEN
 			fbSpindle.Stop_Spindle();
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
-			IF fbSpindle.Check_Tool_Change(fbSpindle.currentTool.toolNumber, fbRobot.inRobotToolNumberRequest) THEN
+			IF fbSpindle.Verify_Tool_Change_Request(fbSpindle.currentTool.toolNumber, fbRobot.inRobotToolNumberRequest) THEN
 				eSystemState := E_MachineState.TOOLCHANGERUN;
 			ELSE
 				fbRobot.RunHold_Robot(RunHold := FALSE);//TODO: Error
@@ -271,7 +271,9 @@ CASE eSystemState OF
 		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#3S);
 		IF toolMatchTimer.Q THEN
 			sHMILastErrorMessage := 'Robot tool value different';
-//			eSystemState := E_MachineState.ERROR;
+			eSystemState := E_MachineState.ERROR;
+		ELSE
+			sHMILastErrorMessage := '';
 		END_IF
 		
 	E_MachineState.RESET:
@@ -803,6 +805,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="272" Count="0" />
       <LineId Id="274" Count="1" />
       <LineId Id="273" Count="0" />
+      <LineId Id="318" Count="1" />
       <LineId Id="270" Count="0" />
       <LineId Id="43" Count="1" />
       <LineId Id="280" Count="0" />

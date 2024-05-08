@@ -36,7 +36,7 @@ VAR
 	inRobotToolNumberCurrent: USINT; //Signal 107-110
 	inRobotToolNumberRequest: USINT; //Signal 111-114
 	inRobotReleaseTool		: BOOL; //Signal 115
-	inRobotProgramRunning		: BOOL; //Signal 116
+	inRobotProgramRunning	: BOOL; //Signal 116
 	inRobotToolUpdated		: BOOL; //Signal 117
 	inRobotStartofProgram	: BOOL; //Signal 118
 	sigs97104 AT %I*		: USINT;
