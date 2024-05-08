@@ -1183,7 +1183,7 @@
   },
   {
     "text": "None",
-    "value": 7.0
+    "value": 8.0
   },
   {
     "text": "Half Inch",
@@ -1191,7 +1191,7 @@
   },
   {
     "text": "Quarter Inch",
-    "value": 2
+    "value": 2.0
   }
 ]
 </script>
@@ -1217,7 +1217,7 @@
   },
   {
     "text": "None",
-    "value": 7
+    "value": 8.0
   },
   {
     "text": "Half Inch",
@@ -1225,7 +1225,7 @@
   },
   {
     "text": "Quarter Inch",
-    "value": 2
+    "value": 2.0
   }
 ]
 </script>

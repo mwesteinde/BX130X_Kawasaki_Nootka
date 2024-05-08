@@ -11,7 +11,7 @@ VAR_GLOBAL
 	dovetail : Tool_Type := (speed := 18000, toolNumber := 5, modelname := 'Dimar', name := 'Dovetail');
 	halfInchBall : Tool_Type := (speed := 18000, toolNumber := 6, modelname := 'Dimar', name := 'Half Inch Ball');
 //	quarterInchBall : Tool_Type := (speed := 18000, toolNumber := 7, modelname := 'Dimar', name := 'Quarter Inch Ball');
-	noTool : Tool_Type := (speed := 0, toolNumber := 7, modelname := 'Dimar', name := 'None');
+	noTool : Tool_Type := (speed := 0, toolNumber := 8, modelname := 'Dimar', name := 'None');
 
 	// ================= Programs ====================================
 	//Update C:\Users\kris\OneDrive\Documents\Robot transfer\Robot Programs\BX130XControlCode\BX130XControlCode\BX130XPLC\POUs\FB_Machine.TcPOU

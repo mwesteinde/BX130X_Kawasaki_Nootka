@@ -268,10 +268,10 @@ CASE eSystemState OF
 			END_IF
 		END_IF
 		
-		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#3S);
+		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#2S);
 		IF toolMatchTimer.Q THEN
 			sHMILastErrorMessage := 'Robot tool value different';
-			eSystemState := E_MachineState.ERROR;
+//			eSystemState := E_MachineState.ERROR;
 		ELSE
 			sHMILastErrorMessage := '';
 		END_IF
@@ -518,7 +518,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//Tool change auto
+        <ST><![CDATA[fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
+
+//Tool change auto
 IF fbRobot.inRobotReleaseTool THEN
 	fbSpindle.Release_Tool();
 	fbRobot.Release_Update(release := fbSpindle.spindleToolOpen);
@@ -537,6 +539,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[fbSpindle.Stop_Spindle();
+fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 //Tool change auto
 IF fbRobot.inRobotReleaseTool THEN
 	fbSpindle.Release_Tool();
@@ -961,11 +964,13 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="81" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_ToolChangeInit">
+      <LineId Id="34" Count="1" />
       <LineId Id="24" Count="6" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_ToolChangeRun">
       <LineId Id="47" Count="0" />
+      <LineId Id="53" Count="0" />
       <LineId Id="16" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="39" Count="0" />

@@ -352,7 +352,7 @@ END_VAR]]></Declaration>
 			updatedTool := GVL_Programs.dovetail;
 		4:
 			updatedTool := GVL_Programs.halfInchUpcut;
-		7:
+		8:
 			updatedTool := GVL_Programs.noTool;
 			
 		ELSE
@@ -378,8 +378,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[
-//NC contacts. Detect if current tool holder is empty and requested tool holder is full. If no tool is selected, checks if spindle is empty
+        <ST><![CDATA[//NC contacts. Detect if current tool holder is empty and requested tool holder is full. If no tool is selected, checks if spindle is empty
 IF ((toolLimitSwitchArray[toolToDrop]) AND (NOT toolLimitSwitchArray[toolToPickup] OR toolToPickup = 8) AND (toolToDrop <> 8 OR spindleToolOpen)) THEN 
 	Verify_Tool_Change_Request := TRUE;
 ELSE
@@ -581,7 +580,7 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="31" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Verify_Tool_Change_Request">
-      <LineId Id="13" Count="1" />
+      <LineId Id="14" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="10" Count="1" />
