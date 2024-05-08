@@ -1358,6 +1358,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.HMILeaveRunScreen": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::HMILeaveRunScreen",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 70
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIChangeTool": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1494,6 +1511,23 @@
                     {
                         "comment": "Current state",
                         "propertyOrder": 8
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.escapeRunScreenEnable": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::escapeRunScreenEnable",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 69
                     }
                 ]
             },
@@ -4547,6 +4581,7 @@
                 "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
+                "C1007.MAIN.fbMachine.HMILeaveRunScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
                 "C1007.MAIN.fbMachine.bHMIReset": 3,
@@ -4555,6 +4590,7 @@
                 "C1007.MAIN.fbMachine.bHMIStart": 3,
                 "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
                 "C1007.MAIN.fbMachine.eSystemState": 3,
+                "C1007.MAIN.fbMachine.escapeRunScreenEnable": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,

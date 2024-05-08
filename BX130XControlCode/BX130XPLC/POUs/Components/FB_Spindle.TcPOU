@@ -142,7 +142,7 @@ END_VAR
 	toolChangeTimer(IN:= pbToolChange, PT:=T#2S);
 	
 	IF pbToolChange THEN
-		IF toolChangeTimer.Q THEN
+		IF toolChangeTimer.Q AND spindleIsStopped THEN
 			cylinderToolRelease1 := TRUE;
 			cylinderToolRelease2 := TRUE;
 		END_IF
