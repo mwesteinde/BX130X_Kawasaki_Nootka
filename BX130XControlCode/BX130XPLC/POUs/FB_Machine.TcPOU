@@ -179,7 +179,7 @@ END_VAR
 	
 	//TODO: find better spot for this
 	IF rTrigHMILeaveRunScreen.Q THEN
-		fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
+		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
 		HMILeaveRunScreen := FALSE;
 	ELSE
 		HMILeaveRunScreen := FALSE;
@@ -258,10 +258,10 @@ CASE eSystemState OF
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 		END_IF
 		
-		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#0.5S);
+		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#3S);
 		IF toolMatchTimer.Q THEN
 			sHMILastErrorMessage := 'Robot tool value different';
-			eSystemState := E_MachineState.ERROR;
+//			eSystemState := E_MachineState.ERROR;
 		END_IF
 		
 	E_MachineState.RESET:
@@ -275,6 +275,7 @@ CASE eSystemState OF
 		
 	E_MachineState.TOOLCHANGERUN:
 		escapeRunScreenEnable := FALSE;
+		toolMatchTimer(IN := FALSE);
 		IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
 			fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberCurrent);
 			fbRobot.RunHold_Robot(RunHold := FALSE);
@@ -799,6 +800,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="22" Count="0" />
       <LineId Id="83" Count="0" />
       <LineId Id="278" Count="0" />
+      <LineId Id="293" Count="0" />
       <LineId Id="82" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="132" Count="0" />

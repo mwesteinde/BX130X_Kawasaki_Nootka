@@ -16,6 +16,7 @@ VAR
 	spindleClean AT %Q* : BOOL;
 	toolChangeTimer : TON;
 	
+	
 	//Dust Hood
 	dustHoodCylinder AT %Q*		: BOOL;
 	
