@@ -204,13 +204,15 @@ END_VAR
       <Implementation>
         <ST><![CDATA[outRobotNoEStop := TRUE;
 outRobotResetError := TRUE;
-outRobotResetProgram := TRUE;
-outRobotProgramSelected := FALSE;
 outRobotTurnMotorOn := TRUE;
 outRobotTurnMotorOff := FALSE;
 outRobotRunHold := TRUE;
 outRobotStartProgram := FALSE;
-Reset_Robot := NOT(inRobotError OR inRobotEStopOn);]]></ST>
+Reset_Robot := NOT(inRobotError OR inRobotEStopOn);
+IF Reset_Robot THEN
+	Stop_Robot_Program(forgetProgram := FALSE);
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Robot_Coords_Match_Tool" Id="{0ccbe5ad-34a8-44b8-a7ff-f15b1d889beb}">
@@ -502,12 +504,15 @@ outRobotRequestedTool := request;]]></ST>
     </LineIds>
     <LineIds Name="FB_Robot.Reset_Robot">
       <LineId Id="8" Count="0" />
-      <LineId Id="11" Count="1" />
-      <LineId Id="31" Count="0" />
+      <LineId Id="11" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
       <LineId Id="32" Count="1" />
       <LineId Id="16" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="38" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Robot_Coords_Match_Tool">
       <LineId Id="5" Count="0" />

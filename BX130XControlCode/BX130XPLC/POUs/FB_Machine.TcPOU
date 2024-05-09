@@ -110,6 +110,7 @@ VAR
 	toolMatchTimer : TON;
 	sHMIPopup			: BOOL;
 	popupMessage		: STRING(300);
+	popUpAutoReset		: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -194,14 +195,13 @@ IF overrideErrors = TRUE THEN
 	errorState.isError := FALSE;
 END_IF
 
-IF errorState.isError THEN
+IF errorState.isError AND eSystemState <> E_MachineState.RESET THEN
 	escapeRunScreenEnable := TRUE;
 	IF errorState.errorType.2 = 1 OR (eSystemState <> E_MachineState.INITIALIZATION AND eSystemState <> E_MachineState.ERROR AND eSystemState <> E_MachineState.RESET) THEN //If E stop is pressed, stop functionality always. Else, only when running
 		eSystemState := E_MachineState.ERROR;
-		Popup_Error(errorState.errorMessage);
+		Popup_Error(errorState.errorMessage, FALSE);
 		fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 		eSystemState := E_MachineState.ERROR; 
-		fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
 		bHMIStart := FALSE;
 	END_IF
 END_IF
@@ -225,12 +225,12 @@ CASE eSystemState OF
 				eSystemState := E_MachineState.TOOLCHANGEINIT;
 				fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
 				IF NOT fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool) THEN
-					Popup_Error('Invalid tool number');
+					Popup_Error('Update Tool Failed - invalid tool number', TRUE);
 				END_IF
 				fbRobot.Program_Select(programChoice := 10, option1 := FALSE, option2 := FALSE, option3 := FALSE);
 				fbRobot.Start_Robot();
 			ELSE
-				Popup_Error('Tool present in destination tool holder, or tool not present in pickup');
+				Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Fix and try to change tool again. If false, check tool limit switches', TRUE);
 				bHMIChangeTool := FALSE;
 			END_IF
 		END_IF
@@ -256,13 +256,15 @@ CASE eSystemState OF
 			IF fbSpindle.Verify_Tool_Change_Request(fbSpindle.currentTool.toolNumber, fbRobot.inRobotToolNumberRequest) THEN
 				eSystemState := E_MachineState.TOOLCHANGERUN;
 			ELSE
-				fbRobot.RunHold_Robot(RunHold := FALSE);//TODO: Error
+				Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Error thrown, program restart. If false, check tool limit switches', TRUE);
+				eSystemState := E_MachineState.ERROR;
 			END_IF
 		END_IF
 		
+		//Check robot tool coordinates
 		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#2S);
 		IF toolMatchTimer.Q THEN
-			Popup_Error('Robot tool value different');
+			Popup_Error('Tool coordinates in robot program do not match the current tools coordinates', TRUE);
 //			eSystemState := E_MachineState.ERROR;
 		END_IF
 		
@@ -280,11 +282,12 @@ CASE eSystemState OF
 		toolMatchTimer(IN := FALSE);
 		IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
 			IF NOT fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberCurrent) THEN
-				Popup_Error('Invalid tool number');
+				Popup_Error('Invalid tool number', TRUE);
 			END_IF;			
 			fbRobot.RunHold_Robot(RunHold := FALSE);
-			sHMIDisplayMessage := CONCAT(CONCAT('Press load tool if ', fbSpindle.currentTool.name), ' is loaded');
+			Popup_Error(CONCAT(CONCAT('Press load tool if ', fbSpindle.currentTool.name), ' is loaded to resume program. If not, can hold green button on spindle for three seconds to change manually'), FALSE);
 			IF rTrigToolLoaded.Q THEN
+				sHMIPopup := FALSE;
 				fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
 				eSystemState := E_MachineState.RUN;
 			END_IF
@@ -302,7 +305,7 @@ CASE eSystemState OF
 		escapeRunScreenEnable := TRUE;
 		IF fTrigInProgramRunning.Q THEN
 			IF NOT fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberCurrent) THEN
-				Popup_Error('Invalid tool number');
+				Popup_Error('Invalid tool number', TRUE);
 			END_IF;
 			eSystemState := E_MachineState.INITIALIZATION;
 			bHMIChangeTool := FALSE;
@@ -329,7 +332,8 @@ fbSpindle.Stop_Spindle();
 //Stop robot
 fbRobot.ForceStop_Robot();
 //Stop Servos
-fbGantry.Stop_Servos();]]></ST>
+fbGantry.Stop_Servos();
+sHMIPopup := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operating_Hold" Id="{d9f86694-1d0b-4add-8c20-fb8a5acf1092}" FolderPath="StateMachine\">
@@ -398,7 +402,7 @@ IF rTrigWarmupSpindle.Q THEN
 	IF fbSpindle.toolSelectedAtInitialization AND fbSpindle.currentTool.toolNumber <> 0 THEN
 		fbSpindle.Spindle_Warmup(); //Done, tested. TODO: Change spindle is warm flag if spindle hasn't been on for >3 hours
 	ELSE
-		Popup_Error('Tool hasnt been picked, OR sawblade loaded');
+		Popup_Error('Tool hasnt been picked, OR sawblade loaded', TRUE);
 	END_IF
 END_IF
 
@@ -430,7 +434,7 @@ IF bActivateRollers AND GVL_Axes.AxisWest.Status.Homed THEN
 		fbGantry.Follow_Robot(robotPoseGantry := robotPose);
 	ELSE
 		sHMIErrorDisplay := 'Robot not sending posedata';
-		Popup_Error('Robot not sending posedata');
+		Popup_Error('Robot not sending posedata or motors not homed', TRUE);
 	END_IF
 END_IF]]></ST>
       </Implementation>
@@ -554,11 +558,13 @@ END_IF
       <Declaration><![CDATA[METHOD Popup_Error : BOOL
 VAR_INPUT
 	message : STRING (300);
+	automaticReset : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[popupMessage := message;
-sHMIpopup := TRUE;]]></ST>
+sHMIpopup := TRUE;
+popUpAutoReset := automaticReset;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Run_Error" Id="{2631638b-9fb7-4314-b8bc-31ebf56164cd}">
@@ -776,7 +782,6 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="166" Count="0" />
       <LineId Id="328" Count="0" />
       <LineId Id="167" Count="1" />
-      <LineId Id="267" Count="0" />
       <LineId Id="276" Count="0" />
       <LineId Id="191" Count="0" />
       <LineId Id="163" Count="0" />
@@ -818,9 +823,12 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="298" Count="0" />
       <LineId Id="294" Count="0" />
       <LineId Id="79" Count="0" />
-      <LineId Id="295" Count="2" />
+      <LineId Id="295" Count="0" />
+      <LineId Id="342" Count="1" />
+      <LineId Id="297" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="269" Count="0" />
+      <LineId Id="344" Count="0" />
       <LineId Id="272" Count="0" />
       <LineId Id="274" Count="0" />
       <LineId Id="329" Count="0" />
@@ -842,7 +850,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="326" Count="1" />
       <LineId Id="86" Count="0" />
       <LineId Id="132" Count="0" />
-      <LineId Id="87" Count="1" />
+      <LineId Id="345" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="346" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="89" Count="0" />
@@ -877,6 +887,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="13" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_Hold">
       <LineId Id="5" Count="0" />
@@ -1008,6 +1019,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
     <LineIds Name="FB_Machine.Popup_Error">
       <LineId Id="5" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Run_Error">
       <LineId Id="11" Count="1" />

@@ -288,22 +288,51 @@
           "        // Handle error situation here",
           "        alert('Error reading symbol: ' + data.error);",
           "    }",
-          "});",
-          ""
+          "});"
         ],
         "injectContextObject": false,
         "asyncWait": true,
         "waitMode": "Synchronous"
       },
       {
-        "objectType": "WriteToSymbol",
+        "objectType": "Condition",
         "active": true,
-        "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIPopup%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
-        },
+        "parts": [
+          {
+            "if": [
+              {
+                "compare1": {
+                  "objectType": "Symbol",
+                  "valueType": "tchmi:general#/definitions/String",
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.popUpAutoReset%/s%"
+                },
+                "compare2": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": true
+                },
+                "compareOperator": "==",
+                "logic": null
+              }
+            ],
+            "then": [
+              {
+                "objectType": "WriteToSymbol",
+                "active": true,
+                "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIPopup%/s%",
+                "value": {
+                  "objectType": "StaticValue",
+                  "valueType": "tchmi:general#/definitions/BOOL",
+                  "value": false
+                },
+                "asyncWait": true
+              }
+            ]
+          },
+          {
+            "else": []
+          }
+        ],
         "asyncWait": true
       }
     ]

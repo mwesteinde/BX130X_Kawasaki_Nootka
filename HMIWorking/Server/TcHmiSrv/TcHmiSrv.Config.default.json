@@ -1637,6 +1637,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.popUpAutoReset": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::popUpAutoReset",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 81
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.popupMessage": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -4684,6 +4701,7 @@
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": 3,
+                "C1007.MAIN.fbMachine.popUpAutoReset": 3,
                 "C1007.MAIN.fbMachine.popupMessage": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
                 "C1007.MAIN.fbMachine.programOption2": 3,
