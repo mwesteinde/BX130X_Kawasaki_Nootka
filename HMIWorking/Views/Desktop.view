@@ -288,11 +288,23 @@
           "        // Handle error situation here",
           "        alert('Error reading symbol: ' + data.error);",
           "    }",
-          "});"
+          "});",
+          ""
         ],
         "injectContextObject": false,
         "asyncWait": true,
         "waitMode": "Synchronous"
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%C1007.MAIN.fbMachine.sHMIPopup%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": false
+        },
+        "asyncWait": true
       }
     ]
   }

@@ -110,7 +110,6 @@ VAR
 	toolMatchTimer : TON;
 	sHMIPopup			: BOOL;
 	popupMessage		: STRING(300);
-	rTrigPopup			: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -156,7 +155,6 @@ END_VAR
 	rTrigToolLoaded(CLK := bHMIToolLoaded);
 	rTrigResetErrors(CLK := bHMIReset);
 	rTrigChangeTool(CLK := bHMIChangeTool);
-	rTrigPopup(CLK := sHMIPopup);
 	
 	fTrigOpenCloseDoor(CLK := bHMIOpenCloseDoor);
 	fTrigUnlockTables(CLK := bHMILockTables);
@@ -169,17 +167,13 @@ END_VAR
 	fTrigStopChangeTool(CLK := bHMIChangeTool);
 	rTrigHMILeaveRunScreen(CLK := HMILeaveRunScreen);
 	
-	//TODO: find better spot for this
+
 	IF rTrigHMILeaveRunScreen.Q THEN
 		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
 		bHMIStart := FALSE;
 		HMILeaveRunScreen := FALSE;
 	ELSE
 		HMILeaveRunScreen := FALSE;
-	END_IF
-	
-	IF rTrigPopup.Q THEN
-		sHMIPopup := FALSE;
 	END_IF]]></ST>
     </Implementation>
     <Folder Name="StateMachine" Id="{b4b3eed7-4e15-4350-a74a-294b50706019}" />
@@ -757,7 +751,6 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="590" Count="0" />
       <LineId Id="706" Count="0" />
       <LineId Id="807" Count="0" />
-      <LineId Id="1644" Count="0" />
       <LineId Id="589" Count="0" />
       <LineId Id="356" Count="2" />
       <LineId Id="353" Count="0" />
@@ -770,8 +763,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="1388" Count="2" />
       <LineId Id="1518" Count="0" />
       <LineId Id="1393" Count="2" />
-      <LineId Id="1391" Count="0" />
-      <LineId Id="1646" Count="3" />
+      <LineId Id="1887" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Change_State">
       <LineId Id="5" Count="0" />

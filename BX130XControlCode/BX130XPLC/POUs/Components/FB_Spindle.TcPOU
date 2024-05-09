@@ -343,7 +343,8 @@ VAR
 	success : BOOL;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE toolNumber OF
+        <ST><![CDATA[success := TRUE;
+CASE toolNumber OF
 		0:
 			updatedTool := GVL_Programs.sawblade;
 		6:
@@ -609,6 +610,7 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Update_Current_Tool">
+      <LineId Id="72" Count="0" />
       <LineId Id="7" Count="10" />
       <LineId Id="53" Count="1" />
       <LineId Id="44" Count="0" />
