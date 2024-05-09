@@ -2013,19 +2013,11 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{5CC90F38-F48A-AAC5-50F9-4D2609A1FBFE}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{01FDA59F-720E-B53B-CB01-EB8F2C0D0BD9}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
-						<Var>
-							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.jt1_pose_1</Name>
 							<Comment><![CDATA[Signal 1-8]]></Comment>
@@ -2212,19 +2204,22 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.safetyPLCError</Name>
+							<Name>MAIN.fbMachine.safetyPLCEStopBlockRun</Name>
+							<Comment><![CDATA[Status of safety PLC Estop block. If FALSE, Estop block not running]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.safetyPLCEStopOut</Name>
+							<Comment><![CDATA[Status of Estop output]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.safetyPLCError</Name>
+							<Comment><![CDATA[Safety PLC Errors. If any true, Safety PLC not running properly. Most likely all the devices aren't communicating]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.safetyPLCComErr</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>MAIN.fbMachine.safetyPLCEStopBlockRun</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2239,17 +2234,17 @@ External Setpoint Generation:
 							<Name>MAIN.fbMachine.sHMIDustCollectionOn</Name>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.NcToPlc</Name>
+							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2" AreaNo="1">
 						<Name>PlcTask Outputs</Name>
-						<Var>
-							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.fbRobot.outRobotControlPowerOn</Name>
 							<Comment><![CDATA[----------Outputs To Robot ----------]]></Comment>
@@ -2332,16 +2327,26 @@ External Setpoint Generation:
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.SafetyPLCRun</Name>
-							<Comment><![CDATA[ =============== Safety ================================================]]></Comment>
+							<Comment><![CDATA[Ouput to safety PLC to run. If FALSE, safetyPLC turns off and EStop occurs]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.ErrorAcknowledge</Name>
+							<Comment><![CDATA[ If SafetyPLC goes into error, this needs to turn on to be able to reset]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.errorReset</Name>
+							<Comment><![CDATA[ Resets E stops. Must be triggered to enable eStop output]]></Comment>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisWest.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>GVL_Axes.AxisEast.PlcToNc</Name>
+							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 					</Vars>
 					<UnrestoredVarLinks ImportTime="2024-03-05T15:00:26">
@@ -4349,6 +4354,7 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.safetyPLCFBErr" VarB="StandardInputs^Standard Out Var 10"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.safetyPLCOtherErr" VarB="StandardInputs^Standard Out Var 12"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.ErrorAcknowledge" VarB="StandardOutputs^Standard In Var 1"/>
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.SafetyPLCRun" VarB="StandardOutputs^Standard In Var 2"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.errorReset" VarB="StandardOutputs^Standard In Var 6"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">

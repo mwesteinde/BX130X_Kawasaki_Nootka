@@ -1410,6 +1410,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIOpenCloseDoor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIOpenCloseDoor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 27
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIReset": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -3147,24 +3164,6 @@
             },
             "USEMAPPING": true
         },
-        "Local.MAIN.fbMachine.bHMICloseDoor": {
-            "ACCESS": 3,
-            "DOMAIN": "ADS",
-            "DYNAMIC": true,
-            "MAPPING": "Local::MAIN::fbMachine::bHMICloseDoor",
-            "SCHEMA": {
-                "allOf": [
-                    {
-                        "$ref": "tchmi:general#/definitions/BOOL"
-                    },
-                    {
-                        "comment": "Called from initialize.content",
-                        "propertyOrder": 11
-                    }
-                ]
-            },
-            "USEMAPPING": true
-        },
         "Local.MAIN.fbMachine.bHMIHomeMotors": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -3232,6 +3231,24 @@
                     {
                         "comment": "Called from initialize.content",
                         "propertyOrder": 13
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "Local.MAIN.fbMachine.bHMIOpenCloseDoor": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "Local::MAIN::fbMachine::bHMIOpenCloseDoor",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Called from initialize.content",
+                        "propertyOrder": 11
                     }
                 ]
             },
@@ -4636,6 +4653,7 @@
                 "C1007.MAIN.fbMachine.HMILeaveRunScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
+                "C1007.MAIN.fbMachine.bHMIOpenCloseDoor": 3,
                 "C1007.MAIN.fbMachine.bHMIReset": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
@@ -4687,11 +4705,11 @@
                 "ListUserNames": 3,
                 "Local.MAIN.fbMachine.bActivateRollers": 3,
                 "Local.MAIN.fbMachine.bHMIChangeTool": 3,
-                "Local.MAIN.fbMachine.bHMICloseDoor": 3,
                 "Local.MAIN.fbMachine.bHMIHomeMotors": 3,
                 "Local.MAIN.fbMachine.bHMIHomeRobot": 3,
                 "Local.MAIN.fbMachine.bHMILockTables": 3,
                 "Local.MAIN.fbMachine.bHMILowerRaiseRollers": 3,
+                "Local.MAIN.fbMachine.bHMIOpenCloseDoor": 3,
                 "Local.MAIN.fbMachine.bHMIStart": 3,
                 "Local.MAIN.fbMachine.bHMIWarmupSpindle": 3,
                 "Local.MAIN.fbMachine.fbEnclosure.cylinderTableEast": 3,

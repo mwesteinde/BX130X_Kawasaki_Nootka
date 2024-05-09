@@ -29,7 +29,7 @@ VAR
 	
 	// =============== State machine ================================================
 	eSystemState			: E_MachineState := E_MachineState.INITIALIZATION;  // Current state 
-	sHMIeSystemStateString	: STRING := TO_STRING(E_MachineState.INITIALIZATION); //String of current state, displayed on HMI
+	sHMIeSystemStateString	: STRING := TO_STRING(eSystemState); //String of current state, displayed on HMI
 	resetSuccessful			: BOOL; //Must be true to reenter initilization
 	
 	// =============== HMI buttons and states ========================================
@@ -41,20 +41,20 @@ VAR
 	rTrigInRobotToolUpdated		: R_TRIG; //Trigger for when robot updates tool number
 
 	// initialize.content buttons
-	bHMIHomeRobot			: BOOL; //
-	rTrigHomeRobot			: R_TRIG; //
-	bHMIHomeMotors			: BOOL; //
-	rTrigHomeMotors			: R_TRIG; //
-	bHMICloseDoor			: BOOL; //
-	rTrigCloseDoor			: R_TRIG; //
-	fTrigOpenDoor			: F_TRIG; //
-	bHMILockTables			: BOOL; //
-	rTrigLockTables			: R_TRIG; //
-	fTrigUnlockTables		: F_TRIG; //
-	bHMILowerRaiseRollers	: BOOL; //
-	rTrigRaiseRollers		: R_TRIG; //
-	fTrigLowerRollers		: F_TRIG; //
-	bHMIWarmupSpindle		: BOOL; //
+	bHMIHomeRobot			: BOOL; 
+	rTrigHomeRobot			: R_TRIG; 
+	bHMIHomeMotors			: BOOL; 
+	rTrigHomeMotors			: R_TRIG; 
+	bHMIOpenCloseDoor		: BOOL; 
+	rTrigOpenCloseDoor		: R_TRIG; 
+	fTrigOpenCloseDoor		: F_TRIG; 
+	bHMILockTables			: BOOL; 
+	rTrigLockTables			: R_TRIG; 
+	fTrigUnlockTables		: F_TRIG; 
+	bHMILowerRaiseRollers	: BOOL; 
+	rTrigRaiseRollers		: R_TRIG; 
+	fTrigLowerRollers		: F_TRIG; 
+	bHMIWarmupSpindle		: BOOL; 
 	rTrigWarmupSpindle		: R_TRIG; //
 	fTrigStopSpindle		: F_TRIG; //
 	bHMIChangeTool			: BOOL;
@@ -62,21 +62,16 @@ VAR
 	fTrigStopChangeTool		: F_TRIG;
 	
 	// initialize.content indicators
-	sHMIMotorsHomed			: BOOL; //Todo: Change colour/text when activated
-	sHMIDoorClosed			: BOOL; //Todo: Change colour/text when activated
-	sHMITablesLocked		: BOOL; //Todo: Change colour/text when activated
-	sHMIRollersRaised		: BOOL; //Todo: Change colour/text when activated
-	sDustCollectionOn		: BOOL;
 	sHMICurrentTool			: INT;
 	sHMIRequestedTool		: INT;
 	
 	// selectProgram.content inputs
-	programWallChoice	: USINT; // 1 for front wall, 2 for back wall, 3-16 for additional options
+	programWallChoice	: USINT; // 1 for front wall, 2 for back wall, 10 for option 3-16 for additional options
 	programOption1		: BOOL; //Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window
 	programOption2		: BOOL; //Front wall: True: glass door, False, wood door Back wall: True: Chimney cut, False, no chimney cut
 	programOption3		: BOOL; //Front wall: True: Door lock, false, no lock Back wall: NA
 	bHMIRunProgramScreen		: BOOL; 
-	rTrigRunProgramScreen		: R_TRIG; //
+	rTrigRunProgramScreen		: R_TRIG;
 	//=============Programs====================
 	selectedProgram : Program_Type;
 	
@@ -128,9 +123,10 @@ END_VAR
 	// Update each HMI indicator
 	sHMIRobotHomed := fbRobot.inRobotAtHome;
 	sHMIRollersActivated := bActivateRollers AND GVL_Axes.AxisWest.Status.Homed;
-	sDustCollectionOn := fbEnclosure.dustCollectionOn;
 	sHMIeStopsOff := NOT fbRobot.inRobotError;
-	sHMICurrentTool := fbSpindle.currentTool.toolNumber;
+	IF fbSpindle.toolSelectedAtInitialization THEN
+		sHMICurrentTool := fbSpindle.currentTool.toolNumber;
+	END_IF
 	
 	// Mode and state requests
 	Change_State();  // Changes state based on inputs
@@ -149,7 +145,7 @@ END_VAR
 // HMI button triggers
 	rTrigHomeRobot(CLK := bHMIHomeRobot);
 	rTrigHomeMotors(CLK := bHMIHomeMotors);
-	rTrigCloseDoor(CLK := bHMICloseDoor);
+	rTrigOpenCloseDoor(CLK := bHMIOpenCloseDoor);
 	rTrigLockTables(CLK := bHMILockTables);
 	rTrigRaiseRollers(CLK := bHMILowerRaiseRollers);
 	rTrigWarmupSpindle(CLK := bHMIWarmupSpindle);
@@ -162,7 +158,7 @@ END_VAR
 	rTrigChangeTool(CLK := bHMIChangeTool);
 	rTrigPopup(CLK := sHMIPopup);
 	
-	fTrigOpenDoor(CLK := bHMICloseDoor);
+	fTrigOpenCloseDoor(CLK := bHMIOpenCloseDoor);
 	fTrigUnlockTables(CLK := bHMILockTables);
 	fTrigLowerRollers(CLK := bHMILowerRaiseRollers);
 	fTrigStopSpindle(CLK := bHMIWarmupSpindle);
@@ -273,7 +269,7 @@ CASE eSystemState OF
 		toolMatchTimer(IN := NOT fbRobot.Robot_Coords_Match_Tool(current_Tool := fbSpindle.currentTool), PT:=T#2S);
 		IF toolMatchTimer.Q THEN
 			Popup_Error('Robot tool value different');
-			eSystemState := E_MachineState.ERROR;
+//			eSystemState := E_MachineState.ERROR;
 		END_IF
 		
 	E_MachineState.RESET:
@@ -380,11 +376,11 @@ IF rTrigHomeMotors.Q THEN
 END_IF
 
 //Toggle buttons
-IF rTrigCloseDoor.Q THEN
+IF rTrigOpenCloseDoor.Q THEN
 	fbEnclosure.Rolling_Door_HMI_Operation(); //Done, tested no door
 END_IF
 
-IF fTrigOpenDoor.Q THEN
+IF fTrigOpenCloseDoor.Q THEN
 	fbEnclosure.Rolling_Door_HMI_Operation(); //Done, tested no door
 END_IF
 
@@ -739,8 +735,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="108" Count="1" />
       <LineId Id="602" Count="1" />
       <LineId Id="1017" Count="0" />
-      <LineId Id="605" Count="5" />
-      <LineId Id="1641" Count="0" />
+      <LineId Id="605" Count="3" />
+      <LineId Id="610" Count="0" />
+      <LineId Id="1761" Count="2" />
       <LineId Id="152" Count="0" />
       <LineId Id="113" Count="0" />
       <LineId Id="370" Count="0" />
