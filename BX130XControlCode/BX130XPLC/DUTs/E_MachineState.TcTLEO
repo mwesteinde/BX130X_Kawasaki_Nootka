@@ -3,6 +3,7 @@
   <EnumerationTextList Name="E_MachineState" Id="{580642a0-2ba0-4ed4-877e-7b89e74756f9}">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 {attribute 'strict'}
+{attribute 'to_string'}
 TYPE E_MachineState :
 (
 	INITIALIZATION	:= 0,

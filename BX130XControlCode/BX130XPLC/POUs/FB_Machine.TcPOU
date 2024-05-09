@@ -114,7 +114,6 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// Call of actions
-
 	// Init
 	overrideErrors := FALSE;
 	disableSpindle := FALSE;
@@ -126,6 +125,7 @@ END_VAR
 	IF fbSpindle.toolSelectedAtInitialization THEN
 		sHMICurrentTool := fbSpindle.currentTool.toolNumber;
 	END_IF
+	sHMIeSystemStateString	:= TO_STRING(eSystemState);
 	
 	// Mode and state requests
 	Change_State();  // Changes state based on inputs
@@ -166,7 +166,6 @@ END_VAR
 	fTrigRunRobot(CLK := bHMIHold);
 	fTrigStopChangeTool(CLK := bHMIChangeTool);
 	rTrigHMILeaveRunScreen(CLK := HMILeaveRunScreen);
-	
 
 	IF rTrigHMILeaveRunScreen.Q THEN
 		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
@@ -202,7 +201,7 @@ IF errorState.isError THEN
 		Popup_Error(errorState.errorMessage);
 		fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 		eSystemState := E_MachineState.ERROR; 
-		HMILeaveRunScreen := TRUE;
+		fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
 		bHMIStart := FALSE;
 	END_IF
 END_IF
@@ -213,6 +212,7 @@ CASE eSystemState OF
 		IF rTrigResetErrors.Q THEN
 			eSystemState := E_MachineState.RESET;
 		END_IF
+		
 	E_MachineState.INITIALIZATION:
 		escapeRunScreenEnable := TRUE;
 		IF rTrigStartProgram.Q AND NOT errorState.isError THEN
@@ -726,12 +726,13 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       </Implementation>
     </Method>
     <LineIds Name="FB_Machine">
-      <LineId Id="108" Count="1" />
+      <LineId Id="108" Count="0" />
       <LineId Id="602" Count="1" />
       <LineId Id="1017" Count="0" />
       <LineId Id="605" Count="3" />
       <LineId Id="610" Count="0" />
       <LineId Id="1761" Count="2" />
+      <LineId Id="1998" Count="0" />
       <LineId Id="152" Count="0" />
       <LineId Id="113" Count="0" />
       <LineId Id="370" Count="0" />
@@ -760,7 +761,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="911" Count="0" />
       <LineId Id="1387" Count="0" />
       <LineId Id="1392" Count="0" />
-      <LineId Id="1388" Count="2" />
+      <LineId Id="1389" Count="1" />
       <LineId Id="1518" Count="0" />
       <LineId Id="1393" Count="2" />
       <LineId Id="1887" Count="0" />
@@ -785,6 +786,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="282" Count="0" />
       <LineId Id="242" Count="1" />
       <LineId Id="240" Count="0" />
+      <LineId Id="339" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="281" Count="0" />
       <LineId Id="12" Count="0" />

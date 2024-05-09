@@ -1919,6 +1919,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.sHMIeSystemStateString": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIeSystemStateString",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "comment": "String of current state, displayed on HMI",
+                        "propertyOrder": 16
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.sProgramString": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -4682,6 +4700,7 @@
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,
                 "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,
+                "C1007.MAIN.fbMachine.sHMIeSystemStateString": 3,
                 "C1007.MAIN.fbMachine.sProgramString": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,
