@@ -67,7 +67,7 @@
 </div>
 <div id="TcHmiButton_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="70" data-tchmi-left-unit="px" data-tchmi-text="" data-tchmi-top="16" data-tchmi-top-unit="px" data-tchmi-width="50" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-background-image="Images/Settings.png" data-tchmi-background-image-width="50" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.escapeRunScreenEnable%/s%">
 </div>
-<div id="PastJobs" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="439" data-tchmi-left-unit="px" data-tchmi-text="%f%%s%C1007.MAIN.fbMachine.eSystemState%/s%+'/n'+%s%C1007.MAIN.fbMachine.sHMILastErrorMessage%/s%%/f%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="PastJobs" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="439" data-tchmi-left-unit="px" data-tchmi-text="%f%%s%C1007.MAIN.fbMachine.eSystemState%/s%%/f%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 
 <script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
@@ -268,5 +268,53 @@
 <div id="ResetButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="341" data-tchmi-left-unit="px" data-tchmi-text="Reset" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="88" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIReset%/s%">
 </div>
 <div id="TcHmiDateTimeDisplay" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiDateTimeDisplay" data-tchmi-height="70" data-tchmi-height-unit="px" data-tchmi-left="549" data-tchmi-left-unit="px" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-time-display-layout="TimeDateMultiLine">
+</div>
+<div id="PopupButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="800" data-tchmi-left-unit="px" data-tchmi-text="Button" data-tchmi-top="149" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.sHMIPopup%/s%" data-tchmi-is-enabled="true">
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "PopupButton.onStatePressed",
+    "actions": [
+      {
+        "objectType": "JavaScript",
+        "active": true,
+        "sourceLines": [
+          "TcHmi.Symbol.readEx2(\"%s%C1007.MAIN.fbMachine.popupMessage%/s%\", function (data) {",
+          "    if (data.error === TcHmi.Errors.NONE) {",
+          "        // This is where you handle the successfully read value",
+          "        alert(data.value);",
+          "    } else {",
+          "        // Handle error situation here",
+          "        alert('Error reading symbol: ' + data.error);",
+          "    }",
+          "});"
+        ],
+        "injectContextObject": false,
+        "asyncWait": true,
+        "waitMode": "Synchronous"
+      }
+    ]
+  }
+]
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-background-color" type="application/json">
+{
+  "color": "rgba(255, 255, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-text-color" type="application/json">
+{
+  "color": "rgba(255, 255, 255, 1)"
+}
+</script>
+
+<script data-tchmi-target-attribute="data-tchmi-border-color" type="application/json">
+{
+  "color": "rgba(255, 255, 255, 1)"
+}
+</script>
 </div>
 </div>

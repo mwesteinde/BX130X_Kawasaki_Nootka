@@ -2013,7 +2013,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{E80D9D1D-EEDA-AFA7-372F-728346E8B418}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{5CC90F38-F48A-AAC5-50F9-4D2609A1FBFE}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -2331,8 +2331,8 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.Run</Name>
-							<Comment><![CDATA[Safety]]></Comment>
+							<Name>MAIN.fbMachine.SafetyPLCRun</Name>
+							<Comment><![CDATA[ =============== Safety ================================================]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -2355,6 +2355,13 @@ External Setpoint Generation:
 							<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 9 (EL2008)">
 								<Link VarA="MAIN.fbMachine.fbGantry.cylinderTableEast" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 6^SV6TableClampEast" Size="1" RestoreInfo="ANotFound"/>
 								<Link VarA="MAIN.fbMachine.fbGantry.cylinderTableWest" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 5^SV5TableClampWest" Size="1" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2024-05-09T09:48:36">
+						<OwnerA Name="OutputSrc" Prefix="TIPC^BX130XPLC^BX130XPLC Instance" Type="2">
+							<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 3 (EL1918)">
+								<Link VarA="MAIN.fbMachine.Run" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="StandardOutputs^Standard In Var 2" Size="1" RestoreInfo="ANotFound"/>
 							</OwnerB>
 						</OwnerA>
 					</UnrestoredVarLinks>
@@ -4342,7 +4349,6 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.safetyPLCFBErr" VarB="StandardInputs^Standard Out Var 10"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.safetyPLCOtherErr" VarB="StandardInputs^Standard Out Var 12"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.ErrorAcknowledge" VarB="StandardOutputs^Standard In Var 1"/>
-				<Link VarA="PlcTask Outputs^MAIN.fbMachine.Run" VarB="StandardOutputs^Standard In Var 2"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.errorReset" VarB="StandardOutputs^Standard In Var 6"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">

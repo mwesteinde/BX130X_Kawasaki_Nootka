@@ -1585,6 +1585,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbSpindle::requestedTool::name",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 4
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1598,6 +1615,24 @@
                     {
                         "comment": "--------------------Warmup params-----------",
                         "propertyOrder": 24
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.popupMessage": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::popupMessage",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "maxLength": 300,
+                        "propertyOrder": 87
+                    },
+                    {
+                        "$ref": "tchmi:general#/definitions/String"
                     }
                 ]
             },
@@ -1774,6 +1809,23 @@
                     {
                         "comment": "Indicator light of pneumatic pressure, called from run.content",
                         "propertyOrder": 45
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIPopup": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIPopup",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 86
                     }
                 ]
             },
@@ -4594,7 +4646,9 @@
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
+                "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": 3,
+                "C1007.MAIN.fbMachine.popupMessage": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
                 "C1007.MAIN.fbMachine.programOption2": 3,
                 "C1007.MAIN.fbMachine.programOption3": 3,
@@ -4605,6 +4659,7 @@
                 "C1007.MAIN.fbMachine.sHMIIsError": 3,
                 "C1007.MAIN.fbMachine.sHMILastErrorMessage": 3,
                 "C1007.MAIN.fbMachine.sHMIPneumaticsOK": 3,
+                "C1007.MAIN.fbMachine.sHMIPopup": 3,
                 "C1007.MAIN.fbMachine.sHMIRequestedTool": 3,
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,

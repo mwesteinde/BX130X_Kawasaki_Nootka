@@ -81,6 +81,8 @@ VAR
 	sigs10251032	AT %Q*			: USINT;
 	sigs10331040	AT %Q*			: USINT;
 	sigs10411048	AT %Q*			: USINT;
+	
+	timerStartProgram				: TON;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Update_Status();
@@ -94,8 +96,16 @@ END_VAR]]></Declaration>
 		outRobotStartCycle := FALSE;
 	END_IF
 	
-	//Turn off startRobot once program started 
+	//Turn off startRobot once program started TODO: Turn off after 5 seconds
 	IF inRobotProgramRunning THEN
+		outRobotStartProgram := FALSE;
+	END_IF
+	
+	//Switch to main program TODO
+	timerStartProgram(IN := outRobotStartProgram, PT := T#5S);
+	IF timerStartProgram.Q THEN
+		//popup program not started or robot didn't send program running flag
+		//Reset robot
 		outRobotStartProgram := FALSE;
 	END_IF
 
@@ -455,6 +465,11 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="428" Count="0" />
       <LineId Id="140" Count="1" />
       <LineId Id="316" Count="0" />
+      <LineId Id="511" Count="0" />
+      <LineId Id="520" Count="0" />
+      <LineId Id="512" Count="2" />
+      <LineId Id="516" Count="1" />
+      <LineId Id="515" Count="0" />
       <LineId Id="73" Count="0" />
       <LineId Id="68" Count="1" />
       <LineId Id="71" Count="1" />

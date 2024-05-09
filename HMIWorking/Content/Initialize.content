@@ -109,61 +109,7 @@
   },
   {
     "event": "ToggleOpenCloseDoor.onInitialized",
-    "actions": [
-      {
-        "objectType": "Condition",
-        "active": true,
-        "parts": [
-          {
-            "if": [
-              {
-                "compare1": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbEnclosure.doorIsOpen%/s%"
-                },
-                "compare2": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "value": true
-                },
-                "compareOperator": "==",
-                "logic": null
-              }
-            ],
-            "then": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctrl%ToggleOpenCloseDoor::ToggleState%/ctrl%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/ToggleState",
-                  "value": "Normal"
-                },
-                "asyncWait": true
-              }
-            ]
-          },
-          {
-            "else": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctrl%ToggleOpenCloseDoor::ToggleState%/ctrl%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:framework#/definitions/ToggleState",
-                  "value": "Active"
-                },
-                "asyncWait": true
-              }
-            ]
-          }
-        ],
-        "asyncWait": true
-      }
-    ]
+    "actions": []
   }
 ]
 </script>
@@ -590,47 +536,6 @@
           }
         ],
         "asyncWait": true
-      },
-      {
-        "objectType": "Condition",
-        "active": true,
-        "parts": [
-          {
-            "if": [
-              {
-                "compare1": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm%/s%"
-                },
-                "compare2": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": true
-                },
-                "compareOperator": "==",
-                "logic": null
-              }
-            ],
-            "then": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctrl%ToggleSpindleWarmup::Text%/ctrl%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "value": "Spindle Warm"
-                },
-                "asyncWait": true
-              }
-            ]
-          },
-          {
-            "else": []
-          }
-        ],
-        "asyncWait": true
       }
     ]
   },
@@ -764,46 +669,21 @@
           }
         ],
         "asyncWait": true
-      },
+      }
+    ]
+  },
+  {
+    "event": "Initialize.onAttached",
+    "actions": [
       {
-        "objectType": "Condition",
+        "objectType": "WriteToSymbol",
         "active": true,
-        "parts": [
-          {
-            "if": [
-              {
-                "compare1": {
-                  "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm%/s%"
-                },
-                "compare2": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/BOOL",
-                  "value": true
-                },
-                "compareOperator": "==",
-                "logic": null
-              }
-            ],
-            "then": [
-              {
-                "objectType": "WriteToSymbol",
-                "active": true,
-                "symbolExpression": "%ctrl%ToggleSpindleWarmup::Text%/ctrl%",
-                "value": {
-                  "objectType": "StaticValue",
-                  "valueType": "tchmi:general#/definitions/String",
-                  "value": "Spindle Warm"
-                },
-                "asyncWait": true
-              }
-            ]
-          },
-          {
-            "else": []
-          }
-        ],
+        "symbolExpression": "%s%C1007.MAIN.fbMachine.HMILeaveRunScreen%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": true
+        },
         "asyncWait": true
       }
     ]

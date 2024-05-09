@@ -39,7 +39,7 @@
 </script>
 
 </div>
-<div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;Tool &quot; + %s%C1007.MAIN.fbMachine.fbSpindle.currentTool.name%/s% + &quot; is loaded&quot;%/f%" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+<div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;Tool &quot; + %s%C1007.MAIN.fbMachine.fbSpindle.requestedTool.name%/s%+&quot; is loaded&quot;%/f%" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
 <div id="ChecktablesLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Both tables are loaded" data-tchmi-top="291" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
@@ -47,7 +47,7 @@
 </div>
 <div id="TcHmiCheckbox_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="Checkbox" data-tchmi-top="363" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
-<div id="TextCurrentTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="72" data-tchmi-height-unit="px" data-tchmi-left="519" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;Requested tool: &quot; + %s%C1007.MAIN.fbMachine.fbSpindle.currentTool.name%/s%%/f%" data-tchmi-top="112" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
+<div id="TextCurrentTool" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="72" data-tchmi-height-unit="px" data-tchmi-left="519" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;Requested tool: &quot; + %s%C1007.MAIN.fbMachine.fbSpindle.requestedTool.name%/s%%/f%" data-tchmi-top="112" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
 {
   "top": 3,

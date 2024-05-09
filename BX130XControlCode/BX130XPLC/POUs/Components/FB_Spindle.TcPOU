@@ -28,7 +28,8 @@ VAR
 	//Dust Hood
 	dustHoodCylinder AT %Q*		: BOOL;
 	
-	currentTool : Tool_Type;
+	currentTool : Tool_Type := GVL_Programs.noTool;
+	toolSelectedAtInitialization : BOOL := FALSE;
 	
 	//--------------------Spindle TCP communication --------
 	fbWriteRegs : FB_MBWriteRegs; //Function call
@@ -61,6 +62,7 @@ VAR
 	triggerWarm1: R_TRIG;
 	triggerWarm2: R_TRIG;
 	triggerWarm3: R_TRIG;
+	requestedTool: Tool_Type;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -356,7 +358,6 @@ END_VAR]]></Declaration>
 			updatedTool := GVL_Programs.noTool;
 			
 		ELSE
-			// Handle invalid tool number
 			success := FALSE;
 	END_CASE
 		
@@ -367,6 +368,46 @@ IF NOT success THEN
 	Update_Current_Tool := FALSE;
 ELSE
 	Update_Current_Tool := TRUE;
+	toolSelectedAtInitialization := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Update_Requested_Tool" Id="{85d5d331-1534-446d-a912-cbacd40c27a7}">
+      <Declaration><![CDATA[METHOD Update_Requested_Tool : BOOL
+VAR_INPUT
+	toolNumber : INT;
+END_VAR
+VAR
+	updatedTool : Tool_Type;
+	success : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE toolNumber OF
+		0:
+			updatedTool := GVL_Programs.sawblade;
+		6:
+			updatedTool := GVL_Programs.halfInchBall;
+		2:
+			updatedTool := GVL_Programs.quarterInchUpcut;
+		5:
+			updatedTool := GVL_Programs.dovetail;
+		4:
+			updatedTool := GVL_Programs.halfInchUpcut;
+		8:
+			updatedTool := GVL_Programs.noTool;
+			
+		ELSE
+			success := FALSE;
+	END_CASE
+		
+requestedTool := updatedTool;
+	
+// Successfully updated the current tool
+IF NOT success THEN
+	Update_Requested_Tool := FALSE;
+ELSE
+	Update_Requested_Tool := TRUE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -571,13 +612,20 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="7" Count="10" />
       <LineId Id="53" Count="1" />
       <LineId Id="44" Count="0" />
-      <LineId Id="18" Count="2" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="23" Count="0" />
       <LineId Id="25" Count="2" />
       <LineId Id="29" Count="1" />
       <LineId Id="33" Count="1" />
+      <LineId Id="63" Count="0" />
       <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Spindle.Update_Requested_Tool">
+      <LineId Id="6" Count="14" />
+      <LineId Id="22" Count="9" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Verify_Tool_Change_Request">
       <LineId Id="14" Count="0" />
