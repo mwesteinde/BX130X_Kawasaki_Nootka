@@ -104,8 +104,6 @@ END_VAR]]></Declaration>
 	//Switch to main program TODO
 	timerStartProgram(IN := outRobotStartProgram, PT := T#5S);
 	IF timerStartProgram.Q THEN
-		//popup program not started or robot didn't send program running flag
-		//Reset robot
 		outRobotStartProgram := FALSE;
 	END_IF
 
@@ -469,8 +467,8 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="316" Count="0" />
       <LineId Id="511" Count="0" />
       <LineId Id="520" Count="0" />
-      <LineId Id="512" Count="2" />
-      <LineId Id="516" Count="1" />
+      <LineId Id="512" Count="1" />
+      <LineId Id="517" Count="0" />
       <LineId Id="515" Count="0" />
       <LineId Id="73" Count="0" />
       <LineId Id="68" Count="1" />

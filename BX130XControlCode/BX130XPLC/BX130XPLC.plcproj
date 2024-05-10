@@ -81,6 +81,9 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="Tc2_EtherCAT">
+      <DefaultResolution>Tc2_EtherCAT, * (Beckhoff Automation GmbH)</DefaultResolution>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_MC2">
       <DefaultResolution>Tc2_MC2, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_MC2</Namespace>
@@ -111,6 +114,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcMatrix">
       <DefaultResolution>TcMatrix, * (Burks Engineering)</DefaultResolution>
+      <Namespace>TcMatrix</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
