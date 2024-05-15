@@ -311,6 +311,7 @@ CASE eSystemState OF
 			fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE);
 			bHMIStart := FALSE;
 			startTimerRun := FALSE;
+			bActivateRollers := FALSE;
 		END_IF
 		
 		IF fbRobot.inRobotToolNumberRequest <> fbSpindle.currentTool.toolNumber THEN
@@ -318,6 +319,7 @@ CASE eSystemState OF
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 			IF fbSpindle.Verify_Tool_Change_Request(fbSpindle.currentTool.toolNumber, fbRobot.inRobotToolNumberRequest) THEN
 				eSystemState := E_MachineState.TOOLCHANGERUN;
+				eRequestedState := E_MachineState.TOOLCHANGERUN;
 				fbSpindle.Update_Requested_Tool(toolNumber := fbRobot.inRobotToolNumberRequest);
 			ELSE
 				Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Error thrown, program restart. If false, check tool limit switches', TRUE);
@@ -1040,6 +1042,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="255" Count="0" />
       <LineId Id="65" Count="0" />
       <LineId Id="410" Count="0" />
+      <LineId Id="498" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="78" Count="0" />
@@ -1047,6 +1050,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="298" Count="0" />
       <LineId Id="294" Count="0" />
       <LineId Id="79" Count="0" />
+      <LineId Id="497" Count="0" />
       <LineId Id="496" Count="0" />
       <LineId Id="295" Count="0" />
       <LineId Id="342" Count="1" />
