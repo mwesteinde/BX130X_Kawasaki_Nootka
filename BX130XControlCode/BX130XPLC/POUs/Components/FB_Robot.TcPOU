@@ -68,21 +68,27 @@ VAR
 	outRobotToolReleased			: BOOL; //Signal 1009
 	outRobotCurrentTool				: USINT; //Signal 1010-1013
 	outRobotNoEStop					: BOOL := TRUE; //Signal 1014
-	outRobotSpindleOn				: BOOL; //Signal 1016
+	outRobotSpindleStopped			: BOOL; //Signal 1016
 	outRobotProgramChoice			: USINT; //Signals 1017-1020
 	outRobotProgramOption1			: BOOL; //Signal 1021
 	outRobotProgramOption2			: BOOL; //Signal 1022
 	outRobotProgramOption3			: BOOL; //Signal 1023
-	outRobotRequestedTool			: USINT; //Signal 1024-1026
-	outRobotProgramSelected			: BOOL; //Signal 1027
+	outRobotRequestedTool			: USINT; //Signal 1024-1027
+	outRobotProgramSelected			: BOOL; //Signal 1028
+	outRobotGoToCleanupPosition		: BOOL; // Signal 1029 
+	outRobotMoveX					: BOOL; // Signal 1030
+	outRobotMoveY					: BOOL; // Signal 1031
+	outRobotMoveZ					: BOOL; // Signal 1032
+	outRobotMovePositive			: BOOL; // Signal 1033
+	
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
 	sigs10171024	AT %Q*			: USINT;
 	sigs10251032	AT %Q*			: USINT;
 	sigs10331040	AT %Q*			: USINT;
 	sigs10411048	AT %Q*			: USINT;
+	timerOutRobotStartProgram		: TON;
 	
-	timerStartProgram				: TON;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Update_Status();
@@ -96,15 +102,14 @@ END_VAR]]></Declaration>
 		outRobotStartCycle := FALSE;
 	END_IF
 	
+	IF NOT inRobotCycleStart AND inRobotStartofProgram THEN
+		outRobotStartCycle := NOT outRobotStartCycle;
+	END_IF
+	
 	//Turn off startRobot once program started TODO: Turn off after 5 seconds
 	IF inRobotProgramRunning THEN
 		outRobotStartProgram := FALSE;
-	END_IF
-	
-	//Switch to main program TODO
-	timerStartProgram(IN := outRobotStartProgram, PT := T#5S);
-	IF timerStartProgram.Q THEN
-		outRobotStartProgram := FALSE;
+		outRobotGoToCleanupPosition := FALSE;
 	END_IF
 
 //Change request to home robot once robot is in home position
@@ -119,6 +124,12 @@ END_VAR]]></Declaration>
 	
 	IF inRobotMotorOn THEN		
 		outRobotTurnMotorOn := TRUE;
+	END_IF
+	
+	//Switch to main program TODO
+	timerOutRobotStartProgram(IN := outRobotStartProgram, PT := T#30S);
+	IF timerOutRobotStartProgram.Q THEN
+		outRobotStartProgram := FALSE;
 	END_IF
 ]]></ST>
     </Implementation>
@@ -140,6 +151,15 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[outRobotNoEStop := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Go_TO_Cleanup" Id="{cb389d38-df14-47a9-8041-23dcf4c8f0bd}">
+      <Declaration><![CDATA[METHOD Go_To_Cleanup : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotGoToCleanupPosition := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Home_Robot" Id="{eca540c4-31fc-4643-aeb8-caefcff4553d}">
@@ -279,7 +299,8 @@ END_VAR
         <ST><![CDATA[outRobotResetProgram := TRUE;
 IF forgetProgram THEN
 	outRobotProgramSelected := FALSE;
-END_IF]]></ST>
+END_IF
+RunHold_Robot(RunHold := True);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Pose" Id="{095f6df8-3cda-4049-b351-7910f936202a}">
@@ -377,6 +398,16 @@ robotPose.zPose := zpose;
 Update_Pose := robotPose;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Update_Spindle_Status" Id="{844ea3f2-6563-424a-a80b-f8b2a0e1b37c}">
+      <Declaration><![CDATA[METHOD Update_Spindle_Status : BOOL
+VAR_INPUT
+	spindleStopped : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotSpindleStopped := spindleStopped;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Update_Status" Id="{1be56ac6-764b-4729-954d-f7379608e62a}">
       <Declaration><![CDATA[//Updates run status and IOs in Beckhoff system
 METHOD Update_Status
@@ -397,9 +428,9 @@ sigs10091016.0 := outRobotToolReleased; //1009
 sigs10091016.1 := outRobotCurrentTool.0; //1010
 sigs10091016.2 := outRobotCurrentTool.1; //1011
 sigs10091016.3 := outRobotCurrentTool.2; //1012
-sigs10091016.4 := outRobotCurrentTool.4; //1013
+sigs10091016.4 := outRobotCurrentTool.3; //1013
 sigs10091016.5 := outRobotNoEStop; //1014
-sigs10091016.7 := outRobotSpindleOn; //1016
+sigs10091016.7 := outRobotSpindleStopped; //1016
 sigs10171024   := outRobotProgramChoice; //1017-1020
 sigs10171024.4 := outRobotProgramOption1; //1021
 sigs10171024.5 := outRobotProgramOption2; //1022
@@ -409,6 +440,12 @@ sigs10251032.0 := outRobotRequestedTool.1; //1025
 sigs10251032.1 := outRobotRequestedTool.2; //1026
 sigs10251032.2 := outRobotRequestedTool.3; //1027
 sigs10251032.3 := outRobotProgramSelected; //1028
+sigs10251032.4 := outRobotGoToCleanupPosition; //1029
+sigs10251032.5 := outRobotMoveX; //1030
+sigs10251032.6 := outRobotMoveY; //1031
+sigs10251032.7 := outRobotMoveZ; //1032
+sigs10331040.0 := outRobotMovePositive; //1033
+
 
 inRobotMotorOn := sigs97104.0; //97
 inRobotError := sigs97104.1; //98
@@ -461,15 +498,14 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="421" Count="0" />
       <LineId Id="423" Count="1" />
       <LineId Id="422" Count="0" />
+      <LineId Id="778" Count="0" />
+      <LineId Id="780" Count="1" />
+      <LineId Id="779" Count="0" />
       <LineId Id="412" Count="0" />
       <LineId Id="428" Count="0" />
       <LineId Id="140" Count="1" />
+      <LineId Id="693" Count="0" />
       <LineId Id="316" Count="0" />
-      <LineId Id="511" Count="0" />
-      <LineId Id="520" Count="0" />
-      <LineId Id="512" Count="1" />
-      <LineId Id="517" Count="0" />
-      <LineId Id="515" Count="0" />
       <LineId Id="73" Count="0" />
       <LineId Id="68" Count="1" />
       <LineId Id="71" Count="1" />
@@ -477,12 +513,16 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="151" Count="1" />
       <LineId Id="155" Count="0" />
       <LineId Id="154" Count="0" />
+      <LineId Id="603" Count="5" />
       <LineId Id="149" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.EStop_OFF">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.ForceStop_Robot">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Go_TO_Cleanup">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Home_Robot">
@@ -533,6 +573,7 @@ outRobotRequestedTool := request;]]></ST>
     <LineIds Name="FB_Robot.Stop_Robot_Program">
       <LineId Id="11" Count="0" />
       <LineId Id="17" Count="2" />
+      <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Pose">
       <LineId Id="6" Count="0" />
@@ -569,6 +610,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="72" Count="1" />
       <LineId Id="12" Count="0" />
     </LineIds>
+    <LineIds Name="FB_Robot.Update_Spindle_Status">
+      <LineId Id="5" Count="0" />
+    </LineIds>
     <LineIds Name="FB_Robot.Update_Status">
       <LineId Id="18" Count="0" />
       <LineId Id="31" Count="6" />
@@ -584,6 +628,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="127" Count="2" />
       <LineId Id="152" Count="0" />
       <LineId Id="139" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="163" Count="3" />
+      <LineId Id="162" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />
       <LineId Id="54" Count="0" />

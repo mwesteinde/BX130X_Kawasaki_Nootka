@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_OperatingCounter" Id="{343a864b-43d4-4be9-b0a5-e74d13e6b874}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_OperatingCounter
+VAR_INPUT
+	stateString : STRING;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	// Timer to count operating time
+    runTimer : TON; // Timer On-Delay
+    elapsedTime : TIME := T#0S; // Time elapsed since last increment
+
+    // Time interval for incrementing operating hours (e.g., every second)
+    timeInterval : TIME := T#1S;
+
+    totalRunHoursRounded : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[totalRunHoursRounded := REAL_TO_INT(GVL_OperationCounter.totalRunHours);
+
+IF stateString = 'RUN' OR stateString = 'TOOLCHANGERUN' OR stateString = 'TOOLCHANGEINIT' THEN
+	// Timer setup
+	runTimer(IN := TRUE, PT := timeInterval);
+	elapsedTime := runTimer.ET;
+	
+	// Check if the timer has elapsed
+	IF runTimer.Q THEN
+		// Increment operating hours (timeInterval is in seconds, convert to hours)
+		GVL_OperationCounter.totalRunHours := GVL_OperationCounter.totalRunHours + TIME_TO_REAL(elapsedTime) / 3600000.0;
+		// Reset timer
+		runTimer(IN := FALSE);
+		runTimer(IN := TRUE);
+	END_IF
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="FB_OperatingCounter">
+      <LineId Id="48" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="37" Count="10" />
+      <LineId Id="35" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

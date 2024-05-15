@@ -1867,152 +1867,11 @@ External Setpoint Generation:
 						</Var>
 					</Vars>
 				</Axis>
-				<Axis Id="3" CreateSymbols="true" AxisType="1">
-					<Name>Axis 3</Name>
-					<AxisPara>
-						<Dynamic Acceleration="260.052" Deceleration="260.052" Jerk="780.156"/>
-						<Velo RefSync="10" SlowManual="8.6684051275234" FastManual="52.0104307651404" Fast="173.368102550468" Maximum="173.368"/>
-						<OtherSettings AllowMotionCmdToSlave="true"/>
-					</AxisPara>
-					<Encoder Name="Enc" EncType="8">
-						<EncPara ScaleFactorNumerator="9.999689" ScaleFactorDenominator="1048576" Inverse="true" MaxCount="#xffffffff"/>
-						<Vars VarGrpType="1">
-							<Name>Inputs</Name>
-							<Var>
-								<Name>In</Name>
-								<Type GUID="{901C2423-655B-45CE-B7E3-21F174F0F99F}" Namespace="MC">NCENCODERSTRUCT_IN2B</Type>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn1</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn2</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn3</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn4</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn5</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn6</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn7</Name>
-									<Comment><![CDATA[Drive Velocity Actual Value
-]]></Comment>
-								</SubVar>
-							</Var>
-						</Vars>
-						<Vars VarGrpType="2">
-							<Name>Outputs</Name>
-							<Var>
-								<Name>Out</Name>
-								<Type GUID="{9CC50AB2-5D79-4869-A3C2-1FA7761BAFEA}" Namespace="MC">NCENCODERSTRUCT_OUT2</Type>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut1</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut2</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut3</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut4</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut5</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut6</Name>
-								</SubVar>
-							</Var>
-						</Vars>
-					</Encoder>
-					<Drive Name="Drive" DrvType="9">
-						<DrvPara Inverse="true" MaxCount="#xffffffff" DriveControlDWord="#x00000100">
-							<Analog VeloReferenz="190.704912805515" VeloScale="1.02400649589962" TorqueSetpointScale="10" ScaleFactorActTorque="0.1"/>
-							<TimeComp TaskDelayCycles="1"/>
-						</DrvPara>
-						<Vars VarGrpType="1">
-							<Name>Inputs</Name>
-							<Var>
-								<Name>In</Name>
-								<Type GUID="{F95C7C69-0C87-46C4-9559-1285CCA5B23A}" Namespace="MC">NCDRIVESTRUCT_IN2</Type>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn1</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn2</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn3</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn4</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn5</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataIn6</Name>
-								</SubVar>
-							</Var>
-						</Vars>
-						<Vars VarGrpType="2">
-							<Name>Outputs</Name>
-							<Var>
-								<Name>Out</Name>
-								<Type GUID="{644DC4BD-3D15-4DCB-94C7-24F3A5D579AA}" Namespace="MC">NCDRIVESTRUCT_OUT2</Type>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut1</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut2</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut3</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut4</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut5</Name>
-								</SubVar>
-								<SubVar TypeFormatIndex="2">
-									<Name>nDataOut6</Name>
-								</SubVar>
-							</Var>
-						</Vars>
-					</Drive>
-					<Controller Name="Ctrl" CtrType="1">
-						<CtrPara PriorControlFactor="1">
-							<Observer BandWidth="20"/>
-						</CtrPara>
-					</Controller>
-					<Vars VarGrpType="1" InsertType="1">
-						<Name>Inputs</Name>
-						<Var>
-							<Name>FromPlc</Name>
-							<Type GUID="{96B75FEB-2D84-43BE-A3EC-D9A681F27D52}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="2" InsertType="1">
-						<Name>Outputs</Name>
-						<Var>
-							<Name>ToPlc</Name>
-							<Type GUID="{25521FAA-EA5F-4C7F-8864-BBCCDACD2E98}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-						</Var>
-					</Vars>
-				</Axis>
 			</NC>
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{C41F2300-9BE3-7D8B-B7F3-0F23C4141C82}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{24A9FC46-7295-F006-E981-C950950EAAEE}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -2173,10 +2032,6 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbSpindle.tool8</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>MAIN.fbMachine.fbGantry.ls1NE</Name>
 							<Comment><![CDATA[Inputs]]></Comment>
 							<Type>BOOL</Type>
@@ -2207,8 +2062,32 @@ External Setpoint Generation:
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>MAIN.fbMachine.fbEnclosure.doorIsOpen</Name>
+							<Name>MAIN.fbMachine.fbEnclosure.doorIsClosed</Name>
 							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbTorqueSensor.FxCounts</Name>
+							<Type>DINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbTorqueSensor.FyCounts</Name>
+							<Type>DINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbTorqueSensor.FzCounts</Name>
+							<Type>DINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbTorqueSensor.TxCounts</Name>
+							<Type>DINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbTorqueSensor.TyCounts</Name>
+							<Type>DINT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.fbTorqueSensor.TzCounts</Name>
+							<Type>DINT</Type>
 						</Var>
 						<Var>
 							<Name>MAIN.fbMachine.safetyPLCEStopBlockRun</Name>
@@ -2369,6 +2248,13 @@ External Setpoint Generation:
 							</OwnerB>
 						</OwnerA>
 					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2024-05-10T13:39:38">
+						<OwnerA Name="InputDst" Prefix="TIPC^BX130XPLC^BX130XPLC Instance" Type="1">
+							<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">
+								<Link VarA="MAIN.fbMachine.fbEnclosure.doorIsOpen" TypeA="BOOL" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Channel 4^rollingDoorOpen" Size="1" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
 					<Contexts>
 						<Context>
 							<Id>0</Id>
@@ -2448,25 +2334,25 @@ External Setpoint Generation:
 								<Entry Name="FSOE__FSoE Command" Index="#x6080" Sub="#x01">
 									<Type>USINT</Type>
 								</Entry>
-								<Entry Name="FSOE__FSIN Module 1.Input" Index="#x6001" Sub="#x01">
+								<Entry Name="FSOE__FSIN Module 1.Input" Index="#x6001" Sub="#x01" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="FSOE__FSIN Module 1.Module Fault" Index="#x6002" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="FSOE__FSIN Module 2.Input" Index="#x6011" Sub="#x01">
+								<Entry Name="FSOE__FSIN Module 2.Input" Index="#x6011" Sub="#x01" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="FSOE__FSIN Module 2.Module Fault" Index="#x6012" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="FSOE__FSIN Module 3.Input" Index="#x6021" Sub="#x01">
+								<Entry Name="FSOE__FSIN Module 3.Input" Index="#x6021" Sub="#x01" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="FSOE__FSIN Module 3.Module Fault" Index="#x6022" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
-								<Entry Name="FSOE__FSIN Module 4.Input" Index="#x6031" Sub="#x01">
+								<Entry Name="FSOE__FSIN Module 4.Input" Index="#x6031" Sub="#x01" Flags="#x00008020">
 									<Type>BIT</Type>
 								</Entry>
 								<Entry Name="FSOE__FSIN Module 4.Module Fault" Index="#x6032" Sub="#x01">
@@ -2815,7 +2701,7 @@ External Setpoint Generation:
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="rollingDoorOpen" Index="#x6030" Sub="#x01">
+								<Entry Name="rollingDoorClosed" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2871,22 +2757,22 @@ External Setpoint Generation:
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 5" Index="#x1a04" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool1Present" Index="#x6040" Sub="#x01">
+								<Entry Name="Tool0Present" Index="#x6040" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 6" Index="#x1a05" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool2Present" Index="#x6050" Sub="#x01">
+								<Entry Name="Tool1Present" Index="#x6050" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 7" Index="#x1a06" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool3Present" Index="#x6060" Sub="#x01">
+								<Entry Name="Tool2Present" Index="#x6060" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 8" Index="#x1a07" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool4Present" Index="#x6070" Sub="#x01">
+								<Entry Name="Tool3Present" Index="#x6070" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -2899,22 +2785,22 @@ External Setpoint Generation:
 							<SyncMan>001001000000010004000000000000000100001000010000</SyncMan>
 							<Fmmu>0000000000000000001000010100000002000000000000000000000000000000</Fmmu>
 							<Pdo Name="Channel 1" Index="#x1a00" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool5" Index="#x6000" Sub="#x01">
+								<Entry Name="Tool4" Index="#x6000" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 2" Index="#x1a01" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool6" Index="#x6010" Sub="#x01">
+								<Entry Name="Tool5" Index="#x6010" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1a02" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool7" Index="#x6020" Sub="#x01">
+								<Entry Name="Tool6" Index="#x6020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 4" Index="#x1a03" Flags="#x0011" SyncMan="0">
-								<Entry Name="Tool8" Index="#x6030" Sub="#x01">
+								<Entry Name="Tool7" Index="#x6030" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -3154,6 +3040,56 @@ External Setpoint Generation:
 						<Name>Term 12 (EK1122)</Name>
 						<ImageId>1004</ImageId>
 						<EtherCAT SlaveType="1" PdiType="#x0d00" CycleMBoxPollingTime="0" VendorId="#x00000002" ProductCode="#x04622c52" RevisionNo="#x00120000" PortPhys="4883" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="EK1122 2 port EtherCAT junction" Desc="EK1122" PortABoxInfo="#x0100001b"/>
+						<Box Id="30" BoxType="9099">
+							<Name>Term 30 (ATI Axia F/T Sensor)</Name>
+							<ImageId>114</ImageId>
+							<EtherCAT SlaveType="2" PdiType="#x0e80" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="35" EoeType="1" FoeType="1" VendorId="#x00000732" ProductCode="#x26483053" RevisionNo="#x00000001" SerialNo="#x00000001" InfoDataAddr="true" PortPhys="49" MaxSlotCount="256" MaxSlotGroupCount="1" SlotPdoIncrement="1" SlotIndexIncrement="16" Type="ATI Axia F/T Sensor" Desc="ATI Axia F/T Sensor" PortABoxInfo="#x0300000c">
+								<SyncMan>001080002600010001000000000000008000001026010000</SyncMan>
+								<SyncMan>801080002200010002000000000000008000801022010000</SyncMan>
+								<SyncMan>001108006400010003000000000000000800001164010000</SyncMan>
+								<SyncMan>001420002000010004000000000000002000001420010000</SyncMan>
+								<Fmmu>0000000000000000001100020100000001000000000000000000000000000000</Fmmu>
+								<Fmmu>0000000000000000001400010100000002000000000000000000000000000000</Fmmu>
+								<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+								<SwitchPortData>00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</SwitchPortData>
+								<DcMode>53796e6368726f6e000000000000000053796e6368726f6e000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000</DcMode>
+								<DcMode>444300000000000000000000000000004443000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000030100000000000000000000000000000000000000000000000000000000000000</DcMode>
+								<Pdo Name="Reading Data" Index="#x1a00" Flags="#x0011" SyncMan="3">
+									<Entry Name="FxGage0" Index="#x6000" Sub="#x01">
+										<Type>DINT</Type>
+									</Entry>
+									<Entry Name="FyGage1" Index="#x6000" Sub="#x02">
+										<Type>DINT</Type>
+									</Entry>
+									<Entry Name="FzGage2" Index="#x6000" Sub="#x03">
+										<Type>DINT</Type>
+									</Entry>
+									<Entry Name="TxGage3" Index="#x6000" Sub="#x04">
+										<Type>DINT</Type>
+									</Entry>
+									<Entry Name="TyGage4" Index="#x6000" Sub="#x05">
+										<Type>DINT</Type>
+									</Entry>
+									<Entry Name="TzGage5" Index="#x6000" Sub="#x06">
+										<Type>DINT</Type>
+									</Entry>
+									<Entry Name="Status Code" Index="#x6010">
+										<Type>UDINT</Type>
+									</Entry>
+									<Entry Name="Sample Counter" Index="#x6020">
+										<Type>UDINT</Type>
+									</Entry>
+								</Pdo>
+								<Pdo Name="Control Codes" Index="#x1601" InOut="1" Flags="#x0011" SyncMan="2">
+									<Entry Name="Control 1" Index="#x7010" Sub="#x01">
+										<Type>UDINT</Type>
+									</Entry>
+									<Entry Name="Control 2" Index="#x7010" Sub="#x02">
+										<Type>UDINT</Type>
+									</Entry>
+								</Pdo>
+							</EtherCAT>
+						</Box>
 					</Box>
 					<Box Id="15" BoxType="9099">
 						<Name>Term 15 (EL9011)</Name>
@@ -3906,7 +3842,7 @@ External Setpoint Generation:
 						<SyncMan>001880002600010001000000800080008000001826010000</SyncMan>
 						<SyncMan>001a80002200010002000000800080008000001a22010000</SyncMan>
 						<SyncMan>00100c002400010003000000000000000000001024010000</SyncMan>
-						<SyncMan>001114002200010004000000000000000000001122010000</SyncMan>
+						<SyncMan>001118002200010004000000000000000000001122010000</SyncMan>
 						<SyncMan>002000002400010005000000000000000000002024010000</SyncMan>
 						<SyncMan>002400002000010006000000000000000000002420010000</SyncMan>
 						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
@@ -4003,8 +3939,6 @@ External Setpoint Generation:
 						<MBoxUserCmdData>020005000a0000002200000000000000000000000000000000000000000000000340650000000000500056656c6f63697479206c6f6f7020696e74656772616c20616374696f6e2074696d6500</MBoxUserCmdData>
 						<MBoxUserCmdData>02000500ec0000000f00000000000000000000000000000000000000000000000340968000000000e000e0000300000045444d33352d324b4630413053303300000000000000000000000000000000000000000000000000000000000e0000000000000005000e00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000e000000000018000c000000000002000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000960096007d0000000000000000000000000000000000000000000000466565646261636b2031207479706500</MBoxUserCmdData>
 						<MBoxUserCmdData>020005001800000011000000000000000000000000000000000000000000000003400282000000000c000c0001000000f401e803bc02000056656c6f63697479206f6273657276657200</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001a0000000000000000000000000000000000000000000000234021000000000003005365636f6e64617279206f7065726174696f6e206d6f6465203100</MBoxUserCmdData>
-						<MBoxUserCmdData>020005000a0000001a0000000000000000000000000000000000000000000000034021000000000003005365636f6e64617279206f7065726174696f6e206d6f6465203100</MBoxUserCmdData>
 						<Pdo Name="AT 1" Index="#x0010" Flags="#x0001" SyncMan="3">
 							<Entry Name="Drive status word" BitLen="16" Index="#x0087" Flags="#x00000800">
 								<Type>UINT</Type>
@@ -4014,6 +3948,9 @@ External Setpoint Generation:
 							</Entry>
 							<Entry Name="Following distance" BitLen="32" Index="#x00bd">
 								<Type>DINT</Type>
+							</Entry>
+							<Entry Name="Torque/force feedback value" BitLen="16" Index="#x0054">
+								<Type>INT</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="AT 2" Index="#x1010" Flags="#x0001" SyncMan="3">
@@ -4025,6 +3962,9 @@ External Setpoint Generation:
 							</Entry>
 							<Entry Name="Following distance" BitLen="32" Index="#x00bd">
 								<Type>DINT</Type>
+							</Entry>
+							<Entry Name="Torque/force feedback value" BitLen="16" Index="#x0054">
+								<Type>INT</Type>
 							</Entry>
 						</Pdo>
 						<Pdo Name="MDT 1" Index="#x0018" InOut="1" Flags="#x0001" SyncMan="2">
@@ -4253,7 +4193,7 @@ External Setpoint Generation:
 						</Pdo>
 					</EtherCAT>
 				</Box>
-				<EtherCAT DcSyncMode="3"/>
+				<EtherCAT DcSyncMode="3" EnableVirtualSwitch="true" MaxSwitchPorts="2" MaxSwitchFrames="120"/>
 			</Device>
 		</Io>
 	</Project>
@@ -4267,15 +4207,16 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 3 (EL1918)">
 				<Link VarA="Term 1 (EK1100)^Term 2 (EL1918)^Module 1 (FSOE)^FSoE Inputs^FSOE" VarB="ConnectionOutputs^Message_3 RxPDO"/>
 				<Link VarA="Term 1 (EK1100)^Term 2 (EL1918)^Module 1 (FSOE)^FSoE Outputs^FSOE" VarB="ConnectionInputs^Message_3 TxPDO"/>
-				<Link VarA="Term 1 (EK1100)^Term 4 (EL2904)^Module 1 (FSOES)^RxPDO^FSOE" VarB="ConnectionInputs^Message_4 TxPDO"/>
+				<Link VarA="Term 1 (EK1100)^Term 4 (EL2904)^Module 1 (FSOES)^TxPDO^FSOE" VarB="ConnectionOutputs^Message_4 RxPDO"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 4 (EL2904)">
-				<Link VarA="Term 1 (EK1100)^Term 3 (EL1918)^ConnectionOutputs^Message_4 RxPDO" VarB="Module 1 (FSOES)^TxPDO^FSOE"/>
+				<Link VarA="Term 1 (EK1100)^Term 3 (EL1918)^ConnectionInputs^Message_4 TxPDO" VarB="Module 1 (FSOES)^RxPDO^FSOE"/>
 			</OwnerB>
 		</OwnerA>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis East">
 			<OwnerB Name="TIID^PortLAN1X102^Drive 13 (AX5206-0000-0214)">
 				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT 2^Following distance"/>
+				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="AT 2^Torque/force feedback value"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="AT 2^Drive status word" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="AT 2^Drive status word"/>
@@ -4292,6 +4233,7 @@ External Setpoint Generation:
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis West">
 			<OwnerB Name="TIID^PortLAN1X102^Drive 13 (AX5206-0000-0214)">
 				<Link VarA="Drive^Inputs^In^nDataIn1" VarB="AT 1^Following distance"/>
+				<Link VarA="Drive^Inputs^In^nDataIn3[0]" VarB="AT 1^Torque/force feedback value"/>
 				<Link VarA="Drive^Inputs^In^nDcOutputTime" VarB="InfoData^DcOutputShift"/>
 				<Link VarA="Drive^Inputs^In^nState1" VarB="AT 1^Drive status word" Size="8" OffsB="8"/>
 				<Link VarA="Drive^Inputs^In^nState2" VarB="AT 1^Drive status word"/>
@@ -4345,6 +4287,14 @@ External Setpoint Generation:
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 11 (EL2008)">
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^SV10WorkHoldDownSouth"/>
 			</OwnerB>
+			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 12 (EK1122)^Term 30 (ATI Axia F/T Sensor)">
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbTorqueSensor.FxCounts" VarB="Reading Data^FxGage0"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbTorqueSensor.FyCounts" VarB="Reading Data^FyGage1"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbTorqueSensor.FzCounts" VarB="Reading Data^FzGage2"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbTorqueSensor.TxCounts" VarB="Reading Data^TxGage3"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbTorqueSensor.TyCounts" VarB="Reading Data^TyGage4"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbTorqueSensor.TzCounts" VarB="Reading Data^TzGage5"/>
+			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 3 (EL1918)">
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.safetyPLCComErr" VarB="StandardInputs^Standard Out Var 11"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.safetyPLCEStopBlockRun" VarB="StandardInputs^Standard Out Var 13"/>
@@ -4357,7 +4307,7 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.errorReset" VarB="StandardOutputs^Standard In Var 6"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 5 (EL1008)">
-				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.doorIsOpen" VarB="Channel 4^rollingDoorOpen"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.doorIsClosed" VarB="Channel 4^rollingDoorClosed"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchHoldDown" VarB="Channel 2^PressureSwitch2HoldDown"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchSpindle" VarB="Channel 1^PressureSwitch1Spindle"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.pressureSwitchTableClamps" VarB="Channel 3^PressureSwitch3TableClamps"/>
@@ -4370,8 +4320,16 @@ External Setpoint Generation:
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbEnclosure.pbTableWest" VarB="Channel 4^TablePBWest"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls1NE" VarB="Channel 1^LimitSwitchEast"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbGantry.ls3NW" VarB="Channel 2^LimitSwitchWest"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool0" VarB="Channel 5^Tool0Present"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool1" VarB="Channel 6^Tool1Present"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool2" VarB="Channel 7^Tool2Present"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool3" VarB="Channel 8^Tool3Present"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 7 (EL1008)">
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool4" VarB="Channel 1^Tool4"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool5" VarB="Channel 2^Tool5"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool6" VarB="Channel 3^Tool6"/>
+				<Link VarA="PlcTask Inputs^MAIN.fbMachine.fbSpindle.tool7" VarB="Channel 4^Tool7"/>
 				<Link VarA="PlcTask Inputs^MAIN.fbMachine.sHMIDustCollectionOn" VarB="Channel 7^FlowSensorOn"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 9 (EL2008)">

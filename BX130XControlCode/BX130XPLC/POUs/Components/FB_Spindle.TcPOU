@@ -23,8 +23,7 @@ VAR
 	tool5 AT %I* : BOOL;
 	tool6 AT %I* : BOOL;
 	tool7 AT %I* : BOOL;
-	tool8 AT %I* : BOOL;
-	toolLimitSwitchArray : ARRAY[0..8] OF BOOL := [tool0, tool1, tool2, tool3, tool4, tool5, tool6, tool7];
+	toolLimitSwitchArray : ARRAY[0..8] OF BOOL;
 	//Dust Hood
 	dustHoodCylinder AT %Q*		: BOOL;
 	
@@ -36,12 +35,18 @@ VAR
 	fbWriteRegs2 : FB_MBWriteRegs; //Error reset
 	fbReadReg	: FB_MBReadRegs; //Drive run/stop
 	fbReadReg2	: FB_MBReadRegs; //Error
+	fbReadRegSpeed	: FB_MBReadRegs; //Speed
+	fbReadRegTorque	: FB_MBReadRegs; //Torque
 	ipAddr      : STRING(15) := '192.168.1.5'; //IPADDRESS
 	eWriteState	: (WAIT, START, STOP, WRITE); //state machine
 	spindleRunStatus : WORD;
 	spindleErrorStatus	: WORD;
+	spindleTorqueStatus : WORD;
+	spindleSpeedStatus	: WORD;
 	spindleIsStopped	: BOOL;
 	spindleError		: BOOL;
+	spindleSpeed		: INT;
+	spindleTorque		: INT;
 	
 	//--------------------Warmup params-----------
 	spindleIsWarm 	: BOOL;
@@ -62,6 +67,7 @@ VAR
 	triggerWarm1: R_TRIG;
 	triggerWarm2: R_TRIG;
 	triggerWarm3: R_TRIG;
+	fTrigWarm3 : F_TRIG;
 	requestedTool: Tool_Type;
 END_VAR
 ]]></Declaration>
@@ -72,6 +78,7 @@ END_VAR
 	triggerWarm1(CLK:=warmUp1);
 	triggerWarm2(CLK:=warmUp2);
 	triggerWarm3(CLK:=warmUp3);
+	fTrigWarm3(CLK := warmUp3);
 	
 IF spindleWarmupOn THEN
 	IF triggerWarmup.Q THEN
@@ -421,12 +428,21 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[//NC contacts. Detect if current tool holder is empty and requested tool holder is full. If no tool is selected, checks if spindle is empty
-IF ((toolLimitSwitchArray[toolToDrop]) AND (NOT toolLimitSwitchArray[toolToPickup] OR toolToPickup = 8) AND (toolToDrop <> 8 OR spindleToolOpen)) THEN 
+toolLimitSwitchArray[0] := tool0;
+toolLimitSwitchArray[1] := tool1;
+toolLimitSwitchArray[2] := tool2;
+toolLimitSwitchArray[3] := tool3;
+toolLimitSwitchArray[4] := tool4;
+toolLimitSwitchArray[5] := tool5;
+toolLimitSwitchArray[6] := tool6;
+toolLimitSwitchArray[7] := tool7;
+
+IF (toolLimitSwitchArray[toolToDrop] OR toolToDrop = 8) AND (NOT toolLimitSwitchArray[toolToPickup] OR toolToPickup = 8) OR (toolToDrop = toolToPickup AND toolLimitSwitchArray[toolToDrop]) THEN 
 	Verify_Tool_Change_Request := TRUE;
 ELSE
 	Verify_Tool_Change_Request := FALSE;
 END_IF
-Verify_Tool_Change_Request := TRUE; //TODO: remove once wired!!]]></ST>
+//Verify_Tool_Change_Request := TRUE; //TODO: remove once wired!!]]></ST>
       </Implementation>
     </Method>
     <Method Name="VFD_Status" Id="{3c5755fa-2782-4792-9f43-a3613d83a04f}">
@@ -496,6 +512,61 @@ fbReadReg2(
 			bError=> , 
 			nErrId=> );
 			
+fbReadRegSpeed(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#210C, 
+			cbLength:= SIZEOF(spindleSpeedStatus), 
+			pDestAddr := ADR(spindleSpeedStatus), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+
+fbReadRegSpeed(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#210C, 
+			cbLength:= SIZEOF(spindleSpeedStatus), 
+			pDestAddr := ADR(spindleSpeedStatus), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+			
+fbReadRegTorque(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#210B, 
+			cbLength:= SIZEOF(spindleTorqueStatus), 
+			pDestAddr := ADR(spindleTorqueStatus), 
+			bExecute:= FALSE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+fbReadRegTorque(
+			sIPAddr:= ipAddr, 
+			nTCPPort:= 502, 
+			nUnitID:= 16#FF, 
+			nQuantity:= 1, 
+			nMBAddr:= 16#210B, 
+			cbLength:= SIZEOF(spindleTorqueStatus), 
+			pDestAddr := ADR(spindleTorqueStatus), 
+			bExecute:= TRUE, 
+			tTimeout:= , 
+			bBusy=> , 
+			bError=> , 
+			nErrId=> );
+
 runStatus := WORD_TO_USINT(spindleRunStatus);
 IF runStatus.0 = 0 AND runStatus.1 = 0 THEN
 	spindleIsStopped := TRUE;
@@ -510,6 +581,9 @@ ELSE
 	spindleError := FALSE;
 END_IF
 
+spindleSpeed := WORD_TO_INT(SpindleSpeedStatus);
+spindleTorque := WORD_TO_INT(SpindleTorqueStatus);
+
 VFD_Status := NOT spindleError;]]></ST>
       </Implementation>
     </Method>
@@ -519,6 +593,7 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="158" Count="0" />
       <LineId Id="167" Count="0" />
       <LineId Id="170" Count="1" />
+      <LineId Id="384" Count="0" />
       <LineId Id="159" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="56" Count="0" />
@@ -631,6 +706,9 @@ VFD_Status := NOT spindleError;]]></ST>
     </LineIds>
     <LineIds Name="FB_Spindle.Verify_Tool_Change_Request">
       <LineId Id="14" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="6" />
+      <LineId Id="21" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="10" Count="1" />
@@ -638,7 +716,21 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.VFD_Status">
-      <LineId Id="109" Count="69" />
+      <LineId Id="109" Count="54" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="189" Count="25" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="164" Count="0" />
+      <LineId Id="219" Count="11" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="232" Count="11" />
+      <LineId Id="231" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="165" Count="12" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="178" Count="0" />
       <LineId Id="100" Count="0" />
     </LineIds>
   </POU>

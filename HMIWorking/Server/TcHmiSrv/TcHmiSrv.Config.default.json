@@ -1289,6 +1289,40 @@
             },
             "USEMAPPING": true
         },
+        "C1007.GVL_Axes.AxisEast.NcToPlc.ActTorque": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Axes::AxisEast::NcToPlc::ActTorque",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/LREAL"
+                    },
+                    {
+                        "propertyOrder": 28
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.GVL_Axes.AxisWest.NcToPlc.ActPos": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Axes::AxisWest::NcToPlc::ActPos",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/LREAL"
+                    },
+                    {
+                        "propertyOrder": 11
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.GVL_Axes.AxisWest.Status.Homed": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1304,6 +1338,16 @@
                         "propertyOrder": 27
                     }
                 ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.GVL_OperationCounter.totalRunHours": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_OperationCounter::totalRunHours",
+            "SCHEMA": {
+                "$ref": "tchmi:general#/definitions/LREAL"
             },
             "USEMAPPING": true
         },
@@ -1392,6 +1436,74 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIEnableButtons": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIEnableButtons",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 54
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIEnableInitialization": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIEnableInitialization",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 54
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIEnableMovement": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIEnableMovement",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 65
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIGoToCleanupPosition": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIGoToCleanupPosition",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 52
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIHold": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1405,6 +1517,75 @@
                     {
                         "comment": "Button to hold program. Called from Run.content",
                         "propertyOrder": 47
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveRobotXneg": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveRobotXneg",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 59
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveRobotXplus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveRobotXplus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 60
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveServosNorth": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveServosNorth",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Settings.content buttons",
+                        "propertyOrder": 57
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveServosSouth": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveServosSouth",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 58
                     }
                 ]
             },
@@ -1550,6 +1731,63 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableEast": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbEnclosure::cylinderTableEast",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 6
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableWest": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbEnclosure::cylinderTableWest",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbOperatingCounter::totalRunHoursRounded",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1632,6 +1870,23 @@
                     {
                         "comment": "--------------------Warmup params-----------",
                         "propertyOrder": 24
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbSpindle::toolSelectedAtInitialization",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 20
                     }
                 ]
             },
@@ -1756,6 +2011,23 @@
                     },
                     {
                         "propertyOrder": 33
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIDoorStatus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIDoorStatus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "propertyOrder": 52
                     }
                 ]
             },
@@ -1913,6 +2185,24 @@
                     {
                         "comment": "Indicator light of rollers activated, called from run.content",
                         "propertyOrder": 47
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMISettingsMessage": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMISettingsMessage",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "comment": "settings.content indicators",
+                        "propertyOrder": 68
                     }
                 ]
             },
@@ -4681,13 +4971,24 @@
                 "ADS.AdsSyncReadStateReq": 3,
                 "ADS.CheckLicense": 3,
                 "ADS.Diagnostics": 1,
+                "C1007.GVL_Axes.AxisEast.NcToPlc.ActTorque": 3,
+                "C1007.GVL_Axes.AxisWest.NcToPlc.ActPos": 3,
                 "C1007.GVL_Axes.AxisWest.Status.Homed": 3,
+                "C1007.GVL_OperationCounter.totalRunHours": 3,
                 "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
                 "C1007.MAIN.fbMachine.HMILeaveRunScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
+                "C1007.MAIN.fbMachine.bHMIEnableButtons": 3,
+                "C1007.MAIN.fbMachine.bHMIEnableInitialization": 3,
+                "C1007.MAIN.fbMachine.bHMIEnableMovement": 3,
+                "C1007.MAIN.fbMachine.bHMIGoToCleanupPosition": 3,
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveRobotXneg": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveRobotXplus": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveServosNorth": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveServosSouth": 3,
                 "C1007.MAIN.fbMachine.bHMIOpenCloseDoor": 3,
                 "C1007.MAIN.fbMachine.bHMIReset": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
@@ -4696,11 +4997,15 @@
                 "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
                 "C1007.MAIN.fbMachine.eSystemState": 3,
                 "C1007.MAIN.fbMachine.escapeRunScreenEnable": 3,
+                "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableEast": 3,
+                "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableWest": 3,
+                "C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": 3,
+                "C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization": 3,
                 "C1007.MAIN.fbMachine.popUpAutoReset": 3,
                 "C1007.MAIN.fbMachine.popupMessage": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
@@ -4708,6 +5013,7 @@
                 "C1007.MAIN.fbMachine.programOption3": 3,
                 "C1007.MAIN.fbMachine.programWallChoice": 3,
                 "C1007.MAIN.fbMachine.sHMICurrentTool": 3,
+                "C1007.MAIN.fbMachine.sHMIDoorStatus": 3,
                 "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
                 "C1007.MAIN.fbMachine.sHMIErrorDisplay": 3,
                 "C1007.MAIN.fbMachine.sHMIIsError": 3,
@@ -4717,6 +5023,7 @@
                 "C1007.MAIN.fbMachine.sHMIRequestedTool": 3,
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,
+                "C1007.MAIN.fbMachine.sHMISettingsMessage": 3,
                 "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,
                 "C1007.MAIN.fbMachine.sHMIeSystemStateString": 3,
                 "C1007.MAIN.fbMachine.sProgramString": 3,

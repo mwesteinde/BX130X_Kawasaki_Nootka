@@ -7,13 +7,35 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
+	countsPerForce : LREAL := 80000;
+	countsPerTorque : LREAL := 1000000;
+	FxCounts AT %I* : DINT;
+	FyCounts AT %I* : DINT;
+	FzCounts AT %I* : DINT;
+	TxCounts AT %I* : DINT;
+	TyCounts AT %I* : DINT;
+	TzCounts AT %I* : DINT;
+	xForce	: LREAL;
+	yForce : LREAL;
+	zForce : LREAL;
+	xTorque : LREAL;
+	yTorque : LREAL;
+	zTorque : LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[xForce := FxCounts / countsPerForce;
+yForce := FyCounts / countsPerForce;
+zForce := FzCounts / countsPerForce;
+xTorque := TxCounts / countsPerTorque;
+yTorque := TyCounts / countsPerTorque;
+zTorque := TzCounts / countsPerTorque;]]></ST>
     </Implementation>
     <LineIds Name="FB_TorqueSensor">
       <LineId Id="9" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="33" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

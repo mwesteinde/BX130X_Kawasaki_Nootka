@@ -40,6 +40,10 @@
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
     </Compile>
+    <Compile Include="GVLs\GVL_OperationCounter.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="GVLs\GVL_Programs.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -55,6 +59,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Components\FB_GantryHoldDown.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Components\FB_OperatingCounter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Components\FB_Robot.TcPOU">

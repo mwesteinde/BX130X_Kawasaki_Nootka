@@ -15,7 +15,7 @@ VAR
 	// Door
 	openCloseDoor				AT %Q* : BOOL;
 	enableRollingDoor 			AT %Q* : BOOL := TRUE;
-	doorIsOpen					AT %I* : BOOL;
+	doorIsClosed				AT %I* : BOOL;
 	doorTimer				: TON;
 	startTimer: BOOL;
 	
@@ -59,7 +59,7 @@ cylinderTableEast := eastTableLock;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Table_Clamp_Control_Pushbutton" Id="{78b6b307-6e7b-4cd9-b1f5-bb2aefea736b}">
-      <Declaration><![CDATA[METHOD Table_Clamp_Control_Pushbutton
+      <Declaration><![CDATA[METHOD Table_Clamp_Control_Pushbutton : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
