@@ -318,6 +318,7 @@ CASE eSystemState OF
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 			IF fbSpindle.Verify_Tool_Change_Request(fbSpindle.currentTool.toolNumber, fbRobot.inRobotToolNumberRequest) THEN
 				eSystemState := E_MachineState.TOOLCHANGERUN;
+				fbSpindle.Update_Requested_Tool(toolNumber := fbRobot.inRobotToolNumberRequest);
 			ELSE
 				Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Error thrown, program restart. If false, check tool limit switches', TRUE);
 				eSystemState := E_MachineState.ERROR;
@@ -350,15 +351,24 @@ CASE eSystemState OF
 		END_IF
 		
 	E_MachineState.TOOLCHANGERUN:
-		IF eRequestedState := E_MachineState.RUN THEN
-			eSystemState := E_MachineState.RUN;
-			fbSpindle.Manual_Tool_Change(changeToolEnable := FALSE);
-			fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
-		END_IF
-		
-		//Move to change state
-		fbSpindle.Update_Requested_Tool(toolNumber := fbRobot.inRobotToolNumberRequest);
-		escapeRunScreenEnable := FALSE;
+		CASE eRequestedState OF
+			E_MachineState.RUN:
+				eSystemState := E_MachineState.RUN;
+				fbSpindle.Manual_Tool_Change(changeToolEnable := FALSE);
+				fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
+			
+			E_MachineState.INITIALIZATION:
+				eSystemState := E_MachineState.INITIALIZATION;
+				fbSpindle.Stop_Spindle();
+				fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
+				fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE);
+				bHMIStart := FALSE;
+				IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
+					IF NOT fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberCurrent) THEN
+						Popup_Error('Invalid tool number', TRUE);
+					END_IF;	
+				END_IF
+		END_CASE
 		
 	E_MachineState.TOOLCHANGEINIT:
 		escapeRunScreenEnable := TRUE;
@@ -684,6 +694,9 @@ END_VAR
 fbSpindle.Stop_Spindle();
 fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 
+//Can't leave run screen
+escapeRunScreenEnable := FALSE;
+
 //Release tool when requested by robot
 IF fbRobot.inRobotReleaseTool THEN
 	fbSpindle.Release_Tool();
@@ -695,14 +708,16 @@ END_IF
 
 //If robot is done tool change
 IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
-	popupRefreshTimer(IN:=TRUE, PT :=T#10S); //Timer to not have constant popups
-	IF popupRefreshTimer.Q THEN
-		Popup_Error(CONCAT(CONCAT('Press tool loaded if ', fbSpindle.currentTool.name), ' is loaded to resume program. If not, can hold green button on spindle for three seconds to change manually'), TRUE);
-		popupRefreshTimer(IN:=FALSE, PT :=T#10S);
-	END_IF
+//	popupRefreshTimer(IN:=TRUE, PT :=T#10S); //Timer to not have constant popups
+//	IF popupRefreshTimer.Q THEN
+//		Popup_Error(CONCAT(CONCAT('Press tool loaded if ', fbSpindle.currentTool.name), ' is loaded to resume program. If not, can hold green button on spindle for three seconds to change manually'), TRUE);
+//		popupRefreshTimer(IN:=FALSE, PT :=T#10S);
+//	END_IF
 	IF NOT fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberCurrent) THEN
 		Popup_Error('Invalid tool number', TRUE);
-	END_IF;			
+		eRequestedState := E_MachineState.ERROR;
+		JMP _endOfMethod;
+	END_IF;
 	runHoldToolChangeRun := FALSE;
 	fbSpindle.Manual_Tool_Change(changeToolEnable := TRUE);
 	IF rTrigToolLoaded.Q THEN
@@ -710,21 +725,9 @@ IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
 	END_IF
 END_IF
 
+//If stop the prgram, go to initialization
 IF (fTrigStopProgram.Q OR fTrigInProgramRunning.Q) THEN
-	fbSpindle.Manual_Tool_Change(changeToolEnable := FALSE);
 	eRequestedState := E_MachineState.INITIALIZATION;
-	eSystemState := E_MachineState.INITIALIZATION;
-	fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
-	fbSpindle.Stop_Spindle();
-	fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
-	fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE);
-	bHMIStart := FALSE;
-	HMILeaveRunScreen := TRUE;
-	IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
-		IF NOT fbSpindle.Update_Current_Tool(toolNumber := fbRobot.inRobotToolNumberCurrent) THEN
-			Popup_Error('Invalid tool number', TRUE);
-		END_IF;	
-	END_IF
 END_IF
 
 IF bHMIHold THEN
@@ -733,6 +736,7 @@ ELSE
 	fbRobot.RunHold_Robot(RunHold := runHoldToolChangeRun);
 END_IF
 
+ _endOfMethod:
 ]]></ST>
       </Implementation>
     </Method>
@@ -1043,6 +1047,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="298" Count="0" />
       <LineId Id="294" Count="0" />
       <LineId Id="79" Count="0" />
+      <LineId Id="496" Count="0" />
       <LineId Id="295" Count="0" />
       <LineId Id="342" Count="1" />
       <LineId Id="297" Count="0" />
@@ -1071,13 +1076,15 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
       <LineId Id="363" Count="1" />
       <LineId Id="22" Count="0" />
       <LineId Id="83" Count="0" />
-      <LineId Id="378" Count="0" />
-      <LineId Id="463" Count="0" />
-      <LineId Id="465" Count="1" />
-      <LineId Id="464" Count="0" />
-      <LineId Id="467" Count="0" />
-      <LineId Id="469" Count="1" />
-      <LineId Id="468" Count="0" />
+      <LineId Id="474" Count="1" />
+      <LineId Id="478" Count="1" />
+      <LineId Id="477" Count="0" />
+      <LineId Id="480" Count="0" />
+      <LineId Id="482" Count="1" />
+      <LineId Id="486" Count="3" />
+      <LineId Id="491" Count="3" />
+      <LineId Id="481" Count="0" />
+      <LineId Id="476" Count="0" />
       <LineId Id="122" Count="0" />
       <LineId Id="114" Count="0" />
       <LineId Id="279" Count="0" />
@@ -1267,21 +1274,31 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgram.prog
     <LineIds Name="FB_Machine.Operating_ToolChangeRun">
       <LineId Id="120" Count="0" />
       <LineId Id="110" Count="1" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="143" Count="0" />
       <LineId Id="129" Count="0" />
       <LineId Id="112" Count="6" />
       <LineId Id="108" Count="0" />
       <LineId Id="130" Count="0" />
       <LineId Id="107" Count="0" />
-      <LineId Id="75" Count="8" />
+      <LineId Id="134" Count="4" />
+      <LineId Id="75" Count="0" />
+      <LineId Id="81" Count="1" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="83" Count="0" />
       <LineId Id="131" Count="0" />
       <LineId Id="85" Count="2" />
-      <LineId Id="90" Count="4" />
+      <LineId Id="90" Count="1" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="92" Count="1" />
       <LineId Id="132" Count="0" />
-      <LineId Id="95" Count="11" />
       <LineId Id="61" Count="0" />
       <LineId Id="123" Count="4" />
       <LineId Id="122" Count="0" />
-      <LineId Id="60" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="140" Count="0" />
       <LineId Id="59" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Popup_Error">
