@@ -578,14 +578,26 @@ END_IF
 
 //Make sure that the robot has received the program selected request
 IF fbRobot.outRobotProgramSelected AND fbRobot.outRobotProgramChoice <> fbRobot.inRobotCurrentProgram THEN
-	timerProgramIsSelected(IN := TRUE, PT := T#2S);
+	timerProgramIsSelected(IN := TRUE, PT := T#0.5S);
 	IF timerProgramIsSelected.Q THEN
-		Popup_Error('Robot program not updated', TRUE);
-		timerProgramIsSelected(IN := FALSE, PT := T#2S);
-		fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
+		IF fbRobot.inRobotAtHome AND fbRobot.outRobotProgramChoice = 12 THEN 
+			fbRobot.Turn_Off_Program_Selected();
+			timerProgramIsSelected(IN := FALSE);
+		ELSIF fbRobot.inRobotAtCleanPosition AND fbRobot.outRobotProgramChoice = 13 THEN
+			fbRobot.Turn_Off_Program_Selected();
+			timerProgramIsSelected(IN := FALSE);
+		ELSE
+			Popup_Error('Robot program not updated', TRUE);
+			timerProgramIsSelected(IN := FALSE);
+			IF fbRobot.outRobotProgramChoice >= 10 THEN //If program selected is home robot, change tool, go to cleanup position or manual move then
+				fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+			ELSE
+				fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
+			END_IF
+		END_IF
 	END_IF
 ELSE
-	timerProgramIsSelected(IN := FALSE, PT := T#2S);
+	timerProgramIsSelected(IN := FALSE);
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -1274,8 +1286,18 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="259" Count="0" />
       <LineId Id="258" Count="0" />
       <LineId Id="260" Count="0" />
-      <LineId Id="265" Count="1" />
-      <LineId Id="268" Count="1" />
+      <LineId Id="265" Count="0" />
+      <LineId Id="276" Count="1" />
+      <LineId Id="284" Count="0" />
+      <LineId Id="278" Count="0" />
+      <LineId Id="281" Count="0" />
+      <LineId Id="285" Count="0" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="282" Count="1" />
+      <LineId Id="286" Count="1" />
+      <LineId Id="289" Count="1" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="275" Count="0" />
       <LineId Id="267" Count="0" />
       <LineId Id="262" Count="0" />
       <LineId Id="264" Count="0" />

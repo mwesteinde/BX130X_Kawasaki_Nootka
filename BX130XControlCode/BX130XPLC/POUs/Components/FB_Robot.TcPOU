@@ -41,6 +41,7 @@ VAR
 	inRobotStartofProgram	: BOOL; //Signal 118
 	inRobotHoldMode			: BOOL; //Signal 119
 	inRobotCurrentProgram	: USINT; //Signals 120-123
+	inRobotAtCleanPosition	: BOOL; //Signal 124
 	sigs97104 AT %I*		: USINT;
 	sigs105112 AT %I*		: USINT;
 	sigs113120 AT %I*		: USINT;
@@ -117,9 +118,9 @@ END_VAR]]></Declaration>
 	END_IF
 
 //Change request to home robot once robot is in home position
-	IF inRobotAtHome OR inRobotError THEN 
-		outRobotHome := FALSE;
-	END_IF
+//	IF inRobotAtHome AND outRobotProgramChoice = 12 THEN 
+//		outRobotHome := FALSE;
+//	END_IF
 	
 //Turn off error reset and motor when on
 	IF NOT inRobotError THEN
@@ -319,6 +320,15 @@ outRobotStartProgram := FALSE;
 RunHold_Robot(RunHold := True);]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Turn_Off_Program_Selected" Id="{6e528639-7fd4-42df-ba6c-144e16c42b39}">
+      <Declaration><![CDATA[METHOD Turn_Off_Program_Selected : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[outRobotProgramSelected := FALSE;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Update_Pose" Id="{095f6df8-3cda-4049-b351-7910f936202a}">
       <Declaration><![CDATA[//Updates current robot pose
 //TODO make flag that verifies pose is being sent
@@ -494,7 +504,8 @@ inRobotStartofProgram := sigs113120.5; // Signal 118
 inRobotCurrentProgram.0 := sigs113120.6;
 inRobotCurrentProgram.1 := sigs113120.7;
 inRobotCurrentProgram.2 := sigs121128.0;
-inRobotCurrentProgram.3 := sigs121128.1;]]></ST>
+inRobotCurrentProgram.3 := sigs121128.1;
+inRobotAtCleanPosition := sigs121128.2;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Tool" Id="{8cd56187-8f55-4d53-8738-7ee602877016}">
@@ -597,6 +608,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="29" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
+    <LineIds Name="FB_Robot.Turn_Off_Program_Selected">
+      <LineId Id="5" Count="0" />
+    </LineIds>
     <LineIds Name="FB_Robot.Update_Pose">
       <LineId Id="6" Count="0" />
       <LineId Id="36" Count="4" />
@@ -669,7 +683,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="62" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="21" Count="0" />
-      <LineId Id="177" Count="3" />
+      <LineId Id="177" Count="4" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Tool">
       <LineId Id="5" Count="0" />
