@@ -25,19 +25,7 @@
   "bottomUnit": "px"
 }
 </script>
-<div id="TextSelectedProgrsm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.sProgramString%/s%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="543" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
-</div>
-<div id="ImageToolpath" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextbox" data-tchmi-height="227" data-tchmi-height-unit="px" data-tchmi-left="246" data-tchmi-left-unit="px" data-tchmi-text="Contour image
-" data-tchmi-top="122" data-tchmi-top-unit="px" data-tchmi-width="251" data-tchmi-width-unit="px">
-<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
-{
-  "top": 3,
-  "right": 3,
-  "bottom": 3,
-  "left": 3
-}
-</script>
-
+<div id="TextSelectedProgrsm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.sProgramString%/s%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="760" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
 </div>
 <div id="CheckToolIsLoaded" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="23" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;Tool &quot; + %s%C1007.MAIN.fbMachine.fbSpindle.requestedTool.name%/s%+&quot; is loaded&quot;%/f%" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
 </div>
@@ -1117,7 +1105,7 @@
   }
 ]
 </script>
-<div id="ToggleHoldRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="193" data-tchmi-left-unit="px" data-tchmi-text="Hold" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIHold%/s%">
+<div id="ToggleHoldRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="193" data-tchmi-left-unit="px" data-tchmi-text="Hold" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIHold%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIStart%/s%">
 </div>
 <div id="ToggleStartStop" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="13" data-tchmi-left-unit="px" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text="Start" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIStart%/s%">
 
@@ -1180,6 +1168,22 @@
         "asyncWait": true
       }
     ]
+  },
+  {
+    "event": "ToggleStartStop.onStateReleased",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleHoldRun::ToggleState%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:framework#/definitions/ToggleState",
+          "value": "Normal"
+        },
+        "asyncWait": true
+      }
+    ]
   }
 ]
 </script>
@@ -1192,7 +1196,7 @@
 </div>
 <div id="TextPressureOK_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="63" data-tchmi-left-unit="px" data-tchmi-text="Dust Collection On" data-tchmi-top="67" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="TcHmiToggleButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="80" data-tchmi-height-unit="px" data-tchmi-left="578" data-tchmi-left-unit="px" data-tchmi-text="Activate Rollers (follow robot)" data-tchmi-top="13" data-tchmi-top-unit="px" data-tchmi-width="184" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bActivateRollers%/s%">
+<div id="TcHmiToggleButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="80" data-tchmi-height-unit="px" data-tchmi-left="223" data-tchmi-left-unit="px" data-tchmi-text="Activate Rollers (follow robot)" data-tchmi-top="73" data-tchmi-top-unit="px" data-tchmi-width="184" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bActivateRollers%/s%">
 </div>
 <div id="TcHmiRequested" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="528" data-tchmi-left-unit="px" data-tchmi-text="Requested Tool" data-tchmi-top="236" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
@@ -1201,5 +1205,66 @@
 <div id="TcHmiTextblock_6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="528" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.fbSpindle.currentTool.name%/s%" data-tchmi-top="210" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 <div id="TextRequestedToolDisplay" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="528" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.fbSpindle.requestedTool.name%/s%" data-tchmi-top="262" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="ToggleHoldRaiseRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="91" data-tchmi-height-unit="px" data-tchmi-left="373" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="399" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIHold%/s%">
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "ToggleHoldRaiseRollers.onStatePressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleHoldRun::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": false
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleHoldRaiseRollers::Text%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/String",
+          "value": "Lower Rollers"
+        },
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "ToggleHoldRaiseRollers.onStateReleased",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleHoldRun::IsEnabled%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/Boolean",
+          "value": true
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleHoldRaiseRollers::Text%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/String",
+          "value": "Raise Rollers"
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
 </div>
 </div>

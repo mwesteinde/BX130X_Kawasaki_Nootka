@@ -7,6 +7,8 @@ FUNCTION_BLOCK FB_GantryHoldDown
 VAR_OUTPUT
 END_VAR
 VAR
+	
+	testLight : BOOL;
 	//MC_functions, called in methods
 	fbMC_PowerWest		: MC_Power;
 	fbMC_PowerEast		: MC_Power;
@@ -40,6 +42,8 @@ VAR
 	//Pneumatic switches
 	
 	rollersReady		: BOOL;
+	
+	lengthWood : LREAL := 2133; //mm, length of wood being clamped;
 	
 	// Enable bools
 	executeEnable		: BOOL := FALSE;
@@ -91,13 +95,13 @@ ELSE
 	cylindersCentreNorth := 0;
 END_IF
 
-IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + GVL_SERVO_ROBOT_CONST.LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
+IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + lengthWood - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTH THEN
 	cylindersSouth := 1;
 ELSE
 	cylindersSouth := 0;
 END_IF
 
-IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + GVL_SERVO_ROBOT_CONST.LEN_WOOD - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
+IF GVL_Axes.AxisWest.NcToPlc.ActPos > POS_TABLE_NORTH + lengthWood - FACTOR_OF_SAFETY - POS_CYLINDER_SOUTHCENTRE THEN
 		cylindersCentreSouth := 1;
 ELSE 
 		cylindersCentreSouth := 0;
@@ -106,13 +110,15 @@ END_IF
       </Implementation>
     </Method>
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
-      <Declaration><![CDATA[METHOD Follow_Robot : BOOL //returns false if robot too far away (1"), true if it is
+      <Declaration><![CDATA[METHOD Follow_Robot : BOOL //returns false if dust boot is within one follow threshold length of rollersw threshold), true if it is
 VAR_INPUT
 	robotPoseGantry : Structure_RobotPose;
 END_VAR
 
 VAR
 	targetPosition: LREAL;
+	positionNorthCornerDustBoot: LREAL;
+	positionSouthCornerDustBoot: LREAL;
 	accel: LREAL:=600;
 	decel: LREAL:=600;
 	jer:   LREAL:=1200;
@@ -126,16 +132,19 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Set target position to middle of robot tool
 targetPosition := (robotPoseGantry.yPose - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+positionNorthCornerDustBoot := (robotPoseGantry.yPoseDustBootNorth - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+positionSouthCornerDustBoot := (robotPoseGantry.yPoseDustBootSouth - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
 
-//If target position - current position > threshold, hold robot
-IF ABS(targetPosition - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD
-AND (robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT) THEN
-//OR ((cylindersCentreNorth OR cylindersNorth) AND NOT GVL_Axes.AxisWest.Status.PositiveDirection)
-//OR ((cylindersCentreSouth OR cylindersSouth) AND NOT GVL_Axes.AxisWest.Status.NegativeDirection)) THEN
-		Follow_Robot := FALSE; //Gantry isn't following, hold robot
-ELSE 
+//Checking if robot is too far away from rollers and above rollers - will hold robot if so
+IF (positionNorthCornerDustBoot < (GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.ROLLERS_SPACING/2 + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) OR 
+	positionSouthCornerDustBoot > (GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.ROLLERS_SPACING/2 - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD)) 
+	AND (robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT) THEN
+	Follow_Robot := FALSE; //Gantry isn't following, hold robot
+ELSE
 	Follow_Robot := TRUE; //Gantry is following properly, keep robot on run
 END_IF
+
+//Checking if robot is too far away from rollers and below rollers - TODO: stop robot if past
 
 IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
 	targetPosition := GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST;
@@ -396,9 +405,14 @@ END_VAR
     <LineIds Name="FB_GantryHoldDown.Follow_Robot">
       <LineId Id="98" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="163" Count="3" />
       <LineId Id="135" Count="0" />
-      <LineId Id="137" Count="7" />
-      <LineId Id="136" Count="0" />
+      <LineId Id="167" Count="0" />
+      <LineId Id="172" Count="0" />
+      <LineId Id="169" Count="2" />
+      <LineId Id="168" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="191" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="80" Count="1" />
       <LineId Id="83" Count="0" />

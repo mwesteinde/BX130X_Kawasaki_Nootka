@@ -1556,6 +1556,74 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIMoveRobotYneg": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveRobotYneg",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 65
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveRobotYplus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveRobotYplus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 66
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveRobotZneg": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveRobotZneg",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 67
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIMoveRobotZplus": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIMoveRobotZplus",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 68
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIMoveServosNorth": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1603,6 +1671,24 @@
                     },
                     {
                         "propertyOrder": 27
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIRaiseRollersRunScreen",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to switch state into manual mode. TODO: make",
+                        "propertyOrder": 92
                     }
                 ]
             },
@@ -1696,6 +1782,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.boardWidthIs51inches": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::boardWidthIs51inches",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "1 if board width is 5.1 inches, 0 if 4.75inches",
+                        "propertyOrder": 76
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.eSystemState": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1766,6 +1870,41 @@
                             "TcAddressType": "Output"
                         },
                         "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbGantry.lengthWood": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbGantry::lengthWood",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/LREAL"
+                    },
+                    {
+                        "comment": "mm, length of wood being clamped",
+                        "propertyOrder": 26
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbGantry.testLight": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbGantry::testLight",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 1
                     }
                 ]
             },
@@ -4987,18 +5126,26 @@
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveRobotXneg": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveRobotXplus": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveRobotYneg": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveRobotYplus": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveRobotZneg": 3,
+                "C1007.MAIN.fbMachine.bHMIMoveRobotZplus": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveServosNorth": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveServosSouth": 3,
                 "C1007.MAIN.fbMachine.bHMIOpenCloseDoor": 3,
+                "C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIReset": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIStart": 3,
                 "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
+                "C1007.MAIN.fbMachine.boardWidthIs51inches": 3,
                 "C1007.MAIN.fbMachine.eSystemState": 3,
                 "C1007.MAIN.fbMachine.escapeRunScreenEnable": 3,
                 "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableEast": 3,
                 "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableWest": 3,
+                "C1007.MAIN.fbMachine.fbGantry.lengthWood": 3,
+                "C1007.MAIN.fbMachine.fbGantry.testLight": 3,
                 "C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,

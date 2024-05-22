@@ -39,9 +39,12 @@ VAR
 	inRobotProgramRunning	: BOOL; //Signal 116
 	inRobotToolUpdated		: BOOL; //Signal 117
 	inRobotStartofProgram	: BOOL; //Signal 118
+	inRobotHoldMode			: BOOL; //Signal 119
+	inRobotCurrentProgram	: USINT; //Signals 120-123
 	sigs97104 AT %I*		: USINT;
 	sigs105112 AT %I*		: USINT;
 	sigs113120 AT %I*		: USINT;
+	sigs121128 AT %I*		: USINT;
 	ztool_pose_1 AT %I* 	: USINT; //Signal 129-136
 	ztool_pose_2 AT %I* 	: USINT; //Signal 137-144
 	sigs145152 AT %I*		: USINT;
@@ -80,6 +83,7 @@ VAR
 	outRobotMoveY					: BOOL; // Signal 1031
 	outRobotMoveZ					: BOOL; // Signal 1032
 	outRobotMovePositive			: BOOL; // Signal 1033
+	outRobotBoardWidth51Inches			: BOOL; //Signal 1034
 	
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
@@ -193,6 +197,7 @@ VAR_INPUT
 	option1 : BOOL;
 	option2 : BOOL;
 	option3 : BOOL;
+	boardWidthIs51 : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -200,6 +205,7 @@ END_VAR
 outRobotProgramOption1 := option1;
 outRobotProgramOption2	:= option2;
 outRobotProgramOption3	:= option3;
+outRobotBoardWidth51Inches := boardWidthIs51;
 outRobotProgramSelected := TRUE;]]></ST>
       </Implementation>
     </Method>
@@ -261,10 +267,19 @@ END_IF]]></ST>
       <Declaration><![CDATA[//TODO: Implement
 METHOD Robot_Manual_Control
 VAR_INPUT
+	x_negative : BOOL;
+	x_positive : BOOL;
+	y_negative : BOOL;
+	y_positive : BOOL;
+	z_negative : BOOL;
+	z_positive : BOOL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[outRobotMovePositive := x_positive OR y_positive OR z_positive;
+outRobotMoveX := x_negative OR x_positive;
+outRobotMoveY := y_negative OR y_positive;
+outRobotMoveZ := z_negative OR z_positive;]]></ST>
       </Implementation>
     </Method>
     <Method Name="RunHold_Robot" Id="{feac628f-72cf-4100-8d56-47c2e35d8c99}">
@@ -300,6 +315,7 @@ END_VAR
 IF forgetProgram THEN
 	outRobotProgramSelected := FALSE;
 END_IF
+outRobotStartProgram := FALSE;
 RunHold_Robot(RunHold := True);]]></ST>
       </Implementation>
     </Method>
@@ -394,6 +410,8 @@ END_FOR
 
 robotPose.xPose := Result.GetI(0);
 robotPose.yPose := (maxY + minY) / 2;
+robotPose.yPoseDustBootNorth := minY;
+robotPose.yPoseDustBootSouth := maxY;
 robotPose.zPose := zpose;
 Update_Pose := robotPose;]]></ST>
       </Implementation>
@@ -445,6 +463,7 @@ sigs10251032.5 := outRobotMoveX; //1030
 sigs10251032.6 := outRobotMoveY; //1031
 sigs10251032.7 := outRobotMoveZ; //1032
 sigs10331040.0 := outRobotMovePositive; //1033
+sigs10331040.1 := outRobotBoardWidth51Inches; //1034
 
 
 inRobotMotorOn := sigs97104.0; //97
@@ -472,9 +491,10 @@ inRobotReleaseTool := sigs113120.2; //115
 inRobotProgramRunning := sigs113120.3; // Signal 116
 inRobotToolUpdated := sigs113120.4; // Signal 117
 inRobotStartofProgram := sigs113120.5; // Signal 118
-// posedata.pc is running
-
-// ]]></ST>
+inRobotCurrentProgram.0 := sigs113120.6;
+inRobotCurrentProgram.1 := sigs113120.7;
+inRobotCurrentProgram.2 := sigs121128.0;
+inRobotCurrentProgram.3 := sigs121128.1;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Tool" Id="{8cd56187-8f55-4d53-8738-7ee602877016}">
@@ -535,6 +555,7 @@ outRobotRequestedTool := request;]]></ST>
     <LineIds Name="FB_Robot.Program_Select">
       <LineId Id="15" Count="2" />
       <LineId Id="5" Count="0" />
+      <LineId Id="36" Count="0" />
       <LineId Id="26" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Release_Update">
@@ -562,7 +583,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="20" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Robot_Manual_Control">
-      <LineId Id="5" Count="0" />
+      <LineId Id="16" Count="3" />
     </LineIds>
     <LineIds Name="FB_Robot.RunHold_Robot">
       <LineId Id="5" Count="0" />
@@ -573,6 +594,7 @@ outRobotRequestedTool := request;]]></ST>
     <LineIds Name="FB_Robot.Stop_Robot_Program">
       <LineId Id="11" Count="0" />
       <LineId Id="17" Count="2" />
+      <LineId Id="29" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Pose">
@@ -607,7 +629,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="315" Count="0" />
       <LineId Id="305" Count="0" />
       <LineId Id="49" Count="1" />
-      <LineId Id="72" Count="1" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="407" Count="1" />
+      <LineId Id="73" Count="0" />
       <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Spindle_Status">
@@ -630,6 +654,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="139" Count="0" />
       <LineId Id="157" Count="0" />
       <LineId Id="163" Count="3" />
+      <LineId Id="176" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />
@@ -644,9 +669,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="62" Count="0" />
       <LineId Id="144" Count="0" />
       <LineId Id="21" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="22" Count="0" />
+      <LineId Id="177" Count="3" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Tool">
       <LineId Id="5" Count="0" />

@@ -6,6 +6,8 @@ STRUCT
 	xPose : LREAL;
 	yPose : LREAL;
 	zPose : LREAL;
+	yPoseDustBootNorth : LREAL;
+	yPoseDustBootSouth : LREAL;
 	oPose : INT;
 	aPose : INT;
 	tPose : INT;

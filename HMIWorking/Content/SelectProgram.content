@@ -82,7 +82,7 @@
 
 
 </div>
-<div id="ButtonToRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="279" data-tchmi-left-unit="px" data-tchmi-text="Run Program" data-tchmi-top="397" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-vertical-alignment="Center" data-tchmi-is-enabled="false" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIRunProgramScreen%/s%">
+<div id="ButtonToRun" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="279" data-tchmi-left-unit="px" data-tchmi-text="Run Program" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-vertical-alignment="Center" data-tchmi-is-enabled="false" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIRunProgramScreen%/s%">
 
 
 
@@ -1324,5 +1324,143 @@
   }
 ]
 </script>
+</div>
+<div id="TcHmiBoardLength" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="true" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="272" data-tchmi-left-unit="px" data-tchmi-top="404" data-tchmi-top-unit="px" data-tchmi-width="81" data-tchmi-width-unit="px" data-tchmi-text="Board Width"  data-tchmi-enum-data-symbol="%s%C1007.MAIN.fbMachine.fbGantry.lengthWood%/s%">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-src-data" type="application/json">
+[
+  {
+    "text": "1'",
+    "value": 304.8
+  },
+  {
+    "text": "2'",
+    "value": 609.6
+  },
+  {
+    "text": "3'",
+    "value": 914.0
+  },
+  {
+    "text": "4'",
+    "value": 1219.0
+  },
+  {
+    "text": "5'",
+    "value": 1524.0
+  },
+  {
+    "text": "6'",
+    "value": 1828.0
+  },
+  {
+    "text": "7'",
+    "value": 2133.0
+  },
+  {
+    "text": "8'",
+    "value": 2438.0
+  }
+]
+</script>
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiBoardLength.onTextChanged",
+    "actions": []
+  },
+  {
+    "event": "TcHmiBoardLength.onUserInteractionFinished",
+    "actions": []
+  },
+  {
+    "event": "TcHmiBoardLength.onPressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": false
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="TextBoxBoardLength" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="189" data-tchmi-left-unit="px" data-tchmi-text="Board Length" data-tchmi-top="404" data-tchmi-top-unit="px" data-tchmi-width="73" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiBoardLength_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="true" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="446" data-tchmi-left-unit="px" data-tchmi-top="404" data-tchmi-top-unit="px" data-tchmi-width="81" data-tchmi-width-unit="px" data-tchmi-text="Board Width" data-tchmi-enum-data-symbol="%s%C1007.MAIN.fbMachine.boardWidthIs51inches%/s%">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-src-data" type="application/json">
+[
+  {
+    "text": "4.75\"",
+    "value": 0.0
+  },
+  {
+    "text": "5.1\"",
+    "value": 1.0
+  }
+]
+</script>
+
+
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiBoardLength_1.onTextChanged",
+    "actions": []
+  },
+  {
+    "event": "TcHmiBoardLength_1.onUserInteractionFinished",
+    "actions": []
+  },
+  {
+    "event": "TcHmiBoardLength_1.onPressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%s%C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization%/s%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/BOOL",
+          "value": false
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="TextBoxBoardLength_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="363" data-tchmi-left-unit="px" data-tchmi-text="Board Width" data-tchmi-top="404" data-tchmi-top-unit="px" data-tchmi-width="73" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 </div>
