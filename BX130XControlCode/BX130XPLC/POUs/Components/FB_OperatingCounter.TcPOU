@@ -4,6 +4,8 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_OperatingCounter
 VAR_INPUT
 	stateString : STRING;
+	currentTool : INT;
+	SpindleIsOn : BOOL;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -16,10 +18,16 @@ VAR
     timeInterval : TIME := T#1S;
 
     totalRunHoursRounded : INT;
+	totalSawbladeHoursRounded : INT;
+	totalHalfInchHoursRounded : INT;
+	totalQuarterInchHoursRounded : INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[totalRunHoursRounded := REAL_TO_INT(GVL_OperationCounter.totalRunHours);
+totalSawbladeHoursRounded := REAL_TO_INT(GVL_OperationCounter.totalSawBladeHoursSinceChanged);
+totalHalfInchHoursRounded := REAL_TO_INT(GVL_OperationCounter.totalHalfInchHoursSinceChanged);
+totalQuarterInchHoursRounded := REAL_TO_INT(GVL_OperationCounter.totalQuarterInchHoursSinceChanged);
 
 IF stateString = 'RUN' OR stateString = 'TOOLCHANGERUN' OR stateString = 'TOOLCHANGEINIT' THEN
 	// Timer setup
@@ -30,6 +38,15 @@ IF stateString = 'RUN' OR stateString = 'TOOLCHANGERUN' OR stateString = 'TOOLCH
 	IF runTimer.Q THEN
 		// Increment operating hours (timeInterval is in seconds, convert to hours)
 		GVL_OperationCounter.totalRunHours := GVL_OperationCounter.totalRunHours + TIME_TO_REAL(elapsedTime) / 3600000.0;
+		IF SpindleIsOn THEN
+			IF currentTool = 0 THEN
+				GVL_OperationCounter.totalSawBladeHoursSinceChanged := GVL_OperationCounter.totalSawBladeHoursSinceChanged + TIME_TO_REAL(elapsedTime) / 3600000.0;
+			ELSIF currenttool = 2 THEN
+				GVL_OperationCounter.totalQuarterInchHoursSinceChanged := GVL_OperationCounter.totalQuarterInchHoursSinceChanged + TIME_TO_REAL(elapsedTime) / 3600000.0;
+			ELSIF currenttool = 4 THEN
+				GVL_OperationCounter.totalHalfInchHoursSinceChanged := GVL_OperationCounter.totalHalfInchHoursSinceChanged + TIME_TO_REAL(elapsedTime) / 3600000.0;
+			END_IF
+		END_IF
 		// Reset timer
 		runTimer(IN := FALSE);
 		runTimer(IN := TRUE);
@@ -37,9 +54,19 @@ IF stateString = 'RUN' OR stateString = 'TOOLCHANGERUN' OR stateString = 'TOOLCH
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="FB_OperatingCounter">
-      <LineId Id="48" Count="1" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="68" Count="2" />
+      <LineId Id="49" Count="0" />
       <LineId Id="33" Count="0" />
-      <LineId Id="37" Count="10" />
+      <LineId Id="37" Count="7" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="79" Count="1" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="45" Count="2" />
       <LineId Id="35" Count="1" />
     </LineIds>
   </POU>

@@ -4,6 +4,9 @@
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL PERSISTENT
 	totalRunHours : LREAL := 0;
+	totalSawBladeHoursSinceChanged : REAL := 0;
+	totalHalfInchHoursSinceChanged : REAL := 0;
+	totalQuarterInchHoursSinceChanged : REAL := 0;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

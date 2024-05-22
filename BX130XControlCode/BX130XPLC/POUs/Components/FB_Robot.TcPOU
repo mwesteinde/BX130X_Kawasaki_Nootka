@@ -85,6 +85,7 @@ VAR
 	outRobotMoveZ					: BOOL; // Signal 1032
 	outRobotMovePositive			: BOOL; // Signal 1033
 	outRobotBoardWidth51Inches			: BOOL; //Signal 1034
+	outRobotManualMoveDistance				: USINT; //Signal 1035-1037
 	
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
@@ -383,7 +384,7 @@ joints[4] := ((UINT_TO_LREAL(jt4_pose_2)*256 + UINT_TO_LREAL(jt4_pose_1) - 40000
 joints[5] := ((UINT_TO_LREAL(jt5_pose_2)*256 + UINT_TO_LREAL(jt5_pose_1) - 40000)/100);
 joints[6] := ((UINT_TO_LREAL(jt6_pose_2)*256 + UINT_TO_LREAL(jt6_pose_1) - 40000)/100);
 
-zpose := ((UINT_TO_LREAL(ztool_pose_2)*256 + UINT_TO_LREAL(ztool_pose_1) - 4000));
+zpose := ((UINT_TO_LREAL(ztool_pose_2)*256 + UINT_TO_LREAL(ztool_pose_1) - 30000)/10);
 
 dustBoot(Data := dustBoot_Data);
 Result(Data := Result_Data);
@@ -474,6 +475,10 @@ sigs10251032.6 := outRobotMoveY; //1031
 sigs10251032.7 := outRobotMoveZ; //1032
 sigs10331040.0 := outRobotMovePositive; //1033
 sigs10331040.1 := outRobotBoardWidth51Inches; //1034
+sigs10331040.2 := outRobotManualMoveDistance.0; //1035
+sigs10331040.3 := outRobotManualMoveDistance.1; //1036
+sigs10331040.4 := outRobotManualMoveDistance.2; //1037
+
 
 
 inRobotMotorOn := sigs97104.0; //97
@@ -669,6 +674,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="157" Count="0" />
       <LineId Id="163" Count="3" />
       <LineId Id="176" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="188" Count="1" />
+      <LineId Id="187" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="55" Count="6" />

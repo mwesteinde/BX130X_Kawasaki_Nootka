@@ -93,6 +93,12 @@ VAR
 	bHMIMoveRobotZplus : BOOL;
 	bHMIEnableMovement : BOOL;
 	rTrigEnableMovement : R_TRIG;
+	bHMICalibrateTool : BOOL;
+	rTrigCalibrateTool : R_TRIG;
+	fTrigCalibrateTool : F_TRIG;
+	bHMIToolatPlastic : BOOL;
+	rTrigToolatPlastic : R_TRIG;
+	toolToCalibrate : Tool_Type;
 	
 	// settings.content indicators
 	sHMISettingsMessage : STRING(80);
@@ -177,7 +183,7 @@ END_VAR
 	fbEnclosure();
 	fbSpindle();
 	fbTorqueSensor();
-	fbOperatingCounter(stateString := sHMIeSystemStateString);
+	fbOperatingCounter(stateString := sHMIeSystemStateString, currentTool := fbSpindle.CurrentTool.toolNumber, SpindleIsOn := NOT fbSpindle.SpindleIsStopped);
 	
 	//Safety
 	ErrorAcknowledge := safetyPLCError OR safetyPLCEStopOut OR safetyPLCComErr OR safetyPLCFBErr OR safetyPLCOtherErr;
@@ -197,6 +203,9 @@ END_VAR
 	rTrigChangeTool(CLK := bHMIChangeTool);
 	rTrigGoToCleanupRobot(CLK := bHMIGoToCleanupPosition);
 	rTrigEnableMovement(CLK := bHMIEnableMovement);
+	rTrigToolatPlastic(CLK := bHMIToolatPlastic);
+	rTrigCalibrateTool(CLK := bHMICalibrateTool);
+	fTrigCalibrateTool(CLK := bHMICalibrateTool);
 	
 	fTrigOpenCloseDoor(CLK := bHMIOpenCloseDoor);
 	fTrigUnlockTables(CLK := bHMILockTables);
@@ -299,6 +308,17 @@ CASE eSystemState OF
 				bHMIChangeTool := FALSE;
 			END_IF
 		END_IF
+		
+//		IF rTrigLoadNewSawblade.Q THEN
+//			toolToCalibrate := GVL_Programs.sawblade;
+//			eSystemState := E_MachineState.TOOLCALIBRATION;
+//		ELSIF rTrigLoadNewHalfInch.Q THEN
+//			toolToCalibrate := GVL_Programs.halfInchUpcut;
+//			eSystemState := E_MachineState.TOOLCALIBRATION;
+//		ELSIF rTrigLoadNewQuarterInch.Q THEN
+//			toolToCalibrate := GVL_Programs.quarterInchUpcut;
+//			eSystemState := E_MachineState.TOOLCALIBRATION;
+//		END_IF
 		
 	E_MachineState.RUN:
 		timerRun(IN := TRUE, PT := T#10S);
@@ -601,15 +621,6 @@ ELSE
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Operating_ManualMove" Id="{e062f620-36f2-4ef0-9468-9f06db1c52fd}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD Operating_ManualMove
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Operating_Reset" Id="{409ce780-c7de-4e8c-a0bb-25edc8e53879}" FolderPath="StateMachine\">
       <Declaration><![CDATA[METHOD Operating_Reset
 VAR_INPUT
@@ -705,6 +716,24 @@ ELSE
 	fbGantry.Cylinder_Set_Cutting();
 END_IF
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_RunManual" Id="{ba107e66-1b70-43ab-bb4f-9d604c51a4ec}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_RunManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Operating_ToolCalibration" Id="{e062f620-36f2-4ef0-9468-9f06db1c52fd}" FolderPath="StateMachine\">
+      <Declaration><![CDATA[METHOD Operating_ToolCalibration
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operating_ToolChangeInit" Id="{a53a4ada-9fc9-4809-accd-3119d32560e7}" FolderPath="StateMachine\">
@@ -909,8 +938,8 @@ END_VAR
 	E_MachineState.INITIALIZATION:
 		Operating_Initialization();
 	
-//	E_MachineState.MANUALMOVE:
-//		Operating_ManualMove(); //TODO: Implement
+	E_MachineState.TOOLCALIBRATION:
+		Operating_ToolCalibration();
 		
 	E_MachineState.RUN:
 		Operating_Run();
@@ -926,6 +955,9 @@ END_VAR
 		
 	E_MachineState.TOOLCHANGEINIT:
 		Operating_ToolChangeInit();
+		
+	E_MachineState.RUNMANUAL:
+		Operating_RunManual(); //TODO: Implement
 END_CASE]]></ST>
       </Implementation>
     </Method>
@@ -1012,6 +1044,8 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="807" Count="0" />
       <LineId Id="2371" Count="0" />
       <LineId Id="2675" Count="0" />
+      <LineId Id="2971" Count="0" />
+      <LineId Id="3127" Count="1" />
       <LineId Id="589" Count="0" />
       <LineId Id="356" Count="2" />
       <LineId Id="353" Count="0" />
@@ -1081,6 +1115,14 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="308" Count="0" />
       <LineId Id="299" Count="0" />
       <LineId Id="126" Count="0" />
+      <LineId Id="531" Count="1" />
+      <LineId Id="538" Count="1" />
+      <LineId Id="533" Count="0" />
+      <LineId Id="537" Count="0" />
+      <LineId Id="540" Count="0" />
+      <LineId Id="535" Count="1" />
+      <LineId Id="541" Count="0" />
+      <LineId Id="534" Count="0" />
       <LineId Id="16" Count="1" />
       <LineId Id="434" Count="0" />
       <LineId Id="277" Count="0" />
@@ -1303,9 +1345,6 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="264" Count="0" />
       <LineId Id="263" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Machine.Operating_ManualMove">
-      <LineId Id="5" Count="0" />
-    </LineIds>
     <LineIds Name="FB_Machine.Operating_Reset">
       <LineId Id="5" Count="0" />
       <LineId Id="9" Count="0" />
@@ -1357,6 +1396,12 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="172" Count="0" />
       <LineId Id="171" Count="0" />
       <LineId Id="165" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_RunManual">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Machine.Operating_ToolCalibration">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Operating_ToolChangeInit">
       <LineId Id="39" Count="0" />
@@ -1463,6 +1508,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="11" Count="12" />
       <LineId Id="28" Count="2" />
       <LineId Id="35" Count="2" />
+      <LineId Id="42" Count="2" />
       <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Update_Program_String">

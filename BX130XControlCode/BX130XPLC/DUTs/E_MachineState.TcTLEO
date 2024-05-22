@@ -11,9 +11,10 @@ TYPE E_MachineState :
 	HOLD 			:= 2,
 	ERROR	 		:= 3,
 	RESET			:= 4,
-	MANUALMOVE  	:= 5,
+	TOOLCALIBRATION := 5,
 	TOOLCHANGERUN	:= 6,
-	TOOLCHANGEINIT 	:= 7
+	TOOLCHANGEINIT 	:= 7,
+	RUNMANUAL		:= 8
 );
 END_TYPE
 ]]></Declaration>
@@ -47,7 +48,7 @@ END_TYPE
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"MANUALMOVE"</v>
+              <v n="TextID">"TOOLCALIBRATION"</v>
               <v n="TextDefault">"5"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
@@ -59,6 +60,11 @@ END_TYPE
             <o>
               <v n="TextID">"TOOLCHANGEINIT"</v>
               <v n="TextDefault">"7"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"RUNMANUAL"</v>
+              <v n="TextDefault">"8"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

@@ -107,6 +107,81 @@
                 }
             },
             "type": "object"
+        },
+        "C1007.Tool_Type": {
+            "properties": {
+                "modelName": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                        },
+                        {
+                            "propertyOrder": 3
+                        }
+                    ]
+                },
+                "name": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                        },
+                        {
+                            "propertyOrder": 4
+                        }
+                    ]
+                },
+                "speed": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/INT"
+                        },
+                        {
+                            "propertyOrder": 1
+                        }
+                    ]
+                },
+                "toolNumber": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/INT"
+                        },
+                        {
+                            "propertyOrder": 2
+                        }
+                    ]
+                },
+                "x_coord": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/INT"
+                        },
+                        {
+                            "propertyOrder": 5
+                        }
+                    ]
+                },
+                "y_coord": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/INT"
+                        },
+                        {
+                            "propertyOrder": 6
+                        }
+                    ]
+                },
+                "z_coord": {
+                    "allOf": [
+                        {
+                            "$ref": "tchmi:general#/definitions/INT"
+                        },
+                        {
+                            "propertyOrder": 7
+                        }
+                    ]
+                }
+            },
+            "type": "object"
         }
     },
     "DEFLATECOMPRESSIONLEVEL": 5,
@@ -1351,6 +1426,70 @@
             },
             "USEMAPPING": true
         },
+        "C1007.GVL_Programs.dovetail": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Programs::dovetail",
+            "SCHEMA": {
+                "$ref": "tchmi:server#/definitions/C1007.Tool_Type"
+            },
+            "USEMAPPING": true
+        },
+        "C1007.GVL_Programs.halfInchUpcut": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Programs::halfInchUpcut",
+            "SCHEMA": {
+                "$ref": "tchmi:server#/definitions/C1007.Tool_Type"
+            },
+            "USEMAPPING": true
+        },
+        "C1007.GVL_Programs.noTool": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Programs::noTool",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "comment": "quarterInchBall : Tool_Type := (speed := 18000, toolNumber := 7, modelname := 'Dimar', name := 'Quarter Inch Ball');"
+                    },
+                    {
+                        "$ref": "tchmi:server#/definitions/C1007.Tool_Type"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.GVL_Programs.quarterInchUpcut": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Programs::quarterInchUpcut",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "comment": "================= Tool Types ====================================\r\nTODO: change"
+                    },
+                    {
+                        "$ref": "tchmi:server#/definitions/C1007.Tool_Type"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.GVL_Programs.sawblade": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::GVL_Programs::sawblade",
+            "SCHEMA": {
+                "$ref": "tchmi:server#/definitions/C1007.Tool_Type"
+            },
+            "USEMAPPING": true
+        },
         "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1910,6 +2049,40 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.fbOperatingCounter.totalHalfInchHoursRounded": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbOperatingCounter::totalHalfInchHoursRounded",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 9
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbOperatingCounter.totalQuarterInchHoursRounded": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbOperatingCounter::totalQuarterInchHoursRounded",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1922,6 +2095,23 @@
                     },
                     {
                         "propertyOrder": 5
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbOperatingCounter.totalSawbladeHoursRounded": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbOperatingCounter::totalSawbladeHoursRounded",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 8
                     }
                 ]
             },
@@ -1940,6 +2130,42 @@
                     {
                         "comment": "Signal 100",
                         "propertyOrder": 17
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbRobot.outRobotJogDistance": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbRobot::outRobotJogDistance",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/USINT"
+                    },
+                    {
+                        "comment": "Signal 1035-1037",
+                        "propertyOrder": 73
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbRobot.outRobotManualMoveDistance": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbRobot::outRobotManualMoveDistance",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/USINT"
+                    },
+                    {
+                        "comment": "Signal 1035-1037",
+                        "propertyOrder": 73
                     }
                 ]
             },
@@ -5114,6 +5340,11 @@
                 "C1007.GVL_Axes.AxisWest.NcToPlc.ActPos": 3,
                 "C1007.GVL_Axes.AxisWest.Status.Homed": 3,
                 "C1007.GVL_OperationCounter.totalRunHours": 3,
+                "C1007.GVL_Programs.dovetail": 3,
+                "C1007.GVL_Programs.halfInchUpcut": 3,
+                "C1007.GVL_Programs.noTool": 3,
+                "C1007.GVL_Programs.quarterInchUpcut": 3,
+                "C1007.GVL_Programs.sawblade": 3,
                 "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
@@ -5146,8 +5377,13 @@
                 "C1007.MAIN.fbMachine.fbEnclosure.cylinderTableWest": 3,
                 "C1007.MAIN.fbMachine.fbGantry.lengthWood": 3,
                 "C1007.MAIN.fbMachine.fbGantry.testLight": 3,
+                "C1007.MAIN.fbMachine.fbOperatingCounter.totalHalfInchHoursRounded": 3,
+                "C1007.MAIN.fbMachine.fbOperatingCounter.totalQuarterInchHoursRounded": 3,
                 "C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded": 3,
+                "C1007.MAIN.fbMachine.fbOperatingCounter.totalSawbladeHoursRounded": 3,
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
+                "C1007.MAIN.fbMachine.fbRobot.outRobotJogDistance": 3,
+                "C1007.MAIN.fbMachine.fbRobot.outRobotManualMoveDistance": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": 3,
