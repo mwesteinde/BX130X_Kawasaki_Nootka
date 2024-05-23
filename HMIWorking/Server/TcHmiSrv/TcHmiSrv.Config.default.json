@@ -1558,6 +1558,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMICalibrateTool": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMICalibrateTool",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 72
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIChangeTool": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1921,6 +1938,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIToolatPlastic": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIToolatPlastic",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 75
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.boardWidthIs51inches": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2171,6 +2205,57 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.fbRobot.robotPose.xPose": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbRobot::robotPose::xPose",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/LREAL"
+                    },
+                    {
+                        "propertyOrder": 1
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbRobot.robotPose.yPose": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbRobot::robotPose::yPose",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/LREAL"
+                    },
+                    {
+                        "propertyOrder": 2
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbRobot.robotPose.zPose": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbRobot::robotPose::zPose",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/LREAL"
+                    },
+                    {
+                        "propertyOrder": 3
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2252,6 +2337,23 @@
                     },
                     {
                         "propertyOrder": 20
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.fbTorqueSensor.sHMIyForce": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbTorqueSensor::sHMIyForce",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 16
                     }
                 ]
             },
@@ -2432,6 +2534,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.sHMIGantryPosition": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIGantryPosition",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 78
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.sHMIIsError": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2568,6 +2687,23 @@
                     {
                         "comment": "settings.content indicators",
                         "propertyOrder": 68
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIToolToCalibrate": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIToolToCalibrate",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:server#/definitions/C1007.Tool_Type"
+                    },
+                    {
+                        "propertyOrder": 77
                     }
                 ]
             },
@@ -5349,6 +5485,7 @@
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
                 "C1007.MAIN.fbMachine.HMILeaveRunScreen": 3,
+                "C1007.MAIN.fbMachine.bHMICalibrateTool": 3,
                 "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
                 "C1007.MAIN.fbMachine.bHMIEnableButtons": 3,
                 "C1007.MAIN.fbMachine.bHMIEnableInitialization": 3,
@@ -5370,6 +5507,7 @@
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIStart": 3,
                 "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
+                "C1007.MAIN.fbMachine.bHMIToolatPlastic": 3,
                 "C1007.MAIN.fbMachine.boardWidthIs51inches": 3,
                 "C1007.MAIN.fbMachine.eSystemState": 3,
                 "C1007.MAIN.fbMachine.escapeRunScreenEnable": 3,
@@ -5384,11 +5522,15 @@
                 "C1007.MAIN.fbMachine.fbRobot.inRobotAtHome": 3,
                 "C1007.MAIN.fbMachine.fbRobot.outRobotJogDistance": 3,
                 "C1007.MAIN.fbMachine.fbRobot.outRobotManualMoveDistance": 3,
+                "C1007.MAIN.fbMachine.fbRobot.robotPose.xPose": 3,
+                "C1007.MAIN.fbMachine.fbRobot.robotPose.yPose": 3,
+                "C1007.MAIN.fbMachine.fbRobot.robotPose.zPose": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.modelName": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization": 3,
+                "C1007.MAIN.fbMachine.fbTorqueSensor.sHMIyForce": 3,
                 "C1007.MAIN.fbMachine.popUpAutoReset": 3,
                 "C1007.MAIN.fbMachine.popupMessage": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,
@@ -5399,6 +5541,7 @@
                 "C1007.MAIN.fbMachine.sHMIDoorStatus": 3,
                 "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
                 "C1007.MAIN.fbMachine.sHMIErrorDisplay": 3,
+                "C1007.MAIN.fbMachine.sHMIGantryPosition": 3,
                 "C1007.MAIN.fbMachine.sHMIIsError": 3,
                 "C1007.MAIN.fbMachine.sHMILastErrorMessage": 3,
                 "C1007.MAIN.fbMachine.sHMIPneumaticsOK": 3,
@@ -5407,6 +5550,7 @@
                 "C1007.MAIN.fbMachine.sHMIRobotHomed": 3,
                 "C1007.MAIN.fbMachine.sHMIRollersActivated": 3,
                 "C1007.MAIN.fbMachine.sHMISettingsMessage": 3,
+                "C1007.MAIN.fbMachine.sHMIToolToCalibrate": 3,
                 "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,
                 "C1007.MAIN.fbMachine.sHMIeSystemStateString": 3,
                 "C1007.MAIN.fbMachine.sProgramString": 3,

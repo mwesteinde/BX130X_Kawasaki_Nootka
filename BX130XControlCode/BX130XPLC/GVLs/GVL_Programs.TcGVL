@@ -20,6 +20,9 @@ VAR_GLOBAL
 	Option3 : Program_Type := (index := 2, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := quarterInchUpcut);
 	Option4 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := quarterInchUpcut);
 	ToolChange : Program_Type := (index := 10, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'ToolChange', firstTool := quarterInchUpcut);
+
+	//=============== Constants ===
+	calibrationPlasticZHeight : REAL := 493.3;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

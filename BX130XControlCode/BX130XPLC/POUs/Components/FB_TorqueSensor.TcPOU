@@ -15,12 +15,15 @@ VAR
 	TxCounts AT %I* : DINT;
 	TyCounts AT %I* : DINT;
 	TzCounts AT %I* : DINT;
+	controlCode1 AT %Q* : DINT;
 	xForce	: LREAL;
 	yForce : LREAL;
 	zForce : LREAL;
 	xTorque : LREAL;
 	yTorque : LREAL;
 	zTorque : LREAL;
+	sHMIyForce : INT;
+	countCalibration : INT := 0;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -29,13 +32,43 @@ yForce := FyCounts / countsPerForce;
 zForce := FzCounts / countsPerForce;
 xTorque := TxCounts / countsPerTorque;
 yTorque := TyCounts / countsPerTorque;
-zTorque := TzCounts / countsPerTorque;]]></ST>
+zTorque := TzCounts / countsPerTorque;
+
+sHMIyForce := LREAL_TO_INT(yForce);
+
+IF controlCode1 = 1  THEN
+	countCalibration := countCalibration + 1;
+	IF countCalibration > 1 THEN
+		controlCode1 := 0;
+		countCalibration := 0;
+	END_IF
+END_IF]]></ST>
     </Implementation>
+    <Method Name="Zero_ForceSensor" Id="{839aef3a-e520-493c-b7e0-caa2a33b5cef}">
+      <Declaration><![CDATA[METHOD Zero_ForceSensor : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[controlCode1 := 1;]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_TorqueSensor">
       <LineId Id="9" Count="0" />
       <LineId Id="31" Count="1" />
       <LineId Id="34" Count="1" />
       <LineId Id="33" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="66" Count="2" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="61" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TorqueSensor.Zero_ForceSensor">
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

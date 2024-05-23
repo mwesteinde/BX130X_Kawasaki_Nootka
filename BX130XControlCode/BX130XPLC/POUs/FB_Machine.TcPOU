@@ -98,10 +98,13 @@ VAR
 	fTrigCalibrateTool : F_TRIG;
 	bHMIToolatPlastic : BOOL;
 	rTrigToolatPlastic : R_TRIG;
-	toolToCalibrate : Tool_Type;
+	sHMIToolToCalibrate : Tool_Type;
+	sHMIGantryPosition : INT;
 	
 	// settings.content indicators
 	sHMISettingsMessage : STRING(80);
+	
+	
 	// selectProgram.content inputs
 	programWallChoice	: USINT; // 1 for front wall, 2 for back wall, 10 for option 3-16 for additional options
 	programOption1		: BOOL; //Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window
@@ -160,6 +163,7 @@ END_VAR
 	sHMIRobotHomed := fbRobot.inRobotAtHome;
 	sHMIRollersActivated := bActivateRollers AND GVL_Axes.AxisWest.Status.Homed;
 	sHMIeStopsOff := NOT fbRobot.inRobotError;
+	sHMIGantryPosition := REAL_TO_INT(GVL_Axes.AxisWest.NcToPlc.ActPos);
 	IF fbSpindle.toolSelectedAtInitialization THEN
 		sHMICurrentTool := fbSpindle.currentTool.toolNumber;
 	END_IF
@@ -241,6 +245,7 @@ END_VAR
 VAR
 	errorState : Structure_Error;
 	temp: BOOL;
+	gantryError : Structure_Error;
 END_VAR
 
 
@@ -253,15 +258,18 @@ IF overrideErrors = TRUE THEN
 END_IF
 
 IF errorState.isError AND eSystemState <> E_MachineState.RESET AND eSystemState <> E_MachineState.ERROR THEN
-	escapeRunScreenEnable := TRUE;
-	eSystemState := E_MachineState.ERROR;
-	Popup_Error(errorState.errorMessage, TRUE);
-	fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
-	eSystemState := E_MachineState.ERROR; 
-	bHMIStart := FALSE;
-	bHMIHold := FALSE;
-	bHMIRaiseRollersRunScreen := FALSE;
-	timerRun(IN := FALSE, PT := T#10S);
+	IF NOT (errorState.errorType.2 <> 1 AND eSystemState = E_MachineState.INITIALIZATION) THEN
+		escapeRunScreenEnable := TRUE;
+		eSystemState := E_MachineState.ERROR;
+		Popup_Error(errorState.errorMessage, TRUE);
+		fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
+		eSystemState := E_MachineState.ERROR; 
+		bHMIStart := FALSE;
+		bHMIHold := FALSE;
+		bHMICalibrateTool := FALSE;
+		bHMIRaiseRollersRunScreen := FALSE;
+		timerRun(IN := FALSE, PT := T#10S);
+	END_IF
 END_IF
 
 CASE eSystemState OF
@@ -309,16 +317,44 @@ CASE eSystemState OF
 			END_IF
 		END_IF
 		
-//		IF rTrigLoadNewSawblade.Q THEN
-//			toolToCalibrate := GVL_Programs.sawblade;
-//			eSystemState := E_MachineState.TOOLCALIBRATION;
-//		ELSIF rTrigLoadNewHalfInch.Q THEN
-//			toolToCalibrate := GVL_Programs.halfInchUpcut;
-//			eSystemState := E_MachineState.TOOLCALIBRATION;
-//		ELSIF rTrigLoadNewQuarterInch.Q THEN
-//			toolToCalibrate := GVL_Programs.quarterInchUpcut;
-//			eSystemState := E_MachineState.TOOLCALIBRATION;
-//		END_IF
+		IF rTrigCalibrateTool.Q THEN
+			IF sHMIToolToCalibrate.toolNumber = GVL_Programs.sawblade.toolNumber THEN
+				fbRobot.Program_Select(programChoice := 14, option1 := FALSE, programOption2, programOption3, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+			ELSE
+				fbRobot.Program_Select(programChoice := 14, option1 := TRUE, programOption2, programOption3, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+			END_IF
+			gantryError := fbGantry.Home_Servos(robotPose := fbRobot.robotPose);
+			IF gantryError.isError THEN
+				Popup_Error('Robot too low to home or axis not coupled properly', TRUE);
+			ELSE
+				fbTorqueSensor.Zero_ForceSensor();
+				fbRobot.Start_Robot();
+				eSystemState := E_MachineState.TOOLCALIBRATION;
+			END_IF
+		END_IF
+		
+	E_MachineState.TOOLCALIBRATION:
+		escapeRunScreenEnable := FALSE;
+		IF fTrigCalibrateTool.Q THEN
+			fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+			eSystemState := E_MachineState.INITIALIZATION;
+			bHMICalibrateTool := FALSE;
+		END_IF
+		
+		IF rTrigResetErrors.Q THEN
+			startTimerReset := TRUE;
+			eSystemState := E_MachineState.RESET;
+			fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+			bHMICalibrateTool := FALSE;
+		END_IF
+		
+		IF rTrigToolatPlastic.Q THEN
+			Popup_Error(CONCAT('Shift tool by ',REAL_TO_STRING(fbRobot.robotPose.zPose - GVL_Programs.calibrationPlasticZHeight)), TRUE);
+			fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+			eSystemState := E_MachineState.INITIALIZATION;
+			bHMICalibrateTool := FALSE;
+		END_IF
+		
 		
 	E_MachineState.RUN:
 		timerRun(IN := TRUE, PT := T#10S);
@@ -596,6 +632,8 @@ IF rTrigEnableMovement.Q THEN
 	fbRobot.Start_Robot();
 END_IF
 
+
+
 //Make sure that the robot has received the program selected request
 IF fbRobot.outRobotProgramSelected AND fbRobot.outRobotProgramChoice <> fbRobot.inRobotCurrentProgram THEN
 	timerProgramIsSelected(IN := TRUE, PT := T#0.5S);
@@ -733,7 +771,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[fbRobot.Robot_Manual_Control(bHMIMoveRobotXneg, bHMIMoveRobotXplus, bHMIMoveRobotYneg, bHMIMoveRobotYplus, bHMIMoveRobotZneg,bHMIMoveRobotZplus); ]]></ST>
       </Implementation>
     </Method>
     <Method Name="Operating_ToolChangeInit" Id="{a53a4ada-9fc9-4809-accd-3119d32560e7}" FolderPath="StateMachine\">
@@ -1013,6 +1051,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="1017" Count="0" />
       <LineId Id="605" Count="3" />
       <LineId Id="610" Count="0" />
+      <LineId Id="3280" Count="0" />
       <LineId Id="1761" Count="2" />
       <LineId Id="1998" Count="0" />
       <LineId Id="2245" Count="1" />
@@ -1072,12 +1111,16 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="227" Count="3" />
       <LineId Id="165" Count="0" />
       <LineId Id="283" Count="0" />
+      <LineId Id="581" Count="0" />
       <LineId Id="166" Count="0" />
       <LineId Id="328" Count="0" />
       <LineId Id="167" Count="1" />
       <LineId Id="276" Count="0" />
-      <LineId Id="520" Count="1" />
+      <LineId Id="520" Count="0" />
+      <LineId Id="596" Count="0" />
+      <LineId Id="521" Count="0" />
       <LineId Id="433" Count="0" />
+      <LineId Id="582" Count="0" />
       <LineId Id="163" Count="0" />
       <LineId Id="54" Count="0" />
       <LineId Id="10" Count="0" />
@@ -1115,14 +1158,36 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="308" Count="0" />
       <LineId Id="299" Count="0" />
       <LineId Id="126" Count="0" />
-      <LineId Id="531" Count="1" />
-      <LineId Id="538" Count="1" />
-      <LineId Id="533" Count="0" />
-      <LineId Id="537" Count="0" />
-      <LineId Id="540" Count="0" />
-      <LineId Id="535" Count="1" />
-      <LineId Id="541" Count="0" />
+      <LineId Id="531" Count="0" />
       <LineId Id="534" Count="0" />
+      <LineId Id="554" Count="2" />
+      <LineId Id="558" Count="0" />
+      <LineId Id="557" Count="0" />
+      <LineId Id="583" Count="0" />
+      <LineId Id="574" Count="1" />
+      <LineId Id="577" Count="0" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="578" Count="1" />
+      <LineId Id="576" Count="0" />
+      <LineId Id="552" Count="0" />
+      <LineId Id="560" Count="1" />
+      <LineId Id="580" Count="0" />
+      <LineId Id="563" Count="1" />
+      <LineId Id="566" Count="0" />
+      <LineId Id="594" Count="0" />
+      <LineId Id="565" Count="0" />
+      <LineId Id="598" Count="0" />
+      <LineId Id="600" Count="2" />
+      <LineId Id="604" Count="0" />
+      <LineId Id="603" Count="0" />
+      <LineId Id="599" Count="0" />
+      <LineId Id="567" Count="1" />
+      <LineId Id="571" Count="0" />
+      <LineId Id="573" Count="0" />
+      <LineId Id="569" Count="0" />
+      <LineId Id="595" Count="0" />
+      <LineId Id="570" Count="0" />
+      <LineId Id="562" Count="0" />
       <LineId Id="16" Count="1" />
       <LineId Id="434" Count="0" />
       <LineId Id="277" Count="0" />
@@ -1324,6 +1389,8 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="241" Count="0" />
       <LineId Id="243" Count="0" />
       <LineId Id="242" Count="0" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="295" Count="0" />
       <LineId Id="270" Count="0" />
       <LineId Id="259" Count="0" />
       <LineId Id="258" Count="0" />
