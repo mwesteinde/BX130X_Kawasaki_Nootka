@@ -12,13 +12,13 @@
   "color": "rgba(0, 0, 0, 1)"
 }
 </script>
-<div id="TextSettingsScreen" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Settings and Manual Move" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="274" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
+<div id="TextSettingsScreen" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Settings and Manual Move" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="352" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="30">
 </div>
 <div id="TcHmiButtonMoveAxisNorth" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Move North (Away from Operator)" data-tchmi-top="109" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIMoveServosNorth%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
 </div>
 <div id="TcHmiButtonMoveAxisSouth" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Move South (Towards Operator)" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIMoveServosSouth%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
 </div>
-<div id="TcHmiGantryPosition" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%f%'Gantry Position: '+%s%C1007.MAIN.fbMachine.sHMIGantryPosition%/s%+'mm'%/f%" data-tchmi-top="69" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TcHmiGantryPosition" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="%f%'Gantry position: ' +Math.round(%s%C1007.GVL_Axes.AxisWest.NcToPlc.ActPos%/s%)+'mm'%/f%" data-tchmi-top="69" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 <div id="TcHmiButtonMoveRobotX+" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="120" data-tchmi-left-unit="px" data-tchmi-text="X+ (East)" data-tchmi-top="277" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIMoveRobotXplus%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
 </div>
@@ -46,7 +46,7 @@
 </div>
 <div id="TcHmiButtonHoldToEnable" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="670" data-tchmi-left-unit="px" data-tchmi-text="Hold To Enable Motion" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
 </div>
-<div id="TcHmiSettingsDisplayMessage" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="294" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.sHMISettingsMessage%/s%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="336" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TcHmiSettingsDisplayMessage" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="53" data-tchmi-height-unit="px" data-tchmi-left="460" data-tchmi-left-unit="px" data-tchmi-text="%s%C1007.MAIN.fbMachine.sHMISettingsMessage%/s%" data-tchmi-top="10" data-tchmi-top-unit="px" data-tchmi-width="170" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 <div id="TcHmiTextblockRobotManualSpeed" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="230" data-tchmi-left-unit="px" data-tchmi-text="Manual Move Distance" data-tchmi-top="327" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>

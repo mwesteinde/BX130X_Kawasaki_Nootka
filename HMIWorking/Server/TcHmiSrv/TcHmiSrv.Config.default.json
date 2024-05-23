@@ -2325,6 +2325,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.fbSpindle.spindleTorque": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::fbSpindle::spindleTorque",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 35
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -5529,6 +5546,7 @@
                 "C1007.MAIN.fbMachine.fbSpindle.currentTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.requestedTool.name": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.spindleIsWarm": 3,
+                "C1007.MAIN.fbMachine.fbSpindle.spindleTorque": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization": 3,
                 "C1007.MAIN.fbMachine.fbTorqueSensor.sHMIyForce": 3,
                 "C1007.MAIN.fbMachine.popUpAutoReset": 3,

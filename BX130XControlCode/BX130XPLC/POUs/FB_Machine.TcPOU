@@ -99,7 +99,6 @@ VAR
 	bHMIToolatPlastic : BOOL;
 	rTrigToolatPlastic : R_TRIG;
 	sHMIToolToCalibrate : Tool_Type;
-	sHMIGantryPosition : INT;
 	
 	// settings.content indicators
 	sHMISettingsMessage : STRING(80);
@@ -163,7 +162,7 @@ END_VAR
 	sHMIRobotHomed := fbRobot.inRobotAtHome;
 	sHMIRollersActivated := bActivateRollers AND GVL_Axes.AxisWest.Status.Homed;
 	sHMIeStopsOff := NOT fbRobot.inRobotError;
-	sHMIGantryPosition := REAL_TO_INT(GVL_Axes.AxisWest.NcToPlc.ActPos);
+
 	IF fbSpindle.toolSelectedAtInitialization THEN
 		sHMICurrentTool := fbSpindle.currentTool.toolNumber;
 	END_IF
