@@ -195,7 +195,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleStartStop::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -290,7 +290,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -347,7 +347,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -404,7 +404,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -461,7 +461,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -518,7 +518,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -591,7 +591,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -817,7 +817,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -874,7 +874,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -931,7 +931,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -988,7 +988,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -1045,7 +1045,7 @@
                   "objectType": "StaticValue",
                   "valueType": "tchmi:framework#/definitions/Color",
                   "value": {
-                    "color": "rgba(249, 23, 23, 1)"
+                    "color": "rgba(232, 232, 0, 1)"
                   }
                 },
                 "asyncWait": true
@@ -1266,5 +1266,7 @@
   }
 ]
 </script>
+</div>
+<div id="TcHmiTextblock_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="52" data-tchmi-height-unit="px" data-tchmi-left="223" data-tchmi-left-unit="px" data-tchmi-text="%f%'Spindle torque: ' + %s%C1007.MAIN.fbMachine.fbSpindle.spindleTorque%/s% %/f%" data-tchmi-top="163" data-tchmi-top-unit="px" data-tchmi-width="184" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 </div>

@@ -38,6 +38,7 @@ VAR
 	pressureSwitchHoldDown	AT %I* : BOOL;
 	pressureSwitchTableClamps AT %I* : BOOL;
 	pressureSwitchTimer : TON;
+	allRollersLowered : BOOL;
 	
 	//Pneumatic switches
 	
@@ -61,6 +62,8 @@ END_VAR
     <Implementation>
       <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
 GVL_Axes.AxisEast.ReadStatus();
+
+allRollersLowered := NOT(cylindersNorth OR cylindersCentreNorth OR cylindersCentreSouth OR cylindersSouth); 
 	
 // Movement functions
 Servo_Commands();
@@ -136,15 +139,13 @@ positionNorthCornerDustBoot := (robotPoseGantry.yPoseDustBootNorth - GVL_SERVO_R
 positionSouthCornerDustBoot := (robotPoseGantry.yPoseDustBootSouth - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
 
 //Checking if robot is too far away from rollers and above rollers - will hold robot if so
-IF (positionNorthCornerDustBoot < (GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.ROLLERS_SPACING/2 + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) OR 
-	positionSouthCornerDustBoot > (GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.ROLLERS_SPACING/2 - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD)) 
+IF (positionNorthCornerDustBoot < (GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2 + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) OR 
+	positionSouthCornerDustBoot > (GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2 - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD)) 
 	AND (robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT) THEN
 	Follow_Robot := FALSE; //Gantry isn't following, hold robot
 ELSE
 	Follow_Robot := TRUE; //Gantry is following properly, keep robot on run
 END_IF
-
-//Checking if robot is too far away from rollers and below rollers - TODO: stop robot if past
 
 IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
 	targetPosition := GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST;
@@ -174,6 +175,57 @@ IF GVL_Axes.AxisWest.Status.Homed THEN
 		Deceleration:= decel,
 		Jerk:= jer, 
 		BufferMode:= Aborting);
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Gantry_Follow_Error" Id="{3bf528b2-7bd3-4e86-b29d-60ca1932044b}">
+      <Declaration><![CDATA[METHOD Gantry_Follow_Error : BOOL
+VAR_INPUT
+	robotPoseGantry : Structure_RobotPose;
+	allRollersLowered : BOOL;
+	rollersInFollow : BOOL; //If follow robot is activated, 
+END_VAR
+VAR
+	positionNorthCornerDustBoot: REAL;
+	positionSouthCornerDustBoot: REAL;
+	heightThreshold : REAL;
+	northRollersNorthEdge : REAL;
+	northRollersSouthEdge : REAL;
+	southRollersNorthEdge : REAL;
+	southRollersSouthEdge : REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[positionNorthCornerDustBoot := (robotPoseGantry.yPoseDustBootNorth - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+positionSouthCornerDustBoot := (robotPoseGantry.yPoseDustBootSouth - GVL_SERVO_ROBOT_CONST.MIN_POS_ROBOT) * GVL_SERVO_ROBOT_CONST.DIFFERENCE_SERVOWEST/GVL_SERVO_ROBOT_CONST.DIFFERENCE_ROBOT;
+
+IF allRollersLowered THEN
+	heightThreshold := GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT_LOWERED + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD;
+ELSE
+	heightThreshold := GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT_RAISED + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD;	
+END_IF
+
+northRollersNorthEdge := GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.OUTER_ROLLERS_SPACING/2;
+northRollersSouthEdge := GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2;
+southRollersNorthEdge := GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2;
+southRollersSouthEdge := GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.OUTER_ROLLERS_SPACING/2;
+
+IF rollersInFollow THEN
+	//Checking if robot is too far away from rollers and below rollers - TODO: stop robot if past
+	IF ((positionNorthCornerDustBoot < northRollersSouthEdge OR positionSouthCornerDustBoot > southRollersNorthEdge) AND (robotPoseGantry.zPose < heightThreshold)) THEN
+		Gantry_Follow_Error := TRUE;
+	ELSE
+		Gantry_Follow_Error := FALSE;
+	END_IF
+ELSE
+	IF positionSouthCornerDustBoot < (northRollersNorthEdge - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) OR
+		(positionNorthCornerDustBoot > (northRollersSouthEdge + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) AND positionSouthCornerDustBoot < (southRollersNorthEdge - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD)) OR
+		positionNorthCornerDustBoot > (southRollersSouthEdge + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) THEN
+		Gantry_Follow_Error := FALSE;
+	ELSE
+		Gantry_Follow_Error := TRUE;
+	END_IF
 END_IF
 ]]></ST>
       </Implementation>
@@ -377,6 +429,8 @@ END_VAR
     </Method>
     <LineIds Name="FB_GantryHoldDown">
       <LineId Id="189" Count="1" />
+      <LineId Id="325" Count="0" />
+      <LineId Id="324" Count="0" />
       <LineId Id="266" Count="0" />
       <LineId Id="188" Count="0" />
       <LineId Id="186" Count="0" />
@@ -411,8 +465,6 @@ END_VAR
       <LineId Id="172" Count="0" />
       <LineId Id="169" Count="2" />
       <LineId Id="168" Count="0" />
-      <LineId Id="192" Count="0" />
-      <LineId Id="191" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="80" Count="1" />
       <LineId Id="83" Count="0" />
@@ -430,6 +482,31 @@ END_VAR
       <LineId Id="53" Count="0" />
       <LineId Id="39" Count="0" />
       <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Gantry_Follow_Error">
+      <LineId Id="10" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="39" Count="1" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="59" Count="3" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="16" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Home_Servos">
       <LineId Id="169" Count="12" />

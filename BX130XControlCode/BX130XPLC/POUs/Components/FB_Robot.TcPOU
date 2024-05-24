@@ -4,6 +4,7 @@
     <Declaration><![CDATA[//Todo - Add flags for if communicating, program info, 
 FUNCTION_BLOCK FB_Robot
 VAR_INPUT
+	systemState : E_MachineState;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -86,6 +87,7 @@ VAR
 	outRobotMovePositive			: BOOL; // Signal 1033
 	outRobotBoardWidth51Inches			: BOOL; //Signal 1034
 	outRobotManualMoveDistance				: USINT; //Signal 1035-1037
+	outRobotDustBootUp AT %I*				: BOOL; //Signal 1038
 	
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
@@ -108,7 +110,7 @@ END_VAR]]></Declaration>
 		outRobotStartCycle := FALSE;
 	END_IF
 	
-	IF NOT inRobotCycleStart AND inRobotStartofProgram THEN
+	IF NOT inRobotCycleStart AND inRobotStartofProgram AND systemState <> E_MachineState.RUNMANUAL THEN
 		outRobotStartCycle := NOT outRobotStartCycle;
 	END_IF
 	
@@ -258,7 +260,7 @@ END_VAR
 tooltransform[2] := SHR((sigs153168 AND 16#FFF0), 4) - 4094/2; // Bits 157-168, y value
 tooltransform[3] := (sigs169184 AND 16#FFF) - 4094/2; // Bits 169-180, z value
 
-IF ABS(current_Tool.x_coord - tooltransform[1]) < 2 AND ABS(current_Tool.y_coord - tooltransform[2]) < 2 AND ABS(current_Tool.z_coord - tooltransform[3]) < 2 THEN
+IF ABS(current_Tool.x_coord - tooltransform[1]) < 3 AND ABS(current_Tool.y_coord - tooltransform[2]) < 3 AND ABS(current_Tool.z_coord - tooltransform[3]) < 3 THEN
 	Robot_Coords_Match_Tool := TRUE;
 ELSE
 	Robot_Coords_Match_Tool := FALSE;
@@ -478,6 +480,7 @@ sigs10331040.1 := outRobotBoardWidth51Inches; //1034
 sigs10331040.2 := outRobotManualMoveDistance.0; //1035
 sigs10331040.3 := outRobotManualMoveDistance.1; //1036
 sigs10331040.4 := outRobotManualMoveDistance.2; //1037
+sigs10331040.5 := outRobotDustBootUp; //1038
 
 
 
@@ -676,6 +679,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="176" Count="0" />
       <LineId Id="186" Count="0" />
       <LineId Id="188" Count="1" />
+      <LineId Id="194" Count="0" />
       <LineId Id="187" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="43" Count="0" />

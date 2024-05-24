@@ -34,15 +34,13 @@
 </div>
 <div id="TcHmiButtonMoveRobotX-" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="X- (West)" data-tchmi-top="277" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIMoveRobotXneg%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
 </div>
-<div id="TcHmiTextblockTotalOperatingHours" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total Run Hours: ' +%s%C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded%/s%%/f%" data-tchmi-top="69" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TcHmiTextblockTotalOperatingHours" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total Run Hours: ' +%s%C1007.MAIN.fbMachine.fbOperatingCounter.totalRunHoursRounded%/s%%/f%" data-tchmi-top="79" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="TcHmiTextblock_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total sawblade hours since last changed: '+ %s%C1007.MAIN.fbMachine.fbOperatingCounter.totalSawbladeHoursRounded%/s%%/f%" data-tchmi-top="112" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TcHmiTextblock_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total sawblade hours since last changed: '+ %s%C1007.MAIN.fbMachine.fbOperatingCounter.totalSawbladeHoursRounded%/s%%/f%" data-tchmi-top="122" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="TcHmiTextblock_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total half inch hours since last changed: ' + %s%C1007.MAIN.fbMachine.fbOperatingCounter.totalHalfInchHoursRounded%/s%%/f%" data-tchmi-top="155" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TcHmiTextblock_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total half inch hours since last changed: ' + %s%C1007.MAIN.fbMachine.fbOperatingCounter.totalHalfInchHoursRounded%/s%%/f%" data-tchmi-top="165" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="TcHmiTextblock_4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="Total hours since last robot grease: " data-tchmi-top="241" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
-</div>
-<div id="TcHmiTextblock_5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total quarter inch hours since last changed: ' +  %s%C1007.MAIN.fbMachine.fbOperatingCounter.totalQuarterInchHoursRounded%/s%%/f%" data-tchmi-top="198" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+<div id="TcHmiTextblock_5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="33" data-tchmi-height-unit="px" data-tchmi-left="620" data-tchmi-left-unit="px" data-tchmi-text="%f%'Total quarter inch hours since last changed: ' +  %s%C1007.MAIN.fbMachine.fbOperatingCounter.totalQuarterInchHoursRounded%/s%%/f%" data-tchmi-top="208" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 <div id="TcHmiButtonHoldToEnable" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="670" data-tchmi-left-unit="px" data-tchmi-text="Hold To Enable Motion" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
 </div>
@@ -174,5 +172,94 @@
 </script>
 </div>
 <div id="TextBlockYforce" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="25" data-tchmi-height-unit="px" data-tchmi-left="230" data-tchmi-left-unit="px" data-tchmi-text="%f%'Torque Sensor Y Force: ' + %s%C1007.MAIN.fbMachine.fbTorqueSensor.sHMIyForce%/s%+'N'%/f%" data-tchmi-top="387" data-tchmi-top-unit="px" data-tchmi-width="157" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiButton_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="403" data-tchmi-left-unit="px" data-tchmi-text="Stop Spindle" data-tchmi-top="167" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIStopSpindleManual%/s%">
+</div>
+<div id="TcHmiButton_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="293" data-tchmi-left-unit="px" data-tchmi-text="Start Spindle" data-tchmi-top="167" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIStartSpindleManual%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableMovement%/s%">
+</div>
+<div id="DropdownSpindleSpeed" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCombobox" data-tchmi-auto-focus-out="false" data-tchmi-combobox-text="Select" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="293" data-tchmi-left-unit="px" data-tchmi-top="134" data-tchmi-top-unit="px" data-tchmi-width="210" data-tchmi-width-unit="px" data-tchmi-text="Spindle Speed"  data-tchmi-enum-data-symbol="%s%C1007.MAIN.fbMachine.spindleSpeedManual%/s%">
+<script data-tchmi-target-attribute="data-tchmi-content-padding" type="application/json">
+{
+  "top": 3,
+  "right": 3,
+  "bottom": 3,
+  "left": 3
+}
+</script>
+
+
+<script data-tchmi-target-attribute="data-tchmi-src-data" type="application/json">
+[
+  {
+    "text": "10000rpm (Sawblade)",
+    "value": 10000.0
+  },
+  {
+    "text": "12000rpm",
+    "value": 12000.0
+  },
+  {
+    "text": "14000rpm",
+    "value": 14000.0
+  },
+  {
+    "text": "16000rpm",
+    "value": 16000.0
+  },
+  {
+    "text": "18000rpm",
+    "value": 18000.0
+  },
+  {
+    "text": "20000rpm",
+    "value": 20000.0
+  },
+  {
+    "text": "22000rpm",
+    "value": 22000.0
+  }
+]
+</script>
+</div>
+<div id="TcHmiToggleButton_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="293" data-tchmi-left-unit="px" data-tchmi-text="Enter Manual Mode (Kris only)" data-tchmi-top="74" data-tchmi-top-unit="px" data-tchmi-width="210" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIEnterManualMode%/s%">
+
+<script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
+[
+  {
+    "event": "TcHmiToggleButton_2.onStatePressed",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%TcHmiToggleButton_2::Text%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/String",
+          "value": "Exit Manual Mode"
+        },
+        "asyncWait": true
+      }
+    ]
+  },
+  {
+    "event": "TcHmiToggleButton_2.onStateReleased",
+    "actions": [
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%TcHmiToggleButton_2::Text%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:general#/definitions/String",
+          "value": "Enter Manual Mode"
+        },
+        "asyncWait": true
+      }
+    ]
+  }
+]
+</script>
+</div>
+<div id="TcHmiToggleButton_3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="343" data-tchmi-left-unit="px" data-tchmi-text="Raise/Lower Dust Boot" data-tchmi-top="227" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnterManualMode%/s%" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIRaiseLowerDustBoot%/s%">
 </div>
 </div>

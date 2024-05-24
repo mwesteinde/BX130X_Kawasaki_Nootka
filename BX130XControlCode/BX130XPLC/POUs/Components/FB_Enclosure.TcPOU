@@ -19,6 +19,11 @@ VAR
 	doorTimer				: TON;
 	startTimer: BOOL;
 	
+	lightGreen AT %Q* : BOOL;
+	lightYellow AT %Q* : BOOL;
+	lightRed AT %Q* : BOOL;
+	lightBuzzer AT %Q* : BOOL;
+	
 	dustCollectionOn : BOOL;
 END_VAR
 ]]></Declaration>
@@ -34,6 +39,22 @@ IF doorTimer.Q THEN
 	startTimer := FALSE;
 END_IF]]></ST>
     </Implementation>
+    <Method Name="Light_Operation" Id="{887136cd-1237-45d3-8b34-738b23af892d}">
+      <Declaration><![CDATA[METHOD Light_Operation : BOOL
+VAR_INPUT
+	Green : BOOL;
+	Yellow : BOOL;
+	Red : BOOL;
+	Buzzer : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[lightGreen := Green;
+lightYellow := Yellow;
+lightRed := Red;
+lightBuzzer := Buzzer;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Rolling_Door_HMI_Operation" Id="{30d6fe7d-957f-4531-95df-ed9ab926cc71}">
       <Declaration><![CDATA[//Opens and closes door
 METHOD Rolling_Door_HMI_Operation
@@ -86,6 +107,10 @@ pbTableEastLast := pbTableEast;]]></ST>
       <LineId Id="29" Count="1" />
       <LineId Id="37" Count="0" />
       <LineId Id="28" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Enclosure.Light_Operation">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="2" />
     </LineIds>
     <LineIds Name="FB_Enclosure.Rolling_Door_HMI_Operation">
       <LineId Id="15" Count="0" />

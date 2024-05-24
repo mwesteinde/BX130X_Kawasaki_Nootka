@@ -1643,6 +1643,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIEnterManualMode": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIEnterManualMode",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 80
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIGoToCleanupPosition": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1832,6 +1849,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIRaiseLowerDustBoot": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIRaiseLowerDustBoot",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 86
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1915,6 +1949,40 @@
                     {
                         "comment": "Button to start program. Called from Run.content",
                         "propertyOrder": 44
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIStartSpindleManual": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIStartSpindleManual",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 78
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIStopSpindleManual": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIStopSpindleManual",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 79
                     }
                 ]
             },
@@ -2774,6 +2842,23 @@
                     },
                     {
                         "propertyOrder": 56
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.spindleSpeedManual": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::spindleSpeedManual",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/INT"
+                    },
+                    {
+                        "propertyOrder": 85
                     }
                 ]
             },
@@ -5507,6 +5592,7 @@
                 "C1007.MAIN.fbMachine.bHMIEnableButtons": 3,
                 "C1007.MAIN.fbMachine.bHMIEnableInitialization": 3,
                 "C1007.MAIN.fbMachine.bHMIEnableMovement": 3,
+                "C1007.MAIN.fbMachine.bHMIEnterManualMode": 3,
                 "C1007.MAIN.fbMachine.bHMIGoToCleanupPosition": 3,
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveRobotXneg": 3,
@@ -5518,11 +5604,14 @@
                 "C1007.MAIN.fbMachine.bHMIMoveServosNorth": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveServosSouth": 3,
                 "C1007.MAIN.fbMachine.bHMIOpenCloseDoor": 3,
+                "C1007.MAIN.fbMachine.bHMIRaiseLowerDustBoot": 3,
                 "C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIReset": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgram": 3,
                 "C1007.MAIN.fbMachine.bHMIRunProgramScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIStart": 3,
+                "C1007.MAIN.fbMachine.bHMIStartSpindleManual": 3,
+                "C1007.MAIN.fbMachine.bHMIStopSpindleManual": 3,
                 "C1007.MAIN.fbMachine.bHMIToolLoaded": 3,
                 "C1007.MAIN.fbMachine.bHMIToolatPlastic": 3,
                 "C1007.MAIN.fbMachine.boardWidthIs51inches": 3,
@@ -5572,6 +5661,7 @@
                 "C1007.MAIN.fbMachine.sHMIeStopsOff": 3,
                 "C1007.MAIN.fbMachine.sHMIeSystemStateString": 3,
                 "C1007.MAIN.fbMachine.sProgramString": 3,
+                "C1007.MAIN.fbMachine.spindleSpeedManual": 3,
                 "ChangeUserSettings": 3,
                 "ConfirmAlarm": 3,
                 "CreateEvent": 3,

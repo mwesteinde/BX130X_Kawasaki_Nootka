@@ -14,7 +14,10 @@ VAR_GLOBAL CONSTANT
 	POSITION_LIMIT_SWITCH : LREAL := 400;
 	FOLLOW_THRESHOLD : LREAL := 20; //Amount the servos can be away from the target and keep moving
 	ROLLERS_Z_HEIGHT : LREAL := 800; // Robot tool z height at rollers
-	ROLLERS_SPACING : LREAL := 406; //Distance between two centre rollers, mm
+	ROLLERS_Z_HEIGHT_RAISED : REAL := 707;
+	ROLLERS_Z_HEIGHT_LOWERED : REAL := 635;
+	INNER_ROLLERS_SPACING : LREAL := 406; //Distance between two centre rollers, mm
+	OUTER_ROLLERS_SPACING : LREAL := 877;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

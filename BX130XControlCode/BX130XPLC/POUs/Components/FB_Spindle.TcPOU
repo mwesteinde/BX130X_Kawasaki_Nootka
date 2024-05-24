@@ -26,6 +26,7 @@ VAR
 	toolLimitSwitchArray : ARRAY[0..8] OF BOOL;
 	//Dust Hood
 	dustHoodCylinder AT %Q*		: BOOL;
+	dustHoodSawActuator AT %Q* : BOOL;
 	
 	currentTool : Tool_Type := GVL_Programs.noTool;
 	toolSelectedAtInitialization : BOOL := FALSE;
@@ -129,11 +130,18 @@ END_VAR
         <ST><![CDATA[IF enable THEN
 	IF x_pose < -1060 THEN
 		dustHoodCylinder := FALSE;
+		dustHoodSawActuator := FALSE;
 	ELSE
 		dustHoodCylinder := TRUE;
+		IF currentTool.toolNumber = 0 THEN
+			dustHoodSawActuator := TRUE;
+		ELSE
+			dustHoodSawActuator := FALSE;
+		END_IF
 	END_IF
 ELSE
 	dustHoodCylinder := FALSE;
+	dustHoodSawActuator := FALSE;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -627,9 +635,15 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="13" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="7" Count="0" />
+      <LineId Id="27" Count="0" />
       <LineId Id="10" Count="1" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="23" Count="0" />
       <LineId Id="8" Count="1" />
-      <LineId Id="14" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="15" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.Grab_Tool">
       <LineId Id="12" Count="0" />
