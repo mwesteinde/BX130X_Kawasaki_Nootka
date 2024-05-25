@@ -15,10 +15,15 @@ VAR_GLOBAL
 
 	// ================= Programs ====================================
 	//Update C:\Users\kris\OneDrive\Documents\Robot transfer\Robot Programs\BX130XControlCode\BX130XControlCode\BX130XPLC\POUs\FB_Machine.TcPOU
-	FrontWall : Program_Type := (index := 0, option1true := 'E cut', option1false := 'No E cut', option2true := 'Glass Door', option2false := 'Wood Door', option3true := 'Lock', option3false := 'No Lock', programName := 'Front Wall', firstTool := halfInchUpcut);
-	BackWall : Program_Type := (index := 1, option1true := 'STD Window', option1false := 'No Window', option2true := 'Chimney Cut', option2false := 'No Chimney', option3true := '', option3false := '', programName := 'Back Wall', firstTool := halfInchUpcut);	
-	Option3 : Program_Type := (index := 2, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := quarterInchUpcut);
-	Option4 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := quarterInchUpcut);
+	FrontWall : Program_Type := (index := 1, option1true := 'E cut', option1false := 'No E cut', option2true := 'Glass Door', option2false := 'Wood Door', option3true := 'Lock', option3false := 'No Lock', programName := 'Front Wall', firstTool := halfInchUpcut);
+	BackWall : Program_Type := (index := 2, option1true := 'STD Window', option1false := 'No Window', option2true := 'Chimney Cut', option2false := 'No Chimney', option3true := '', option3false := '', programName := 'Back Wall', firstTool := halfInchUpcut);	
+	Option3 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := quarterInchUpcut);
+	Option4 : Program_Type := (index := 4, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := quarterInchUpcut);
+	CubeSaunaFront : Program_Type := (index := 5, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'CubeSaunaFront', firstTool := halfInchUpcut);
+	Option5 : Program_Type := (index := 6, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'option5', firstTool := halfInchUpcut);
+	Option6 : Program_Type := (index := 7, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'option6', firstTool := halfInchUpcut);
+	Option7 : Program_Type := (index := 8, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'option7', firstTool := halfInchUpcut);
+	CubeSaunaRear : Program_Type := (index := 9, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'CubeSaunaRear', firstTool := halfInchUpcut);
 	ToolChange : Program_Type := (index := 10, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'ToolChange', firstTool := quarterInchUpcut);
 
 	//=============== Constants ===

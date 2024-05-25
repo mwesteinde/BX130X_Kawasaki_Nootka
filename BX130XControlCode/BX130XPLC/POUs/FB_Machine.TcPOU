@@ -1116,6 +1116,11 @@ END_VAR]]></Declaration>
         2: selectedProgram := GVL_Programs.BackWall;
         3: selectedProgram := GVL_Programs.Option3;
         4: selectedProgram := GVL_Programs.Option4;
+		5: selectedProgram := GVL_Programs.CubeSaunaFront;
+		6: selectedProgram := GVL_Programs.Option5;
+		7: selectedProgram := GVL_Programs.Option6;
+		8: selectedProgram := GVL_Programs.Option7;
+		9: selectedProgram := GVL_Programs.CubeSaunaRear;
         // Add more cases for additional options if needed
         ELSE
             // Handle invalid program wall choice
@@ -1723,7 +1728,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Update_Program_String">
-      <LineId Id="21" Count="7" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="69" Count="4" />
+      <LineId Id="26" Count="2" />
       <LineId Id="5" Count="0" />
       <LineId Id="29" Count="1" />
       <LineId Id="33" Count="0" />
