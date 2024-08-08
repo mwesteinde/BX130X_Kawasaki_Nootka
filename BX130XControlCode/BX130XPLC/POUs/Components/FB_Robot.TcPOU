@@ -88,6 +88,7 @@ VAR
 	outRobotBoardWidth51Inches			: BOOL; //Signal 1034
 	outRobotManualMoveDistance				: USINT; //Signal 1035-1037
 	outRobotDustBootUp AT %I*				: BOOL; //Signal 1038
+	outRobotProgramOption4 : BOOL; //Signal 1039
 	
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
@@ -201,6 +202,7 @@ VAR_INPUT
 	option1 : BOOL;
 	option2 : BOOL;
 	option3 : BOOL;
+	option4 : BOOL;
 	boardWidthIs51 : BOOL;
 END_VAR
 ]]></Declaration>
@@ -209,6 +211,7 @@ END_VAR
 outRobotProgramOption1 := option1;
 outRobotProgramOption2	:= option2;
 outRobotProgramOption3	:= option3;
+outRobotProgramOption4 := option4;
 outRobotBoardWidth51Inches := boardWidthIs51;
 outRobotProgramSelected := TRUE;]]></ST>
       </Implementation>
@@ -481,6 +484,8 @@ sigs10331040.2 := outRobotManualMoveDistance.0; //1035
 sigs10331040.3 := outRobotManualMoveDistance.1; //1036
 sigs10331040.4 := outRobotManualMoveDistance.2; //1037
 sigs10331040.5 := outRobotDustBootUp; //1038
+sigs10331040.6 := outRobotProgramOption4; //1039
+; //1038
 
 
 
@@ -574,6 +579,7 @@ outRobotRequestedTool := request;]]></ST>
     <LineIds Name="FB_Robot.Program_Select">
       <LineId Id="15" Count="2" />
       <LineId Id="5" Count="0" />
+      <LineId Id="46" Count="0" />
       <LineId Id="36" Count="0" />
       <LineId Id="26" Count="0" />
     </LineIds>
@@ -680,6 +686,7 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="186" Count="0" />
       <LineId Id="188" Count="1" />
       <LineId Id="194" Count="0" />
+      <LineId Id="199" Count="1" />
       <LineId Id="187" Count="0" />
       <LineId Id="162" Count="0" />
       <LineId Id="43" Count="0" />

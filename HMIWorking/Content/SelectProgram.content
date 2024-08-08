@@ -50,11 +50,11 @@
 
 
 </div>
-<div id="ToggleNoLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="No Lock" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupLock">
+<div id="ToggleNoLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="No Handles" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupLock">
 
 
 </div>
-<div id="ToggleLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Lock" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupLock" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption3%/s%">
+<div id="ToggleLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Handles" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupLock" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption3%/s%">
 
 
 </div>
@@ -500,14 +500,70 @@
                                     ],
                                     "then": [
                                       {
-                                        "objectType": "WriteToSymbol",
+                                        "objectType": "Condition",
                                         "active": true,
-                                        "symbolExpression": "%ctrl%ButtonToRun::IsEnabled%/ctrl%",
-                                        "value": {
-                                          "objectType": "StaticValue",
-                                          "valueType": "tchmi:general#/definitions/Boolean",
-                                          "value": true
-                                        },
+                                        "parts": [
+                                          {
+                                            "if": [
+                                              {
+                                                "compare1": {
+                                                  "objectType": "Symbol",
+                                                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                                                  "symbolExpression": "%ctrl%ToggleHalfMoon::ToggleState%/ctrl%"
+                                                },
+                                                "compare2": {
+                                                  "objectType": "StaticValue",
+                                                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                                                  "value": "Active"
+                                                },
+                                                "compareOperator": "==",
+                                                "logic": null
+                                              },
+                                              {
+                                                "compare1": {
+                                                  "objectType": "Symbol",
+                                                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                                                  "symbolExpression": "%ctrl%ToggleNoHalfMoon::ToggleState%/ctrl%"
+                                                },
+                                                "compare2": {
+                                                  "objectType": "StaticValue",
+                                                  "valueType": "tchmi:framework#/definitions/ToggleState",
+                                                  "value": "Active"
+                                                },
+                                                "compareOperator": "==",
+                                                "logic": "OR"
+                                              }
+                                            ],
+                                            "then": [
+                                              {
+                                                "objectType": "WriteToSymbol",
+                                                "active": true,
+                                                "symbolExpression": "%ctrl%ButtonToRun::IsEnabled%/ctrl%",
+                                                "value": {
+                                                  "objectType": "StaticValue",
+                                                  "valueType": "tchmi:general#/definitions/Boolean",
+                                                  "value": true
+                                                },
+                                                "asyncWait": true
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "else": [
+                                              {
+                                                "objectType": "WriteToSymbol",
+                                                "active": true,
+                                                "symbolExpression": "%ctrl%ButtonToRun::IsEnabled%/ctrl%",
+                                                "value": {
+                                                  "objectType": "StaticValue",
+                                                  "valueType": "tchmi:general#/definitions/Boolean",
+                                                  "value": false
+                                                },
+                                                "asyncWait": true
+                                              }
+                                            ]
+                                          }
+                                        ],
                                         "asyncWait": true
                                       }
                                     ]
@@ -734,7 +790,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleOption4::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -748,7 +804,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleCubeSaunaFront::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -762,7 +818,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleOption5::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -776,7 +832,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleOption6::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -790,7 +846,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleOption7::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -804,7 +860,7 @@
               {
                 "compare1": {
                   "objectType": "Symbol",
-                  "valueType": "tchmi:general#/definitions/String",
+                  "valueType": "tchmi:framework#/definitions/ToggleState",
                   "symbolExpression": "%ctrl%ToggleCubeSaunaRear::ToggleState%/ctrl%"
                 },
                 "compare2": {
@@ -1300,7 +1356,7 @@
   }
 ]
 </script>
-<div id="ToggleOption3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option3" data-tchmi-top="259" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption3" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option3" data-tchmi-top="294" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -1690,7 +1746,7 @@
 </div>
 <div id="TextBoxBoardLength_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="363" data-tchmi-left-unit="px" data-tchmi-text="Board Width" data-tchmi-top="404" data-tchmi-top-unit="px" data-tchmi-width="73" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
-<div id="ToggleCubeSaunaFront" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Cube Sauna Front" data-tchmi-top="214" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleCubeSaunaFront" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Cube Sauna Front" data-tchmi-top="249" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -1794,7 +1850,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option5" data-tchmi-top="304" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option5" data-tchmi-top="339" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -2106,7 +2162,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option7" data-tchmi-top="349" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option7" data-tchmi-top="384" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -2209,5 +2265,9 @@
   }
 ]
 </script>
+</div>
+<div id="ToggleNoHalfMoon" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="No Half Moon" data-tchmi-top="214" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupHalfMoon">
+</div>
+<div id="ToggleHalfMoon" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Half Moon" data-tchmi-top="214" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupHalfMoon" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption4%/s%">
 </div>
 </div>

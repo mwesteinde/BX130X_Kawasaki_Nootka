@@ -120,6 +120,7 @@ VAR
 	programOption1		: BOOL; //Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window
 	programOption2		: BOOL; //Front wall: True: glass door, False, wood door Back wall: True: Chimney cut, False, no chimney cut
 	programOption3		: BOOL; //Front wall: True: Door lock, false, no lock Back wall: NA
+	programOption4		: BOOL;
 	boardWidthIs51inches : BOOL := TRUE; //1 if board width is 5.1 inches, 0 if 4.75inches
 	bHMIRunProgramScreen		: BOOL; 
 	rTrigRunProgramScreen		: R_TRIG;
@@ -303,7 +304,7 @@ CASE eSystemState OF
 			IF fbEnclosure.cylinderTableWest AND fbEnclosure.cylinderTableEast AND fbSpindle.CurrentTool.toolNumber = fbRobot.inRobotToolNumberRequest AND fbEnclosure.doorIsClosed THEN
 				HMILeaveRunScreen := FALSE;
 				eSystemState := E_MachineState.RUN;
-				fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3, boardWidthIs51 := boardWidthIs51inches);
+				fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3, option4 := programOption4, boardWidthIs51 := boardWidthIs51inches);
 				IF NOT disableSpindle THEN
 					fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
 				END_IF
@@ -326,7 +327,7 @@ CASE eSystemState OF
 				IF NOT fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool) THEN
 					Popup_Error('Update Tool Failed - invalid tool number', TRUE);
 				END_IF
-				fbRobot.Program_Select(programChoice := 10, programOption1, programOption2, programOption3, boardWidthIs51inches);
+				fbRobot.Program_Select(programChoice := 10, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 				fbRobot.Start_Robot();
 			ELSE
 				Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Fix and try to change tool again. If false, check tool limit switches', TRUE);
@@ -336,9 +337,9 @@ CASE eSystemState OF
 		
 		IF rTrigCalibrateTool.Q THEN
 			IF sHMIToolToCalibrate.toolNumber = GVL_Programs.sawblade.toolNumber THEN
-				fbRobot.Program_Select(programChoice := 14, option1 := FALSE, programOption2, programOption3, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+				fbRobot.Program_Select(programChoice := 14, option1 := FALSE, programOption2, programOption3, programOption4, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
 			ELSE
-				fbRobot.Program_Select(programChoice := 14, option1 := TRUE, programOption2, programOption3, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+				fbRobot.Program_Select(programChoice := 14, option1 := TRUE, programOption2, programOption3, programOption4, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
 			END_IF
 			gantryError := fbGantry.Home_Servos(robotPose := fbRobot.robotPose);
 			IF gantryError.isError THEN
@@ -555,14 +556,14 @@ END_IF
 //Home robot operation on button press
 IF rTrigHomeRobot.Q THEN
 //	fbRobot.Home_Robot();
-	fbRobot.Program_Select(programChoice := 12, programOption1, programOption2, programOption3, boardWidthIs51inches);
+	fbRobot.Program_Select(programChoice := 12, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 	fbRobot.Start_Robot();
 END_IF
 
 //Robot moves out of the way on button press
 IF rTrigGoToCleanupRobot.Q THEN
 //	fbRobot.Go_To_Cleanup();
-	fbRobot.Program_Select(programChoice := 13, programOption1, programOption2, programOption3, boardWidthIs51inches);
+	fbRobot.Program_Select(programChoice := 13, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 	fbRobot.Start_Robot();
 	fbGantry.Home_Servos(robotPose);
 	bActivateRollers := FALSE;
@@ -624,7 +625,7 @@ END_IF
 
 //Save program to robot and PLC
 IF rTrigRunProgramScreen.Q THEN
-	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3, boardwidthis51 := boardWidthIs51inches);
+	fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3, option4 := programOption4, boardwidthis51 := boardWidthIs51inches);
 	Update_Program_String();
 	bHMIRunProgramScreen := FALSE;
 END_IF
@@ -682,7 +683,7 @@ IF fTrigMoveServosNorth.Q OR fTrigMoveServosSouth.Q THEN
 END_IF
 
 IF rTrigEnableMovement.Q THEN
-	fbRobot.Program_Select(programChoice := 11, programOption1, programOption2, programOption3, boardWidthIs51inches);
+	fbRobot.Program_Select(programChoice := 11, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 	fbRobot.Start_Robot();
 END_IF
 
