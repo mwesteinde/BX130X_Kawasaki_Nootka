@@ -141,6 +141,10 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="Server\ADS\ADS.Config.default.json" />
+    <Content Include="Server\ADS\ADS.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Config.remote.json" />
     <Content Include="Views\Desktop.view">
       <SubType>Content</SubType>
     </Content>

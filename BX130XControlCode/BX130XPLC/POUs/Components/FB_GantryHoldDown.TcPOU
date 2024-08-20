@@ -16,8 +16,9 @@ VAR
 	fbMC_HomeEast		: MC_Home;
 	fbMC_MoveAbsWest1	: MC_MoveAbsolute;
 	fbMC_MoveAbsWest2	: MC_MoveAbsolute;
-	fbMC_MoveVelocity: MC_MoveVelocity;
+	fbMC_MoveVelocity	: MC_MoveVelocity;
 	fbMC_SyncAxes		: MC_GearIn;
+	fbMC_DecoupleAxes	: MC_GearOut;
 	fbReadStatus		: MC_ReadStatus;
 	fbMC_Stop			: MC_Stop;
 	fbMC_Halt			: MC_HALT;
@@ -43,13 +44,15 @@ VAR
 	//Pneumatic switches
 	
 	rollersReady		: BOOL;
-	
-	lengthWood : LREAL := 2133; //mm, length of wood being clamped;
+	eastGantryHoming	: BOOL := FALSE; //Set to true for when east gantry is homing
+	lengthWood 			: LREAL := 2133; //mm, length of wood being clamped variable changed by toggle on selectprogram screen;
 	
 	// Enable bools
 	executeEnable		: BOOL := FALSE;
-	executeHome 		: BOOL := FALSE;
+	executeHomeWest 		: BOOL := FALSE;
+	executeHomeEast		: BOOL := FALSE;
 	executeCouple 		: BOOL := FALSE;
+	executeDecouple		: BOOL := FALSE;
 	executeCylinders	: BOOL := FALSE;
 	followVariable		: BOOL:= TRUE; //Set for following robot
 	stopGantry			: BOOL := FALSE;
@@ -57,6 +60,7 @@ VAR
 	executeManualMove		: BOOL;
 	executeHalt			: BOOL;
 	manualMoveDirection 		: MC_Direction;
+	rTrigHomeWestDone	: R_TRIG;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -64,12 +68,12 @@ END_VAR
 GVL_Axes.AxisEast.ReadStatus();
 
 allRollersLowered := NOT(cylindersNorth OR cylindersCentreNorth OR cylindersCentreSouth OR cylindersSouth); 
-	
+rTrigHomeWestDone(CLK := fbMC_HomeWest.Done);
 // Movement functions
 Servo_Commands();
 // Enable and couple axes
 executeEnable := TRUE;
-IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 THEN
+IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 AND NOT fbMC_HomeEast.Busy AND NOT fbMC_DecoupleAxes.Busy THEN
 	executeCouple := NOT executeCouple;
 END_IF]]></ST>
     </Implementation>
@@ -155,7 +159,7 @@ END_IF
 
 followVariable := NOT followVariable;
 
-IF GVL_Axes.AxisWest.Status.Homed THEN
+IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.NcToPlc.CoupleState = 3 THEN
 	fbMC_MoveAbsWest1(
 		Axis:= GVL_Axes.AxisWest, 
 		Execute:= followVariable, 
@@ -232,7 +236,6 @@ END_IF
     </Method>
     <Method Name="Home_Servos" Id="{40c1f2ee-aae6-427c-ae6f-0159b8da9b8e}">
       <Declaration><![CDATA[//Enables, couples and homes hold down gantry
-//TODO: check if robot is above rollers before homing
 //Returns True if can sucessfully home, false if robot too low
 METHOD Home_Servos : Structure_Error
 VAR_INPUT
@@ -246,7 +249,7 @@ END_VAR]]></Declaration>
         <ST><![CDATA[IF robotPose.zPose > GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT THEN
 	//Home Axes
 	IF GVL_Axes.AxisEast.NcToPlc.CoupleState = 3 THEN
-		executeHome := TRUE;
+		executeHomeWest := TRUE;
 		Home_Servos.isError := FALSE;
 		Home_Servos.errorMessage := 'No Error';
 	ELSE
@@ -282,7 +285,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF moveServos THEN
+        <ST><![CDATA[IF moveServos AND GVL_Axes.AxisEast.NcToPlc.CoupleState = 3 THEN
 	IF direction = -1 THEN
 		manualMoveDirection := MC_Negative_Direction;
 	ELSE
@@ -381,13 +384,38 @@ fbMC_SyncAxes(
 //Home
 fbMC_HomeWest(
 	Axis:= GVL_Axes.AxisWest, 
-	Execute:= executeHome, 
+	Execute:= executeHomeWest AND GVL_Axes.AxisEast.NcToPlc.CoupleState = 3, //Make sure that axes are coupled before homing
 	Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
 	HomingMode:= MC_DefaultHoming, 
 	bCalibrationCam:= NOT ls3NW);
-	
-IF fbMC_HomeWest.Done THEN
-	executeHome := FALSE;
+
+//When west axis homing complete, turn off homewest trigger so that it can be activated again
+IF fbMC_HomeWest.Done THEN 
+	executeHomeWest := FALSE;
+END_IF
+
+//When west axis hming complete, enable east home and decouple triggers
+IF rTrigHomeWestDone.Q THEN 
+	executeHomeEast := TRUE;
+	executeDecouple := TRUE;
+END_IF
+
+//Decouple axes to allow east axis to home
+fbMC_DecoupleAxes(
+	Slave	:= GVL_Axes.AxisEast,
+	Execute	:= executeDecouple);
+
+//Home east axis once axes are decoupled
+fbMC_HomeEast(
+	Axis:= GVL_Axes.AxisEast, 
+	Execute:= executeHomeEast AND fbMC_DecoupleAxes.Done, 
+	Position:= GVL_SERVO_ROBOT_CONST.POSITION_LIMIT_SWITCH, 
+	HomingMode:= MC_DefaultHoming, 
+	bCalibrationCam:= NOT ls1NE);
+
+IF fbMC_HomeEast.Done THEN //Turn off home east and decouple triggers once home east is done, so can activate again
+	executeHomeEast := FALSE;
+	executeDecouple := FALSE;
 END_IF
 
 fbMC_MoveVelocity(
@@ -562,7 +590,25 @@ END_VAR
       <LineId Id="33" Count="0" />
       <LineId Id="29" Count="0" />
       <LineId Id="6" Count="5" />
+      <LineId Id="137" Count="0" />
       <LineId Id="55" Count="3" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="133" Count="0" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="129" Count="1" />
+      <LineId Id="120" Count="6" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="112" Count="0" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="115" Count="0" />
       <LineId Id="85" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="91" Count="1" />
