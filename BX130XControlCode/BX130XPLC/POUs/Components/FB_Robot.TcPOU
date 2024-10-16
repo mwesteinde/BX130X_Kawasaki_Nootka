@@ -263,7 +263,7 @@ END_VAR
 tooltransform[2] := SHR((sigs153168 AND 16#FFF0), 4) - 4094/2; // Bits 157-168, y value
 tooltransform[3] := (sigs169184 AND 16#FFF) - 4094/2; // Bits 169-180, z value
 
-IF ABS(current_Tool.x_coord - tooltransform[1]) < 3 AND ABS(current_Tool.y_coord - tooltransform[2]) < 3 AND ABS(current_Tool.z_coord - tooltransform[3]) < 3 THEN
+IF ABS(current_Tool.x_coord - tooltransform[1]) < 4 AND ABS(current_Tool.y_coord - tooltransform[2]) < 3 AND ABS(current_Tool.z_coord - tooltransform[3]) < 3 THEN
 	Robot_Coords_Match_Tool := TRUE;
 ELSE
 	Robot_Coords_Match_Tool := FALSE;

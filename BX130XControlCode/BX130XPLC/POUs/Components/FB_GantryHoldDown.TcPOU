@@ -82,10 +82,10 @@ END_IF]]></ST>
 VAR_INPUT
 END_VAR
 VAR
-	POS_CYLINDER_NORTH : LREAL := 76.5; //mm, position of north pneum cylinder relative to gantry plate
-	POS_CYLINDER_NORTHCENTRE : LREAL := 229.62; //mm, position of centre north pneum cylinder relative to gantry plate
-	POS_CYLINDER_SOUTHCENTRE : LREAL := 712.212; //mm, position of centre south pneum cylinder relative to gantry plate
-	POS_CYLINDER_SOUTH : LREAL := 867.832; //mm, position of south pneum cylinder relative to gantry plate
+	POS_CYLINDER_NORTH : LREAL := 74;//74 //mm, position of north pneum cylinder relative to gantry plate
+	POS_CYLINDER_NORTHCENTRE : LREAL := 229.62;//229.62 //mm, position of centre north pneum cylinder relative to gantry plate
+	POS_CYLINDER_SOUTHCENTRE : LREAL := 811.78; //mm, position of centre south pneum cylinder relative to gantry plate
+	POS_CYLINDER_SOUTH : LREAL := 967.40; //mm, position of south pneum cylinder relative to gantry plate
 	POS_TABLE_NORTH : LREAL := 474.14; //mm, position of table start WRT Zero
 	FACTOR_OF_SAFETY : LREAL := 100; //mm, distance from edge of table cylinders will rise
 END_VAR]]></Declaration>

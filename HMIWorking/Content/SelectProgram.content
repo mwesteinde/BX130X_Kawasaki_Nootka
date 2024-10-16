@@ -70,13 +70,13 @@
 
 
 </div>
-<div id="ToggleNoChimney" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="No Chimney" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney">
+<div id="ToggleNoHandles" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="No Handles" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney">
 
 
 
 
 </div>
-<div id="ToggleChimneyCut" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Chimney Cut" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%">
+<div id="ToggleHandles" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Handles" data-tchmi-top="124" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%">
 
 
 
@@ -119,7 +119,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -130,7 +130,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -168,7 +168,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -179,7 +179,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -692,7 +692,7 @@
                                 "compare1": {
                                   "objectType": "Symbol",
                                   "valueType": "tchmi:framework#/definitions/ToggleState",
-                                  "symbolExpression": "%ctrl%ToggleChimneyCut::ToggleState%/ctrl%"
+                                  "symbolExpression": "%ctrl%ToggleHandles::ToggleState%/ctrl%"
                                 },
                                 "compare2": {
                                   "objectType": "StaticValue",
@@ -706,7 +706,7 @@
                                 "compare1": {
                                   "objectType": "Symbol",
                                   "valueType": "tchmi:framework#/definitions/ToggleState",
-                                  "symbolExpression": "%ctrl%ToggleNoChimney::ToggleState%/ctrl%"
+                                  "symbolExpression": "%ctrl%ToggleNoHandles::ToggleState%/ctrl%"
                                 },
                                 "compare2": {
                                   "objectType": "StaticValue",
@@ -1201,7 +1201,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::ToggleState%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::ToggleState%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:framework#/definitions/ToggleState",
@@ -1256,7 +1256,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::ToggleState%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::ToggleState%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:framework#/definitions/ToggleState",
@@ -1365,7 +1365,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1376,7 +1376,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1414,7 +1414,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1425,7 +1425,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1460,7 +1460,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="416" data-tchmi-left-unit="px" data-tchmi-text="Option4" data-tchmi-top="259" data-tchmi-top-unit="px" data-tchmi-width="129" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption4" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="416" data-tchmi-left-unit="px" data-tchmi-text="EastOnly Wood Door (opt4)" data-tchmi-top="259" data-tchmi-top-unit="px" data-tchmi-width="129" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -1755,7 +1755,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1766,7 +1766,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1804,7 +1804,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1815,7 +1815,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1850,7 +1850,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option5" data-tchmi-top="339" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption5" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Blade Front Wall (opt5)" data-tchmi-top="339" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -1859,7 +1859,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1870,7 +1870,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1908,7 +1908,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1919,7 +1919,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1963,7 +1963,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -1974,7 +1974,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2012,7 +2012,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2023,7 +2023,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2058,7 +2058,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="416" data-tchmi-left-unit="px" data-tchmi-text="Option6" data-tchmi-top="304" data-tchmi-top-unit="px" data-tchmi-width="129" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="416" data-tchmi-left-unit="px" data-tchmi-text="STD Window Blade (opt6)" data-tchmi-top="304" data-tchmi-top-unit="px" data-tchmi-width="129" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -2067,7 +2067,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2078,7 +2078,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2116,7 +2116,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2127,7 +2127,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2171,7 +2171,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2182,7 +2182,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2220,7 +2220,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleChimneyCut::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
@@ -2231,7 +2231,7 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%ctrl%ToggleNoChimney::IsEnabled%/ctrl%",
+        "symbolExpression": "%ctrl%ToggleNoHandles::IsEnabled%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/Boolean",
