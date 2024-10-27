@@ -5,13 +5,13 @@
 //Position of the robot at the centre of the gantry at max and min travel of the gantry.
 
 VAR_GLOBAL CONSTANT
-	MIN_POS_ROBOT : LREAL := 969.833; // Position of robot at min travel servo
-	MAX_POS_ROBOT : LREAL := 3279.799; // Position of robot at max travel servo
+	MIN_POS_ROBOT : LREAL := 961.833; // Position of robot at min travel servo
+	MAX_POS_ROBOT : LREAL := 3271.799; // Position of robot at max travel servo
 	MAX_POS_SERVOWEST : LREAL := 2310; // max travel of servo
  	MIN_POS_SERVOWEST : LREAL := 1; // min travel of servo
 	DIFFERENCE_ROBOT : LREAL := MAX_POS_ROBOT - MIN_POS_ROBOT;
 	DIFFERENCE_SERVOWEST : LREAL := MAX_POS_SERVOWEST - MIN_POS_SERVOWEST;
-	POSITION_LIMIT_SWITCH : LREAL := 425;
+	POSITION_LIMIT_SWITCH : LREAL := 417.4;
 	FOLLOW_THRESHOLD : LREAL := 24; //mm, min distance between dust boot and rollers
 	ROLLERS_Z_HEIGHT : LREAL := 800; // Robot tool z height at rollers
 	ROLLERS_Z_HEIGHT_RAISED : REAL := 707;
