@@ -41,6 +41,13 @@ VAR
 	pressureSwitchTimer : TON;
 	allRollersLowered : BOOL;
 	
+	// laser feedback
+	westLaserDistance AT %I* : INT;
+	eastLaserDistance AT %I* : INT;
+	eastDisplay : LREAL;
+	westDisplay : LREAL;
+	laserReadingOk : ARRAY[0..1] OF BOOL;
+	
 	//Pneumatic switches
 	
 	rollersReady		: BOOL;
@@ -66,6 +73,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
 GVL_Axes.AxisEast.ReadStatus();
+laserReadingOk := Servo_Feedback_Ok();
 
 allRollersLowered := NOT(cylindersNorth OR cylindersCentreNorth OR cylindersCentreSouth OR cylindersSouth); 
 rTrigHomeWestDone(CLK := fbMC_HomeWest.Done);
@@ -445,6 +453,35 @@ fbMC_Reset(
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Servo_Feedback_Ok" Id="{ca3627b1-0886-4bf3-93a4-0c36fc747e85}">
+      <Declaration><![CDATA[METHOD Servo_Feedback_Ok : ARRAY[0..1] OF BOOL;
+VAR
+	eastDistanceMM : LREAL;
+	westDistanceMM : LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[eastDistanceMM := (GVL_SERVO_ROBOT_CONST.EAST_LASER_MAX_TRAVEL-GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_TRAVEL)
+			*(eastLaserDistance-GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_RAWVALUE)
+			/(GVL_SERVO_ROBOT_CONST.EAST_LASER_MAX_RAWVALUE-GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_RAWVALUE)
+			+ GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_TRAVEL;
+westDistanceMM := (GVL_SERVO_ROBOT_CONST.WEST_LASER_MAX_TRAVEL-GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_TRAVEL)
+			*(westLaserDistance-GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_RAWVALUE)
+			/(GVL_SERVO_ROBOT_CONST.WEST_LASER_MAX_RAWVALUE-GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_RAWVALUE)
+			+ GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_TRAVEL;
+			
+eastDisplay := eastDistanceMM;
+westDisplay := westDistanceMM;
+			
+IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.Status.Homed THEN
+	Servo_Feedback_Ok[0] := ABS(westDistanceMM - GVL_Axes.AxisWest.NcToPlc.ActPos) < 20;
+	Servo_Feedback_Ok[1] := ABS(eastDistanceMM - GVL_Axes.AxisEast.NcToPlc.ActPos) < 20;
+ELSE
+	Servo_Feedback_Ok[0] := TRUE;
+	Servo_Feedback_Ok[1] := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Stop_Servos" Id="{7d8e10e5-888f-4c22-837f-e643348693b1}">
       <Declaration><![CDATA[//Stops gantry
 METHOD Stop_Servos : BOOL
@@ -457,6 +494,7 @@ END_VAR
     </Method>
     <LineIds Name="FB_GantryHoldDown">
       <LineId Id="189" Count="1" />
+      <LineId Id="389" Count="0" />
       <LineId Id="325" Count="0" />
       <LineId Id="324" Count="0" />
       <LineId Id="266" Count="0" />
@@ -628,6 +666,18 @@ END_VAR
       <LineId Id="78" Count="1" />
       <LineId Id="77" Count="0" />
       <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.Servo_Feedback_Ok">
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="5" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="36" Count="2" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Stop_Servos">
       <LineId Id="5" Count="0" />

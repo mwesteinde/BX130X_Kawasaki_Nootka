@@ -253,6 +253,14 @@ END_VAR
 	
 	IF fbRobot.timerOutRobotStartProgram.Q THEN
 		Popup_Error('Robot not started after 20 seconds. Check if robot is in cycle mode', TRUE);
+	END_IF
+	
+	IF NOT fbGantry.laserReadingOk[0] THEN
+		Popup_Error('West Gantry laser not reading well', TRUE);
+	END_IF
+	
+	IF NOT fbGantry.laserReadingOk[1] THEN
+		Popup_Error('East Gantry laser not reading well', TRUE);
 	END_IF]]></ST>
     </Implementation>
     <Folder Name="StateMachine" Id="{b4b3eed7-4e15-4350-a74a-294b50706019}" />
@@ -1218,6 +1226,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="2239" Count="0" />
       <LineId Id="2242" Count="0" />
       <LineId Id="2236" Count="0" />
+      <LineId Id="3617" Count="4" />
+      <LineId Id="3623" Count="1" />
+      <LineId Id="3622" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Change_State">
       <LineId Id="5" Count="0" />

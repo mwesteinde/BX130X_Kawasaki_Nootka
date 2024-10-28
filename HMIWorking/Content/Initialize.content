@@ -6,11 +6,11 @@
   "color": "rgba(255, 255, 255, 1)"
 }
 </script>
-<div id="ButtonHomeMotors" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Home Motors" data-tchmi-top="200" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeMotors%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
+<div id="ButtonHomeMotors" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Home Motors" data-tchmi-top="200" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIHomeMotors%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
 
 
 </div>
-<div id="ButtonHomeRobot" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Home Robot" data-tchmi-top="140" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIHomeRobot%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
+<div id="ButtonHomeRobot" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Home Robot" data-tchmi-top="140" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIHomeRobot%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
 
 
 
@@ -82,7 +82,7 @@
 ]
 </script>
 </div>
-<div id="ToggleTableLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Lock Tables" data-tchmi-top="320" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILockTables%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
+<div id="ToggleTableLock" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Lock Tables" data-tchmi-top="320" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMILockTables%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -125,7 +125,7 @@
 ]
 </script>
 </div>
-<div id="ToggleRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="380" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMILowerRaiseRollers%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
+<div id="ToggleRollers" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Raise Rollers" data-tchmi-top="380" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMILowerRaiseRollers%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIEnableInitialization%/s%">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -168,7 +168,7 @@
 ]
 </script>
 </div>
-<div id="ToggleSpindleWarmup" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Warmup Spindle" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.bHMIWarmupSpindle%/s%" data-tchmi-is-enabled="false">
+<div id="ToggleSpindleWarmup" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="50" data-tchmi-height-unit="px" data-tchmi-left="10" data-tchmi-left-unit="px" data-tchmi-text="Warmup Spindle" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIWarmupSpindle%/s%" data-tchmi-is-enabled="false">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -1169,5 +1169,13 @@
   }
 ]
 </script>
+</div>
+<div id="TcHmiTextblock_9" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="32" data-tchmi-height-unit="px" data-tchmi-left="790" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;East actual:&quot;+%s%C1007.GVL_Axes.AxisEast.NcToPlc.ActPos%/s%%/f%" data-tchmi-top="364" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiTextblock_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="34" data-tchmi-height-unit="px" data-tchmi-left="790" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;East laser:&quot;+%s%C1007.MAIN.fbMachine.fbGantry.eastDisplay%/s%%/f%" data-tchmi-top="396" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiTextblock_11" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="790" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;West laser: &quot;+%s%C1007.MAIN.fbMachine.fbGantry.westDisplay%/s%%/f%" data-tchmi-top="465" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiTextblock_12" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="790" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;West Actual: &quot;+%s%C1007.GVL_Axes.AxisWest.NcToPlc.ActPos%/s%%/f%" data-tchmi-top="430" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
 </div>
