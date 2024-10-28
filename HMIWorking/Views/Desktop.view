@@ -707,4 +707,12 @@
 ]
 </script>
 </div>
+<div id="TcHmiTextblock_9" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="32" data-tchmi-height-unit="px" data-tchmi-left="800" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;East actual:&quot;+%s%C1007.GVL_Axes.AxisEast.NcToPlc.ActPos%/s%%/f%" data-tchmi-top="262" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiTextblock_10" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="34" data-tchmi-height-unit="px" data-tchmi-left="800" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;East laser:&quot;+%s%C1007.MAIN.fbMachine.fbGantry.eastDisplay%/s%%/f%" data-tchmi-top="294" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiTextblock_12" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="800" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;West Actual: &quot;+%s%C1007.GVL_Axes.AxisWest.NcToPlc.ActPos%/s%%/f%" data-tchmi-top="328" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
+<div id="TcHmiTextblock_11" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="800" data-tchmi-left-unit="px" data-tchmi-text="%f%&quot;West laser: &quot;+%s%C1007.MAIN.fbMachine.fbGantry.westDisplay%/s%%/f%" data-tchmi-top="363" data-tchmi-top-unit="px" data-tchmi-width="150" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
+</div>
 </div>
