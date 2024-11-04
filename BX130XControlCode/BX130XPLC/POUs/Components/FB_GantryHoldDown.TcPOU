@@ -48,6 +48,10 @@ VAR
 	westDisplay : LREAL;
 	eastLaserErrorCount : INT := 0; //Counts times in a row eastLaser position is off
 	westLaserErrorCount : INT := 0; //Counts times in a row westLaser position is off
+	maxWestLaserErrorCount : INT := 0;
+	maxEastLaserErrorCount : INT := 0;
+	positionMaxWestLaserErrorCount : ARRAY[0..1] OF LREAL;
+	positionMaxEastLaserErrorCount : ARRAY[0..1] OF LREAL;
 	
 	//Pneumatic switches
 	
@@ -687,12 +691,41 @@ westDisplay := westLaserDistanceMM;
 IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.Status.Homed THEN
 	IF ABS(westLaserDistanceMM - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.LASER_SERVO_DIFFERENCE_THRESHOLD THEN
 		westLaserErrorCount := westLaserErrorCount + 1;
+		IF rowIndex < MAX_CSV_ROWS THEN
+			database[rowIndex,0] := LREAL_TO_STRING(GVL_Axes.AxisWest.NcToPlc.ActPos);
+			database[rowIndex,1] := LREAL_TO_STRING(westLaserDistanceMM);
+			database[rowIndex,2] := LREAL_TO_STRING(westLaserDistanceRaw);
+			database[rowIndex,3] := LREAL_TO_STRING(GVL_Axes.AxisEast.NcToPlc.ActPos);
+			database[rowIndex,4] := LREAL_TO_STRING(eastLaserDistanceMM);
+			database[rowIndex,5] := LREAL_TO_STRING(eastLaserDistanceRaw);
+			rowIndex := rowIndex + 1;
+		END_IF
+	
+		IF westLaserErrorCount > maxWestLaserErrorCount THEN
+			maxWestLaserErrorCount := westLaserErrorCount;
+			positionMaxWestLaserErrorCount[0] := westLaserDistanceMM;
+			positionMaxWestLaserErrorCount[1] := GVL_Axes.AxisWest.NcToPlc.ActPos;
+		END_IF
 	ELSE
 		westLaserErrorCount := 0;
 	END_IF
 	
 	IF ABS(eastLaserDistanceMM - GVL_Axes.AxisEast.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.LASER_SERVO_DIFFERENCE_THRESHOLD THEN
 		eastLaserErrorCount := eastLaserErrorCount + 1;
+		IF rowIndex < MAX_CSV_ROWS THEN
+			database[rowIndex,0] := LREAL_TO_STRING(GVL_Axes.AxisWest.NcToPlc.ActPos);
+			database[rowIndex,1] := LREAL_TO_STRING(westLaserDistanceMM);
+			database[rowIndex,2] := LREAL_TO_STRING(westLaserDistanceRaw);
+			database[rowIndex,3] := LREAL_TO_STRING(GVL_Axes.AxisEast.NcToPlc.ActPos);
+			database[rowIndex,4] := LREAL_TO_STRING(eastLaserDistanceMM);
+			database[rowIndex,5] := LREAL_TO_STRING(eastLaserDistanceRaw);
+			rowIndex := rowIndex + 1;
+		END_IF
+		IF eastLaserErrorCount > maxEastLaserErrorCount THEN
+			maxEastLaserErrorCount := eastLaserErrorCount;
+			positionMaxEastLaserErrorCount[0] := eastLaserDistanceMM;
+			positionMaxEastLaserErrorCount[1] := GVL_Axes.AxisEast.NcToPlc.ActPos;
+		END_IF
 	ELSE
 		eastLaserErrorCount := 0;
 	END_IF
@@ -933,9 +966,21 @@ END_VAR
       <LineId Id="21" Count="1" />
       <LineId Id="29" Count="0" />
       <LineId Id="205" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="243" Count="5" />
+      <LineId Id="241" Count="1" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="215" Count="1" />
+      <LineId Id="223" Count="1" />
+      <LineId Id="217" Count="0" />
       <LineId Id="207" Count="1" />
       <LineId Id="206" Count="0" />
-      <LineId Id="209" Count="4" />
+      <LineId Id="209" Count="2" />
+      <LineId Id="249" Count="7" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="219" Count="3" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="212" Count="1" />
       <LineId Id="34" Count="0" />
       <LineId Id="30" Count="1" />
       <LineId Id="214" Count="0" />

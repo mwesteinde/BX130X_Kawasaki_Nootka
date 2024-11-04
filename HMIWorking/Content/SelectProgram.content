@@ -2270,4 +2270,8 @@
 </div>
 <div id="ToggleHalfMoon" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Half Moon" data-tchmi-top="214" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupHalfMoon" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption4%/s%">
 </div>
+<div id="ToggleNoHalfMoon_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="No Glass Handle" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupGlassHandle">
+</div>
+<div id="ToggleHalfMoon_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Glass Handle" data-tchmi-top="169" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupGlassHandle"  data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption3%/s%">
+</div>
 </div>
