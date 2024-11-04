@@ -1575,6 +1575,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bActivateRollers": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bActivateRollers",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to make rollers follow robot. Called from Run.content",
+                        "propertyOrder": 107
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMICalibrateTool": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2735,6 +2753,24 @@
                     },
                     {
                         "propertyOrder": 33
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.sHMIDisplayMessage": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::sHMIDisplayMessage",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/STRING%2880%29"
+                    },
+                    {
+                        "comment": "Run display",
+                        "propertyOrder": 118
                     }
                 ]
             },
@@ -5760,6 +5796,7 @@
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
                 "C1007.MAIN.fbMachine.HMILeaveRunScreen": 3,
+                "C1007.MAIN.fbMachine.bActivateRollers": 3,
                 "C1007.MAIN.fbMachine.bHMICalibrateTool": 3,
                 "C1007.MAIN.fbMachine.bHMIChangeTool": 3,
                 "C1007.MAIN.fbMachine.bHMIEnableButtons": 3,
@@ -5827,6 +5864,7 @@
                 "C1007.MAIN.fbMachine.programOption4": 3,
                 "C1007.MAIN.fbMachine.programWallChoice": 3,
                 "C1007.MAIN.fbMachine.sHMICurrentTool": 3,
+                "C1007.MAIN.fbMachine.sHMIDisplayMessage": 3,
                 "C1007.MAIN.fbMachine.sHMIDoorStatus": 3,
                 "C1007.MAIN.fbMachine.sHMIDustCollectionOn": 3,
                 "C1007.MAIN.fbMachine.sHMIErrorDisplay": 3,

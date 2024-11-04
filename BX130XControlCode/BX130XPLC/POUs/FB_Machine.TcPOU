@@ -254,14 +254,7 @@ END_VAR
 	IF fbRobot.timerOutRobotStartProgram.Q THEN
 		Popup_Error('Robot not started after 20 seconds. Check if robot is in cycle mode', TRUE);
 	END_IF
-	
-//	IF NOT fbGantry.laserReadingOk[0] THEN
-//		Popup_Error('West Gantry laser not reading well', TRUE);
-//	END_IF
-//	
-//	IF NOT fbGantry.laserReadingOk[1] THEN
-//		Popup_Error('East Gantry laser not reading well', TRUE);
-//	END_IF]]></ST>
+	]]></ST>
     </Implementation>
     <Folder Name="StateMachine" Id="{b4b3eed7-4e15-4350-a74a-294b50706019}" />
     <Method Name="Change_State" Id="{11427209-76ae-4b9c-9f30-0498e05b4968}" FolderPath="StateMachine\">
@@ -988,12 +981,18 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[Run_Error.errorMessage := '';
 Run_Error.isError := FALSE;
+Run_Error.errorType.0 := FALSE;
+Run_Error.errorType.1 := FALSE;
+Run_Error.errorType.2 := FALSE;
+Run_Error.errorType.3 := FALSE;
+Run_Error.errorType.4 := FALSE;
+Run_Error.errorType.5 := FALSE;
+Run_Error.errorType.6 := FALSE;
+
 //Robot Error
 IF fbRobot.inRobotError THEN
 	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage,'\nRobot error, check teach pendant');
 	Run_Error.isError := TRUE;
-	Run_Error.errorType.0 := TRUE;
-ELSE
 	Run_Error.errorType.0 := TRUE;
 END_IF
 
@@ -1007,8 +1006,6 @@ IF fbRobot.inRobotEStopOn THEN
 	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nRobot E Stop On');
 	Run_Error.isError := TRUE;
 	Run_Error.errorType.2 := TRUE;
-ELSE
-	Run_Error.errorType.2 := FALSE;
 END_IF
 
 
@@ -1017,16 +1014,24 @@ IF GVL_Axes.AxisWest.Status.Error THEN
 	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, CONCAT('\nwest gantry error: ', UDINT_TO_STRING(GVL_Axes.AxisWest.Status.ErrorID)));
 	Run_Error.isError := TRUE;
 	Run_Error.errorType.1 := TRUE;
-ELSE
-	Run_Error.errorType.1 := FALSE;
 END_IF
 
 IF GVL_Axes.AxisEast.Status.Error THEN
 	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, CONCAT('\neast gantry error: ', UDINT_TO_STRING(GVL_Axes.AxisWest.Status.ErrorID)));
 	Run_Error.isError := TRUE;
 	Run_Error.errorType.1 := TRUE;
-ELSE
-	Run_Error.errorType.1 := FALSE;
+END_IF
+
+IF fbGantry.westLaserErrorCount > 10 THEN
+	Run_Error.isError := TRUE;
+	Run_Error.errorType.1 := TRUE;
+	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nWest gantry position laser is reading >15mm difference to servo position. Tis means that either the gantry has stalled or the piston has disengaged, or the laser position sensor has been displaced.');
+END_IF
+
+IF fbGantry.eastLaserErrorCount > 10 THEN
+	Run_Error.isError := TRUE;
+	Run_Error.errorType.1 := TRUE;
+	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nEast gantry position laser is reading >15mm difference to servo position. Tis means that either the gantry has stalled or the piston has disengaged, or the laser position sensor has been displaced.');
 END_IF
 
 //Torque sensor error Todo: implement
@@ -1056,7 +1061,6 @@ IF pneumaticsError.isError THEN
 	Run_Error.errorType.4 := TRUE;
 	sHMIPneumaticsOK := FALSE;
 ELSE
-	Run_Error.errorType.4 := FALSE;
 	sHMIPneumaticsOK := TRUE;
 END_IF
 
@@ -1065,8 +1069,6 @@ IF fbSpindle.spindleError THEN
 	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nSpindleError');
 	Run_Error.isError := TRUE;
 	Run_Error.errorType.5 := TRUE;
-ELSE 
-	Run_Error.errorType.5 := FALSE;
 END_IF
 
 sHMIIsError := Run_Error.isError;
@@ -1226,8 +1228,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="2239" Count="0" />
       <LineId Id="2242" Count="0" />
       <LineId Id="2236" Count="0" />
-      <LineId Id="3787" Count="6" />
-      <LineId Id="3622" Count="0" />
+      <LineId Id="3787" Count="0" />
     </LineIds>
     <LineIds Name="FB_Machine.Change_State">
       <LineId Id="5" Count="0" />
@@ -1673,27 +1674,35 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
     </LineIds>
     <LineIds Name="FB_Machine.Run_Error">
       <LineId Id="11" Count="1" />
+      <LineId Id="158" Count="5" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="164" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="20" Count="1" />
       <LineId Id="23" Count="1" />
-      <LineId Id="92" Count="1" />
       <LineId Id="22" Count="0" />
       <LineId Id="134" Count="2" />
       <LineId Id="138" Count="1" />
       <LineId Id="137" Count="0" />
       <LineId Id="67" Count="0" />
       <LineId Id="69" Count="3" />
-      <LineId Id="95" Count="1" />
       <LineId Id="68" Count="0" />
       <LineId Id="94" Count="0" />
       <LineId Id="56" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="27" Count="3" />
-      <LineId Id="97" Count="1" />
       <LineId Id="26" Count="0" />
       <LineId Id="75" Count="3" />
-      <LineId Id="99" Count="2" />
+      <LineId Id="99" Count="0" />
       <LineId Id="79" Count="0" />
+      <LineId Id="147" Count="1" />
+      <LineId Id="154" Count="1" />
+      <LineId Id="149" Count="1" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="156" Count="1" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="146" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="31" Count="0" />
@@ -1713,17 +1722,13 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="86" Count="0" />
       <LineId Id="102" Count="0" />
       <LineId Id="39" Count="3" />
-      <LineId Id="52" Count="1" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="54" Count="0" />
+      <LineId Id="52" Count="2" />
       <LineId Id="38" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="47" Count="1" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="87" Count="1" />
-      <LineId Id="46" Count="0" />
+      <LineId Id="45" Count="1" />
       <LineId Id="58" Count="1" />
       <LineId Id="109" Count="0" />
       <LineId Id="112" Count="2" />

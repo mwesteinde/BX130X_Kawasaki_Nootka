@@ -42,11 +42,12 @@ VAR
 	allRollersLowered : BOOL;
 	
 	// laser feedback
-	westLaserDistance AT %I* : INT;
-	eastLaserDistance AT %I* : INT;
+	westLaserDistanceRaw AT %I* : INT;
+	eastLaserDistanceRaw AT %I* : INT;
 	eastDisplay : LREAL;
 	westDisplay : LREAL;
-	laserReadingOk : ARRAY[0..1] OF BOOL;
+	eastLaserErrorCount : INT := 0; //Counts times in a row eastLaser position is off
+	westLaserErrorCount : INT := 0; //Counts times in a row westLaser position is off
 	
 	//Pneumatic switches
 	
@@ -56,7 +57,7 @@ VAR
 	
 	// Enable bools
 	executeEnable		: BOOL := FALSE;
-	executeHomeWest 		: BOOL := FALSE;
+	executeHomeWest 	: BOOL := FALSE;
 	executeHomeEast		: BOOL := FALSE;
 	executeCouple 		: BOOL := FALSE;
 	executeDecouple		: BOOL := FALSE;
@@ -68,12 +69,43 @@ VAR
 	executeHalt			: BOOL;
 	manualMoveDirection 		: MC_Direction;
 	rTrigHomeWestDone	: R_TRIG;
+	
+	//CSV variables
+	bWrite			: BOOL := FALSE;(* Rising edge starts program execution *)
+	sNetId			: T_AmsNetId := '';	(* TwinCAT system network address *)
+	sFileName		: T_MaxString := 'C:\laserServo5mms.csv';(* CSV destination file path and name *)
+	sCSVLine		: T_MaxString := '';(* Single CSV text line (row, record), we are using string as record buffer (your are able to see created fields) *)
+	sCSVField		: T_MaxString := '';(* Single CSV field value (column, record field) *)
+	bBusy			: BOOL;
+	bError			: BOOL;
+	nErrId			: UDINT;
+	nRow	 		: UDINT 	:= 0;(* Row number (record) *)
+	nColumn			: UDINT 	:= 0;(* Column number (record field) *)
+	hFile			: UINT		:= 0;(* File handle of the source file *)
+	step			: DWORD 	:= 0;
+	fbFileOpen		: FB_FileOpen;(* Opens file *)
+	fbFileClose		: FB_FileClose;(* Closes file *)
+	fbFilePuts		: FB_FilePuts;(* Writes one record (line) *)
+	fbWriter		: FB_CSVMemBufferWriter;(* Helper function block used to create CSV data bytes (single record line) *)
+	startCount : BOOL := FALSE;
+	rowIndex		: INT := 0;
+	counterCycles	: INT := 0;
+	cycleModulus : INT := 1;
+	csvRows		: INT := 1200;
+
+	database		: ARRAY[0..MAX_CSV_ROWS, 0..MAX_CSV_COLUMNS ] OF STRING(MAX_CSV_FIELD_LENGTH);
 END_VAR
-]]></Declaration>
+VAR CONSTANT
+	MAX_CSV_ROWS    : INT :=10000;
+	MAX_CSV_COLUMNS : INT :=6;
+	MAX_CSV_FIELD_LENGTH : INT := 100;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[GVL_Axes.AxisWest.ReadStatus();
 GVL_Axes.AxisEast.ReadStatus();
-laserReadingOk := Servo_Feedback_Ok();
+Servo_Feedback_Ok();
+
+//CSV_Writer(); //To write database of laser values to CSV
 
 allRollersLowered := NOT(cylindersNorth OR cylindersCentreNorth OR cylindersCentreSouth OR cylindersSouth); 
 rTrigHomeWestDone(CLK := fbMC_HomeWest.Done);
@@ -85,6 +117,115 @@ IF GVL_Axes.AxisEast.NcToPlc.CoupleState <> 3 AND NOT fbMC_HomeEast.Busy AND NOT
 	executeCouple := NOT executeCouple;
 END_IF]]></ST>
     </Implementation>
+    <Method Name="CSV_Writer" Id="{f9e266aa-d592-4fb5-9501-ba9af6944160}">
+      <Declaration><![CDATA[METHOD CSV_Writer : BOOL
+(* Writing of CSV file in text mode. None of the field value is containing any non-printing control characters like line feed, carriage return, quotation marks, semicolon... *)
+VAR
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE step OF
+	0:	(* Wait for rising edge at bWrite variable *)
+		IF bWrite THEN
+			bWrite 	:= FALSE;
+			bBusy 	:= TRUE;
+			bError	:= FALSE;
+			nErrId	:= 0;
+			hFile	:= 0;
+			nRow	:= 0;
+			nColumn	:= 0;
+			step 	:= 1;
+		END_IF
+
+	1:	(* Open source file *)
+		fbFileOpen(  bExecute := FALSE  );
+		fbFileOpen( sNetId := sNetId, sPathName := sFileName, nMode := FOPEN_MODEWRITE OR FOPEN_MODETEXT,(* Open file in TEXT mode! *)
+					ePath := PATH_GENERIC, bExecute := TRUE );
+		step := 2;
+
+	2:(* Wait until open not busy *)
+		fbFileOpen( bExecute := FALSE, bError => bError, nErrID => nErrID, hFile => hFile );
+		IF NOT fbFileOpen.bBusy THEN
+			IF NOT fbFileOpen.bError THEN
+				step := 3;
+			ELSE(* Error: file not found? *)
+				step := 100;
+			END_IF
+		END_IF
+
+	3:(* Convert one PLC record to CSV format *)
+		sCSVLine := '';
+		fbWriter.eCmd := eEnumCmd_First;(* Write first field value *)
+		IF nRow <= csvRows THEN
+
+			FOR nColumn := 0 TO MAX_CSV_COLUMNS BY 1 DO
+
+				sCSVField := STRING_TO_CSVFIELD( database[ nRow, nColumn ], FALSE );(* TODO: Get field value from your application *)
+
+				(* Add new field to the record buffer *)
+				fbWriter( 	pBuffer := ADR( sCSVLine ), cbBuffer := SIZEOF( sCSVLine ) - 1, putValue := sCSVField, pValue := 0, cbValue := 0,
+							bCRLF := ( nColumn = MAX_CSV_COLUMNS ) );(* bCRLF == TRUE => Write CRLF after the last field value *)
+				IF fbWriter.bOk THEN
+					fbWriter.eCmd := eEnumCmd_Next;(* Write next field value *)
+				ELSE(* Error *)
+					step := 100;
+					RETURN;
+				END_IF
+
+			END_FOR(* FOR nColumn := 0... *)
+
+			(* FB_FilePuts adds allready CR (carriage return) to the written line.
+			We have to replace the $R$L characters with $L character to avoid double CR. *)
+			IF RIGHT( sCSVLine, 2 ) = '$R$L' THEN
+				sCSVLine := REPLACE( sCSVLine, '$L', 2, LEN( sCSVLine ) - 1 );
+			END_IF
+
+			nRow := nRow + 1;(* Increment number of created records (rows) *)
+			step := 4;(* Write record to the file *)
+
+		ELSE(* All rows written => Close file *)
+			step := 10;
+		END_IF
+
+	4:	(* Write single text line *)
+		fbFilePuts( bExecute := FALSE );
+		fbFilePuts( sNetId := sNetId, hFile := hFile, sLine := sCSVLine, bExecute := TRUE );
+		step := 5;
+
+	5:(* Wait until write not busy *)
+		fbFilePuts( bExecute := FALSE, bError => bError, nErrID => nErrID );
+		IF NOT fbFilePuts.bBusy THEN
+			IF NOT fbFilePuts.bError THEN
+				step := 3;(* Write next record *)
+			ELSE(* Error *)
+				step := 100;
+			END_IF
+		END_IF
+
+	10:	(* Close source file *)
+		fbFileClose( bExecute := FALSE );
+		fbFileClose( sNetId := sNetId, hFile := hFile, bExecute := TRUE );
+		step := 11;
+
+	11:(* Wait until close not busy *)
+		fbFileClose( bExecute := FALSE, bError => bError, nErrID => nErrID );
+		IF ( NOT fbFileClose.bBusy ) THEN
+			hFile := 0;
+			step := 100;
+		END_IF
+
+	100: (* Error or ready step => cleanup *)
+		IF ( hFile <> 0 ) THEN
+			step := 10; (* Close the source file *)
+		ELSE
+			bBusy := FALSE;
+			step := 0;	(* Ready *)
+		END_IF
+
+END_CASE
+
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Cylinder_Set_Cutting" Id="{80c33305-3d27-491c-90ce-c1e0d842bbab}">
       <Declaration><![CDATA[METHOD Cylinder_Set_Cutting
 VAR_INPUT
@@ -454,31 +595,126 @@ fbMC_Reset(
       </Implementation>
     </Method>
     <Method Name="Servo_Feedback_Ok" Id="{ca3627b1-0886-4bf3-93a4-0c36fc747e85}">
-      <Declaration><![CDATA[METHOD Servo_Feedback_Ok : ARRAY[0..1] OF BOOL;
+      <Declaration><![CDATA[METHOD Servo_Feedback_Ok : BOOL;
 VAR
-	eastDistanceMM : LREAL;
-	westDistanceMM : LREAL;
+	eastLaserDistanceMM : LREAL;
+	westLaserDistanceMM : LREAL;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[eastDistanceMM := (GVL_SERVO_ROBOT_CONST.EAST_LASER_MAX_TRAVEL-GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_TRAVEL)
-			*(eastLaserDistance-GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_RAWVALUE)
-			/(GVL_SERVO_ROBOT_CONST.EAST_LASER_MAX_RAWVALUE-GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_RAWVALUE)
-			+ GVL_SERVO_ROBOT_CONST.EAST_LASER_MIN_TRAVEL;
-westDistanceMM := (GVL_SERVO_ROBOT_CONST.WEST_LASER_MAX_TRAVEL-GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_TRAVEL)
-			*(westLaserDistance-GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_RAWVALUE)
-			/(GVL_SERVO_ROBOT_CONST.WEST_LASER_MAX_RAWVALUE-GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_RAWVALUE)
-			+ GVL_SERVO_ROBOT_CONST.WEST_LASER_MIN_TRAVEL;
-			
-eastDisplay := eastDistanceMM;
-westDisplay := westDistanceMM;
-			
-IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.Status.Homed THEN
-	Servo_Feedback_Ok[0] := ABS(westDistanceMM - GVL_Axes.AxisWest.NcToPlc.ActPos) < 20;
-	Servo_Feedback_Ok[1] := ABS(eastDistanceMM - GVL_Axes.AxisEast.NcToPlc.ActPos) < 20;
+        <ST><![CDATA[(*	 West segments. Found by logging laser raw vaues compared to servo values and generating stepwise matcing function with this pyton script: https://colab.research.google.com/drive/1Y94awcyMlDvm36SadoFhQ90GHG-RgMbE?usp=sharing
+Segment 1: y = 0.0752 * x + 4.1635 for 513.0 <= x <= 2752.0
+Segment 2: y = 0.0744 * x + 5.1779 for 2764.0 <= x <= 5171.0
+Segment 3: y = 0.0782 * x + -19.3787 for 5189.0 <= x <= 7711.0
+Segment 4: y = 0.0760 * x + -1.5012 for 7726.0 <= x <= 10374.0
+Segment 5: y = 0.0748 * x + 14.5548 for 10393.0 <= x <= 13260.0
+Segment 6: y = 0.0775 * x + -19.1401 for 13268.0 <= x <= 16313.0
+Segment 7: y = 0.0761 * x + 0.8288 for 16337.0 <= x <= 19469.0
+Segment 8: y = 0.0766 * x + -10.5501 for 19492.0 <= x <= 22646.0
+Segment 9: y = 0.0762 * x + -1.3316 for 22666.0 <= x <= 25786.0
+Segment 10: y = 0.0738 * x + 62.2617 for 25802.0 <= x <= 27665.0*)
+
+//West distance:
+IF westLaserDistanceRaw < 513 THEN
+	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos; //At start laser is not linear
+ELSIF westLaserDistanceRaw < 2752 THEN
+    westLaserDistanceMM := 0.0752 * westLaserDistanceRaw + 4.1635;
+ELSIF westLaserDistanceRaw < 5171 THEN
+    westLaserDistanceMM := 0.0744 * westLaserDistanceRaw + 5.1779;
+ELSIF westLaserDistanceRaw < 7711 THEN
+    westLaserDistanceMM := 0.0782 * westLaserDistanceRaw + -19.3787;
+ELSIF westLaserDistanceRaw < 10374 THEN
+    westLaserDistanceMM := 0.0760 * westLaserDistanceRaw + -1.5012;
+ELSIF westLaserDistanceRaw < 13260 THEN
+    westLaserDistanceMM := 0.0748 * westLaserDistanceRaw + 14.5548;
+ELSIF westLaserDistanceRaw < 16313 THEN
+    westLaserDistanceMM := 0.0775 * westLaserDistanceRaw + -19.1401;
+ELSIF westLaserDistanceRaw < 19469 THEN
+    westLaserDistanceMM := 0.0761 * westLaserDistanceRaw + 0.8288;
+ELSIF westLaserDistanceRaw < 22646 THEN
+    westLaserDistanceMM := 0.0766 * westLaserDistanceRaw + -10.5501;
+ELSIF westLaserDistanceRaw < 25786 THEN
+    westLaserDistanceMM := 0.0762 * westLaserDistanceRaw + -1.3316;
+ELSIF westLaserDistanceRaw <= 27665 THEN
+    westLaserDistanceMM := 0.0738 * westLaserDistanceRaw + 62.2617;
 ELSE
-	Servo_Feedback_Ok[0] := TRUE;
-	Servo_Feedback_Ok[1] := TRUE;
+	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos; //At ends laser is less reliable
+END_IF
+
+(*	 East segments. Found by logging laser raw vaues compared to servo values and generating stepwise matcing function with this pyton script: https://colab.research.google.com/drive/1Y94awcyMlDvm36SadoFhQ90GHG-RgMbE?usp=sharing
+Segment 1: y = 0.0765 * x + 5.3461 for 512.0 <= x <= 3356.0
+Segment 2: y = 0.0717 * x + 20.8508 for 3367.0 <= x <= 6278.0
+Segment 3: y = 0.0766 * x + -4.5129 for 6298.0 <= x <= 9309.0
+Segment 4: y = 0.0758 * x + 2.6925 for 9316.0 <= x <= 12407.0
+Segment 5: y = 0.0784 * x + -32.3308 for 12422.0 <= x <= 15408.0
+Segment 6: y = 0.0753 * x + 15.0025 for 15425.0 <= x <= 18194.0
+Segment 7: y = 0.0739 * x + 41.3383 for 18209.0 <= x <= 20818.0
+Segment 8: y = 0.0762 * x + -2.3633 for 20855.0 <= x <= 23436.0
+Segment 9: y = 0.0770 * x + -24.5967 for 23454.0 <= x <= 26111.0
+Segment 10: y = 0.0733 * x + 74.9176 for 26122.0 <= x <= 27668.0
+*)
+IF eastLaserDistanceRaw < 512 THEN
+	eastLaserDistanceMM := GVL_Axes.AxisEast.NcToPlc.ActPos; //At start laser is not linear
+ELSIF eastLaserDistanceRaw < 3356 THEN
+    eastLaserDistanceMM := 0.0765 * eastLaserDistanceRaw + 5.3461;
+ELSIF eastLaserDistanceRaw < 6278 THEN
+    eastLaserDistanceMM := 0.0717 * eastLaserDistanceRaw + 20.8508;
+ELSIF eastLaserDistanceRaw < 9309 THEN
+    eastLaserDistanceMM := 0.0766 * eastLaserDistanceRaw + -4.5129;
+ELSIF eastLaserDistanceRaw < 12407 THEN
+    eastLaserDistanceMM := 0.0758 * eastLaserDistanceRaw + 2.6925;
+ELSIF eastLaserDistanceRaw < 15408 THEN
+    eastLaserDistanceMM := 0.0784 * eastLaserDistanceRaw + -32.3308;
+ELSIF eastLaserDistanceRaw < 18194 THEN
+    eastLaserDistanceMM := 0.0753 * eastLaserDistanceRaw + 15.0025;
+ELSIF eastLaserDistanceRaw < 20818 THEN
+    eastLaserDistanceMM := 0.0739 * eastLaserDistanceRaw + 41.3383;
+ELSIF eastLaserDistanceRaw < 23436 THEN
+    eastLaserDistanceMM := 0.0762 * eastLaserDistanceRaw + -2.3633;
+ELSIF eastLaserDistanceRaw < 26111 THEN
+    eastLaserDistanceMM := 0.0770 * eastLaserDistanceRaw + -24.5967;
+ELSIF eastLaserDistanceRaw <= 27668 THEN
+    eastLaserDistanceMM := 0.0733 * eastLaserDistanceRaw + 74.9176;
+ELSE
+	eastLaserDistanceMM := GVL_Axes.AxisEast.NcToPlc.ActPos;
+END_IF
+
+			
+eastDisplay := eastLaserDistanceMM;
+westDisplay := westLaserDistanceMM;
+
+//Comparing laser distance value to servo feedback. If off by more than threshold, start counting how many times in a row this happens
+IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.Status.Homed THEN
+	IF ABS(westLaserDistanceMM - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.LASER_SERVO_DIFFERENCE_THRESHOLD THEN
+		westLaserErrorCount := westLaserErrorCount + 1;
+	ELSE
+		westLaserErrorCount := 0;
+	END_IF
+	
+	IF ABS(eastLaserDistanceMM - GVL_Axes.AxisEast.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.LASER_SERVO_DIFFERENCE_THRESHOLD THEN
+		eastLaserErrorCount := eastLaserErrorCount + 1;
+	ELSE
+		eastLaserErrorCount := 0;
+	END_IF
+ELSE
+	westLaserErrorCount := 0;
+	eastLaserErrorCount := 0;
+END_IF
+
+//Logging laser raw values to database, written to csv in CSV_Writer
+IF startCount THEN
+	IF counterCycles MOD cycleModulus = 0 THEN
+		IF rowIndex < MAX_CSV_ROWS THEN
+			database[rowIndex,0] := LREAL_TO_STRING(GVL_Axes.AxisWest.NcToPlc.ActPos);
+			database[rowIndex,1] := LREAL_TO_STRING(westLaserDistanceMM);
+			database[rowIndex,2] := LREAL_TO_STRING(westLaserDistanceRaw);
+			database[rowIndex,3] := LREAL_TO_STRING(GVL_Axes.AxisEast.NcToPlc.ActPos);
+			database[rowIndex,4] := LREAL_TO_STRING(eastLaserDistanceMM);
+			database[rowIndex,5] := LREAL_TO_STRING(eastLaserDistanceRaw);
+		END_IF
+		rowIndex := rowIndex + 1;
+	END_IF
+	counterCycles := counterCycles + 1;
 END_IF]]></ST>
       </Implementation>
     </Method>
@@ -494,7 +730,9 @@ END_VAR
     </Method>
     <LineIds Name="FB_GantryHoldDown">
       <LineId Id="189" Count="1" />
-      <LineId Id="389" Count="0" />
+      <LineId Id="499" Count="0" />
+      <LineId Id="496" Count="0" />
+      <LineId Id="487" Count="0" />
       <LineId Id="325" Count="0" />
       <LineId Id="324" Count="0" />
       <LineId Id="266" Count="0" />
@@ -504,6 +742,10 @@ END_VAR
       <LineId Id="207" Count="0" />
       <LineId Id="195" Count="0" />
       <LineId Id="208" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_GantryHoldDown.CSV_Writer">
+      <LineId Id="6" Count="99" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Cylinder_Set_Cutting">
       <LineId Id="12" Count="0" />
@@ -668,16 +910,50 @@ END_VAR
       <LineId Id="31" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Servo_Feedback_Ok">
-      <LineId Id="5" Count="0" />
-      <LineId Id="15" Count="5" />
-      <LineId Id="12" Count="0" />
+      <LineId Id="164" Count="9" />
+      <LineId Id="162" Count="1" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="136" Count="1" />
+      <LineId Id="143" Count="18" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="174" Count="1" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="116" Count="8" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="178" Count="1" />
+      <LineId Id="182" Count="18" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="201" Count="1" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="176" Count="0" />
       <LineId Id="36" Count="2" />
+      <LineId Id="204" Count="0" />
       <LineId Id="21" Count="1" />
       <LineId Id="29" Count="0" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="207" Count="1" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="209" Count="4" />
       <LineId Id="34" Count="0" />
       <LineId Id="30" Count="1" />
-      <LineId Id="35" Count="0" />
+      <LineId Id="214" Count="0" />
       <LineId Id="24" Count="0" />
+      <LineId Id="203" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="57" Count="0" />
     </LineIds>
     <LineIds Name="FB_GantryHoldDown.Stop_Servos">
       <LineId Id="5" Count="0" />
