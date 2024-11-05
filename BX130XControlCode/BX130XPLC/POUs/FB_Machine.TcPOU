@@ -323,34 +323,47 @@ CASE eSystemState OF
 		
 		//Moves to change tool initialization
 		IF rTrigChangeTool.Q THEN
-			IF fbSpindle.Verify_Tool_Change_Request(sHMICurrentTool, sHMIRequestedTool) THEN
-				eSystemState := E_MachineState.TOOLCHANGEINIT;
-				fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
-				IF NOT fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool) THEN
-					Popup_Error('Update Tool Failed - invalid tool number', TRUE);
+			IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+				IF fbSpindle.Verify_Tool_Change_Request(sHMICurrentTool, sHMIRequestedTool) THEN
+					eSystemState := E_MachineState.TOOLCHANGEINIT;
+					fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
+					IF NOT fbSpindle.Update_Current_Tool(toolNumber := sHMICurrentTool) THEN
+						Popup_Error('Update Tool Failed - invalid tool number', TRUE);
+					END_IF
+					fbRobot.Program_Select(programChoice := 10, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
+					fbRobot.Start_Robot();
+				ELSE
+					Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Fix and try to change tool again. If false, check tool limit switches', TRUE);
+					bHMIChangeTool := FALSE;
 				END_IF
-				fbRobot.Program_Select(programChoice := 10, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
-				fbRobot.Start_Robot();
 			ELSE
-				Popup_Error('Tool present in destination tool holder, or tool not present in pickup tool holder. Fix and try to change tool again. If false, check tool limit switches', TRUE);
-				bHMIChangeTool := FALSE;
+				fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+				fbRobot.Program_Select(programChoice := 0, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
+				Popup_Error('Robot program not updated, try again after 2 seconds', TRUE);
 			END_IF
 		END_IF
 		
 		IF rTrigCalibrateTool.Q THEN
-			IF sHMIToolToCalibrate.toolNumber = GVL_Programs.sawblade.toolNumber THEN
-				fbRobot.Program_Select(programChoice := 14, option1 := FALSE, programOption2, programOption3, programOption4, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+			IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+				IF sHMIToolToCalibrate.toolNumber = GVL_Programs.sawblade.toolNumber THEN
+					fbRobot.Program_Select(programChoice := 14, option1 := FALSE, programOption2, programOption3, programOption4, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+				ELSE
+					fbRobot.Program_Select(programChoice := 14, option1 := TRUE, programOption2, programOption3, programOption4, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+				END_IF
+				gantryError := fbGantry.Home_Servos(robotPose := fbRobot.robotPose);
+				IF gantryError.isError THEN
+					Popup_Error('Robot too low to home or axis not coupled properly', TRUE);
+				ELSE
+					fbTorqueSensor.Zero_ForceSensor();
+					fbRobot.Start_Robot();
+					eSystemState := E_MachineState.TOOLCALIBRATION;
+				END_IF
 			ELSE
-				fbRobot.Program_Select(programChoice := 14, option1 := TRUE, programOption2, programOption3, programOption4, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
+				fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+				fbRobot.Program_Select(programChoice := 0, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
+				Popup_Error('Robot program not updated, try again after 2 seconds', TRUE);
 			END_IF
-			gantryError := fbGantry.Home_Servos(robotPose := fbRobot.robotPose);
-			IF gantryError.isError THEN
-				Popup_Error('Robot too low to home or axis not coupled properly', TRUE);
-			ELSE
-				fbTorqueSensor.Zero_ForceSensor();
-				fbRobot.Start_Robot();
-				eSystemState := E_MachineState.TOOLCALIBRATION;
-			END_IF
+			
 		END_IF
 		
 		IF rTrigEnterManualMode.Q THEN
@@ -675,6 +688,7 @@ IF rTrigEnableMovement.Q THEN
 		fbRobot.Start_Robot();
 	ELSE
 		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+		fbRobot.Program_Select(programChoice := 0, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 		Popup_Error('Robot program not updated, try again after 2 seconds', TRUE);
 	END_IF
 END_IF
@@ -686,6 +700,7 @@ IF rTrigHomeRobot.Q THEN
 		fbRobot.Start_Robot();
 	ELSE
 		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+		fbRobot.Program_Select(programChoice := 0, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 		Popup_Error('Robot program not updated, try again after 2 seconds', TRUE);
 	END_IF
 END_IF
@@ -699,6 +714,7 @@ IF rTrigGoToCleanupRobot.Q THEN
 		bActivateRollers := FALSE;
 	ELSE
 		fbRobot.Stop_Robot_Program(forgetProgram := TRUE);
+		fbRobot.Program_Select(programChoice := 0, programOption1, programOption2, programOption3, programOption4, boardWidthIs51inches);
 		Popup_Error('Robot program not updated, try again after 2 seconds', TRUE);
 	END_IF
 END_IF
@@ -1291,25 +1307,20 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="123" Count="0" />
       <LineId Id="667" Count="0" />
       <LineId Id="124" Count="0" />
-      <LineId Id="300" Count="0" />
-      <LineId Id="304" Count="2" />
-      <LineId Id="321" Count="1" />
-      <LineId Id="307" Count="0" />
-      <LineId Id="301" Count="2" />
-      <LineId Id="308" Count="0" />
-      <LineId Id="299" Count="0" />
+      <LineId Id="669" Count="0" />
+      <LineId Id="676" Count="10" />
+      <LineId Id="670" Count="0" />
+      <LineId Id="672" Count="3" />
+      <LineId Id="668" Count="0" />
       <LineId Id="126" Count="0" />
       <LineId Id="531" Count="0" />
-      <LineId Id="534" Count="0" />
-      <LineId Id="554" Count="2" />
-      <LineId Id="558" Count="0" />
-      <LineId Id="557" Count="0" />
-      <LineId Id="583" Count="0" />
-      <LineId Id="574" Count="1" />
-      <LineId Id="577" Count="0" />
-      <LineId Id="597" Count="0" />
-      <LineId Id="578" Count="1" />
-      <LineId Id="576" Count="0" />
+      <LineId Id="699" Count="0" />
+      <LineId Id="713" Count="0" />
+      <LineId Id="720" Count="11" />
+      <LineId Id="714" Count="0" />
+      <LineId Id="716" Count="3" />
+      <LineId Id="712" Count="0" />
+      <LineId Id="687" Count="0" />
       <LineId Id="552" Count="0" />
       <LineId Id="653" Count="3" />
       <LineId Id="621" Count="1" />
@@ -1535,20 +1546,26 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="351" Count="0" />
       <LineId Id="355" Count="0" />
       <LineId Id="359" Count="0" />
-      <LineId Id="356" Count="2" />
+      <LineId Id="356" Count="1" />
+      <LineId Id="362" Count="0" />
+      <LineId Id="358" Count="0" />
       <LineId Id="350" Count="0" />
       <LineId Id="295" Count="0" />
       <LineId Id="314" Count="2" />
       <LineId Id="339" Count="0" />
       <LineId Id="343" Count="0" />
       <LineId Id="347" Count="0" />
-      <LineId Id="344" Count="2" />
+      <LineId Id="344" Count="1" />
+      <LineId Id="360" Count="0" />
+      <LineId Id="346" Count="0" />
       <LineId Id="338" Count="0" />
       <LineId Id="320" Count="3" />
       <LineId Id="329" Count="0" />
       <LineId Id="332" Count="2" />
       <LineId Id="330" Count="0" />
-      <LineId Id="335" Count="2" />
+      <LineId Id="335" Count="1" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="337" Count="0" />
       <LineId Id="331" Count="0" />
       <LineId Id="313" Count="0" />
       <LineId Id="270" Count="0" />
