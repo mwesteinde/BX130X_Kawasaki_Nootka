@@ -356,6 +356,7 @@ CASE eSystemState OF
 				ELSE
 					fbTorqueSensor.Zero_ForceSensor();
 					fbRobot.Start_Robot();
+					bActivateRollers := FALSE;
 					eSystemState := E_MachineState.TOOLCALIBRATION;
 				END_IF
 			ELSE
@@ -544,7 +545,8 @@ END_VAR
     </Method>
     <Method Name="Operating_Initialization" Id="{a0909845-20b7-4f19-88c6-a128d86fcc8b}" FolderPath="StateMachine\">
       <Declaration><![CDATA[METHOD Operating_Initialization
-VAR_INPUT
+VAR
+	robotTooLow : ARRAY [0..1] OF BOOL;
 END_VAR
 VAR
 END_VAR]]></Declaration>
@@ -643,9 +645,13 @@ END_IF
 IF bActivateRollers THEN
 	IF GVL_Axes.AxisWest.Status.Homed THEN
 		IF fbRobot.inRobotPoseDataIsSent THEN
-			fbGantry.Follow_Robot(robotPoseGantry := robotPose);
+			robotTooLow := fbGantry.Follow_Robot(robotPoseGantry := robotPose);
 		ELSE
 			Popup_Error('Robot posedata program not running', TRUE);
+			bActivateRollers := FALSE;
+		END_IF
+		IF robotTooLow[1] THEN
+			Popup_Error('Robot too low, home robot first', TRUE);
 			bActivateRollers := FALSE;
 		END_IF
 	ELSE
@@ -800,6 +806,7 @@ END_IF]]></ST>
       <Declaration><![CDATA[METHOD Operating_Run
 VAR
 	robotRun : BOOL;
+	followRobot : ARRAY[0..1] OF BOOL;
 	toolNumber: INT;
 END_VAR
 ]]></Declaration>
@@ -809,7 +816,8 @@ fbEnclosure.Light_Operation(FALSE, TRUE, FALSE, FALSE);
 
 // Follow robot
 IF fbRobot.inRobotPoseDataIsSent THEN
-	robotRun := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
+	followRobot := fbGantry.Follow_Robot(robotPoseGantry := fbRobot.robotPose);
+	robotRun := followRobot[0];
 ELSE 
 	robotRun := FALSE;
 	Popup_Error('Robot pose data not being sent', TRUE);
@@ -1316,7 +1324,9 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="531" Count="0" />
       <LineId Id="699" Count="0" />
       <LineId Id="713" Count="0" />
-      <LineId Id="720" Count="11" />
+      <LineId Id="720" Count="10" />
+      <LineId Id="742" Count="0" />
+      <LineId Id="731" Count="0" />
       <LineId Id="714" Count="0" />
       <LineId Id="716" Count="3" />
       <LineId Id="712" Count="0" />
@@ -1516,6 +1526,10 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="169" Count="3" />
       <LineId Id="175" Count="0" />
       <LineId Id="167" Count="0" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="369" Count="0" />
+      <LineId Id="371" Count="0" />
+      <LineId Id="370" Count="0" />
       <LineId Id="173" Count="1" />
       <LineId Id="176" Count="0" />
       <LineId Id="168" Count="0" />
@@ -1618,6 +1632,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="14" Count="0" />
       <LineId Id="120" Count="0" />
       <LineId Id="11" Count="0" />
+      <LineId Id="199" Count="0" />
       <LineId Id="121" Count="1" />
       <LineId Id="124" Count="0" />
       <LineId Id="123" Count="0" />

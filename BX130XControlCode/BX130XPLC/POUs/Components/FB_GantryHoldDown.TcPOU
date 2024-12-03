@@ -270,7 +270,7 @@ END_IF
       </Implementation>
     </Method>
     <Method Name="Follow_Robot" Id="{56fb3307-d26a-436e-8a13-67eb97620809}">
-      <Declaration><![CDATA[METHOD Follow_Robot : BOOL //returns false if dust boot is within one follow threshold length of rollersw threshold), true if it is
+      <Declaration><![CDATA[METHOD Follow_Robot : ARRAY[0..1] OF BOOL //Index 0 returns false if dust boot is within one follow threshold length of rollersw threshold), true if it is. Index 1 returns True if the robot is below rollers and outside of the rollers
 VAR_INPUT
 	robotPoseGantry : Structure_RobotPose;
 END_VAR
@@ -299,9 +299,16 @@ positionSouthCornerDustBoot := (robotPoseGantry.yPoseDustBootSouth - GVL_SERVO_R
 IF (positionNorthCornerDustBoot < (GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2 + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) OR 
 	positionSouthCornerDustBoot > (GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2 - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD)) 
 	AND (robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT) THEN
-	Follow_Robot := FALSE; //Gantry isn't following, hold robot
+	Follow_Robot[0] := FALSE; //Gantry isn't following, hold robot
 ELSE
-	Follow_Robot := TRUE; //Gantry is following properly, keep robot on run
+	Follow_Robot[0] := TRUE; //Gantry is following properly, keep robot on run
+END_IF
+
+//Checking if robot is below rollers and on the outside of rollers
+IF robotPoseGantry.zPose < GVL_SERVO_ROBOT_CONST.ROLLERS_Z_HEIGHT - 50 AND (positionNorthCornerDustBoot > (GVL_Axes.AxisWest.NcToPlc.ActPos + GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2 + GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD) OR positionSouthCornerDustBoot < (GVL_Axes.AxisWest.NcToPlc.ActPos - GVL_SERVO_ROBOT_CONST.INNER_ROLLERS_SPACING/2 - GVL_SERVO_ROBOT_CONST.FOLLOW_THRESHOLD)) THEN
+	Follow_Robot[1] := TRUE;
+ELSE
+	Follow_Robot[1] := FALSE;
 END_IF
 
 IF targetPosition < GVL_SERVO_ROBOT_CONST.MIN_POS_SERVOWEST THEN
@@ -806,6 +813,12 @@ END_VAR
       <LineId Id="172" Count="0" />
       <LineId Id="169" Count="2" />
       <LineId Id="168" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="196" Count="1" />
+      <LineId Id="195" Count="0" />
       <LineId Id="134" Count="0" />
       <LineId Id="80" Count="1" />
       <LineId Id="83" Count="0" />
