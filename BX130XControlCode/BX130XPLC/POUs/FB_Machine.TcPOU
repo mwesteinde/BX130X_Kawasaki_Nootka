@@ -124,6 +124,16 @@ VAR
 	boardWidthIs51inches : BOOL := TRUE; //1 if board width is 5.1 inches, 0 if 4.75inches
 	bHMIRunProgramScreen		: BOOL; 
 	rTrigRunProgramScreen		: R_TRIG;
+	bHMIProgramFront			: BOOL;
+	bHMIProgramRear			: BOOL;
+	bHMIProgramCubeBlade			: BOOL;
+	bHMIProgramTableEdge			: BOOL;
+	bHMIProgramCube			: BOOL;
+	bHMIProgramBarrelBlade			: BOOL;
+	bHMIProgramOption6			: BOOL;
+	bHMIProgramOption7			: BOOL;
+	bHMIProgramOption9			: BOOL;
+	
 	//=============Programs====================
 	selectedProgram : Program_Type;
 	

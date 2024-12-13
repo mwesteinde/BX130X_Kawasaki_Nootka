@@ -1558,6 +1558,27 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.ErrorAcknowledge": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::ErrorAcknowledge",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "attributes": {
+                            "TcAddressType": "Output"
+                        },
+                        "comment": "If SafetyPLC goes into error, this needs to turn on to be able to reset",
+                        "propertyOrder": 10
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.HMILeaveRunScreen": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -1966,6 +1987,91 @@
                     },
                     {
                         "propertyOrder": 27
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIProgramBarrelBlade": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIProgramBarrelBlade",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 103
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIProgramCube": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIProgramCube",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 102
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIProgramCubeBlade": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIProgramCubeBlade",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 100
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIProgramFront": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIProgramFront",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 98
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.bHMIProgramRear": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIProgramRear",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 99
                     }
                 ]
             },
@@ -5795,6 +5901,7 @@
                 "C1007.Global_Variables.DATE_AND_TIME_SECPERDAY": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX": 3,
                 "C1007.Global_Variables.SYSTEMTIME_DATE_AND_TIME_MAX64": 3,
+                "C1007.MAIN.fbMachine.ErrorAcknowledge": 3,
                 "C1007.MAIN.fbMachine.HMILeaveRunScreen": 3,
                 "C1007.MAIN.fbMachine.bActivateRollers": 3,
                 "C1007.MAIN.fbMachine.bHMICalibrateTool": 3,
@@ -5819,6 +5926,11 @@
                 "C1007.MAIN.fbMachine.bHMIMoveServosNorth": 3,
                 "C1007.MAIN.fbMachine.bHMIMoveServosSouth": 3,
                 "C1007.MAIN.fbMachine.bHMIOpenCloseDoor": 3,
+                "C1007.MAIN.fbMachine.bHMIProgramBarrelBlade": 3,
+                "C1007.MAIN.fbMachine.bHMIProgramCube": 3,
+                "C1007.MAIN.fbMachine.bHMIProgramCubeBlade": 3,
+                "C1007.MAIN.fbMachine.bHMIProgramFront": 3,
+                "C1007.MAIN.fbMachine.bHMIProgramRear": 3,
                 "C1007.MAIN.fbMachine.bHMIRaiseLowerDustBoot": 3,
                 "C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen": 3,
                 "C1007.MAIN.fbMachine.bHMIReset": 3,
