@@ -15,8 +15,8 @@ VAR_GLOBAL
 
 	// ================= Programs ====================================
 	//Update C:\Users\kris\OneDrive\Documents\Robot transfer\Robot Programs\BX130XControlCode\BX130XControlCode\BX130XPLC\POUs\FB_Machine.TcPOU
-	FrontWall : Program_Type := (index := 1, option1true := 'E cut', option1false := 'No E cut', option2true := 'Glass Door', option2false := 'Wood Door', option3true := 'Handles', option3false := 'No Handles', programName := 'Front Wall', firstTool := halfInchUpcut);
-	BackWall : Program_Type := (index := 2, option1true := 'STD Window', option1false := 'No Window', option2true := 'Handles', option2false := 'No Handles', option3true := 'Glass Door Handle', option3false := 'No Glass Door Handle', programName := 'Back Wall', firstTool := halfInchUpcut);	
+	FrontWall : Program_Type := (index := 1, option1true := 'E cut', option1false := 'No E cut', option2true := 'Glass Door', option2false := 'Standard Door', option3true := 'Handles', option3false := 'No Handles', programName := 'Front Wall', firstTool := halfInchUpcut);
+	BackWall : Program_Type := (index := 2, option1true := 'XL Window', option1false := 'No Window', option2true := 'Handles', option2false := 'No Handles', option3true := 'Glass Door Handle', option3false := 'No Glass Door Handle', programName := 'Back Wall', firstTool := halfInchUpcut);	
 	Option3 : Program_Type := (index := 3, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option3', firstTool := quarterInchUpcut);
 	Option4 : Program_Type := (index := 4, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'Option4', firstTool := quarterInchUpcut);
 	CubeSaunaFront : Program_Type := (index := 5, option1true := '', option1false := '', option2true := '', option2false := '', option3true := '', option3false := '', programName := 'CubeSaunaFront', firstTool := halfInchUpcut);
