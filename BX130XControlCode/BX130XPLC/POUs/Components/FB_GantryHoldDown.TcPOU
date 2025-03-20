@@ -109,7 +109,15 @@ END_VAR]]></Declaration>
 GVL_Axes.AxisEast.ReadStatus();
 Servo_Feedback_Ok();
 
-//CSV_Writer(); //To write database of laser values to CSV
+cycleModulus := 3;
+
+CSV_Writer(); //To write database of laser values to CSV
+
+IF NOT(cylindersNorth AND cylindersCentreNorth AND cylindersCentreSouth AND cylindersSouth) THEN
+	startCount := FALSE;
+ELSE
+	startCount := FALSE;
+END_IF
 
 allRollersLowered := NOT(cylindersNorth OR cylindersCentreNorth OR cylindersCentreSouth OR cylindersSouth); 
 rTrigHomeWestDone(CLK := fbMC_HomeWest.Done);
@@ -698,7 +706,7 @@ westDisplay := westLaserDistanceMM;
 IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.Status.Homed THEN
 	IF ABS(westLaserDistanceMM - GVL_Axes.AxisWest.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.LASER_SERVO_DIFFERENCE_THRESHOLD THEN
 		westLaserErrorCount := westLaserErrorCount + 1;
-		IF rowIndex < MAX_CSV_ROWS THEN
+		IF rowIndex < MAX_CSV_ROWS - 1 THEN
 			database[rowIndex,0] := LREAL_TO_STRING(GVL_Axes.AxisWest.NcToPlc.ActPos);
 			database[rowIndex,1] := LREAL_TO_STRING(westLaserDistanceMM);
 			database[rowIndex,2] := LREAL_TO_STRING(westLaserDistanceRaw);
@@ -719,7 +727,7 @@ IF GVL_Axes.AxisWest.Status.Homed AND GVL_Axes.AxisEast.Status.Homed THEN
 	
 	IF ABS(eastLaserDistanceMM - GVL_Axes.AxisEast.NcToPlc.ActPos) > GVL_SERVO_ROBOT_CONST.LASER_SERVO_DIFFERENCE_THRESHOLD THEN
 		eastLaserErrorCount := eastLaserErrorCount + 1;
-		IF rowIndex < MAX_CSV_ROWS THEN
+		IF rowIndex < MAX_CSV_ROWS - 1 THEN
 			database[rowIndex,0] := LREAL_TO_STRING(GVL_Axes.AxisWest.NcToPlc.ActPos);
 			database[rowIndex,1] := LREAL_TO_STRING(westLaserDistanceMM);
 			database[rowIndex,2] := LREAL_TO_STRING(westLaserDistanceRaw);
@@ -744,15 +752,15 @@ END_IF
 //Logging laser raw values to database, written to csv in CSV_Writer
 IF startCount THEN
 	IF counterCycles MOD cycleModulus = 0 THEN
-		IF rowIndex < MAX_CSV_ROWS THEN
+		IF rowIndex < MAX_CSV_ROWS - 1 THEN
 			database[rowIndex,0] := LREAL_TO_STRING(GVL_Axes.AxisWest.NcToPlc.ActPos);
 			database[rowIndex,1] := LREAL_TO_STRING(westLaserDistanceMM);
 			database[rowIndex,2] := LREAL_TO_STRING(westLaserDistanceRaw);
 			database[rowIndex,3] := LREAL_TO_STRING(GVL_Axes.AxisEast.NcToPlc.ActPos);
 			database[rowIndex,4] := LREAL_TO_STRING(eastLaserDistanceMM);
 			database[rowIndex,5] := LREAL_TO_STRING(eastLaserDistanceRaw);
+			rowIndex := rowIndex + 1;
 		END_IF
-		rowIndex := rowIndex + 1;
 	END_IF
 	counterCycles := counterCycles + 1;
 END_IF]]></ST>
@@ -771,8 +779,16 @@ END_VAR
     <LineIds Name="FB_GantryHoldDown">
       <LineId Id="189" Count="1" />
       <LineId Id="499" Count="0" />
+      <LineId Id="610" Count="0" />
+      <LineId Id="609" Count="0" />
       <LineId Id="496" Count="0" />
       <LineId Id="487" Count="0" />
+      <LineId Id="603" Count="0" />
+      <LineId Id="602" Count="0" />
+      <LineId Id="604" Count="0" />
+      <LineId Id="606" Count="0" />
+      <LineId Id="608" Count="0" />
+      <LineId Id="605" Count="0" />
       <LineId Id="325" Count="0" />
       <LineId Id="324" Count="0" />
       <LineId Id="266" Count="0" />
@@ -1008,8 +1024,9 @@ END_VAR
       <LineId Id="58" Count="0" />
       <LineId Id="52" Count="1" />
       <LineId Id="59" Count="0" />
+      <LineId Id="262" Count="0" />
       <LineId Id="55" Count="0" />
-      <LineId Id="46" Count="1" />
+      <LineId Id="47" Count="0" />
       <LineId Id="50" Count="0" />
       <LineId Id="57" Count="0" />
     </LineIds>

@@ -2060,6 +2060,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMIProgramOption6": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMIProgramOption6",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 104
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMIProgramRear": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -5930,6 +5947,7 @@
                 "C1007.MAIN.fbMachine.bHMIProgramCube": 3,
                 "C1007.MAIN.fbMachine.bHMIProgramCubeBlade": 3,
                 "C1007.MAIN.fbMachine.bHMIProgramFront": 3,
+                "C1007.MAIN.fbMachine.bHMIProgramOption6": 3,
                 "C1007.MAIN.fbMachine.bHMIProgramRear": 3,
                 "C1007.MAIN.fbMachine.bHMIRaiseLowerDustBoot": 3,
                 "C1007.MAIN.fbMachine.bHMIRaiseRollersRunScreen": 3,

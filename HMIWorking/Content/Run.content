@@ -1269,4 +1269,8 @@
 </div>
 <div id="TcHmiTextblock_8" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="52" data-tchmi-height-unit="px" data-tchmi-left="223" data-tchmi-left-unit="px" data-tchmi-text="%f%'Spindle torque: ' + %s%C1007.MAIN.fbMachine.fbSpindle.spindleTorque%/s% %/f%" data-tchmi-top="163" data-tchmi-top-unit="px" data-tchmi-width="184" data-tchmi-width-unit="px" data-tchmi-word-wrap="true">
 </div>
+<div id="CheckNoOneInCell_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="193" data-tchmi-left-unit="px" data-tchmi-text="Clean vent closed, robot vent open" data-tchmi-top="255" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+</div>
+<div id="CheckNoOneInCell_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiCheckbox" data-tchmi-height="26" data-tchmi-height-unit="px" data-tchmi-left="193" data-tchmi-left-unit="px" data-tchmi-text="All grooves facing operator" data-tchmi-top="291" data-tchmi-top-unit="px" data-tchmi-width="160" data-tchmi-width-unit="px">
+</div>
 </div>

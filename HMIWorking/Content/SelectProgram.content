@@ -433,6 +433,20 @@
                         },
                         "compareOperator": "==",
                         "logic": "OR"
+                      },
+                      {
+                        "compare1": {
+                          "objectType": "Symbol",
+                          "valueType": "tchmi:general#/definitions/String",
+                          "symbolExpression": "%ctrl%ToggleSmallWindow::ToggleState%/ctrl%"
+                        },
+                        "compare2": {
+                          "objectType": "StaticValue",
+                          "valueType": "tchmi:framework#/definitions/ToggleState",
+                          "value": "Active"
+                        },
+                        "compareOperator": "==",
+                        "logic": "OR"
                       }
                     ],
                     "then": [
@@ -601,7 +615,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:framework#/definitions/ToggleState",
-                  "symbolExpression": "%ctrl%ToggleOption7::ToggleState%/ctrl%"
+                  "symbolExpression": "%ctrl%WoodHandlesOnly(5.1inboards)::ToggleState%/ctrl%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -885,7 +899,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:framework#/definitions/ToggleState",
-                  "symbolExpression": "%ctrl%ToggleOption7::ToggleState%/ctrl%"
+                  "symbolExpression": "%ctrl%WoodHandlesOnly(5.1inboards)::ToggleState%/ctrl%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -1812,7 +1826,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Option6" data-tchmi-top="349" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption6" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="33" data-tchmi-left-unit="px" data-tchmi-text="Wings Only (opt6)" data-tchmi-top="349" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.bHMIProgramOption6%/s%">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -1916,7 +1930,7 @@
 ]
 </script>
 </div>
-<div id="ToggleOption7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="411" data-tchmi-left-unit="px" data-tchmi-text="Option7" data-tchmi-top="339" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
+<div id="ToggleOption7" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="411" data-tchmi-left-unit="px" data-tchmi-text="Wood Handes Only (5.1in boards)" data-tchmi-top="339" data-tchmi-top-unit="px" data-tchmi-width="134" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCut">
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
@@ -2045,5 +2059,11 @@
 <div id="ToggleGlassHandle_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Rear" data-tchmi-top="304" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCubeBlade" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption1%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramCubeBlade%/s%">
 </div>
 <div id="ToggleCubeFront_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="Front" data-tchmi-top="304" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupCubeBlade" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramCubeBlade%/s%">
+</div>
+<div id="ToggleNoWindow_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="West" data-tchmi-top="349" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWings" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramOption6%/s%">
+</div>
+<div id="ToggleSmallWindow_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="317" data-tchmi-left-unit="px" data-tchmi-text="Both" data-tchmi-top="349" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWings" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramOption6%/s%">
+</div>
+<div id="ToggleStandardWindow_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="East" data-tchmi-top="349" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWings" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption1%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramOption6%/s%">
 </div>
 </div>
