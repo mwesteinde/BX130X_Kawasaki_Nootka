@@ -18,7 +18,7 @@ VAR_GLOBAL CONSTANT
 	ROLLERS_Z_HEIGHT_LOWERED : REAL := 635; // Height of the rollers when lowered, relative to robot base
 	INNER_ROLLERS_SPACING : LREAL := 506; //Distance between the inside ot the two centre rollers, mm
 	OUTER_ROLLERS_SPACING : LREAL := 977; //Distance between the inside ot the two outer rollers, mm
-	LASER_SERVO_DIFFERENCE_THRESHOLD : INT := 15; //Max allowable difference between laser position readout, and servo readout
+	LASER_SERVO_DIFFERENCE_THRESHOLD : INT := 30; //Max allowable difference between laser position readout, and servo readout
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

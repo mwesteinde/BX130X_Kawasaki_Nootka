@@ -1786,6 +1786,24 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.bHMILaserOverride": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::bHMILaserOverride",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Button to override lasers",
+                        "propertyOrder": 121
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.bHMILoadTool": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -2735,6 +2753,40 @@
                     },
                     {
                         "propertyOrder": 16
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.laserErrorEast": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::laserErrorEast",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 131
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "C1007.MAIN.fbMachine.laserErrorWest": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::laserErrorWest",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 130
                     }
                 ]
             },
@@ -5931,6 +5983,7 @@
                 "C1007.MAIN.fbMachine.bHMIHold": 3,
                 "C1007.MAIN.fbMachine.bHMIHomeMotors": 3,
                 "C1007.MAIN.fbMachine.bHMIHomeRobot": 3,
+                "C1007.MAIN.fbMachine.bHMILaserOverride": 3,
                 "C1007.MAIN.fbMachine.bHMILoadTool": 3,
                 "C1007.MAIN.fbMachine.bHMILockTables": 3,
                 "C1007.MAIN.fbMachine.bHMILowerRaiseRollers": 3,
@@ -5986,6 +6039,8 @@
                 "C1007.MAIN.fbMachine.fbSpindle.spindleTorque": 3,
                 "C1007.MAIN.fbMachine.fbSpindle.toolSelectedAtInitialization": 3,
                 "C1007.MAIN.fbMachine.fbTorqueSensor.sHMIyForce": 3,
+                "C1007.MAIN.fbMachine.laserErrorEast": 3,
+                "C1007.MAIN.fbMachine.laserErrorWest": 3,
                 "C1007.MAIN.fbMachine.popUpAutoReset": 3,
                 "C1007.MAIN.fbMachine.popupMessage": 3,
                 "C1007.MAIN.fbMachine.programOption1": 3,

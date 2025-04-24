@@ -151,6 +151,7 @@ VAR
 	HMILeaveRunScreen		: BOOL;
 	rTrigHMILeaveRunScreen	: R_TRIG;
 	bHMIRaiseRollersRunScreen		: BOOL; // Button to switch state into manual mode. TODO: make
+	bHMILaserOverride 		: BOOL; // Button to override lasers
 	
 	// run.content indicators
 	sHMIPneumaticsOK		: BOOL; // Indicator light of pneumatic pressure, called from run.content
@@ -161,6 +162,8 @@ VAR
 	sProgramString			: STRING;
 	sHMIDisplayMessage		: STRING; //Run display
 	sHMIIsError				: BOOL; //
+	laserErrorWest			: BOOL;
+	laserErrorEast			: BOOL;
 	
 	// Error states
 	eInitializeServos : Structure_Error;
@@ -315,6 +318,7 @@ CASE eSystemState OF
 			IF fbEnclosure.cylinderTableWest AND fbEnclosure.cylinderTableEast AND fbSpindle.CurrentTool.toolNumber = fbRobot.inRobotToolNumberRequest AND fbEnclosure.doorIsClosed THEN
 				HMILeaveRunScreen := FALSE;
 				eSystemState := E_MachineState.RUN;
+				bHMILaserOverride := FALSE;
 				fbRobot.Program_Select(programChoice := programWallChoice, option1 := programOption1, option2 := programOption2, option3 := programOption3, option4 := programOption4, boardWidthIs51 := boardWidthIs51inches);
 				IF NOT disableSpindle THEN
 					fbSpindle.Start_Spindle(spindleSpeed := fbSpindle.currentTool.speed);
@@ -844,6 +848,21 @@ IF ABS(fbSpindle.spindleSpeed - fbSpindle.CurrentTool.speed) > 2000 THEN
 	robotRun := FALSE;
 END_IF
 
+
+IF fbGantry.westLaserErrorCount > 5 AND NOT bHMILaserOverride THEN
+	robotRun := FALSE;
+	laserErrorWest := TRUE;
+ELSE
+	laserErrorWest := FALSE;
+END_IF
+
+IF fbGantry.eastLaserErrorCount > 5 AND NOT bHMILaserOverride THEN
+	robotRun := FALSE;
+	laserErrorEast := TRUE;
+ELSE
+	laserErrorEast := FALSE;
+END_IF
+
 //dust boot
 fbSpindle.Dust_Hood(x_pose := fbRobot.robotPose.xPose, enable := TRUE);
 
@@ -1068,19 +1087,6 @@ IF GVL_Axes.AxisEast.Status.Error THEN
 	Run_Error.isError := TRUE;
 	Run_Error.errorType.1 := TRUE;
 END_IF
-
-(*
-IF fbGantry.westLaserErrorCount > 10 THEN
-	Run_Error.isError := TRUE;
-	Run_Error.errorType.1 := TRUE;
-	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nWest gantry position laser is reading >15mm difference to servo position. Tis means that either the gantry has stalled or the piston has disengaged, or the laser position sensor has been displaced or dirty lens.');
-END_IF
-
-IF fbGantry.eastLaserErrorCount > 10 THEN
-	Run_Error.isError := TRUE;
-	Run_Error.errorType.1 := TRUE;
-	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage, '\nEast gantry position laser is reading >15mm difference to servo position. Tis means that either the gantry has stalled or the piston has disengaged, or the laser position sensor has been displaced or dirty lens.');
-END_IF*)
 
 //Torque sensor error Todo: implement
 
@@ -1312,6 +1318,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="436" Count="0" />
       <LineId Id="265" Count="0" />
       <LineId Id="25" Count="0" />
+      <LineId Id="753" Count="0" />
       <LineId Id="403" Count="0" />
       <LineId Id="406" Count="0" />
       <LineId Id="405" Count="0" />
@@ -1653,6 +1660,16 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="151" Count="1" />
       <LineId Id="157" Count="2" />
       <LineId Id="153" Count="1" />
+      <LineId Id="207" Count="2" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="224" Count="1" />
+      <LineId Id="213" Count="2" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="216" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="190" Count="0" />
       <LineId Id="192" Count="0" />
@@ -1755,15 +1772,6 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(selectedProgr
       <LineId Id="75" Count="3" />
       <LineId Id="99" Count="0" />
       <LineId Id="79" Count="0" />
-      <LineId Id="167" Count="0" />
-      <LineId Id="147" Count="1" />
-      <LineId Id="154" Count="1" />
-      <LineId Id="149" Count="1" />
-      <LineId Id="166" Count="0" />
-      <LineId Id="152" Count="0" />
-      <LineId Id="156" Count="1" />
-      <LineId Id="153" Count="0" />
-      <LineId Id="146" Count="0" />
       <LineId Id="55" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="31" Count="0" />

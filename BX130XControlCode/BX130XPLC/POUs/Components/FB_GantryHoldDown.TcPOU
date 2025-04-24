@@ -98,6 +98,8 @@ VAR
 	csvRows		: INT := 1200;
 
 	database		: ARRAY[0..MAX_CSV_ROWS, 0..MAX_CSV_COLUMNS ] OF STRING(MAX_CSV_FIELD_LENGTH);
+	// If true, write laser values to database at runtime
+	logLaserValuesAtRuntime: BOOL;
 END_VAR
 VAR CONSTANT
 	MAX_CSV_ROWS    : INT :=10000;
@@ -113,10 +115,12 @@ cycleModulus := 3;
 
 CSV_Writer(); //To write database of laser values to CSV
 
-IF NOT(cylindersNorth AND cylindersCentreNorth AND cylindersCentreSouth AND cylindersSouth) THEN
-	startCount := FALSE;
-ELSE
-	startCount := FALSE;
+IF logLaserValuesAtRuntime THEN
+	IF NOT(cylindersNorth AND cylindersCentreNorth AND cylindersCentreSouth AND cylindersSouth) THEN
+		startCount := TRUE;
+	ELSE
+		startCount := FALSE;
+	END_IF
 END_IF
 
 allRollersLowered := NOT(cylindersNorth OR cylindersCentreNorth OR cylindersCentreSouth OR cylindersSouth); 
@@ -621,83 +625,90 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[(*	 West segments. Found by logging laser raw vaues compared to servo values and generating stepwise matcing function with this pyton script: https://colab.research.google.com/drive/1Y94awcyMlDvm36SadoFhQ90GHG-RgMbE?usp=sharing
-Segment 1: y = 0.0752 * x + 4.1635 for 513.0 <= x <= 2752.0
-Segment 2: y = 0.0744 * x + 5.1779 for 2764.0 <= x <= 5171.0
-Segment 3: y = 0.0782 * x + -19.3787 for 5189.0 <= x <= 7711.0
-Segment 4: y = 0.0760 * x + -1.5012 for 7726.0 <= x <= 10374.0
-Segment 5: y = 0.0748 * x + 14.5548 for 10393.0 <= x <= 13260.0
-Segment 6: y = 0.0775 * x + -19.1401 for 13268.0 <= x <= 16313.0
-Segment 7: y = 0.0761 * x + 0.8288 for 16337.0 <= x <= 19469.0
-Segment 8: y = 0.0766 * x + -10.5501 for 19492.0 <= x <= 22646.0
-Segment 9: y = 0.0762 * x + -1.3316 for 22666.0 <= x <= 25786.0
-Segment 10: y = 0.0738 * x + 62.2617 for 25802.0 <= x <= 27665.0*)
+        <ST><![CDATA[//(*	 West segments. Found by logging laser raw vaues compared to servo values and generating stepwise matcing function with this pyton script: https://colab.research.google.com/drive/1Y94awcyMlDvm36SadoFhQ90GHG-RgMbE?usp=sharing
+//Segment 1: y = 0.0752 * x + 4.1635 for 513.0 <= x <= 2752.0
+//Segment 2: y = 0.0744 * x + 5.1779 for 2764.0 <= x <= 5171.0
+//Segment 3: y = 0.0782 * x + -19.3787 for 5189.0 <= x <= 7711.0
+//Segment 4: y = 0.0760 * x + -1.5012 for 7726.0 <= x <= 10374.0
+//Segment 5: y = 0.0748 * x + 14.5548 for 10393.0 <= x <= 13260.0
+//Segment 6: y = 0.0775 * x + -19.1401 for 13268.0 <= x <= 16313.0
+//Segment 7: y = 0.0761 * x + 0.8288 for 16337.0 <= x <= 19469.0
+//Segment 8: y = 0.0766 * x + -10.5501 for 19492.0 <= x <= 22646.0
+//Segment 9: y = 0.0762 * x + -1.3316 for 22666.0 <= x <= 25786.0
+//Segment 10: y = 0.0738 * x + 62.2617 for 25802.0 <= x <= 27665.0*)
 
-//West distance:
-IF westLaserDistanceRaw < 513 THEN
-	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos; //At start laser is not linear
-ELSIF westLaserDistanceRaw < 2752 THEN
-    westLaserDistanceMM := 0.0752 * westLaserDistanceRaw + 4.1635;
-ELSIF westLaserDistanceRaw < 5171 THEN
-    westLaserDistanceMM := 0.0744 * westLaserDistanceRaw + 5.1779;
-ELSIF westLaserDistanceRaw < 7711 THEN
-    westLaserDistanceMM := 0.0782 * westLaserDistanceRaw + -19.3787;
-ELSIF westLaserDistanceRaw < 10374 THEN
-    westLaserDistanceMM := 0.0760 * westLaserDistanceRaw + -1.5012;
-ELSIF westLaserDistanceRaw < 13260 THEN
-    westLaserDistanceMM := 0.0748 * westLaserDistanceRaw + 14.5548;
-ELSIF westLaserDistanceRaw < 16313 THEN
-    westLaserDistanceMM := 0.0775 * westLaserDistanceRaw + -19.1401;
-ELSIF westLaserDistanceRaw < 19469 THEN
-    westLaserDistanceMM := 0.0761 * westLaserDistanceRaw + 0.8288;
-ELSIF westLaserDistanceRaw < 22646 THEN
-    westLaserDistanceMM := 0.0766 * westLaserDistanceRaw + -10.5501;
-ELSIF westLaserDistanceRaw < 25786 THEN
-    westLaserDistanceMM := 0.0762 * westLaserDistanceRaw + -1.3316;
-ELSIF westLaserDistanceRaw <= 27665 THEN
-    westLaserDistanceMM := 0.0738 * westLaserDistanceRaw + 62.2617;
-ELSE
-	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos; //At ends laser is less reliable
-END_IF
+////West distance:
+//IF westLaserDistanceRaw < 513 THEN
+//	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos; //At start laser is not linear
+//ELSIF westLaserDistanceRaw < 2752 THEN
+//    westLaserDistanceMM := 0.0752 * westLaserDistanceRaw + 4.1635;
+//ELSIF westLaserDistanceRaw < 5171 THEN
+//    westLaserDistanceMM := 0.0744 * westLaserDistanceRaw + 5.1779;
+//ELSIF westLaserDistanceRaw < 7711 THEN
+//    westLaserDistanceMM := 0.0782 * westLaserDistanceRaw + -19.3787;
+//ELSIF westLaserDistanceRaw < 10374 THEN
+//    westLaserDistanceMM := 0.0760 * westLaserDistanceRaw + -1.5012;
+//ELSIF westLaserDistanceRaw < 13260 THEN
+//    westLaserDistanceMM := 0.0748 * westLaserDistanceRaw + 14.5548;
+//ELSIF westLaserDistanceRaw < 16313 THEN
+//    westLaserDistanceMM := 0.0775 * westLaserDistanceRaw + -19.1401;
+//ELSIF westLaserDistanceRaw < 19469 THEN
+//    westLaserDistanceMM := 0.0761 * westLaserDistanceRaw + 0.8288;
+//ELSIF westLaserDistanceRaw < 22646 THEN
+//    westLaserDistanceMM := 0.0766 * westLaserDistanceRaw + -10.5501;
+//ELSIF westLaserDistanceRaw < 25786 THEN
+//    westLaserDistanceMM := 0.0762 * westLaserDistanceRaw + -1.3316;
+//ELSIF westLaserDistanceRaw <= 27665 THEN
+//    westLaserDistanceMM := 0.0738 * westLaserDistanceRaw + 62.2617;
+//ELSE
+//	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos; //At ends laser is less reliable
+//END_IF
 
-(*	 East segments. Found by logging laser raw vaues compared to servo values and generating stepwise matcing function with this pyton script: https://colab.research.google.com/drive/1Y94awcyMlDvm36SadoFhQ90GHG-RgMbE?usp=sharing
-Segment 1: y = 0.0765 * x + 5.3461 for 512.0 <= x <= 3356.0
-Segment 2: y = 0.0717 * x + 20.8508 for 3367.0 <= x <= 6278.0
-Segment 3: y = 0.0766 * x + -4.5129 for 6298.0 <= x <= 9309.0
-Segment 4: y = 0.0758 * x + 2.6925 for 9316.0 <= x <= 12407.0
-Segment 5: y = 0.0784 * x + -32.3308 for 12422.0 <= x <= 15408.0
-Segment 6: y = 0.0753 * x + 15.0025 for 15425.0 <= x <= 18194.0
-Segment 7: y = 0.0739 * x + 41.3383 for 18209.0 <= x <= 20818.0
-Segment 8: y = 0.0762 * x + -2.3633 for 20855.0 <= x <= 23436.0
-Segment 9: y = 0.0770 * x + -24.5967 for 23454.0 <= x <= 26111.0
-Segment 10: y = 0.0733 * x + 74.9176 for 26122.0 <= x <= 27668.0
-*)
-IF eastLaserDistanceRaw < 512 THEN
-	eastLaserDistanceMM := GVL_Axes.AxisEast.NcToPlc.ActPos; //At start laser is not linear
-ELSIF eastLaserDistanceRaw < 3356 THEN
-    eastLaserDistanceMM := 0.0765 * eastLaserDistanceRaw + 5.3461;
-ELSIF eastLaserDistanceRaw < 6278 THEN
-    eastLaserDistanceMM := 0.0717 * eastLaserDistanceRaw + 20.8508;
-ELSIF eastLaserDistanceRaw < 9309 THEN
-    eastLaserDistanceMM := 0.0766 * eastLaserDistanceRaw + -4.5129;
-ELSIF eastLaserDistanceRaw < 12407 THEN
-    eastLaserDistanceMM := 0.0758 * eastLaserDistanceRaw + 2.6925;
-ELSIF eastLaserDistanceRaw < 15408 THEN
-    eastLaserDistanceMM := 0.0784 * eastLaserDistanceRaw + -32.3308;
-ELSIF eastLaserDistanceRaw < 18194 THEN
-    eastLaserDistanceMM := 0.0753 * eastLaserDistanceRaw + 15.0025;
-ELSIF eastLaserDistanceRaw < 20818 THEN
-    eastLaserDistanceMM := 0.0739 * eastLaserDistanceRaw + 41.3383;
-ELSIF eastLaserDistanceRaw < 23436 THEN
-    eastLaserDistanceMM := 0.0762 * eastLaserDistanceRaw + -2.3633;
-ELSIF eastLaserDistanceRaw < 26111 THEN
-    eastLaserDistanceMM := 0.0770 * eastLaserDistanceRaw + -24.5967;
-ELSIF eastLaserDistanceRaw <= 27668 THEN
-    eastLaserDistanceMM := 0.0733 * eastLaserDistanceRaw + 74.9176;
-ELSE
+//(*	 East segments. Found by logging laser raw vaues compared to servo values and generating stepwise matcing function with this pyton script: https://colab.research.google.com/drive/1Y94awcyMlDvm36SadoFhQ90GHG-RgMbE?usp=sharing
+//Segment 1: y = 0.0765 * x + 5.3461 for 512.0 <= x <= 3356.0
+//Segment 2: y = 0.0717 * x + 20.8508 for 3367.0 <= x <= 6278.0
+//Segment 3: y = 0.0766 * x + -4.5129 for 6298.0 <= x <= 9309.0
+//Segment 4: y = 0.0758 * x + 2.6925 for 9316.0 <= x <= 12407.0
+//Segment 5: y = 0.0784 * x + -32.3308 for 12422.0 <= x <= 15408.0
+//Segment 6: y = 0.0753 * x + 15.0025 for 15425.0 <= x <= 18194.0
+//Segment 7: y = 0.0739 * x + 41.3383 for 18209.0 <= x <= 20818.0
+//Segment 8: y = 0.0762 * x + -2.3633 for 20855.0 <= x <= 23436.0
+//Segment 9: y = 0.0770 * x + -24.5967 for 23454.0 <= x <= 26111.0
+//Segment 10: y = 0.0733 * x + 74.9176 for 26122.0 <= x <= 27668.0
+//*)
+//IF eastLaserDistanceRaw < 512 THEN
+//	eastLaserDistanceMM := GVL_Axes.AxisEast.NcToPlc.ActPos; //At start laser is not linear
+//ELSIF eastLaserDistanceRaw < 3356 THEN
+//    eastLaserDistanceMM := 0.0765 * eastLaserDistanceRaw + 5.3461;
+//ELSIF eastLaserDistanceRaw < 6278 THEN
+//    eastLaserDistanceMM := 0.0717 * eastLaserDistanceRaw + 20.8508;
+//ELSIF eastLaserDistanceRaw < 9309 THEN
+//    eastLaserDistanceMM := 0.0766 * eastLaserDistanceRaw + -4.5129;
+//ELSIF eastLaserDistanceRaw < 12407 THEN
+//    eastLaserDistanceMM := 0.0758 * eastLaserDistanceRaw + 2.6925;
+//ELSIF eastLaserDistanceRaw < 15408 THEN
+//    eastLaserDistanceMM := 0.0784 * eastLaserDistanceRaw + -32.3308;
+//ELSIF eastLaserDistanceRaw < 18194 THEN
+//    eastLaserDistanceMM := 0.0753 * eastLaserDistanceRaw + 15.0025;
+//ELSIF eastLaserDistanceRaw < 20818 THEN
+//    eastLaserDistanceMM := 0.0739 * eastLaserDistanceRaw + 41.3383;
+//ELSIF eastLaserDistanceRaw < 23436 THEN
+//    eastLaserDistanceMM := 0.0762 * eastLaserDistanceRaw + -2.3633;
+//ELSIF eastLaserDistanceRaw < 26111 THEN
+//    eastLaserDistanceMM := 0.0770 * eastLaserDistanceRaw + -24.5967;
+//ELSIF eastLaserDistanceRaw <= 27668 THEN
+//    eastLaserDistanceMM := 0.0733 * eastLaserDistanceRaw + 74.9176;
+//ELSE
+//	eastLaserDistanceMM := GVL_Axes.AxisEast.NcToPlc.ActPos;
+//END_IF
+
+IF GVL_Axes.AxisEast.NcToPlc.ActPos > 1266 AND GVL_Axes.AxisEast.NcToPlc.ActPos < 1268 THEN
 	eastLaserDistanceMM := GVL_Axes.AxisEast.NcToPlc.ActPos;
+	westLaserDistanceMM := GVL_Axes.AxisWest.NcToPlc.ActPos;
+ELSE
+	eastLaserDistanceMM := 0.076 * eastLaserDistanceRaw + 1.38;
+	westLaserDistanceMM := 0.0763 * westLaserDistanceRaw - 1.27;
 END_IF
-
 			
 eastDisplay := eastLaserDistanceMM;
 westDisplay := westLaserDistanceMM;
@@ -783,12 +794,10 @@ END_VAR
       <LineId Id="609" Count="0" />
       <LineId Id="496" Count="0" />
       <LineId Id="487" Count="0" />
+      <LineId Id="713" Count="0" />
       <LineId Id="603" Count="0" />
-      <LineId Id="602" Count="0" />
-      <LineId Id="604" Count="0" />
-      <LineId Id="606" Count="0" />
-      <LineId Id="608" Count="0" />
-      <LineId Id="605" Count="0" />
+      <LineId Id="718" Count="4" />
+      <LineId Id="715" Count="0" />
       <LineId Id="325" Count="0" />
       <LineId Id="324" Count="0" />
       <LineId Id="266" Count="0" />
@@ -989,7 +998,12 @@ END_VAR
       <LineId Id="177" Count="0" />
       <LineId Id="201" Count="1" />
       <LineId Id="181" Count="0" />
-      <LineId Id="176" Count="0" />
+      <LineId Id="10283" Count="0" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="10284" Count="0" />
+      <LineId Id="10289" Count="0" />
+      <LineId Id="10286" Count="2" />
+      <LineId Id="10285" Count="0" />
       <LineId Id="36" Count="2" />
       <LineId Id="204" Count="0" />
       <LineId Id="21" Count="1" />
