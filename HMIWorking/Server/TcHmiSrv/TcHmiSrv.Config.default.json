@@ -2898,6 +2898,23 @@
             },
             "USEMAPPING": true
         },
+        "C1007.MAIN.fbMachine.programOption5": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "C1007::MAIN::fbMachine::programOption5",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "propertyOrder": 95
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
         "C1007.MAIN.fbMachine.programWallChoice": {
             "ACCESS": 3,
             "DOMAIN": "ADS",
@@ -6047,6 +6064,7 @@
                 "C1007.MAIN.fbMachine.programOption2": 3,
                 "C1007.MAIN.fbMachine.programOption3": 3,
                 "C1007.MAIN.fbMachine.programOption4": 3,
+                "C1007.MAIN.fbMachine.programOption5": 3,
                 "C1007.MAIN.fbMachine.programWallChoice": 3,
                 "C1007.MAIN.fbMachine.sHMICurrentTool": 3,
                 "C1007.MAIN.fbMachine.sHMIDisplayMessage": 3,

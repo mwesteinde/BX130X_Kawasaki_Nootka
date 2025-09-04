@@ -10,6 +10,10 @@ STRUCT
 	option2false		: STRING;
 	option3true			: STRING;
 	option3false		: STRING;
+	option4true			: STRING;
+	option4false		: STRING;
+	option5true			: STRING;
+	option5false		: STRING;
 	programName			: STRING;
 	firstTool			: Tool_Type;
 END_STRUCT
