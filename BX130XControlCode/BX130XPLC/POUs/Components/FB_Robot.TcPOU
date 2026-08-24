@@ -105,14 +105,16 @@ END_VAR]]></Declaration>
 
 	IF outRobotResetProgram AND inRobotStartofProgram THEN
 		outRobotStartCycle := TRUE;
-		outRobotResetProgram := FALSE;
+		IF NOT inRobotProgramRunning THEN
+			outRobotResetProgram := FALSE;
+		END_IF
 	END_IF
 	
 	IF inRobotCycleStart AND NOT inRobotStartofProgram THEN
 		outRobotStartCycle := FALSE;
 	END_IF
 	
-	IF NOT inRobotCycleStart AND inRobotStartofProgram AND systemState <> E_MachineState.RUNMANUAL THEN
+	IF NOT inRobotCycleStart AND inRobotStartofProgram AND systemState <> E_MachineState.RUNMANUAL AND systemState <> E_MachineState.ERROR AND systemState <> E_MachineState.RESET THEN
 		outRobotStartCycle := NOT outRobotStartCycle;
 	END_IF
 	
@@ -137,7 +139,7 @@ END_VAR]]></Declaration>
 	END_IF
 	
 	//Switch to main program TODO
-	timerOutRobotStartProgram(IN := outRobotStartProgram, PT := T#30S);
+	timerOutRobotStartProgram(IN := outRobotStartProgram, PT := T#3S);
 	IF timerOutRobotStartProgram.Q THEN
 		outRobotStartProgram := FALSE;
 	END_IF
@@ -311,7 +313,8 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[outRobotTurnMotorOn := TRUE;
-outRobotStartProgram := TRUE;]]></ST>
+outRobotStartProgram := TRUE;
+outRobotResetProgram := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Stop_Robot_Program" Id="{6c078892-c602-48a3-b370-75ca6dae0e8d}">
@@ -321,12 +324,12 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[outRobotResetProgram := TRUE;
+        <ST><![CDATA[outRobotStartProgram := FALSE;
+outRobotResetProgram := TRUE;
 IF forgetProgram THEN
 	outRobotProgramSelected := FALSE;
 END_IF
-outRobotStartProgram := FALSE;
-RunHold_Robot(RunHold := True);]]></ST>
+RunHold_Robot(RunHold := TRUE);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Turn_Off_Program_Selected" Id="{6e528639-7fd4-42df-ba6c-144e16c42b39}">
@@ -551,7 +554,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="9" Count="0" />
       <LineId Id="426" Count="0" />
       <LineId Id="414" Count="1" />
+      <LineId Id="880" Count="0" />
       <LineId Id="420" Count="0" />
+      <LineId Id="881" Count="0" />
       <LineId Id="413" Count="0" />
       <LineId Id="421" Count="0" />
       <LineId Id="423" Count="1" />
@@ -630,11 +635,12 @@ outRobotRequestedTool := request;]]></ST>
     </LineIds>
     <LineIds Name="FB_Robot.Start_Robot">
       <LineId Id="10" Count="1" />
+      <LineId Id="16" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Stop_Robot_Program">
+      <LineId Id="34" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="17" Count="2" />
-      <LineId Id="29" Count="0" />
       <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Turn_Off_Program_Selected">
