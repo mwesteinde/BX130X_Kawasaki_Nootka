@@ -1881,7 +1881,7 @@ External Setpoint Generation:
 		</Motion>
 		<Plc>
 			<Project GUID="{2130DB54-55DD-4C5C-8480-7D54A429BF8F}" Name="BX130XPLC" PrjFilePath="BX130XPLC\BX130XPLC.plcproj" TmcFilePath="BX130XPLC\BX130XPLC.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{BD6ABB48-34D5-2B8B-4D3B-B3F4E265805E}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="BX130XPLC\BX130XPLC.tmc" TmcHash="{CC613E69-514F-5073-AE89-23B12E2D5AF4}">
 					<Name>BX130XPLC Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
@@ -2276,6 +2276,11 @@ External Setpoint Generation:
 						<Var>
 							<Name>MAIN.fbMachine.errorReset</Name>
 							<Comment><![CDATA[ Resets E stops. Must be triggered to enable eStop output]]></Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.fbMachine.blastGateOn6Inch</Name>
+							<Comment><![CDATA[ Blast gate]]></Comment>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>
@@ -3017,7 +3022,7 @@ External Setpoint Generation:
 								</Entry>
 							</Pdo>
 							<Pdo Name="Channel 3" Index="#x1602" InOut="1" Flags="#x0011" SyncMan="0">
-								<Entry Name="Output" Index="#x7020" Sub="#x01">
+								<Entry Name="blastGateOn6Inch" Index="#x7020" Sub="#x01">
 									<Type>BIT</Type>
 								</Entry>
 							</Pdo>
@@ -4452,6 +4457,7 @@ Bit1: Value smaller than Limit2]]></Comment>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbRobot.outRobotControlPowerOn" VarB="Channel 2^RobotX91ControlPowerON"/>
 			</OwnerB>
 			<OwnerB Name="TIID^PortLAN1X102^Term 1 (EK1100)^Term 11 (EL2008)">
+				<Link VarA="PlcTask Outputs^MAIN.fbMachine.blastGateOn6Inch" VarB="Channel 3^blastGateOn6Inch"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbGantry.cylindersSouth" VarB="Channel 1^SV10WorkHoldDownSouth"/>
 				<Link VarA="PlcTask Outputs^MAIN.fbMachine.fbSpindle.dustHoodSawActuator" VarB="Channel 2^DustBootExtraActuatorOnWhenSawblade"/>
 			</OwnerB>

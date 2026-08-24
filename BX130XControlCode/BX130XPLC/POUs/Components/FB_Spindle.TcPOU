@@ -435,7 +435,7 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//NC contacts. Detect if current tool holder is empty and requested tool holder is full. If no tool is selected, checks if spindle is empty
+        <ST><![CDATA[//NC contacts. Detect if current tool holder is empty and requested tool holder is full. If no tool is selected as dropoff, checks if all other slots are full.
 toolLimitSwitchArray[0] := tool0;
 toolLimitSwitchArray[1] := tool1;
 toolLimitSwitchArray[2] := tool2;
@@ -445,7 +445,7 @@ toolLimitSwitchArray[5] := tool5;
 toolLimitSwitchArray[6] := tool6;
 toolLimitSwitchArray[7] := tool7;
 
-IF (toolLimitSwitchArray[toolToDrop] OR toolToDrop = 8) AND (NOT toolLimitSwitchArray[toolToPickup] OR toolToPickup = 8) OR (toolToDrop = toolToPickup AND toolLimitSwitchArray[toolToDrop]) THEN 
+IF (toolLimitSwitchArray[toolToDrop] OR (toolToDrop = 8 AND NOT toolLimitSwitchArray[0] AND NOT toolLimitSwitchArray[2] AND NOT toolLimitSwitchArray[4])) AND (NOT toolLimitSwitchArray[toolToPickup] OR toolToPickup = 8) OR (toolToDrop = toolToPickup AND toolLimitSwitchArray[toolToDrop]) THEN 
 	Verify_Tool_Change_Request := TRUE;
 ELSE
 	Verify_Tool_Change_Request := FALSE;
@@ -727,7 +727,7 @@ VFD_Status := NOT spindleError;]]></ST>
       <LineId Id="8" Count="0" />
       <LineId Id="10" Count="1" />
       <LineId Id="9" Count="0" />
-      <LineId Id="12" Count="0" />
+      <LineId Id="34" Count="0" />
     </LineIds>
     <LineIds Name="FB_Spindle.VFD_Status">
       <LineId Id="109" Count="54" />

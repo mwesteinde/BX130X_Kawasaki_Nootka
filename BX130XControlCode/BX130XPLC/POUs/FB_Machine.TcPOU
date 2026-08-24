@@ -176,6 +176,9 @@ VAR
 	popupMessage		: STRING(300);
 	popUpAutoReset		: BOOL;
 	popupRefreshTimer: TON;
+	
+	// Blast gate
+	blastGateOn6Inch AT %Q*	: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -215,7 +218,7 @@ END_VAR
 	fbOperatingCounter(stateString := sHMIeSystemStateString, currentTool := fbSpindle.CurrentTool.toolNumber, SpindleIsOn := NOT fbSpindle.SpindleIsStopped);
 	
 	//Safety
-	ErrorAcknowledge := safetyPLCError OR safetyPLCEStopOut OR safetyPLCComErr OR safetyPLCFBErr OR safetyPLCOtherErr;
+	ErrorAcknowledge := (safetyPLCError OR safetyPLCEStopOut OR safetyPLCComErr OR safetyPLCFBErr OR safetyPLCOtherErr) AND NOT ErrorAcknowledge;
 	
 // HMI button triggers
 	rTrigHomeRobot(CLK := bHMIHomeRobot);
@@ -432,6 +435,7 @@ CASE eSystemState OF
 			bHMIRaiseRollersRunScreen := FALSE;
 			timerRun(IN := FALSE, PT := T#10S);
 			bActivateRollers := FALSE;
+			blastGateOn6Inch := FALSE;
 		END_IF
 		
 		IF fbRobot.inRobotToolNumberRequest <> fbSpindle.currentTool.toolNumber THEN
@@ -447,6 +451,7 @@ CASE eSystemState OF
 			END_IF
 			timerRun(IN := FALSE, PT := T#10S);
 			toolMatchTimer(IN := FALSE);
+			blastGateOn6Inch := FALSE;
 		END_IF
 		
 		//Check robot tool coordinates
@@ -455,6 +460,7 @@ CASE eSystemState OF
 			Popup_Error('Tool coordinates in robot program do not match the current tools coordinates', TRUE);
 			eSystemState := E_MachineState.ERROR;
 			timerRun(IN := FALSE, PT := T#10S);
+			blastGateOn6Inch := FALSE;
 		END_IF
 		
 //		IF fbGantry.Gantry_Follow_Error(robotPosegantry := fbRobot.robotPose, allRollersLowered := fbGantry.allRollersLowered, rollersInFollow := TRUE) THEN
@@ -568,6 +574,8 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[//Enables pushbutton table locking capability
 fbEnclosure.Table_Clamp_Control_Pushbutton();
+
+blastGateOn6Inch := FALSE;
 
 //Light
 fbEnclosure.Light_Operation(TRUE, FALSE, FALSE, FALSE);
@@ -869,8 +877,13 @@ fbSpindle.Dust_Hood(x_pose := fbRobot.robotPose.xPose, enable := TRUE);
 
 IF bHMIHold THEN
 	fbRobot.RunHold_Robot(RunHold := FALSE);
+	blastGateOn6Inch := FALSE;
+ELSIF fbRobot.Update_Hold_Button_Status() THEN
+	blastGateOn6Inch := FALSE;
+	fbRobot.RunHold_Robot(RunHold := robotRun);
 ELSE
 	fbRobot.RunHold_Robot(RunHold := robotRun);
+	blastGateOn6Inch := TRUE;
 END_IF
 
 //Cylinder raise/lower
@@ -1401,6 +1414,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT
       <LineId Id="518" Count="1" />
       <LineId Id="410" Count="0" />
       <LineId Id="498" Count="0" />
+      <LineId Id="766" Count="0" />
       <LineId Id="28" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="78" Count="0" />
@@ -1415,6 +1429,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT
       <LineId Id="297" Count="0" />
       <LineId Id="411" Count="0" />
       <LineId Id="471" Count="0" />
+      <LineId Id="765" Count="0" />
       <LineId Id="80" Count="0" />
       <LineId Id="269" Count="0" />
       <LineId Id="344" Count="0" />
@@ -1423,6 +1438,7 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT
       <LineId Id="329" Count="0" />
       <LineId Id="273" Count="0" />
       <LineId Id="432" Count="0" />
+      <LineId Id="764" Count="0" />
       <LineId Id="270" Count="0" />
       <LineId Id="615" Count="2" />
       <LineId Id="620" Count="0" />
@@ -1492,6 +1508,8 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT
     <LineIds Name="FB_Machine.Operating_Initialization">
       <LineId Id="191" Count="0" />
       <LineId Id="91" Count="0" />
+      <LineId Id="378" Count="0" />
+      <LineId Id="377" Count="0" />
       <LineId Id="302" Count="0" />
       <LineId Id="301" Count="0" />
       <LineId Id="303" Count="0" />
@@ -1691,7 +1709,10 @@ sProgramString := CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT
       <LineId Id="79" Count="0" />
       <LineId Id="78" Count="0" />
       <LineId Id="80" Count="0" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="234" Count="2" />
       <LineId Id="82" Count="1" />
+      <LineId Id="233" Count="0" />
       <LineId Id="81" Count="0" />
       <LineId Id="168" Count="0" />
       <LineId Id="167" Count="0" />

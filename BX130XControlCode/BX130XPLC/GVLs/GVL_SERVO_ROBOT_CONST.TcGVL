@@ -12,7 +12,7 @@ VAR_GLOBAL CONSTANT
 	DIFFERENCE_ROBOT : LREAL := MAX_POS_ROBOT - MIN_POS_ROBOT; //Robot distance along gantry length
 	DIFFERENCE_SERVOWEST : LREAL := MAX_POS_SERVOWEST - MIN_POS_SERVOWEST; // Total Gantry length,mm
 	POSITION_LIMIT_SWITCH : LREAL := 417.4; //Position of limit switch along servo gantry, mm
-	FOLLOW_THRESHOLD : LREAL := 24; //mm, min distance between dust boot and rollers
+	FOLLOW_THRESHOLD : LREAL := 42; //mm, min distance between dust boot and rollers kRIS MOVED IT UP FROM 24MM ON JAN 5 2026 Moved from 34mm on Jan 26 2026 Kris
 	ROLLERS_Z_HEIGHT : LREAL := 800; // Robot tool z height at rollers
 	ROLLERS_Z_HEIGHT_RAISED : REAL := 707; // Height of the rollers when raised, relative to robot base
 	ROLLERS_Z_HEIGHT_LOWERED : REAL := 635; // Height of the rollers when lowered, relative to robot base

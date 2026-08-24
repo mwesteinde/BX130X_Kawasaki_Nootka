@@ -338,6 +338,16 @@ END_VAR
         <ST><![CDATA[outRobotProgramSelected := FALSE;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Update_Hold_Button_Status" Id="{ce8dd4c0-1ebd-4ad5-9b99-898e9536d0d6}">
+      <Declaration><![CDATA[// Read status of the teach pendant hold button to the main program. True if hold button is on
+METHOD Update_Hold_Button_Status : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Update_Hold_Button_Status := inRobotHoldMode;]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Update_Pose" Id="{095f6df8-3cda-4049-b351-7910f936202a}">
       <Declaration><![CDATA[//Updates current robot pose
 //TODO make flag that verifies pose is being sent
@@ -628,6 +638,9 @@ outRobotRequestedTool := request;]]></ST>
       <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Turn_Off_Program_Selected">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Robot.Update_Hold_Button_Status">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Robot.Update_Pose">
