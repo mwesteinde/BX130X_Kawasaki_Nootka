@@ -139,7 +139,7 @@ END_VAR]]></Declaration>
 	END_IF
 	
 	//Switch to main program TODO
-	timerOutRobotStartProgram(IN := outRobotStartProgram, PT := T#3S);
+	timerOutRobotStartProgram(IN := outRobotStartProgram, PT := T#30S);
 	IF timerOutRobotStartProgram.Q THEN
 		outRobotStartProgram := FALSE;
 	END_IF
