@@ -429,7 +429,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersCentreNorth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersCentreNorth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -443,7 +443,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersCentreSouth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersCentreSouth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -457,7 +457,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersNorth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersNorth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -471,7 +471,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersSouth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersSouth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -746,7 +746,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersCentreNorth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersCentreNorth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -760,7 +760,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersCentreSouth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersCentreSouth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -774,7 +774,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersNorth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersNorth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",
@@ -788,7 +788,7 @@
                 "compare1": {
                   "objectType": "Symbol",
                   "valueType": "tchmi:general#/definitions/BOOL",
-                  "symbolExpression": "%s%Local.MAIN.fbMachine.fbGantry.cylindersSouth%/s%"
+                  "symbolExpression": "%s%C1007.MAIN.fbMachine.fbGantry.cylindersSouth%/s%"
                 },
                 "compare2": {
                   "objectType": "StaticValue",

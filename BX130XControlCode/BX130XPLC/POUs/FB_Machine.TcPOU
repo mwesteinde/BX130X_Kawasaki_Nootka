@@ -118,10 +118,10 @@ VAR
 	// selectProgram.content inputs
 	programWallChoice	: USINT; // 1 for front wall, 2 for back wall, 10 for option 3-16 for additional options
 	programOption1		: BOOL; //Front wall: True: E cut, False, no e cut Back wall: True: STDWindow, False, no window
-	programOption2		: BOOL; //Front wall: True: glass door, False, wood door Back wall: True: Chimney cut, False, no chimney cut
+	programOption2		: BOOL; //Front wall: True: glass door, False, wood door Back wall: True: Handles, False, no handles
 	programOption3		: BOOL; //Front wall: True: Door lock, false, no lock Back wall: NA
 	programOption4		: BOOL;
-	programOption5		: BOOL;
+	programOption5		: BOOL; //Back wall: True: Chimney cut, False, no chimney cut
 	boardWidthIs51inches : BOOL := TRUE; //1 if board width is 5.1 inches, 0 if 4.75inches
 	bHMIRunProgramScreen		: BOOL; 
 	rTrigRunProgramScreen		: R_TRIG;

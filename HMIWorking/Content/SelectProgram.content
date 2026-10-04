@@ -70,13 +70,13 @@
 
 
 </div>
-<div id="ToggleNoHandles" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="No Handles" data-tchmi-top="114" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramRear%/s%">
+<div id="ToggleNoHandles" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="555" data-tchmi-left-unit="px" data-tchmi-text="No Handles" data-tchmi-top="114" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupHandles" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramRear%/s%">
 
 
 
 
 </div>
-<div id="ToggleHandles" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Handles" data-tchmi-top="114" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupChimney" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramRear%/s%">
+<div id="ToggleHandles" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="625" data-tchmi-left-unit="px" data-tchmi-text="Handles" data-tchmi-top="114" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupHandles" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramRear%/s%">
 
 
 
@@ -401,6 +401,28 @@
         "objectType": "WriteToSymbol",
         "active": true,
         "symbolExpression": "%ctrl%ToggleECut::ToggleState%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:framework#/definitions/ToggleState",
+          "value": "Normal"
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleCubeGlassDoor::ToggleState%/ctrl%",
+        "value": {
+          "objectType": "StaticValue",
+          "valueType": "tchmi:framework#/definitions/ToggleState",
+          "value": "Normal"
+        },
+        "asyncWait": true
+      },
+      {
+        "objectType": "WriteToSymbol",
+        "active": true,
+        "symbolExpression": "%ctrl%ToggleCubeSTDDoor::ToggleState%/ctrl%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:framework#/definitions/ToggleState",
@@ -798,7 +820,7 @@
 </div>
 <div id="ToggleStandardWindow_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="East" data-tchmi-top="371" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupWings" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption1%/s%" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramOption6%/s%">
 </div>
-<div id="ToggleCubeGlassDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Glass Door" data-tchmi-top="275" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupCubeDoor" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramCube%/s%" data-tchmi-state-symbol="%s%Local.MAIN.fbMachine.programOption2%/s%">
+<div id="ToggleCubeGlassDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="247" data-tchmi-left-unit="px" data-tchmi-text="Glass Door" data-tchmi-top="275" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-group="ToggleGroupCubeDoor" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramCube%/s%" data-tchmi-state-symbol="%s%C1007.MAIN.fbMachine.programOption2%/s%">
 </div>
 <div id="ToggleCubeSTDDoor" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiToggleButton" data-tchmi-height="35" data-tchmi-height-unit="px" data-tchmi-left="177" data-tchmi-left-unit="px" data-tchmi-text="STD Door" data-tchmi-top="276" data-tchmi-top-unit="px" data-tchmi-width="70" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-toggle-state="Normal" data-tchmi-toggle-group="ToggleGroupCubeDoor" data-tchmi-is-enabled="%s%C1007.MAIN.fbMachine.bHMIProgramCube%/s%" >
 </div>
