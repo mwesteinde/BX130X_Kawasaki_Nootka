@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TargetSystemConfig Crc="1146260348" Version="1.5">
+<TargetSystemConfig Crc="3289740888" Version="1.5">
   <TargetSystemType>HSafetyPLC</TargetSystemType>
   <TargetSystemSubType>EL1918</TargetSystemSubType>
   <IsExternalDevice>false</IsExternalDevice>
   <TargetSystemObjectId>50462723</TargetSystemObjectId>
   <TargetSystemObjectName>Term 3 (EL1918)</TargetSystemObjectName>
-  <SoftwareVersion>02 (V01.08)     </SoftwareVersion>
-  <SerialNumber>3592570</SerialNumber>
+  <SoftwareVersion />
+  <SerialNumber />
   <ProjectCRC>19032</ProjectCRC>
   <MapProjectCRC>false</MapProjectCRC>
   <MapSerialNumber>false</MapSerialNumber>
   <VersionNumber>1</VersionNumber>
   <FSOEAddress>2</FSOEAddress>
-  <DipSwitch>2</DipSwitch>
-  <AmsNetID>172.18.239.23.3.1</AmsNetID>
+  <DipSwitch />
+  <AmsNetID>192.168.0.7.3.1</AmsNetID>
   <AmsPort>1003</AmsPort>
   <ConnectionInfoDataConfigOld>false</ConnectionInfoDataConfigOld>
   <TakeOverSafetyAliasDeviceNamesInProcessImage>false</TakeOverSafetyAliasDeviceNamesInProcessImage>
