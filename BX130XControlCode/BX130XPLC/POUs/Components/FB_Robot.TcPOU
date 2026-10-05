@@ -43,6 +43,7 @@ VAR
 	inRobotHoldMode			: BOOL; //Signal 119
 	inRobotCurrentProgram	: USINT; //Signals 120-123
 	inRobotAtCleanPosition	: BOOL; //Signal 124
+	inRobotPcHeartbeat		: BOOL; //Signal 124, toggled every pass by programcontrol.pc
 	sigs97104 AT %I*		: USINT;
 	sigs105112 AT %I*		: USINT;
 	sigs113120 AT %I*		: USINT;
@@ -90,6 +91,7 @@ VAR
 	outRobotDustBootUp AT %I*				: BOOL; //Signal 1038
 	outRobotProgramOption4 : BOOL; //Signal 1039
 	outRobotProgramOption5 : BOOL; //Signal 1040
+	outRobotStopProgram			: BOOL; //Signal 1041, programcontrol.pc holds then aborts the robot program
 	
 	sigs10011008	AT %Q*			: USINT;
 	sigs10091016	AT %Q*			: USINT;
@@ -98,25 +100,34 @@ VAR
 	sigs10331040	AT %Q*			: USINT;
 	sigs10411048	AT %Q*			: USINT;
 	timerOutRobotStartProgram		: TON;
+	motorOnRequest			: BOOL; // Set by methods, sent as a pulse on outRobotTurnMotorOn
+	motorOnPending			: BOOL; // Motor ON requested, waiting for motor OFF to be released
+	motorOffSent			: BOOL; // outRobotTurnMotorOff as packed for the next scan
+	resetProgramRequest		: BOOL; // Set by methods, sent as a pulse on outRobotResetProgram
+	stopProgramRequest		: BOOL; // Set by methods, turns on outRobotStopProgram
+	rTrigMotorOn				: R_TRIG;
+	rTrigResetProgram		: R_TRIG;
+	timerMotorOnPulse		: TON;
+	timerResetProgramPulse	: TON;
+	timerStopMinimum		: TON; // Stop request stays on at least this long
+	timerStopTimeout		: TON;
+	robotStopFailed			: BOOL; // Robot still running 5 s after a stop request
+	heartbeatPrev			: BOOL;
+	timerHeartbeatLost		: TON;
+	pcHeartbeatLost			: BOOL; // programcontrol.pc heartbeat unchanged for 1 s
+	plcCommandActive		: BOOL; // TRUE from Start_Robot until that program ends, is stopped or times out
+	motionAllowed			: BOOL; // Manual mode, a PLC-commanded program, or TEACH
+	fTrigProgramRunning		: F_TRIG;
+	rTrigMotionAllowed		: R_TRIG;
+	timerMotorOffDelay		: TON;
 	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[Update_Status();
 
-	IF outRobotResetProgram AND inRobotStartofProgram THEN
-		outRobotStartCycle := TRUE;
-		IF NOT inRobotProgramRunning THEN
-			outRobotResetProgram := FALSE;
-		END_IF
-	END_IF
-	
-	IF inRobotCycleStart AND NOT inRobotStartofProgram THEN
-		outRobotStartCycle := FALSE;
-	END_IF
-	
-	IF NOT inRobotCycleStart AND inRobotStartofProgram AND systemState <> E_MachineState.RUNMANUAL AND systemState <> E_MachineState.ERROR AND systemState <> E_MachineState.RESET THEN
-		outRobotStartCycle := NOT outRobotStartCycle;
-	END_IF
+	// Robot programs are started by programcontrol.pc on the robot (MC EXECUTE),
+	// so the PLC never sends cycle start.
+	outRobotStartCycle := FALSE;
 	
 	//Turn off startRobot once program started TODO: Turn off after 5 seconds
 	IF inRobotProgramRunning THEN
@@ -134,14 +145,92 @@ END_VAR]]></Declaration>
 		outRobotResetError := FALSE;
 	END_IF
 	
-	IF inRobotMotorOn THEN		
-		outRobotTurnMotorOn := TRUE;
+	// The robot may only move when the PLC knows about it: in manual mode, while a
+	// program the PLC started is starting or running, or in TEACH (pendant control).
+	fTrigProgramRunning(CLK := inRobotProgramRunning);
+	IF fTrigProgramRunning.Q THEN
+		plcCommandActive := FALSE;
 	END_IF
+	
+	// programcontrol.pc toggles signal 124 every pass. 1 s without a change means
+	// it is not running, so nothing it started can be tracked: end the command.
+	timerHeartbeatLost(IN := inRobotPcHeartbeat = heartbeatPrev, PT := T#1S);
+	heartbeatPrev := inRobotPcHeartbeat;
+	pcHeartbeatLost := timerHeartbeatLost.Q;
+	IF pcHeartbeatLost THEN
+		plcCommandActive := FALSE;
+	END_IF
+	motionAllowed := (systemState = E_MachineState.RUNMANUAL) OR plcCommandActive OR inRobotInTeach;
+	
+	// Otherwise hold the robot at once (applied in Update_Status, so methods that set
+	// outRobotRunHold cannot release it) and turn motor power off (1008) 0.5 s later,
+	// so anything still moving is stopped by the hold before power is cut.
+	timerMotorOffDelay(IN := NOT motionAllowed, PT := T#500MS);
+	outRobotTurnMotorOff := timerMotorOffDelay.Q;
+	
+	// When motion becomes allowed again, power the motors up
+	rTrigMotionAllowed(CLK := motionAllowed);
+	IF rTrigMotionAllowed.Q THEN
+		IF NOT inRobotInTeach THEN
+			motorOnRequest := TRUE;
+		END_IF
+	END_IF
+	
+	// Motor power ON, program reset and stop program are sent as 0.4 s pulses
+	// (the robot needs 0.3-0.5 s). Motor power ON must not be held on: the robot
+	// re-applies motor power as soon as an E-stop is released if it is.
+	// Motor ON only works once motor OFF is released, so the pulse starts one scan
+	// after the release has been sent.
+	IF motorOnRequest THEN
+		motorOnPending := TRUE;
+	END_IF
+	// A motor ON request only stands while motion is allowed, and never in TEACH
+	IF NOT motionAllowed OR inRobotInTeach THEN
+		motorOnPending := FALSE;
+	END_IF
+	rTrigMotorOn(CLK := motorOnPending AND NOT motorOffSent);
+	IF rTrigMotorOn.Q THEN
+		outRobotTurnMotorOn := TRUE;
+		motorOnPending := FALSE;
+	END_IF
+	timerMotorOnPulse(IN := outRobotTurnMotorOn, PT := T#400MS);
+	IF timerMotorOnPulse.Q THEN
+		outRobotTurnMotorOn := FALSE;
+	END_IF
+	motorOnRequest := FALSE;
+	
+	rTrigResetProgram(CLK := resetProgramRequest);
+	IF rTrigResetProgram.Q THEN
+		outRobotResetProgram := TRUE;
+	END_IF
+	timerResetProgramPulse(IN := outRobotResetProgram, PT := T#400MS);
+	IF timerResetProgramPulse.Q THEN
+		outRobotResetProgram := FALSE;
+	END_IF
+	resetProgramRequest := FALSE;
+	
+	// Stop request (1041) stays on until the robot reports it is no longer running,
+	// and for at least 1.5 s so programcontrol.pc sees it even while it is busy
+	// launching a program. Each new request restarts the minimum time.
+	IF stopProgramRequest THEN
+		outRobotStopProgram := TRUE;
+		timerStopMinimum(IN := FALSE);
+	END_IF
+	timerStopMinimum(IN := outRobotStopProgram, PT := T#1500MS);
+	IF timerStopMinimum.Q AND NOT inRobotProgramRunning THEN
+		outRobotStopProgram := FALSE;
+	END_IF
+	timerStopTimeout(IN := outRobotStopProgram AND inRobotProgramRunning, PT := T#5S);
+	robotStopFailed := timerStopTimeout.Q;
+	stopProgramRequest := FALSE;
+	
+	motorOffSent := outRobotTurnMotorOff;
 	
 	//Switch to main program TODO
 	timerOutRobotStartProgram(IN := outRobotStartProgram, PT := T#30S);
 	IF timerOutRobotStartProgram.Q THEN
 		outRobotStartProgram := FALSE;
+		plcCommandActive := FALSE;
 	END_IF
 ]]></ST>
     </Implementation>
@@ -162,7 +251,8 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[outRobotNoEStop := FALSE;]]></ST>
+        <ST><![CDATA[outRobotNoEStop := FALSE;
+plcCommandActive := FALSE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Go_TO_Cleanup" Id="{cb389d38-df14-47a9-8041-23dcf4c8f0bd}">
@@ -192,9 +282,8 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[outRobotResetError := TRUE;
-outRobotTurnMotorOn := TRUE;
-outRobotRunHold := TRUE;
-outRobotStartCycle := TRUE;]]></ST>
+motorOnRequest := TRUE;
+outRobotRunHold := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Program_Select" Id="{5ccc5e7e-14d0-4912-bf3c-54f9c88aeb76}">
@@ -240,8 +329,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[outRobotNoEStop := TRUE;
 outRobotResetError := TRUE;
-outRobotTurnMotorOn := TRUE;
-outRobotTurnMotorOff := FALSE;
+motorOnRequest := TRUE;
 outRobotRunHold := TRUE;
 outRobotStartProgram := FALSE;
 Reset_Robot := NOT(inRobotError OR inRobotEStopOn);
@@ -312,7 +400,9 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[outRobotTurnMotorOn := TRUE;
+        <ST><![CDATA[motorOnRequest := TRUE;
+plcCommandActive := TRUE;
+outRobotRunHold := TRUE;
 outRobotStartProgram := TRUE;
 outRobotResetProgram := FALSE;]]></ST>
       </Implementation>
@@ -325,7 +415,9 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[outRobotStartProgram := FALSE;
-outRobotResetProgram := TRUE;
+plcCommandActive := FALSE;
+resetProgramRequest := TRUE;
+stopProgramRequest := TRUE;
 IF forgetProgram THEN
 	outRobotProgramSelected := FALSE;
 END_IF
@@ -471,7 +563,7 @@ sigs10011008.1 := outRobotResetError; //1002
 sigs10011008.2 := outRobotStartCycle; //1003
 sigs10011008.3 := outRobotResetProgram; //1004
 sigs10011008.4 := outRobotStartProgram; //1005
-sigs10011008.5 := outRobotRunHold; //1006
+sigs10011008.5 := outRobotRunHold AND motionAllowed; //1006, held whenever the PLC has not allowed motion
 sigs10011008.6 := outRobotHome; //1007
 sigs10011008.7 := outRobotTurnMotorOff; //1008
 sigs10091016.0 := outRobotToolReleased; //1009
@@ -502,6 +594,7 @@ sigs10331040.4 := outRobotManualMoveDistance.2; //1037
 sigs10331040.5 := outRobotDustBootUp; //1038
 sigs10331040.6 := outRobotProgramOption4; //1039
 sigs10331040.7 := outRobotProgramOption5; //1040
+sigs10411048.0 := outRobotStopProgram; //1041
 ; //1038
 
 
@@ -535,7 +628,8 @@ inRobotCurrentProgram.0 := sigs113120.6;
 inRobotCurrentProgram.1 := sigs113120.7;
 inRobotCurrentProgram.2 := sigs121128.0;
 inRobotCurrentProgram.3 := sigs121128.1;
-inRobotAtCleanPosition := sigs121128.2;]]></ST>
+inRobotAtCleanPosition := sigs121128.2;
+inRobotPcHeartbeat := sigs121128.3; //124]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Tool" Id="{8cd56187-8f55-4d53-8738-7ee602877016}">

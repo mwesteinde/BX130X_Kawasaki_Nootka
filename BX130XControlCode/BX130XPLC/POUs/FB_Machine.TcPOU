@@ -269,7 +269,7 @@ END_VAR
 	END_IF
 	
 	IF fbRobot.timerOutRobotStartProgram.Q THEN
-		Popup_Error('Robot not started after 20 seconds. Check if robot is in cycle mode', TRUE);
+		Popup_Error('Robot not started after 30 seconds. Check the robot is in REPEAT with motor power on', TRUE);
 	END_IF
 	]]></ST>
     </Implementation>
@@ -319,7 +319,10 @@ CASE eSystemState OF
 	E_MachineState.INITIALIZATION:
 		escapeRunScreenEnable := TRUE;
 		IF rTrigStartProgram.Q AND NOT errorState.isError THEN
-			IF fbEnclosure.cylinderTableWest AND fbEnclosure.cylinderTableEast AND fbSpindle.CurrentTool.toolNumber = fbRobot.inRobotToolNumberRequest AND fbEnclosure.doorIsClosed THEN
+			IF fbRobot.inRobotProgramRunning THEN
+				Popup_Error('Robot program still running, wait for it to stop', TRUE);
+				bHMIStart := FALSE;
+			ELSIF fbEnclosure.cylinderTableWest AND fbEnclosure.cylinderTableEast AND fbSpindle.CurrentTool.toolNumber = fbRobot.inRobotToolNumberRequest AND fbEnclosure.doorIsClosed THEN
 				HMILeaveRunScreen := FALSE;
 				eSystemState := E_MachineState.RUN;
 				bHMILaserOverride := FALSE;
@@ -341,7 +344,7 @@ CASE eSystemState OF
 		
 		//Moves to change tool initialization
 		IF rTrigChangeTool.Q THEN
-			IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+			IF NOT fbRobot.inRobotProgramRunning THEN //Make sure the robot isn't already running a program
 				IF fbSpindle.Verify_Tool_Change_Request(sHMICurrentTool, sHMIRequestedTool) THEN
 					eSystemState := E_MachineState.TOOLCHANGEINIT;
 					fbRobot.Update_Tool(current := INT_TO_USINT(sHMICurrentTool), request := INT_TO_USINT(sHMIRequestedTool));
@@ -362,7 +365,7 @@ CASE eSystemState OF
 		END_IF
 		
 		IF rTrigCalibrateTool.Q THEN
-			IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+			IF NOT fbRobot.inRobotProgramRunning THEN //Make sure the robot isn't already running a program
 				IF sHMIToolToCalibrate.toolNumber = GVL_Programs.sawblade.toolNumber THEN
 					fbRobot.Program_Select(programChoice := 14, option1 := FALSE, programOption2, programOption3, programOption4, programOption5, boardWidthIs51inches); //Option 1 false to indicate that it is the sawblade being used
 				ELSE
@@ -425,6 +428,21 @@ CASE eSystemState OF
 		timerRun(IN := TRUE, PT := T#10S);
 		escapeRunScreenEnable := FALSE;
 		IF (fTrigStopProgram.Q OR fTrigInProgramRunning.Q) AND NOT errorState.isError THEN
+			eSystemState := E_MachineState.INITIALIZATION;
+			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
+			fbSpindle.Stop_Spindle();
+			fbRobot.Stop_Robot_Program(forgetProgram := FALSE);
+			fbGantry.Lower_Raise_Rollers(raiseRollers := TRUE);
+			bHMIStart := FALSE;
+			bHMIHold := FALSE;
+			bHMIRaiseRollersRunScreen := FALSE;
+			timerRun(IN := FALSE, PT := T#10S);
+			bActivateRollers := FALSE;
+			blastGateOn6Inch := FALSE;
+		END_IF
+		
+		// The robot never started the program: leave RUN rather than wait with the spindle on
+		IF fbRobot.timerOutRobotStartProgram.Q THEN
 			eSystemState := E_MachineState.INITIALIZATION;
 			fbSpindle.Dust_Hood(x_pose := 0, enable := FALSE);
 			fbSpindle.Stop_Spindle();
@@ -712,7 +730,7 @@ END_IF
 
 //Robot Program to enable manual movement
 IF rTrigEnableMovement.Q THEN	
-	IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+	IF NOT fbRobot.inRobotProgramRunning THEN //Make sure the robot isn't already running a program
 		fbRobot.Program_Select(programChoice := 11, programOption1, programOption2, programOption3, programOption4, programOption5, boardWidthIs51inches);
 		fbRobot.Start_Robot();
 	ELSE
@@ -724,7 +742,7 @@ END_IF
 
 //Home robot operation on button press
 IF rTrigHomeRobot.Q THEN
-	IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+	IF NOT fbRobot.inRobotProgramRunning THEN //Make sure the robot isn't already running a program
 		fbRobot.Program_Select(programChoice := 12, programOption1, programOption2, programOption3, programOption4, programOption5, boardWidthIs51inches);
 		fbRobot.Start_Robot();
 	ELSE
@@ -736,7 +754,7 @@ END_IF
 
 //Robot moves out of the way on button press
 IF rTrigGoToCleanupRobot.Q THEN
-	IF fbRobot.inRobotCurrentProgram = 0 THEN //Make sure robot isn't stuck in a program that's not programselect.
+	IF NOT fbRobot.inRobotProgramRunning THEN //Make sure the robot isn't already running a program
 		fbRobot.Program_Select(programChoice := 13, programOption1, programOption2, programOption3, programOption4, programOption5, boardWidthIs51inches);
 		fbRobot.Start_Robot();
 		fbGantry.Home_Servos(robotPose);
@@ -1080,6 +1098,16 @@ IF NOT fbRobot.inRobotPoseDataIsSent THEN
 	Run_Error.isError := TRUE;
 	Run_Error.errorType.0 := TRUE;
 	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage,'\nRobot pose data program not running');
+END_IF
+IF fbRobot.pcHeartbeatLost THEN
+	Run_Error.isError := TRUE;
+	Run_Error.errorType.0 := TRUE;
+	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage,'\nRobot program control (programcontrol.pc) not running');
+END_IF
+IF fbRobot.robotStopFailed THEN
+	Run_Error.isError := TRUE;
+	Run_Error.errorType.0 := TRUE;
+	Run_Error.errorMessage := CONCAT(Run_Error.errorMessage,'\nRobot program did not stop, check teach pendant');
 END_IF
 
 IF fbRobot.inRobotEStopOn THEN
