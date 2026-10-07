@@ -1033,10 +1033,15 @@ IF fbRobot.inRobotToolNumberRequest = fbRobot.inRobotToolNumberCurrent THEN
 		eRequestedState := E_MachineState.ERROR;
 		JMP _endOfMethod;
 	END_IF;
-	runHoldToolChangeRun := FALSE;
-	fbSpindle.Manual_Tool_Change(changeToolEnable := TRUE);
-	IF rTrigToolLoaded.Q THEN
-		eRequestedState := E_MachineState.RUN;
+	// The robot flags the last tool change of a program (signal 125): nothing is cut
+	// after it, so let the program run to its end instead of holding for Tool Loaded.
+	// The end of the program then takes TOOLCHANGERUN to INITIALIZATION below.
+	IF NOT fbRobot.inRobotFinalToolChange THEN
+		runHoldToolChangeRun := FALSE;
+		fbSpindle.Manual_Tool_Change(changeToolEnable := TRUE);
+		IF rTrigToolLoaded.Q THEN
+			eRequestedState := E_MachineState.RUN;
+		END_IF
 	END_IF
 END_IF
 

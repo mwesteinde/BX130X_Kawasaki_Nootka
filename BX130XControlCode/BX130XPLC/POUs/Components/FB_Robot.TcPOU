@@ -44,6 +44,7 @@ VAR
 	inRobotCurrentProgram	: USINT; //Signals 120-123
 	inRobotAtCleanPosition	: BOOL; //Signal 124
 	inRobotPcHeartbeat		: BOOL; //Signal 124, toggled every pass by programcontrol.pc
+	inRobotFinalToolChange	: BOOL; //Signal 125, the running program is on its last tool change
 	sigs97104 AT %I*		: USINT;
 	sigs105112 AT %I*		: USINT;
 	sigs113120 AT %I*		: USINT;
@@ -629,7 +630,8 @@ inRobotCurrentProgram.1 := sigs113120.7;
 inRobotCurrentProgram.2 := sigs121128.0;
 inRobotCurrentProgram.3 := sigs121128.1;
 inRobotAtCleanPosition := sigs121128.2;
-inRobotPcHeartbeat := sigs121128.3; //124]]></ST>
+inRobotPcHeartbeat := sigs121128.3; //124
+inRobotFinalToolChange := sigs121128.4; //125]]></ST>
       </Implementation>
     </Method>
     <Method Name="Update_Tool" Id="{8cd56187-8f55-4d53-8738-7ee602877016}">
